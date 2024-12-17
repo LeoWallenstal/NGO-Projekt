@@ -16,7 +16,8 @@ Package Files
 *.ear
 
 .tar.gz
-
+.xml
+.mf
 
 
 Directories
