@@ -17,34 +17,24 @@ public class Anvandare {
     private final InfDB idb;
     //Användarens uppgifter, kanske värt att göra till en Array?
     //Dessa kommer skickas med från anrop
-    private String ePost;
-    private String losenord;
+    private String anstallningsId;
     //Dessa kommer hämtas från databasen
     private String fornamn;
     private String efternamn;
     private String adress;
     private String telNr;
     private String avdelningsId;
-    private String anstallningsId;
     private String anstallningsDatum;
+     private String ePost;
+    private String losenord;
     
-    public Anvandare(InfDB idb, String ePost, String losenord) {
+    public Anvandare(InfDB idb, String anstallningsId) {
         this.idb = idb;
-        this.ePost = ePost;
-        this.losenord = losenord;
+        this.anstallningsId = anstallningsId;
         setUppgifter();
-        System.out.println(fornamn+" "+efternamn+" "+adress+" "+telNr+" "+avdelningsId+" "+anstallningsId+" "+anstallningsDatum);
     }
 
-    //Getters
-    public String getEPost(){
-        return ePost;
-    }
-    
-    public String getLosenord(){
-        return losenord;
-    }
-    
+    //Getters 
     public String getFornamn() {
         return fornamn;
     }
@@ -76,13 +66,22 @@ public class Anvandare {
     public String getAnstallningsDatum(){
         return anstallningsDatum;
     }
+    
+    public String getEPost(){
+        return ePost;
+    }
+    
+    public String getLosenord(){
+        return losenord;
+    }
+    
 
     //Setters
     private void setUppgifter() {
         HashMap<String, String> uppgifter;
         try {
-            String sqlFraga = "SELECT fornamn, efternamn, adress, telefon, avdelning, aid, anstallningsdatum "
-                    + "FROM anstalld where epost = '" + ePost + "'";
+            String sqlFraga = "SELECT fornamn, efternamn, adress, telefon, avdelning, anstallningsdatum, epost, losenord "
+                    + "FROM anstalld where aid = '" + anstallningsId + "'";
             uppgifter = idb.fetchRow(sqlFraga);
             for (String kolumn : uppgifter.keySet()) {
                 String varde = uppgifter.get(kolumn);
@@ -106,13 +105,17 @@ public class Anvandare {
                     case "avdelning":
                         avdelningsId = varde;
                         break;
-                        
-                    case "aid":
-                        anstallningsId = varde;
-                        break;
                     
                     case "anstallningsdatum":
                         anstallningsDatum = varde;
+                        break;
+                        
+                    case "epost":
+                        ePost = varde;
+                        break;
+                        
+                    case "losenord":
+                        losenord = varde;
                         break;
                 }
             }
