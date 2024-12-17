@@ -13,7 +13,7 @@ import oru.inf.InfException;
  */
 public class Inloggning extends javax.swing.JFrame {
 
-    private InfDB idb;
+    private final InfDB idb;
     
     /**
      * Creates new form Inloggning
@@ -120,21 +120,22 @@ public class Inloggning extends javax.swing.JFrame {
     private void btnLoggaInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoggaInActionPerformed
         
         String ePost = tfEPost.getText();
-        String losen = tfLosenord.getText();
+        String losenord = tfLosenord.getText();
         
         try{
             String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost+"'";
             //System.out.println(sqlFraga);
-            String dbLosen = idb.fetchSingle(sqlFraga);
-            if (losen.equals(dbLosen)){
-                new Meny(idb, ePost).setVisible(true);
+            String dbLosenord = idb.fetchSingle(sqlFraga);
+            if (losenord.equals(dbLosenord)){
+                Anvandare inloggadAnvandare = new Anvandare(idb, ePost, losenord);
+                new Meny(idb, inloggadAnvandare).setVisible(true);
                 this.setVisible(false);
             }
             else{
                 lblFelmeddelande.setVisible(true);
             }
             
-        }catch(Exception ex){
+        }catch(InfException ex){
             System.out.println(ex.getMessage());
         }
         
