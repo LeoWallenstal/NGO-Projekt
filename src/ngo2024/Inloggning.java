@@ -127,7 +127,9 @@ public class Inloggning extends javax.swing.JFrame {
             //System.out.println(sqlFraga);
             String dbLosenord = idb.fetchSingle(sqlFraga);
             if (losenord.equals(dbLosenord)){
-                Anvandare inloggadAnvandare = new Anvandare(idb, ePost, losenord);
+                sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + ePost + "'";
+                String anstallningsId = idb.fetchSingle(sqlFraga);
+                Anvandare inloggadAnvandare = new Anvandare(idb, anstallningsId);
                 new Meny(idb, inloggadAnvandare).setVisible(true);
                 this.setVisible(false);
             }
