@@ -13,17 +13,18 @@ import oru.inf.InfException;
  */
 public class Meny extends javax.swing.JFrame {
 
-    private InfDB idb;
-    private String inloggadAnvandare;
+    private final InfDB idb;
+    private Anvandare inloggadAnvandare;
     
     /**
      * Creates new form Meny
      */
-    public Meny(InfDB idb, String inloggadAnvandare) {
+    public Meny(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        String inloggadNamn = inloggadAnvandare.getFullNamn();
         initComponents();
-        lblInloggadAnvandare.setText(inloggadAnvandare);
+        lblInloggadAnvandare.setText(inloggadNamn);
     }
 
     /**
@@ -36,30 +37,76 @@ public class Meny extends javax.swing.JFrame {
     private void initComponents() {
 
         lblInloggadAnvandare = new javax.swing.JLabel();
+        lblValkommen = new javax.swing.JLabel();
+        btnUppgifter = new javax.swing.JButton();
+        btnAvdelning = new javax.swing.JButton();
+        btnProjekt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblInloggadAnvandare.setText("jLabel1");
+
+        lblValkommen.setText("Välkommen");
+
+        btnUppgifter.setText("Mina uppgifter");
+        btnUppgifter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUppgifterActionPerformed(evt);
+            }
+        });
+
+        btnAvdelning.setText("Min avdelning");
+
+        btnProjekt.setText("Projekt");
+        btnProjekt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProjektActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(lblInloggadAnvandare)
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblValkommen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblInloggadAnvandare))
+                    .addComponent(btnUppgifter)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnProjekt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAvdelning, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(285, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(lblInloggadAnvandare)
-                .addContainerGap(242, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblInloggadAnvandare)
+                    .addComponent(lblValkommen))
+                .addGap(18, 18, 18)
+                .addComponent(btnUppgifter)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAvdelning)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnProjekt)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUppgifterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUppgifterActionPerformed
+
+    private void btnProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProjektActionPerformed
 
     /**
      * @param args the command line arguments
@@ -97,6 +144,10 @@ public class Meny extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAvdelning;
+    private javax.swing.JButton btnProjekt;
+    private javax.swing.JButton btnUppgifter;
     private javax.swing.JLabel lblInloggadAnvandare;
+    private javax.swing.JLabel lblValkommen;
     // End of variables declaration//GEN-END:variables
 }
