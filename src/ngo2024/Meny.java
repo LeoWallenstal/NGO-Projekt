@@ -6,6 +6,7 @@ package ngo2024;
 
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.awt.*;
 
 /**
  *
@@ -24,9 +25,20 @@ public class Meny extends javax.swing.JFrame {
         this.inloggadAnvandare = inloggadAnvandare;
         String inloggadNamn = inloggadAnvandare.getFullNamn();
         initComponents();
+        setWindowSize();
         lblInloggadAnvandare.setText(inloggadNamn);
     }
 
+    private void setWindowSize(){
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int windowWidth = (int) (screenSize.width * 0.75);
+        int windowHeight = (int) (screenSize.height * 0.75);
+        int x = (screenSize.width - windowWidth) / 2;
+        int y = (screenSize.height - windowHeight) / 2;
+        setBounds(x, y, windowWidth, windowHeight);
+        setLocationRelativeTo(null);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
