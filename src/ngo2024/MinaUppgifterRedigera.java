@@ -4,24 +4,74 @@
  */
 package ngo2024;
 
+import java.awt.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
+
+
 /**
  *
- * @author Gastinlogg
+ * @author walle
  */
-public class MinaUppgifter extends javax.swing.JFrame {
+public class MinaUppgifterRedigera extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    
     /**
-     * Creates new form MinaUppgifter
+     * Creates new form MinaUppgifterRedigera
      */
-    public MinaUppgifter(InfDB idb, Anvandare inloggadAnvandare) {
+    public MinaUppgifterRedigera(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
+        setWindowSize();
+        setUppgifter();
+        
+    }
+    
+    private void setWindowSize(){
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int windowWidth = (int) (screenSize.width * 0.75);
+        int windowHeight = (int) (screenSize.height * 0.75);
+        int x = (screenSize.width - windowWidth) / 2;
+        int y = (screenSize.height - windowHeight) / 2;
+        setBounds(x, y, windowWidth, windowHeight);
+        setLocationRelativeTo(null);
+    }
+    
+    private void setUppgifter(){
+        String fornamn = inloggadAnvandare.getFornamn();
+        tfFornamn.setText(fornamn);
+        String efternamn = inloggadAnvandare.getEfternamn();
+        tfEfternamn.setText(efternamn);
+        String adress = inloggadAnvandare.getAdress();
+        tfAdress.setText(adress);
+        String ePost = inloggadAnvandare.getEPost();
+        tfEpost.setText(ePost);
+        String losenord = inloggadAnvandare.getLosenord();
+        tfLosenord.setText(losenord);
+        tfLosenord.enable(false);
+        String telNr = inloggadAnvandare.getTelNr();
+        tfTelefonnr.setText(telNr);
+        String AID = inloggadAnvandare.getAnstallningsId();
+        tfAID.setText(AID);
+        tfAID.enable(false);
+        String anstallningsDatum = inloggadAnvandare.getAnstallningsDatum();
+        tfAnstallningsdatum.setText(anstallningsDatum);
+        tfAnstallningsdatum.enable(false);
+        String avdelningsId = inloggadAnvandare.getAvdelningsId();
+        String sqlFraga = "SELECT namn FROM avdelning where avdid = " + avdelningsId;
+        System.out.println(sqlFraga);
+        try{
+        String avdelningsNamn = idb.fetchSingle(sqlFraga);
+        tfAvdelning.setText(avdelningsNamn);
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        
+        
     }
 
     /**
@@ -33,78 +83,30 @@ public class MinaUppgifter extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel5 = new javax.swing.JLabel();
-        lblFornamn = new javax.swing.JLabel();
-        lblEfternamn = new javax.swing.JLabel();
-        lblEpost = new javax.swing.JLabel();
-        lblLosenord = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        btnAndraUppgifter = new javax.swing.JButton();
-        btnAndraLosenord = new javax.swing.JButton();
-        btnTillbaka = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        tfFornamn = new javax.swing.JTextField();
-        tfEfternamn = new javax.swing.JTextField();
-        tfAdress = new javax.swing.JTextField();
-        tfEpost = new javax.swing.JTextField();
         tfLosenord = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
         tfTelefonnr = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         tfAID = new javax.swing.JTextField();
+        btnAndraUppgifter = new javax.swing.JButton();
         tfAnstallningsdatum = new javax.swing.JTextField();
         tfAvdelning = new javax.swing.JTextField();
-
-        jLabel5.setText("jLabel5");
+        btnTillbaka = new javax.swing.JButton();
+        lblFornamn = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblEfternamn = new javax.swing.JLabel();
+        tfFornamn = new javax.swing.JTextField();
+        lblEpost = new javax.swing.JLabel();
+        tfEfternamn = new javax.swing.JTextField();
+        lblLosenord = new javax.swing.JLabel();
+        tfAdress = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        tfEpost = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblFornamn.setText("Förnamn:");
-
-        lblEfternamn.setText("Efternamn:");
-
-        lblEpost.setText("Epost:");
-
-        lblLosenord.setText("Lösenord:");
-
-        jLabel1.setText("Telefonnummer:");
-
         jLabel2.setText("AnställningsID:");
-
-        jLabel3.setText("Anställningsdatum:");
-
-        jLabel4.setText("Avdelning:");
-
-        btnAndraUppgifter.setText("Ändra uppgifter");
-        btnAndraUppgifter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAndraUppgifterActionPerformed(evt);
-            }
-        });
-
-        btnAndraLosenord.setText("Ändra lösenord");
-        btnAndraLosenord.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAndraLosenordActionPerformed(evt);
-            }
-        });
-
-        btnTillbaka.setText("Gå tillbaka");
-
-        jLabel6.setText("Adress:");
-
-        tfFornamn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfFornamnActionPerformed(evt);
-            }
-        });
-
-        tfAdress.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfAdressActionPerformed(evt);
-            }
-        });
 
         tfLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,41 +114,76 @@ public class MinaUppgifter extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Anställningsdatum:");
+
+        jLabel4.setText("Avdelning:");
+
+        btnAndraUppgifter.setText("Spara uppgifter");
+        btnAndraUppgifter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAndraUppgifterActionPerformed(evt);
+            }
+        });
+
+        btnTillbaka.setText("Gå tillbaka");
+
+        lblFornamn.setText("Förnamn:");
+
+        jLabel6.setText("Adress:");
+
+        lblEfternamn.setText("Efternamn:");
+
+        tfFornamn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfFornamnActionPerformed(evt);
+            }
+        });
+
+        lblEpost.setText("Epost:");
+
+        lblLosenord.setText("Lösenord:");
+
+        tfAdress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAdressActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Telefonnummer:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(btnTillbaka)
-                .addGap(28, 28, 28)
-                .addComponent(btnAndraLosenord)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(btnAndraUppgifter)
-                .addGap(14, 14, 14))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(lblLosenord)
-                    .addComponent(lblEpost)
-                    .addComponent(jLabel6)
-                    .addComponent(lblEfternamn)
-                    .addComponent(lblFornamn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tfLosenord, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                    .addComponent(tfTelefonnr)
-                    .addComponent(tfAID)
-                    .addComponent(tfAnstallningsdatum)
-                    .addComponent(tfAvdelning)
-                    .addComponent(tfEpost)
-                    .addComponent(tfAdress)
-                    .addComponent(tfEfternamn)
-                    .addComponent(tfFornamn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnTillbaka)
+                        .addGap(22, 22, 22)
+                        .addComponent(btnAndraUppgifter))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(lblLosenord)
+                            .addComponent(lblEpost)
+                            .addComponent(jLabel6)
+                            .addComponent(lblEfternamn)
+                            .addComponent(lblFornamn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfLosenord, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                            .addComponent(tfTelefonnr)
+                            .addComponent(tfAID)
+                            .addComponent(tfAnstallningsdatum)
+                            .addComponent(tfAvdelning)
+                            .addComponent(tfEpost)
+                            .addComponent(tfAdress)
+                            .addComponent(tfEfternamn)
+                            .addComponent(tfFornamn))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -188,25 +225,23 @@ public class MinaUppgifter extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tfAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
-                    .addComponent(btnAndraLosenord)
                     .addComponent(btnAndraUppgifter))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAndraUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraUppgifterActionPerformed
-        new MinaUppgifterRedigera(idb,inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnAndraUppgifterActionPerformed
-
-    private void btnAndraLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraLosenordActionPerformed
+    private void tfLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLosenordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAndraLosenordActionPerformed
+    }//GEN-LAST:event_tfLosenordActionPerformed
+
+    private void btnAndraUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraUppgifterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAndraUppgifterActionPerformed
 
     private void tfFornamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFornamnActionPerformed
         // TODO add your handling code here:
@@ -215,10 +250,6 @@ public class MinaUppgifter extends javax.swing.JFrame {
     private void tfAdressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAdressActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfAdressActionPerformed
-
-    private void tfLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLosenordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfLosenordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,33 +268,31 @@ public class MinaUppgifter extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MinaUppgifter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MinaUppgifterRedigera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MinaUppgifter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MinaUppgifterRedigera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MinaUppgifter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MinaUppgifterRedigera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MinaUppgifter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MinaUppgifterRedigera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new MinaUppgifter(InfDB idb).setVisible(true);
+                //new MinaUppgifterRedigera().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAndraLosenord;
     private javax.swing.JButton btnAndraUppgifter;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblEfternamn;
     private javax.swing.JLabel lblEpost;
