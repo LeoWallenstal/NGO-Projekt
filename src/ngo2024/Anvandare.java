@@ -15,110 +15,63 @@ import java.util.HashMap;
 public class Anvandare {
 
     private final InfDB idb;
-    //Användarens uppgifter, kanske värt att göra till en Array?
-    //Dessa kommer skickas med från anrop
-    private String anstallningsId;
-    //Dessa kommer hämtas från databasen
-    private String fornamn;
-    private String efternamn;
-    private String adress;
-    private String telNr;
-    private String avdelningsId;
-    private String anstallningsDatum;
-     private String ePost;
-    private String losenord;
+    private HashMap<String,String> uppgifter;
     
-    public Anvandare(InfDB idb, String anstallningsId) {
+    public Anvandare(InfDB idb, String aid) {
         this.idb = idb;
-        this.anstallningsId = anstallningsId;
-        setUppgifter();
+        uppgifter = new HashMap<>();
+        setUppgifter(aid);
     }
 
     //Getters 
     public String getFornamn() {
-        return fornamn;
+        return uppgifter.get("fornamn");
     }
 
     public String getEfternamn() {
-        return efternamn;
+        return uppgifter.get("efternamn");
     }
 
     public String getFullNamn() {
-        return fornamn + " " + efternamn;
+        return uppgifter.get("fornamn") + " " + uppgifter.get("efternamn");
     }
     
     public String getAdress(){
-        return adress;
+        return uppgifter.get("adress");
     }
     
     public String getTelNr(){
-        return telNr;
+        return uppgifter.get("telefon");
     }
     
     public String getAvdelningsId(){
-        return avdelningsId;
+        return uppgifter.get("avdelning");
     }
     
     public String getAnstallningsId(){
-        return anstallningsId;
+        return uppgifter.get("aid");
     }
     
     public String getAnstallningsDatum(){
-        return anstallningsDatum;
+        return uppgifter.get("anstallningsdatum");
     }
     
     public String getEPost(){
-        return ePost;
+        return uppgifter.get("epost");
     }
     
     public String getLosenord(){
-        return losenord;
+        return uppgifter.get("losenord");
     }
     
 
     //Setters
-    private void setUppgifter() {
-        HashMap<String, String> uppgifter;
+    private void setUppgifter(String aid) {
         try {
-            String sqlFraga = "SELECT fornamn, efternamn, adress, telefon, avdelning, anstallningsdatum, epost, losenord "
-                    + "FROM anstalld where aid = '" + anstallningsId + "'";
+            String sqlFraga = "SELECT fornamn, efternamn, adress, telefon, avdelning, anstallningsdatum, epost, losenord, aid "
+                    + "FROM anstalld where aid = '" + aid+"'";
+            System.out.println(sqlFraga);
             uppgifter = idb.fetchRow(sqlFraga);
-            for (String kolumn : uppgifter.keySet()) {
-                String varde = uppgifter.get(kolumn);
-                switch (kolumn) {
-                    case "fornamn":
-                        fornamn = varde;
-                        break;
-                    
-                    case "efternamn":
-                        efternamn = varde;
-                        break;
-                        
-                    case "adress":
-                        adress = varde;
-                        break;
-                    
-                    case "telefon":
-                        telNr = varde;
-                        break;
-                        
-                    case "avdelning":
-                        avdelningsId = varde;
-                        break;
-                    
-                    case "anstallningsdatum":
-                        anstallningsDatum = varde;
-                        break;
-                        
-                    case "epost":
-                        ePost = varde;
-                        break;
-                        
-                    case "losenord":
-                        losenord = varde;
-                        break;
-                }
-            }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
