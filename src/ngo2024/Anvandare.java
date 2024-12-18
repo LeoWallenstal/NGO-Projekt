@@ -70,7 +70,6 @@ public class Anvandare {
         try {
             String sqlFraga = "SELECT fornamn, efternamn, adress, telefon, avdelning, anstallningsdatum, epost, losenord, aid "
                     + "FROM anstalld where aid = '" + aid+"'";
-            System.out.println(sqlFraga);
             uppgifter = idb.fetchRow(sqlFraga);
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
