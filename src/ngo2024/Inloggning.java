@@ -6,6 +6,9 @@ package ngo2024;
 
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.awt.*;
+
+
 
 /**
  *
@@ -22,8 +25,9 @@ public class Inloggning extends javax.swing.JFrame {
         this.idb = idb;
         initComponents();
         lblFelmeddelande.setVisible(false);
+        setLocationRelativeTo(null);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,6 +43,7 @@ public class Inloggning extends javax.swing.JFrame {
         tfEPost = new javax.swing.JTextField();
         tfLosenord = new javax.swing.JTextField();
         btnLoggaIn = new javax.swing.JButton();
+        lblLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,12 +55,14 @@ public class Inloggning extends javax.swing.JFrame {
         lblFelmeddelande.setText("Felaktig epost eller lösenord");
         lblFelmeddelande.setAlignmentX(0.5F);
 
+        tfEPost.setText("maria.g@example.com");
         tfEPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfEPostActionPerformed(evt);
             }
         });
 
+        tfLosenord.setText("password123");
         tfLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfLosenordActionPerformed(evt);
@@ -69,29 +76,38 @@ public class Inloggning extends javax.swing.JFrame {
             }
         });
 
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/logo_globala_malen-1.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFelmeddelande)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblLosenord)
-                            .addComponent(lblEPost))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnLoggaIn)
-                            .addComponent(tfEPost, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(tfLosenord))))
-                .addContainerGap(88, Short.MAX_VALUE))
+                            .addComponent(lblFelmeddelande)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblLosenord)
+                                    .addComponent(lblEPost))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnLoggaIn)
+                                    .addComponent(tfEPost)
+                                    .addComponent(tfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(lblLogo)))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addComponent(lblLogo)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEPost)
                     .addComponent(tfEPost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -103,7 +119,7 @@ public class Inloggning extends javax.swing.JFrame {
                 .addComponent(lblFelmeddelande)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLoggaIn)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addGap(75, 75, 75))
         );
 
         pack();
@@ -182,6 +198,7 @@ public class Inloggning extends javax.swing.JFrame {
     private javax.swing.JButton btnLoggaIn;
     private javax.swing.JLabel lblEPost;
     private javax.swing.JLabel lblFelmeddelande;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblLosenord;
     private javax.swing.JTextField tfEPost;
     private javax.swing.JTextField tfLosenord;

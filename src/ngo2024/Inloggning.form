@@ -23,31 +23,41 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblFelmeddelande" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblLosenord" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblEPost" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnLoggaIn" min="-2" max="-2" attributes="0"/>
-                          <Component id="tfEPost" alignment="0" pref="200" max="32767" attributes="0"/>
-                          <Component id="tfLosenord" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblFelmeddelande" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblLosenord" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblEPost" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnLoggaIn" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfEPost" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="tfLosenord" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
+                      <Component id="lblLogo" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="88" max="32767" attributes="0"/>
+              <EmptySpace pref="113" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <Component id="lblLogo" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblEPost" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfEPost" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -61,7 +71,7 @@
               <Component id="lblFelmeddelande" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnLoggaIn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="159" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,11 +97,17 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfEPost">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="maria.g@example.com"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfEPostActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfLosenord">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="password123"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfLosenordActionPerformed"/>
       </Events>
@@ -103,6 +119,13 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoggaInActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLogo">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resources/goals_icons/logo_globala_malen-1.png"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
