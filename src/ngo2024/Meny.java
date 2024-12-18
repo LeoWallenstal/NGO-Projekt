@@ -118,7 +118,8 @@ public class Meny extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUppgifterActionPerformed
 
     private void btnProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektActionPerformed
-        // TODO add your handling code here:
+        new Projekt(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnProjektActionPerformed
 
     /**
