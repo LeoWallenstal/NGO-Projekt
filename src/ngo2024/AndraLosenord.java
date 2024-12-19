@@ -183,8 +183,16 @@ public class AndraLosenord extends javax.swing.JFrame {
             String nyttLosenord2 = tfUpprepaLosenord.getText();
             if(!nyttLosenord1.isEmpty() && !nyttLosenord2.isEmpty()){ 
                 if(nyttLosenord1.equals(nyttLosenord2)){
-                   //ska ändra i db
-                    this.setVisible(false); }
+                   if(Validerare.formatLosenord(nyttLosenord1)){
+                       //ska ändra i db 
+                       this.setVisible(false);
+                    }
+                   else {
+                        String felMed = "Lösenordet måste innehålla 8 tecken och minst 1 siffra.";
+                        lblFelmeddelandeNyttLosenord.setText(felMed);
+                        lblFelmeddelandeNyttLosenord.setVisible(true);
+                   }
+                }
                 else{
                     lblFelmeddelandeNyttLosenord.setText("Lösenordet matchar inte!");
                     lblFelmeddelandeNyttLosenord.setVisible(true);

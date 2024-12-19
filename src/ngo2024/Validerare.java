@@ -29,4 +29,10 @@ public class Validerare {
     public static boolean arSiffror(String siffror){
             return siffror.matches("^\\d+$");
     }
+    
+    public static boolean formatLosenord(String losenord){
+        return losenord.matches("^(?=.*\\d).{8,}$");
+    }
+
 }
+
