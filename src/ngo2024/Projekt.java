@@ -10,6 +10,12 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Map;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -19,6 +25,7 @@ public class Projekt extends javax.swing.JFrame {
 
     private Anvandare inloggadAnvandare;
     private InfDB idb;
+    private ArrayList<HashMap<String, String>> projektUppgifter;
     
     /**
      * Creates new form Projekt
@@ -27,6 +34,8 @@ public class Projekt extends javax.swing.JFrame {
         initComponents();
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
+        initProjektUppgifter();      
+        displayProjektUppgifter();
     }
 
     /**
@@ -58,29 +67,10 @@ public class Projekt extends javax.swing.JFrame {
 
         projektTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Projekt", "Projektchef", "Prioritet", "Startdatum"
+
             }
         ));
         projektTable.setShowHorizontalLines(true);
@@ -167,35 +157,41 @@ public class Projekt extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(101, 101, 101)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(allaProjektButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(avdelningensProjektButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(minaProjektButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sokLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(allaProjektButton, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(redigeraButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(avdelningensProjektButton, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(minaProjektButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(sokEfterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(65, 65, 65)
-                                .addComponent(sokDatumButton)))
-                        .addGap(18, 18, 18)
+                                .addComponent(sokLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(redigeraButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(sokEfterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(65, 65, 65)
+                                        .addComponent(sokDatumButton)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(taBortButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(laggTillButton, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(taBortButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(laggTillButton, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(18, 18, 18)
-                .addComponent(tillbakaButton)
-                .addContainerGap(12, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(tillbakaButton))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,6 +270,31 @@ public class Projekt extends javax.swing.JFrame {
         //Den här ska bara vara enabled om man är administratör
     }//GEN-LAST:event_redigeraButtonMouseClicked
 
+    private void initProjektUppgifter(){
+        try {
+            String sqlFraga = "SELECT projektnamn, projektchef, prioritet, startdatum from projekt";
+            projektUppgifter = idb.fetchRows(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    private void displayProjektUppgifter(){
+        //Skapar kolumnerna och namnger dem.
+        DefaultTableModel model = (DefaultTableModel) projektTable.getModel();
+        for(String kolumnNamn : projektUppgifter.getFirst().keySet()){ 
+            model.addColumn(kolumnNamn);
+        }
+        
+        //flyttar kolumnerna rätt.
+        TableColumnModel columnModel = projektTable.getColumnModel();
+        columnModel.moveColumn(2, 0);
+        columnModel.moveColumn(3, 1);
+        
+        //nånting nånting data ska in här
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -300,6 +321,7 @@ public class Projekt extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Projekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
