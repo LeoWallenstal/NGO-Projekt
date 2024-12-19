@@ -56,7 +56,7 @@ public class Meny extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblInloggadAnvandare.setText("jLabel1");
+        lblInloggadAnvandare.setText("namn");
 
         lblValkommen.setText("Välkommen");
 

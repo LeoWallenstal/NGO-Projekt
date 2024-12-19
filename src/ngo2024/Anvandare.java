@@ -7,6 +7,7 @@ package ngo2024;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,10 +18,14 @@ public class Anvandare {
     private final InfDB idb;
     private HashMap<String,String> uppgifter;
     
+    private boolean admin = false;
+    private boolean handlaggare = false;
+    
     public Anvandare(InfDB idb, String aid) {
         this.idb = idb;
         uppgifter = new HashMap<>();
         setUppgifter(aid);
+        setBehorighet(aid);
     }
 
     //Getters 
@@ -64,6 +69,14 @@ public class Anvandare {
         return uppgifter.get("losenord");
     }
     
+    public boolean isAdmin(){
+        return admin;
+    }
+    
+    public boolean isHandlaggare(){
+        return handlaggare;
+    }
+    
 
     //Setters
     private void setUppgifter(String aid) {
@@ -73,7 +86,32 @@ public class Anvandare {
             uppgifter = idb.fetchRow(sqlFraga);
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
-        }
+        } 
+    }
+    
+    private void setBehorighet(String aid){
         
+        String sqlFragaAdmin = "SELECT aid FROM admin";
+        String sqlFragaHandlaggare = "SELECT aid FROM handlaggare";
+        try{
+            ArrayList<String> adminAid = idb.fetchColumn(sqlFragaAdmin);
+            ArrayList<String> handlaggareAid = idb.fetchColumn(sqlFragaHandlaggare);
+            
+            for(String dbAid : adminAid){
+                if(aid.equals(dbAid)){
+                    admin = true;
+                    break;
+                }
+            }
+            for(String dbAid : handlaggareAid){
+                if(aid.equals(dbAid)){
+                    handlaggare = true;
+                    break;
+                }
+            }
+        }
+        catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }
