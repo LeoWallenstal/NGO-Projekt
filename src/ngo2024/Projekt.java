@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Arrays;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -75,7 +74,6 @@ public class Projekt extends javax.swing.JFrame {
         ));
         projektTable.setShowHorizontalLines(true);
         projektTable.setShowVerticalLines(true);
-        projektTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(projektTable);
 
         tillbakaButton.setText("Tillbaka");
@@ -224,6 +222,8 @@ public class Projekt extends javax.swing.JFrame {
                         .addGap(14, 14, 14))))
         );
 
+        getAccessibleContext().setAccessibleName("SDG Sweden - Projekt");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -279,21 +279,42 @@ public class Projekt extends javax.swing.JFrame {
         }
     }
     
-    private void displayProjektUppgifter(){
-        //Skapar kolumnerna och namnger dem.
+    private void displayProjektUppgifter() {
         DefaultTableModel model = (DefaultTableModel) projektTable.getModel();
-        for(String kolumnNamn : projektUppgifter.getFirst().keySet()){ 
-            model.addColumn(kolumnNamn);
+    
+        // Skapa och namnsätta kolumnerna
+        if (model.getColumnCount() == 0) {
+            for (String kolumnNamn : projektUppgifter.getFirst().keySet()) {
+                model.addColumn(kolumnNamn);
+            }
         }
+    
+        // Populera raden med data
+        for (HashMap<String, String> radData : projektUppgifter) {
+            String[] data = new String[model.getColumnCount()]; 
+
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                String kolumnNamn = model.getColumnName(i); 
+                if (radData.containsKey(kolumnNamn)) { // Kolla om kolumnen finns i radData
+                    data[i] = radData.get(kolumnNamn); 
+                }
+            }
+
+            model.addRow(data); 
+        }
+        //Flytta kolumnerna så de sitter rätt.
+        projektTable.moveColumn(2, 0);
+        projektTable.moveColumn(3, 1);
         
-        //flyttar kolumnerna rätt.
-        TableColumnModel columnModel = projektTable.getColumnModel();
-        columnModel.moveColumn(2, 0);
-        columnModel.moveColumn(3, 1);
-        
-        //nånting nånting data ska in här
+        //Förhindrar användare att direkt editera celler.
+        projektTable.setDefaultEditor(Object.class, null);
         
     }
+        
+        
+        
+        
+    
     
     /**
      * @param args the command line arguments
