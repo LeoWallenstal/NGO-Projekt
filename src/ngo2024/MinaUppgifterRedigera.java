@@ -67,6 +67,7 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
         try{
         String avdelningsNamn = idb.fetchSingle(sqlFraga);
         tfAvdelning.setText(avdelningsNamn);
+        tfAvdelning.enable(false);
         }catch(InfException ex){
             System.out.println(ex.getMessage());
         }

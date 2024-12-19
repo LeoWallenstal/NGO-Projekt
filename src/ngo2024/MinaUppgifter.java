@@ -4,6 +4,7 @@
  */
 package ngo2024;
 
+import java.awt.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -22,7 +23,22 @@ public class MinaUppgifter extends javax.swing.JFrame {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
+        setWindowSize();
+        setUppgifter();
         
+    }
+    
+    private void setWindowSize(){
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int windowWidth = (int) (screenSize.width * 0.75);
+        int windowHeight = (int) (screenSize.height * 0.75);
+        int x = (screenSize.width - windowWidth) / 2;
+        int y = (screenSize.height - windowHeight) / 2;
+        setBounds(x, y, windowWidth, windowHeight);
+        setLocationRelativeTo(null);
+    }
+    
+    private void setUppgifter(){
         String fornamn = inloggadAnvandare.getFornamn();
         lblFornamnet.setText(fornamn);
         
@@ -57,7 +73,6 @@ public class MinaUppgifter extends javax.swing.JFrame {
         catch(InfException ex){
             System.out.println(ex.getMessage()); 
         }
-        
     }
 
     /**
