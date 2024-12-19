@@ -2,6 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+//rad194 ska läggas in db ändringar.
+
 package ngo2024;
 
 import oru.inf.InfDB;
@@ -21,6 +23,9 @@ public class AndraLosenord extends javax.swing.JFrame {
         initComponents();
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        setLocationRelativeTo(null);
+        lblFelmeddelandeNyttLosenord.setVisible(false);
+        lblFelmeddelandeOrginalLosenord.setVisible(false);
     }
 
     /**
@@ -32,112 +37,168 @@ public class AndraLosenord extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTidigareLosenord = new javax.swing.JLabel();
+        lblNyttLosenord = new javax.swing.JLabel();
+        lblUpprepaLosenord = new javax.swing.JLabel();
+        tfTidigareLosenord = new javax.swing.JTextField();
+        tfNyttLosenord = new javax.swing.JTextField();
+        tfUpprepaLosenord = new javax.swing.JTextField();
+        btnSparaNyttLosenord = new javax.swing.JButton();
+        btnAvbryt = new javax.swing.JButton();
+        lblFelmeddelandeNyttLosenord = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        lblFelmeddelandeOrginalLosenord = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SDG Sweden - Ändra lösenord");
 
-        jLabel1.setText("Ändra lösenord");
+        lblTidigareLosenord.setText("Tidigare lösenord:");
 
-        jLabel2.setText("Tidigare lösenord:");
+        lblNyttLosenord.setText("Nytt lösenord:");
 
-        jLabel3.setText("Nytt lösenord:");
+        lblUpprepaLosenord.setText("Upprepa nytt lösenord:");
 
-        jLabel4.setText("Upprepa nytt lösenord:");
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        tfTidigareLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                tfTidigareLosenordActionPerformed(evt);
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        tfNyttLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                tfNyttLosenordActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Spara nytt lösenord");
-
-        jButton2.setText("Avbryt");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSparaNyttLosenord.setText("Spara nytt lösenord");
+        btnSparaNyttLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSparaNyttLosenordActionPerformed(evt);
             }
         });
+
+        btnAvbryt.setText("Avbryt");
+        btnAvbryt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvbrytActionPerformed(evt);
+            }
+        });
+
+        lblFelmeddelandeNyttLosenord.setForeground(new java.awt.Color(255, 0, 51));
+        lblFelmeddelandeNyttLosenord.setText("Lösenordet matchar inte!");
+
+        jLabel2.setForeground(new java.awt.Color(255, 0, 51));
+
+        lblFelmeddelandeOrginalLosenord.setForeground(new java.awt.Color(255, 0, 51));
+        lblFelmeddelandeOrginalLosenord.setText("Angivet lösenord är felaktigt!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(151, 151, 151))
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(64, 64, 64))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblTidigareLosenord)
+                            .addComponent(lblNyttLosenord)
+                            .addComponent(lblUpprepaLosenord))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfTidigareLosenord, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                            .addComponent(tfNyttLosenord)
+                            .addComponent(tfUpprepaLosenord)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(lblFelmeddelandeNyttLosenord)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFelmeddelandeOrginalLosenord)
+                            .addComponent(jLabel2))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(btnAvbryt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addComponent(btnSparaNyttLosenord)
+                .addGap(62, 62, 62))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel1)
+                .addGap(67, 67, 67)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTidigareLosenord)
+                    .addComponent(tfTidigareLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(4, 4, 4)
+                .addComponent(lblFelmeddelandeOrginalLosenord)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNyttLosenord)
+                    .addComponent(tfNyttLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUpprepaLosenord)
+                    .addComponent(tfUpprepaLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(lblFelmeddelandeNyttLosenord)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(60, Short.MAX_VALUE))
+                    .addComponent(btnAvbryt)
+                    .addComponent(btnSparaNyttLosenord))
+                .addGap(41, 41, 41))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void tfNyttLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNyttLosenordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_tfNyttLosenordActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void tfTidigareLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTidigareLosenordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_tfTidigareLosenordActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnAvbrytActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvbrytActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAvbrytActionPerformed
+
+    private void btnSparaNyttLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaNyttLosenordActionPerformed
+        lblFelmeddelandeOrginalLosenord.setVisible(false);
+        lblFelmeddelandeNyttLosenord.setVisible(false);
+        String losenord = inloggadAnvandare.getLosenord();
+        String angivetLosenord = tfTidigareLosenord.getText();
+        if(losenord.equals(angivetLosenord)){
+            String nyttLosenord1 = tfNyttLosenord.getText();
+            String nyttLosenord2 = tfUpprepaLosenord.getText();
+            if(!nyttLosenord1.isEmpty() && !nyttLosenord2.isEmpty()){ 
+                if(nyttLosenord1.equals(nyttLosenord2)){
+                   //ska ändra i db
+                    this.setVisible(false); }
+                else{
+                    lblFelmeddelandeNyttLosenord.setText("Lösenordet matchar inte!");
+                    lblFelmeddelandeNyttLosenord.setVisible(true);
+                }
+            }
+            else{
+                lblFelmeddelandeNyttLosenord.setText("Fyll i alla fält!");
+                lblFelmeddelandeNyttLosenord.setVisible(true);
+            }
+        }
+        else {
+            lblFelmeddelandeOrginalLosenord.setVisible(true);
+        }
+    }//GEN-LAST:event_btnSparaNyttLosenordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,14 +236,17 @@ public class AndraLosenord extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnAvbryt;
+    private javax.swing.JButton btnSparaNyttLosenord;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lblFelmeddelandeNyttLosenord;
+    private javax.swing.JLabel lblFelmeddelandeOrginalLosenord;
+    private javax.swing.JLabel lblNyttLosenord;
+    private javax.swing.JLabel lblTidigareLosenord;
+    private javax.swing.JLabel lblUpprepaLosenord;
+    private javax.swing.JTextField tfNyttLosenord;
+    private javax.swing.JTextField tfTidigareLosenord;
+    private javax.swing.JTextField tfUpprepaLosenord;
     // End of variables declaration//GEN-END:variables
 }
