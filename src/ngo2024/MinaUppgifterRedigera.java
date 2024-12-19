@@ -18,6 +18,11 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private String orginalFornamn;
+    private String orginalEfternamn;
+    private String orginalAdress;
+    private String orginalEpost;
+    private String orginalTelefonnummer;
     
     /**
      * Creates new form MinaUppgifterRedigera
@@ -28,6 +33,11 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
         initComponents();
         setWindowSize();
         setUppgifter();
+        orginalFornamn = tfFornamn.getText();
+        orginalEfternamn = tfEfternamn.getText();
+        orginalAdress = tfAdress.getText();
+        orginalEpost = tfEpost.getText();
+        orginalTelefonnummer = tfTelefonnr.getText();
         
     }
     
@@ -90,7 +100,7 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
         tfTelefonnr = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         tfAID = new javax.swing.JTextField();
-        btnAndraUppgifter = new javax.swing.JButton();
+        btnSparaNyaUppgifter = new javax.swing.JButton();
         tfAnstallningsdatum = new javax.swing.JTextField();
         tfAvdelning = new javax.swing.JTextField();
         btnTillbaka = new javax.swing.JButton();
@@ -119,14 +129,19 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
 
         jLabel4.setText("Avdelning:");
 
-        btnAndraUppgifter.setText("Spara uppgifter");
-        btnAndraUppgifter.addActionListener(new java.awt.event.ActionListener() {
+        btnSparaNyaUppgifter.setText("Spara uppgifter");
+        btnSparaNyaUppgifter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAndraUppgifterActionPerformed(evt);
+                btnSparaNyaUppgifterActionPerformed(evt);
             }
         });
 
         btnTillbaka.setText("Gå tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
 
         lblFornamn.setText("Förnamn:");
 
@@ -162,7 +177,7 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTillbaka)
                         .addGap(22, 22, 22)
-                        .addComponent(btnAndraUppgifter))
+                        .addComponent(btnSparaNyaUppgifter))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
@@ -229,7 +244,7 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
-                    .addComponent(btnAndraUppgifter))
+                    .addComponent(btnSparaNyaUppgifter))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -240,9 +255,58 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfLosenordActionPerformed
 
-    private void btnAndraUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraUppgifterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAndraUppgifterActionPerformed
+    private void btnSparaNyaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaNyaUppgifterActionPerformed
+        //metod för att ändra uppgifter
+        boolean formatKorrekt = true;
+        
+        if(Validerare.arBokstaver(tfFornamn.getText())){
+            //andring i databas av fornamn
+        }
+        else{
+            //felmeddelande, endast bokstäver
+            formatKorrekt = false;
+            System.out.println("fel");
+        }
+        if(Validerare.arBokstaver(tfEfternamn.getText())){
+            //andring i databas av efternamn
+        }
+        else{
+            //felmeddelande, endast bokstäver
+            formatKorrekt = false;
+            System.out.println("fel");
+        }
+        if(Validerare.arAdress(tfAdress.getText())){
+            //andring i databas av adress
+        }
+        else{
+            formatKorrekt = false;
+            //följ detta format ...
+            System.out.println("fel");
+            
+        }
+        if(Validerare.arEpostAdress(tfEpost.getText())){
+            //andring av epost i db
+        }
+        else{
+            formatKorrekt = false;
+            //felmeddelande om att följa format
+            System.out.println("fel");
+        }
+        if(Validerare.arTelefonnummer(tfTelefonnr.getText())){
+            //andring av tfnr i db
+        }
+        else{
+            formatKorrekt = false;
+            //felmeddelande om att följa format
+            System.out.println("fel");
+        }
+    
+    if(formatKorrekt){
+        this.setVisible(false);
+        new MinaUppgifter(idb, inloggadAnvandare).setVisible(true);
+    }
+        
+    }//GEN-LAST:event_btnSparaNyaUppgifterActionPerformed
 
     private void tfFornamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFornamnActionPerformed
         // TODO add your handling code here:
@@ -251,6 +315,34 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
     private void tfAdressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAdressActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfAdressActionPerformed
+
+    private boolean harOsparadeAndringar(){
+        if(!orginalFornamn.equals(tfFornamn.getText())){
+            return true;
+        }
+        if(!orginalEfternamn.equals(tfEfternamn.getText())){
+            return true;
+        }
+        if(!orginalAdress.equals(tfAdress.getText())){
+            return true;
+        }
+        if(!orginalEpost.equals(tfEpost.getText())){
+            return true;
+        }
+        if(!orginalTelefonnummer.equals(tfTelefonnr.getText())){
+            return true;
+        }
+        return false;
+    }
+    
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        if(harOsparadeAndringar()){
+            new OsparadeAndringar(idb, inloggadAnvandare).setVisible(true);
+        }
+        else {
+            new MinaUppgifter(idb,inloggadAnvandare).setVisible(true);
+        }
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,7 +380,7 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAndraUppgifter;
+    private javax.swing.JButton btnSparaNyaUppgifter;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

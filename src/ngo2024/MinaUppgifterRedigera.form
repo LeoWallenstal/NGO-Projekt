@@ -29,7 +29,7 @@
                   <Group type="102" attributes="0">
                       <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                      <Component id="btnAndraUppgifter" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnSparaNyaUppgifter" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -112,7 +112,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnAndraUppgifter" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnSparaNyaUppgifter" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
@@ -144,12 +144,12 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfAID">
     </Component>
-    <Component class="javax.swing.JButton" name="btnAndraUppgifter">
+    <Component class="javax.swing.JButton" name="btnSparaNyaUppgifter">
       <Properties>
         <Property name="text" type="java.lang.String" value="Spara uppgifter"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAndraUppgifterActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSparaNyaUppgifterActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfAnstallningsdatum">
@@ -160,6 +160,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="G&#xe5; tillbaka"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTillbakaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFornamn">
       <Properties>
