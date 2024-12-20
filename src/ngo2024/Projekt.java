@@ -33,7 +33,8 @@ public class Projekt extends javax.swing.JFrame {
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;     
         initKolumner(); //Skapar och namnsätter kolumner
-        visaAllaProjekt();
+        ArrayList<HashMap<String, String>> uppgifter = hamtaAllaProjekt();
+        visaData(uppgifter);
     }
 
     /**
@@ -286,17 +287,20 @@ public class Projekt extends javax.swing.JFrame {
 
     private void avdelningensProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avdelningensProjektButtonMouseClicked
         rensaDataFonster();
-        visaAvdelningensProjekt();
+        ArrayList<HashMap<String, String>> uppgifter = hamtaAvdelningensProjekt();
+        visaData(uppgifter);
     }//GEN-LAST:event_avdelningensProjektButtonMouseClicked
 
     private void allaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allaProjektButtonMouseClicked
         rensaDataFonster();
-        visaAllaProjekt();
+        ArrayList<HashMap<String, String>> uppgifter = hamtaAllaProjekt();
+        visaData(uppgifter);
     }//GEN-LAST:event_allaProjektButtonMouseClicked
 
     private void minaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minaProjektButtonMouseClicked
         rensaDataFonster();
-        visaMinaProjekt();
+        ArrayList<HashMap<String, String>> uppgifter = hamtaMinaProjekt();
+        visaData(uppgifter);
     }//GEN-LAST:event_minaProjektButtonMouseClicked
 
     private void initKolumner(){
@@ -312,6 +316,49 @@ public class Projekt extends javax.swing.JFrame {
         //Flytta kolumnerna så de sitter rätt.
         projektTable.moveColumn(2, 0);
         projektTable.moveColumn(3, 1);
+        
+        projektTable.setDefaultEditor(Object.class, null);
+    }
+    
+    private void visaData(ArrayList<HashMap<String, String>> projektUppgifter) {
+        
+        DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
+    
+        // Populera raden med data
+        for (HashMap<String, String> enRad : projektUppgifter) {
+            String[] data = new String[tabell.getColumnCount()]; 
+
+            for (int i = 0; i < tabell.getColumnCount(); i++) {
+                String kolumnNamn = tabell.getColumnName(i); 
+                
+                if(tabell.getColumnName(i).equals("projektchef")){
+                    int projektchefID = Integer.parseInt(enRad.get(kolumnNamn));
+                    
+                    String sqlFornamn = "SELECT fornamn from projekt "
+                                      + "JOIN ans_proj on projektchef = aid "
+                                      + "JOIN anstalld on ans_proj.aid = anstalld.aid "
+                                      + "WHERE anstalld.aid = " + projektchefID;
+                    
+                    String sqlEfternamn = "SELECT efternamn from projekt "
+                                      + "JOIN ans_proj on projektchef = aid "
+                                      + "JOIN anstalld on ans_proj.aid = anstalld.aid "
+                                      + "WHERE anstalld.aid = " + projektchefID;
+                    try{
+                        String fornamn = idb.fetchSingle(sqlFornamn);
+                        String efternamn = idb.fetchSingle(sqlEfternamn);
+                        if(fornamn != null && efternamn != null){
+                            data[i] = fornamn + " " + efternamn;
+                        }
+                    } catch (InfException ex) {
+                    System.out.println(ex.getMessage());
+                    }
+                }
+                else{
+                    data[i] = enRad.get(kolumnNamn); 
+                }
+            }
+            tabell.addRow(data); 
+        }
     }
     
     private ArrayList<HashMap<String, String>> hamtaAllaProjekt(){
@@ -326,29 +373,6 @@ public class Projekt extends javax.swing.JFrame {
         return projektUppgifter;
     }
     
-    private void visaAllaProjekt() {
-        ArrayList<HashMap<String, String>> projektUppgifter = hamtaAllaProjekt();
-        
-        DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
-    
-        // Populera raden med data
-        for (HashMap<String, String> radData : projektUppgifter) {
-            String[] data = new String[tabell.getColumnCount()]; 
-
-            for (int i = 0; i < tabell.getColumnCount(); i++) {
-                String kolumnNamn = tabell.getColumnName(i); 
-                if (radData.containsKey(kolumnNamn)) { // Kolla om kolumnen finns i radData
-                    data[i] = radData.get(kolumnNamn); 
-                }
-            }
-
-            tabell.addRow(data); 
-        }
-        
-        //Förhindrar användare att direkt editera celler.
-        projektTable.setDefaultEditor(Object.class, null); 
-    }
-    
     private ArrayList<HashMap<String, String>> hamtaAvdelningensProjekt(){
         ArrayList<HashMap<String, String>> projektUppgifter = new ArrayList<>();
         
@@ -361,8 +385,6 @@ public class Projekt extends javax.swing.JFrame {
                 + "JOIN avdelning on anstalld.avdelning = avdelning.avdid "
                 + "WHERE avdelning.avdid = " + inloggadAnvandare.getAvdelningsId() + " "
                 + "GROUP BY projektnamn, projektchef, startdatum, prioritet ";
-            System.out.println("SQL-fråga: " + sqlFraga);
-            //System.out.println("Data från databasen: " + projektUppgifter);
             projektUppgifter = idb.fetchRows(sqlFraga);
             
             
@@ -371,28 +393,6 @@ public class Projekt extends javax.swing.JFrame {
         }
         
         return projektUppgifter;
-    }
-    
-    private void visaAvdelningensProjekt(){
-        ArrayList<HashMap<String, String>> projektUppgifter = hamtaAvdelningensProjekt();
-        
-        DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
-    
-        // Populera raden med data
-        for (HashMap<String, String> radData : projektUppgifter) {
-            String[] data = new String[tabell.getColumnCount()]; 
-
-            for (int i = 0; i < tabell.getColumnCount(); i++) {
-                String kolumnNamn = tabell.getColumnName(i); 
-                if (radData.containsKey(kolumnNamn)) { // Kolla om kolumnen finns i radData
-                    data[i] = radData.get(kolumnNamn); 
-                }
-            }
-            tabell.addRow(data); 
-        }
-
-        //Förhindrar användare att direkt editera celler.
-        projektTable.setDefaultEditor(Object.class, null); 
     }
     
     private ArrayList<HashMap<String, String>> hamtaMinaProjekt(){
@@ -400,37 +400,18 @@ public class Projekt extends javax.swing.JFrame {
         
         try {
             String sqlFraga = 
-                  "SELECT "; // här ska mer kod in
-            projektUppgifter = idb.fetchRows(sqlFraga);
-            
-            
+                  "SELECT projektnamn, projektchef, startdatum, prioritet from projekt "
+                + "JOIN ans_proj on projekt.pid = ans_proj.pid "
+                + "JOIN anstalld on ans_proj.aid = anstalld.aid "
+                + "WHERE ans_proj.aid = " + inloggadAnvandare.getAnstallningsId() + " "
+                + "OR projektchef = " + inloggadAnvandare.getAnstallningsId() + " "
+                + "GROUP BY projektnamn, projektchef, startdatum, prioritet";
+            projektUppgifter = idb.fetchRows(sqlFraga);     
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
         
         return projektUppgifter;
-    }
-    
-    private void visaMinaProjekt(){
-        ArrayList<HashMap<String, String>> projektUppgifter = hamtaMinaProjekt();
-        
-        DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
-    
-        // Populera raden med data
-        for (HashMap<String, String> radData : projektUppgifter) {
-            String[] data = new String[tabell.getColumnCount()]; 
-
-            for (int i = 0; i < tabell.getColumnCount(); i++) {
-                String kolumnNamn = tabell.getColumnName(i); 
-                if (radData.containsKey(kolumnNamn)) { // Kolla om kolumnen finns i radData
-                    data[i] = radData.get(kolumnNamn); 
-                }
-            }
-            tabell.addRow(data); 
-        }
-
-        //Förhindrar användare att direkt editera celler.
-        projektTable.setDefaultEditor(Object.class, null);
     }
     
     private void rensaDataFonster(){
