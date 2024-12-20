@@ -46,6 +46,7 @@ public class Inloggning extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SDG Sweden - Inloggning");
 
         lblEPost.setText("E-Post");
 

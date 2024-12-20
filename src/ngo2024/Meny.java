@@ -73,6 +73,7 @@ public class Meny extends javax.swing.JFrame {
         tpMalInfoText = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SDG Sweden - Start");
         setMinimumSize(new java.awt.Dimension(1020, 576));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

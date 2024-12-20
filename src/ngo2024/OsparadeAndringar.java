@@ -38,7 +38,7 @@ public class OsparadeAndringar extends javax.swing.JFrame {
         btnFortsattTillMinaUppgifter = new javax.swing.JButton();
         lblFraga = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SDG Sweden - Osparade ändringar");
 
         lblOsparat.setText("Du har osparade ändringar!");
 

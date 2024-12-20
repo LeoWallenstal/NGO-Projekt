@@ -56,6 +56,7 @@ public class Avdelning extends javax.swing.JFrame {
         btnTillbaka = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SDG Sweden - Min avdelning");
         setMinimumSize(new java.awt.Dimension(1020, 576));
         setPreferredSize(new java.awt.Dimension(1020, 576));
 
