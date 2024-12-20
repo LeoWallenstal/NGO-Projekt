@@ -85,7 +85,7 @@ public class MalInfo extends javax.swing.JFrame {
                     pbPrioritet.setForeground(Color.GREEN);
                     break;
             }
-            
+            this.setTitle("SDG Sweden - " + malNamn);
         }catch(InfException ex){
             System.out.println(ex.getMessage());
         }

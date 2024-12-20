@@ -111,6 +111,7 @@ public class MinaUppgifter extends javax.swing.JFrame {
         jLabel5.setText("jLabel5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SDG Sweden - Mina uppgifter");
 
         lblFornamn.setText("Förnamn:");
 
@@ -142,7 +143,12 @@ public class MinaUppgifter extends javax.swing.JFrame {
             }
         });
 
-        btnTillbaka.setText("Gå tillbaka");
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTillbakaMouseClicked(evt);
+            }
+        });
 
         jLabel6.setText("Adress:");
 
@@ -167,40 +173,41 @@ public class MinaUppgifter extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(btnTillbaka)
-                .addGap(28, 28, 28)
-                .addComponent(btnAndraLosenord)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(btnAndraUppgifter)
-                .addGap(14, 14, 14))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(lblLosenord)
-                    .addComponent(lblEpost)
-                    .addComponent(jLabel6)
-                    .addComponent(lblEfternamn)
-                    .addComponent(lblFornamn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblFornamnet, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addComponent(btnTillbaka)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnAndraLosenord)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAndraUppgifter))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(lblLosenord)
+                            .addComponent(lblEpost)
+                            .addComponent(jLabel6)
+                            .addComponent(lblEfternamn)
+                            .addComponent(lblFornamn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7))
-                    .addComponent(lblEfternamnet)
-                    .addComponent(lblAdressen)
-                    .addComponent(lblEposten)
-                    .addComponent(lblLosenordet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTelefonnummer)
-                    .addComponent(lblAnsID)
-                    .addComponent(lblAnstDatum)
-                    .addComponent(lblAvdelningen))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblFornamnet, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7))
+                            .addComponent(lblEfternamnet)
+                            .addComponent(lblAdressen)
+                            .addComponent(lblEposten)
+                            .addComponent(lblLosenordet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTelefonnummer)
+                            .addComponent(lblAnsID)
+                            .addComponent(lblAnstDatum)
+                            .addComponent(lblAvdelningen))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,6 +268,11 @@ public class MinaUppgifter extends javax.swing.JFrame {
     private void btnAndraLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraLosenordActionPerformed
         new AndraLosenord(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnAndraLosenordActionPerformed
+
+    private void btnTillbakaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTillbakaMouseClicked
+        new Meny(idb, inloggadAnvandare).setVisible(true);
+                this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaMouseClicked
 
     /**
      * @param args the command line arguments

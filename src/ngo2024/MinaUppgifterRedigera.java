@@ -116,6 +116,7 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
         tfEpost = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SDG Sweden - Ändra uppgifter");
 
         jLabel2.setText("AnställningsID:");
 
