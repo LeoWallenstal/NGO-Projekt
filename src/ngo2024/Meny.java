@@ -71,6 +71,7 @@ public class Meny extends javax.swing.JFrame {
         btnMal_12 = new javax.swing.JButton();
         btnMal_17 = new javax.swing.JButton();
         tpMalInfoText = new javax.swing.JTextPane();
+        loggaUtButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Start");
@@ -288,6 +289,19 @@ public class Meny extends javax.swing.JFrame {
         tpMalInfoText.setOpaque(false);
         getContentPane().add(tpMalInfoText, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 140, 320, 90));
 
+        loggaUtButton.setText("Logga ut");
+        loggaUtButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loggaUtButtonMouseClicked(evt);
+            }
+        });
+        loggaUtButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loggaUtButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(loggaUtButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -392,6 +406,15 @@ public class Meny extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnAvdelningActionPerformed
 
+    private void loggaUtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggaUtButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loggaUtButtonActionPerformed
+
+    private void loggaUtButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loggaUtButtonMouseClicked
+        new Inloggning(idb).setVisible(true);
+                this.setVisible(false);
+    }//GEN-LAST:event_loggaUtButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -451,6 +474,7 @@ public class Meny extends javax.swing.JFrame {
     private javax.swing.JButton btnUppgifter;
     private javax.swing.JLabel lblInloggadAnvandare;
     private javax.swing.JLabel lblValkommen;
+    private javax.swing.JButton loggaUtButton;
     private javax.swing.JTextPane tpMalInfoText;
     // End of variables declaration//GEN-END:variables
 }
