@@ -330,7 +330,6 @@ public class Projekt extends javax.swing.JFrame {
         ArrayList<HashMap<String, String>> projektUppgifter = hamtaAllaProjekt();
         
         DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
-        //initKolumner();
     
         // Populera raden med data
         for (HashMap<String, String> radData : projektUppgifter) {
@@ -401,9 +400,7 @@ public class Projekt extends javax.swing.JFrame {
         
         try {
             String sqlFraga = 
-                  "SELECT ";
-            System.out.println("SQL-fråga: " + sqlFraga);
-            //System.out.println("Data från databasen: " + projektUppgifter);
+                  "SELECT " // här ska mer kod in
             projektUppgifter = idb.fetchRows(sqlFraga);
             
             
