@@ -93,6 +93,11 @@ public class Meny extends javax.swing.JFrame {
         getContentPane().add(btnUppgifter, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 130, -1));
 
         btnAvdelning.setText("Min avdelning");
+        btnAvdelning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvdelningActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAvdelning, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 130, -1));
 
         btnProjekt.setText("Projekt");
@@ -379,6 +384,12 @@ public class Meny extends javax.swing.JFrame {
         // TODO add your handling code here:
         new MalInfo(idb,17).setVisible(true);
     }//GEN-LAST:event_btnMal_17ActionPerformed
+
+    private void btnAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvdelningActionPerformed
+        // TODO add your handling code here:
+        new Avdelning(idb,inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAvdelningActionPerformed
 
     /**
      * @param args the command line arguments
