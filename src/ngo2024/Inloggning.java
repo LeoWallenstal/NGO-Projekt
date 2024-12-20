@@ -28,6 +28,29 @@ public class Inloggning extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
+    private void login(String ePost,String losenord){
+      
+        try{
+            String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost+"'";
+            //System.out.println(sqlFraga);
+            String dbLosenord = idb.fetchSingle(sqlFraga);
+            if (losenord.equals(dbLosenord)){
+                sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + ePost + "'";
+                String anstallningsId = idb.fetchSingle(sqlFraga);
+                Anvandare inloggadAnvandare = new Anvandare(idb, anstallningsId);
+                new Meny(idb, inloggadAnvandare).setVisible(true);
+                this.setVisible(false);
+            }
+            else{
+                lblFelmeddelande.setVisible(true);
+            }
+            
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,6 +67,9 @@ public class Inloggning extends javax.swing.JFrame {
         tfLosenord = new javax.swing.JTextField();
         btnLoggaIn = new javax.swing.JButton();
         lblLogo = new javax.swing.JLabel();
+        btnAdmin = new javax.swing.JButton();
+        btnHandlaggare = new javax.swing.JButton();
+        btnAnstalld = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Inloggning");
@@ -79,6 +105,27 @@ public class Inloggning extends javax.swing.JFrame {
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/foretagLogga.png"))); // NOI18N
 
+        btnAdmin.setText("Admin");
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
+
+        btnHandlaggare.setText("Handläggare");
+        btnHandlaggare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHandlaggareActionPerformed(evt);
+            }
+        });
+
+        btnAnstalld.setText("Anställd");
+        btnAnstalld.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnstalldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,6 +149,14 @@ public class Inloggning extends javax.swing.JFrame {
                         .addGap(124, 124, 124)
                         .addComponent(lblLogo)))
                 .addContainerGap(113, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(btnAdmin)
+                .addGap(57, 57, 57)
+                .addComponent(btnHandlaggare)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAnstalld)
+                .addGap(44, 44, 44))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +175,12 @@ public class Inloggning extends javax.swing.JFrame {
                 .addComponent(lblFelmeddelande)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLoggaIn)
-                .addGap(75, 75, 75))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdmin)
+                    .addComponent(btnHandlaggare)
+                    .addComponent(btnAnstalld))
+                .addGap(34, 34, 34))
         );
 
         pack();
@@ -138,27 +198,24 @@ public class Inloggning extends javax.swing.JFrame {
         
         String ePost = tfEPost.getText();
         String losenord = tfLosenord.getText();
-        
-        try{
-            String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost+"'";
-            //System.out.println(sqlFraga);
-            String dbLosenord = idb.fetchSingle(sqlFraga);
-            if (losenord.equals(dbLosenord)){
-                sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + ePost + "'";
-                String anstallningsId = idb.fetchSingle(sqlFraga);
-                Anvandare inloggadAnvandare = new Anvandare(idb, anstallningsId);
-                new Meny(idb, inloggadAnvandare).setVisible(true);
-                this.setVisible(false);
-            }
-            else{
-                lblFelmeddelande.setVisible(true);
-            }
-            
-        }catch(InfException ex){
-            System.out.println(ex.getMessage());
-        }
+        login(ePost,losenord);
         
     }//GEN-LAST:event_btnLoggaInActionPerformed
+
+    private void btnAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnstalldActionPerformed
+        // TODO add your handling code here:
+        login("emily.c@example.com","password123");
+    }//GEN-LAST:event_btnAnstalldActionPerformed
+
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        // TODO add your handling code here:
+        login("muhammad.a@example.com","password456");
+    }//GEN-LAST:event_btnAdminActionPerformed
+
+    private void btnHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlaggareActionPerformed
+        // TODO add your handling code here:
+        login("luis.m@example.com","passwordabc");
+    }//GEN-LAST:event_btnHandlaggareActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,6 +253,9 @@ public class Inloggning extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdmin;
+    private javax.swing.JButton btnAnstalld;
+    private javax.swing.JButton btnHandlaggare;
     private javax.swing.JButton btnLoggaIn;
     private javax.swing.JLabel lblEPost;
     private javax.swing.JLabel lblFelmeddelande;
