@@ -400,7 +400,7 @@ public class Projekt extends javax.swing.JFrame {
         
         try {
             String sqlFraga = 
-                  "SELECT " // här ska mer kod in
+                  "SELECT "; // här ska mer kod in
             projektUppgifter = idb.fetchRows(sqlFraga);
             
             
