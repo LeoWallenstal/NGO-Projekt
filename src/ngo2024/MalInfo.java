@@ -111,8 +111,6 @@ public class MalInfo extends javax.swing.JFrame {
         lblPrioritet = new javax.swing.JLabel();
         pbPrioritet = new javax.swing.JProgressBar();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         lblMalIkon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/01-ingen-fattigdom.png"))); // NOI18N
 
         btnStang.setText("Stäng");
