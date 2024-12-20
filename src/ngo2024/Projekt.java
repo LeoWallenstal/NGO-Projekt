@@ -24,7 +24,6 @@ public class Projekt extends javax.swing.JFrame {
 
     private Anvandare inloggadAnvandare;
     private InfDB idb;
-    private ArrayList<HashMap<String, String>> projektUppgifter;
     
     /**
      * Creates new form Projekt
@@ -32,9 +31,9 @@ public class Projekt extends javax.swing.JFrame {
     public Projekt(InfDB idb, Anvandare inloggadAnvandare) {
         initComponents();
         this.inloggadAnvandare = inloggadAnvandare;
-        this.idb = idb;
-        initProjektUppgifter();      
-        displayProjektUppgifter();
+        this.idb = idb;     
+        initKolumner(); //Skapar och namnsätter kolumner
+        visaAllaProjekt();
     }
 
     /**
@@ -113,6 +112,11 @@ public class Projekt extends javax.swing.JFrame {
         statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Alla", "Pågående", "Pausade", "Avslutade" }));
 
         allaProjektButton.setText("Alla projekt");
+        allaProjektButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                allaProjektButtonMouseClicked(evt);
+            }
+        });
         allaProjektButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 allaProjektButtonActionPerformed(evt);
@@ -120,8 +124,18 @@ public class Projekt extends javax.swing.JFrame {
         });
 
         avdelningensProjektButton.setText("Avdelningens projekt");
+        avdelningensProjektButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                avdelningensProjektButtonMouseClicked(evt);
+            }
+        });
 
         minaProjektButton.setText("Mina projekt");
+        minaProjektButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minaProjektButtonMouseClicked(evt);
+            }
+        });
 
         laggTillButton.setText("Lägg till projekt");
         laggTillButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -238,7 +252,7 @@ public class Projekt extends javax.swing.JFrame {
 
     private void sokfaltKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sokfaltKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            // some code
+            
         }
     }//GEN-LAST:event_sokfaltKeyPressed
 
@@ -270,48 +284,168 @@ public class Projekt extends javax.swing.JFrame {
         //Den här ska bara vara enabled om man är administratör
     }//GEN-LAST:event_redigeraButtonMouseClicked
 
-    private void initProjektUppgifter(){
+    private void avdelningensProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avdelningensProjektButtonMouseClicked
+        rensaDataFonster();
+        visaAvdelningensProjekt();
+    }//GEN-LAST:event_avdelningensProjektButtonMouseClicked
+
+    private void allaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allaProjektButtonMouseClicked
+        rensaDataFonster();
+        visaAllaProjekt();
+    }//GEN-LAST:event_allaProjektButtonMouseClicked
+
+    private void minaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minaProjektButtonMouseClicked
+        rensaDataFonster();
+        visaMinaProjekt();
+    }//GEN-LAST:event_minaProjektButtonMouseClicked
+
+    private void initKolumner(){
+        ArrayList<HashMap<String, String>> projektUppgifter = hamtaAllaProjekt();
+        DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
+        
+        // Skapa och namnsätta kolumnerna
+        if (tabell.getColumnCount() == 0) {
+            for (String kolumnNamn : projektUppgifter.getFirst().keySet()) {
+                tabell.addColumn(kolumnNamn);
+            }
+        }
+        //Flytta kolumnerna så de sitter rätt.
+        projektTable.moveColumn(2, 0);
+        projektTable.moveColumn(3, 1);
+    }
+    
+    private ArrayList<HashMap<String, String>> hamtaAllaProjekt(){
+        ArrayList<HashMap<String, String>> projektUppgifter = new ArrayList<>();
+        
         try {
             String sqlFraga = "SELECT projektnamn, projektchef, prioritet, startdatum from projekt";
             projektUppgifter = idb.fetchRows(sqlFraga);
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
+        return projektUppgifter;
     }
     
-    private void displayProjektUppgifter() {
-        DefaultTableModel model = (DefaultTableModel) projektTable.getModel();
-    
-        // Skapa och namnsätta kolumnerna
-        if (model.getColumnCount() == 0) {
-            for (String kolumnNamn : projektUppgifter.getFirst().keySet()) {
-                model.addColumn(kolumnNamn);
-            }
-        }
+    private void visaAllaProjekt() {
+        ArrayList<HashMap<String, String>> projektUppgifter = hamtaAllaProjekt();
+        
+        DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
+        //initKolumner();
     
         // Populera raden med data
         for (HashMap<String, String> radData : projektUppgifter) {
-            String[] data = new String[model.getColumnCount()]; 
+            String[] data = new String[tabell.getColumnCount()]; 
 
-            for (int i = 0; i < model.getColumnCount(); i++) {
-                String kolumnNamn = model.getColumnName(i); 
+            for (int i = 0; i < tabell.getColumnCount(); i++) {
+                String kolumnNamn = tabell.getColumnName(i); 
                 if (radData.containsKey(kolumnNamn)) { // Kolla om kolumnen finns i radData
                     data[i] = radData.get(kolumnNamn); 
                 }
             }
 
-            model.addRow(data); 
+            tabell.addRow(data); 
         }
-        //Flytta kolumnerna så de sitter rätt.
-        projektTable.moveColumn(2, 0);
-        projektTable.moveColumn(3, 1);
         
         //Förhindrar användare att direkt editera celler.
-        projektTable.setDefaultEditor(Object.class, null);
-        
+        projektTable.setDefaultEditor(Object.class, null); 
     }
+    
+    private ArrayList<HashMap<String, String>> hamtaAvdelningensProjekt(){
+        ArrayList<HashMap<String, String>> projektUppgifter = new ArrayList<>();
         
+        try {
+            String sqlFraga = 
+                  "SELECT projektnamn, projektchef, startdatum,  prioritet "
+                + "FROM projekt "
+                + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
+                + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
+                + "JOIN avdelning on anstalld.avdelning = avdelning.avdid "
+                + "WHERE avdelning.avdid = " + inloggadAnvandare.getAvdelningsId() + " "
+                + "GROUP BY projektnamn, projektchef, startdatum, prioritet ";
+            System.out.println("SQL-fråga: " + sqlFraga);
+            //System.out.println("Data från databasen: " + projektUppgifter);
+            projektUppgifter = idb.fetchRows(sqlFraga);
+            
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
         
+        return projektUppgifter;
+    }
+    
+    private void visaAvdelningensProjekt(){
+        ArrayList<HashMap<String, String>> projektUppgifter = hamtaAvdelningensProjekt();
+        
+        DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
+    
+        // Populera raden med data
+        for (HashMap<String, String> radData : projektUppgifter) {
+            String[] data = new String[tabell.getColumnCount()]; 
+
+            for (int i = 0; i < tabell.getColumnCount(); i++) {
+                String kolumnNamn = tabell.getColumnName(i); 
+                if (radData.containsKey(kolumnNamn)) { // Kolla om kolumnen finns i radData
+                    data[i] = radData.get(kolumnNamn); 
+                }
+            }
+            tabell.addRow(data); 
+        }
+
+        //Förhindrar användare att direkt editera celler.
+        projektTable.setDefaultEditor(Object.class, null); 
+    }
+    
+    private ArrayList<HashMap<String, String>> hamtaMinaProjekt(){
+        ArrayList<HashMap<String, String>> projektUppgifter = new ArrayList<>();
+        
+        try {
+            String sqlFraga = 
+                  "SELECT ";
+            System.out.println("SQL-fråga: " + sqlFraga);
+            //System.out.println("Data från databasen: " + projektUppgifter);
+            projektUppgifter = idb.fetchRows(sqlFraga);
+            
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        return projektUppgifter;
+    }
+    
+    private void visaMinaProjekt(){
+        ArrayList<HashMap<String, String>> projektUppgifter = hamtaMinaProjekt();
+        
+        DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
+    
+        // Populera raden med data
+        for (HashMap<String, String> radData : projektUppgifter) {
+            String[] data = new String[tabell.getColumnCount()]; 
+
+            for (int i = 0; i < tabell.getColumnCount(); i++) {
+                String kolumnNamn = tabell.getColumnName(i); 
+                if (radData.containsKey(kolumnNamn)) { // Kolla om kolumnen finns i radData
+                    data[i] = radData.get(kolumnNamn); 
+                }
+            }
+            tabell.addRow(data); 
+        }
+
+        //Förhindrar användare att direkt editera celler.
+        projektTable.setDefaultEditor(Object.class, null);
+    }
+    
+    private void rensaDataFonster(){
+        DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
+        
+        //Tar bort datan............?
+        tabell.getDataVector().clear();
+        
+        //Tar bort datan från fönstret också.
+        projektTable.repaint();
+        
+    };
         
         
     
