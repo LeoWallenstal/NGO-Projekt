@@ -8,8 +8,6 @@ import java.awt.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
-
-
 /**
  *
  * @author walle
@@ -38,6 +36,11 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
         orginalAdress = tfAdress.getText();
         orginalEpost = tfEpost.getText();
         orginalTelefonnummer = tfTelefonnr.getText();
+        lblFornamnFelM.setVisible(false);
+        lblEfternamnFelM.setVisible(false);
+        lblAdressFelM.setVisible(false);
+        lblEpostFelM.setVisible(false);
+        lblTelefonNrFelM.setVisible(false);
         
     }
     
@@ -114,6 +117,11 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
         tfAdress = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         tfEpost = new javax.swing.JTextField();
+        lblFornamnFelM = new javax.swing.JLabel();
+        lblEfternamnFelM = new javax.swing.JLabel();
+        lblAdressFelM = new javax.swing.JLabel();
+        lblEpostFelM = new javax.swing.JLabel();
+        lblTelefonNrFelM = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Ändra uppgifter");
@@ -168,6 +176,21 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
 
         jLabel1.setText("Telefonnummer:");
 
+        lblFornamnFelM.setForeground(new java.awt.Color(255, 0, 51));
+        lblFornamnFelM.setText("Kan endast innehålla bokstäver!");
+
+        lblEfternamnFelM.setForeground(new java.awt.Color(255, 0, 51));
+        lblEfternamnFelM.setText("Kan endast innehålla bokstäver!");
+
+        lblAdressFelM.setForeground(new java.awt.Color(255, 0, 51));
+        lblAdressFelM.setText("Adressen måste anges i formatet \"Nummer Gatuadress, Platsnamn\"!");
+
+        lblEpostFelM.setForeground(new java.awt.Color(255, 0, 51));
+        lblEpostFelM.setText("Epost bör följa format: exempel@domän.com");
+
+        lblTelefonNrFelM.setForeground(new java.awt.Color(255, 0, 51));
+        lblTelefonNrFelM.setText("Telefonnumret måste anges i formatet xxx-xxx-xxxx, där x är en siffra.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,6 +224,13 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
                             .addComponent(tfAdress)
                             .addComponent(tfEfternamn)
                             .addComponent(tfFornamn))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFornamnFelM)
+                    .addComponent(lblEfternamnFelM)
+                    .addComponent(lblAdressFelM)
+                    .addComponent(lblEpostFelM)
+                    .addComponent(lblTelefonNrFelM))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -209,19 +239,23 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFornamn)
-                    .addComponent(tfFornamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfFornamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFornamnFelM))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEfternamn)
-                    .addComponent(tfEfternamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfEfternamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEfternamnFelM))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAdressFelM))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEpost)
-                    .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEpostFelM))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLosenord)
@@ -229,7 +263,8 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(tfTelefonnr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfTelefonnr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTelefonNrFelM))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -259,54 +294,37 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
     private void btnSparaNyaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaNyaUppgifterActionPerformed
         //metod för att ändra uppgifter
         boolean formatKorrekt = true;
+        lblFornamnFelM.setVisible(false);
+        lblEfternamnFelM.setVisible(false);
+        lblAdressFelM.setVisible(false);   
+        lblEpostFelM.setVisible(false);  
         
-        if(Validerare.arBokstaver(tfFornamn.getText())){
-            //andring i databas av fornamn
-        }
-        else{
-            //felmeddelande, endast bokstäver
+        if(!Validerare.arBokstaver(tfFornamn.getText())){
             formatKorrekt = false;
-            System.out.println("fel");
+            lblFornamnFelM.setVisible(true);
         }
-        if(Validerare.arBokstaver(tfEfternamn.getText())){
-            //andring i databas av efternamn
-        }
-        else{
-            //felmeddelande, endast bokstäver
+        if(!Validerare.arBokstaver(tfEfternamn.getText())){
             formatKorrekt = false;
-            System.out.println("fel");
+            lblEfternamnFelM.setVisible(true);
         }
-        if(Validerare.arAdress(tfAdress.getText())){
-            //andring i databas av adress
-        }
-        else{
+        if(!Validerare.arAdress(tfAdress.getText())){
             formatKorrekt = false;
-            //följ detta format ...
-            System.out.println("fel");
-            
+            lblAdressFelM.setVisible(true);   
         }
-        if(Validerare.arEpostAdress(tfEpost.getText())){
-            //andring av epost i db
-        }
-        else{
+        if(!Validerare.arEpostAdress(tfEpost.getText())){
             formatKorrekt = false;
-            //felmeddelande om att följa format
-            System.out.println("fel");
+            lblEpostFelM.setVisible(true);  
         }
-        if(Validerare.arTelefonnummer(tfTelefonnr.getText())){
-            //andring av tfnr i db
-        }
-        else{
+        if(!Validerare.arTelefonnummer(tfTelefonnr.getText())){
             formatKorrekt = false;
-            //felmeddelande om att följa format
-            System.out.println("fel");
+            lblTelefonNrFelM.setVisible(true);  
         }
     
     if(formatKorrekt){
+        //ÄNDRA SAMTLIGA I DB
         this.setVisible(false);
         new MinaUppgifter(idb, inloggadAnvandare).setVisible(true);
-    }
-        
+    }    
     }//GEN-LAST:event_btnSparaNyaUppgifterActionPerformed
 
     private void tfFornamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFornamnActionPerformed
@@ -388,10 +406,15 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lblAdressFelM;
     private javax.swing.JLabel lblEfternamn;
+    private javax.swing.JLabel lblEfternamnFelM;
     private javax.swing.JLabel lblEpost;
+    private javax.swing.JLabel lblEpostFelM;
     private javax.swing.JLabel lblFornamn;
+    private javax.swing.JLabel lblFornamnFelM;
     private javax.swing.JLabel lblLosenord;
+    private javax.swing.JLabel lblTelefonNrFelM;
     private javax.swing.JTextField tfAID;
     private javax.swing.JTextField tfAdress;
     private javax.swing.JTextField tfAnstallningsdatum;
