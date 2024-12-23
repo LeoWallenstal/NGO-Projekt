@@ -24,6 +24,8 @@ public class Projekt extends javax.swing.JFrame {
 
     private Anvandare inloggadAnvandare;
     private InfDB idb;
+    private String status;
+    private String vy;
     
     /**
      * Creates new form Projekt
@@ -31,10 +33,13 @@ public class Projekt extends javax.swing.JFrame {
     public Projekt(InfDB idb, Anvandare inloggadAnvandare) {
         initComponents();
         this.inloggadAnvandare = inloggadAnvandare;
-        this.idb = idb;     
+        this.idb = idb;   
+        status = "Alla";
+        vy = "Alla projekt";
         initKolumner(); //Skapar och namnsätter kolumner
         ArrayList<HashMap<String, String>> uppgifter = hamtaAllaProjekt();
         visaData(uppgifter);
+        
     }
 
     /**
@@ -60,6 +65,7 @@ public class Projekt extends javax.swing.JFrame {
         laggTillButton = new javax.swing.JButton();
         taBortButton = new javax.swing.JButton();
         redigeraButton = new javax.swing.JButton();
+        lblStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NGO Sweden - Projekt");
@@ -110,7 +116,17 @@ public class Projekt extends javax.swing.JFrame {
             }
         });
 
-        statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Alla", "Pågående", "Pausade", "Avslutade" }));
+        statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alla", "Pågående", "Planerat", "Avslutat" }));
+        statusComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusComboBoxActionPerformed(evt);
+            }
+        });
+        statusComboBox.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                statusComboBoxPropertyChange(evt);
+            }
+        });
 
         allaProjektButton.setText("Alla projekt");
         allaProjektButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,6 +180,8 @@ public class Projekt extends javax.swing.JFrame {
             }
         });
 
+        lblStatus.setText("Status:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -175,7 +193,7 @@ public class Projekt extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(allaProjektButton, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                                .addComponent(allaProjektButton, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(avdelningensProjektButton, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -203,13 +221,17 @@ public class Projekt extends javax.swing.JFrame {
                                 .addComponent(tillbakaButton))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblStatus)
+                                    .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(28, 28, 28)
+                .addComponent(lblStatus)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(allaProjektButton)
@@ -287,21 +309,48 @@ public class Projekt extends javax.swing.JFrame {
 
     private void avdelningensProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avdelningensProjektButtonMouseClicked
         rensaDataFonster();
+        vy = "Avdelningens projekt";
         ArrayList<HashMap<String, String>> uppgifter = hamtaAvdelningensProjekt();
         visaData(uppgifter);
     }//GEN-LAST:event_avdelningensProjektButtonMouseClicked
 
     private void allaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allaProjektButtonMouseClicked
         rensaDataFonster();
+        vy = "Alla projekt";
         ArrayList<HashMap<String, String>> uppgifter = hamtaAllaProjekt();
         visaData(uppgifter);
     }//GEN-LAST:event_allaProjektButtonMouseClicked
 
     private void minaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minaProjektButtonMouseClicked
         rensaDataFonster();
+        vy = "Mina projekt";
         ArrayList<HashMap<String, String>> uppgifter = hamtaMinaProjekt();
         visaData(uppgifter);
     }//GEN-LAST:event_minaProjektButtonMouseClicked
+
+ 
+    
+    private void statusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusComboBoxActionPerformed
+        status = statusComboBox.getSelectedItem().toString();
+        rensaDataFonster();
+        if(vy.equals("Alla projekt")){
+            ArrayList<HashMap<String, String>> uppgifter = hamtaAllaProjekt();
+            visaData(uppgifter);
+            
+            }
+        else if(vy.equals("Mina projekt")){
+            ArrayList<HashMap<String, String>> uppgifter = hamtaMinaProjekt();
+            visaData(uppgifter);
+            }
+        else if(vy.equals("Avdelningens projekt")){
+           ArrayList<HashMap<String, String>> uppgifter = hamtaAvdelningensProjekt();
+            visaData(uppgifter);
+        }     
+    }//GEN-LAST:event_statusComboBoxActionPerformed
+
+    private void statusComboBoxPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_statusComboBoxPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusComboBoxPropertyChange
 
     private void initKolumner(){
         ArrayList<HashMap<String, String>> projektUppgifter = hamtaAllaProjekt();
@@ -365,7 +414,13 @@ public class Projekt extends javax.swing.JFrame {
         ArrayList<HashMap<String, String>> projektUppgifter = new ArrayList<>();
         
         try {
+            
             String sqlFraga = "SELECT projektnamn, projektchef, prioritet, startdatum from projekt";
+            
+            if(!status.equals("Alla")){
+                sqlFraga = "SELECT projektnamn, projektchef, prioritet, startdatum from projekt WHERE status = '" + status + "'";
+            }
+            
             projektUppgifter = idb.fetchRows(sqlFraga);
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
@@ -383,10 +438,21 @@ public class Projekt extends javax.swing.JFrame {
                 + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
                 + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
                 + "JOIN avdelning on anstalld.avdelning = avdelning.avdid "
-                + "WHERE avdelning.avdid = " + inloggadAnvandare.getAvdelningsId() + " "
+                + "WHERE avdelning.avdid = " + inloggadAnvandare.getAvdelningsId() + " " 
                 + "GROUP BY projektnamn, projektchef, startdatum, prioritet ";
-            projektUppgifter = idb.fetchRows(sqlFraga);
             
+            
+            if(!status.equals("Alla")){
+                sqlFraga = "SELECT projektnamn, projektchef, startdatum,  prioritet "
+                + "FROM projekt "
+                + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
+                + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
+                + "JOIN avdelning on anstalld.avdelning = avdelning.avdid "
+                + "WHERE avdelning.avdid = " + inloggadAnvandare.getAvdelningsId() + " AND status = '"
+                + status + "' "
+                + "GROUP BY projektnamn, projektchef, startdatum, prioritet "; 
+            }
+            projektUppgifter = idb.fetchRows(sqlFraga);
             
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
@@ -399,6 +465,7 @@ public class Projekt extends javax.swing.JFrame {
         ArrayList<HashMap<String, String>> projektUppgifter = new ArrayList<>();
         
         try {
+            
             String sqlFraga = 
                   "SELECT projektnamn, projektchef, startdatum, prioritet from projekt "
                 + "JOIN ans_proj on projekt.pid = ans_proj.pid "
@@ -406,6 +473,16 @@ public class Projekt extends javax.swing.JFrame {
                 + "WHERE ans_proj.aid = " + inloggadAnvandare.getAnstallningsId() + " "
                 + "OR projektchef = " + inloggadAnvandare.getAnstallningsId() + " "
                 + "GROUP BY projektnamn, projektchef, startdatum, prioritet";
+            
+            if(!status.equals("Alla")){
+                sqlFraga = "SELECT projektnamn, projektchef, startdatum, prioritet from projekt "
+                + "JOIN ans_proj on projekt.pid = ans_proj.pid "
+                + "JOIN anstalld on ans_proj.aid = anstalld.aid "
+                + "WHERE ans_proj.aid = " + inloggadAnvandare.getAnstallningsId()
+                + " AND status = '" + status + "' " + "OR projektchef = " + inloggadAnvandare.getAnstallningsId() + " AND status = '" + status + "' " +
+                 "GROUP BY projektnamn, projektchef, startdatum, prioritet";
+            }
+            
             projektUppgifter = idb.fetchRows(sqlFraga);     
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
@@ -469,6 +546,7 @@ public class Projekt extends javax.swing.JFrame {
     private javax.swing.JButton avdelningensProjektButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton laggTillButton;
+    private javax.swing.JLabel lblStatus;
     private javax.swing.JButton minaProjektButton;
     private javax.swing.JTable projektTable;
     private javax.swing.JButton redigeraButton;

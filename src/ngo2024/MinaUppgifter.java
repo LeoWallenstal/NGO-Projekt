@@ -149,6 +149,11 @@ public class MinaUppgifter extends javax.swing.JFrame {
                 btnTillbakaMouseClicked(evt);
             }
         });
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Adress:");
 
@@ -273,6 +278,11 @@ public class MinaUppgifter extends javax.swing.JFrame {
         new Meny(idb, inloggadAnvandare).setVisible(true);
                 this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaMouseClicked
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        this.setVisible(false);
+        new Meny(idb, inloggadAnvandare).setVisible(true);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
