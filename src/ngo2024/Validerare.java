@@ -11,7 +11,7 @@ public class Validerare {
     }
     
     public static boolean arTelefonnummer(String telefonnummer){
-            return telefonnummer.matches("^\\d{10}$");
+            return telefonnummer.matches("^\\d{3}-\\d{3}-\\d{4}$");
     }
     
     public static boolean arDatum(String datum){
@@ -23,7 +23,7 @@ public class Validerare {
     }
     
     public static boolean arAdress(String adress){
-            return adress.matches("^[a-zA-ZåäöÅÄÖ\\s]+ \\d+[a-zA-Z]?(\\s*,\\s*\\d{5}\\s+[a-zA-ZåäöÅÄÖ\\s]+)?$");
+            return adress.matches("^\\d+\\s[A-Za-z\\s]+,\\s[A-Za-z\\s]+$");
     }
     
     public static boolean arSiffror(String siffror){
