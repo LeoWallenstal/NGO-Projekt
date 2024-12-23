@@ -4,6 +4,10 @@
  */
 package ngo2024;
 
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.awt.*;
