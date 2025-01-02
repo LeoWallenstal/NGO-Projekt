@@ -117,11 +117,11 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         try{
         
         
-        String sqlFraga = "SELECT aid FROM anstalld";
+        String sqlFraga = "SELECT aid FROM anstalld ORDER BY aid ASC";
         
         ArrayList<String> anstallda = idb.fetchColumn(sqlFraga);
         
-        sqlFraga = "SELECT aid FROM handlaggare";
+        sqlFraga = "SELECT aid FROM handlaggare ";
             ArrayList<String> handlaggare = idb.fetchColumn(sqlFraga);
             
         
@@ -135,8 +135,6 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
             
             String namn = uppgifter.get("fornamn") + " "+ uppgifter.get("efternamn");
              
-            String avdelning = uppgifter.get("avdelning");
-            System.out.println("Avdelning: " + avdelning);
     
             
            if(handlaggare.contains(aid)){
