@@ -4,22 +4,24 @@
  */
 //rad194 ska läggas in db ändringar.
 
-package ngo2024;
+package ngo2024.fonster;
 
+import ngo2024.Anvandare;
+import ngo2024.Validerare;
 import oru.inf.InfDB;
 
 /**
  *
  * @author Gastinlogg
  */
-public class AndraLosenord extends javax.swing.JFrame {
+public class AndraLosenordFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
     /**
      * Creates new form AndraLosenord
      */
-    public AndraLosenord(InfDB idb, Anvandare inloggadAnvandare) {
+    public AndraLosenordFonster(InfDB idb, Anvandare inloggadAnvandare) {
         initComponents();
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
@@ -224,14 +226,15 @@ public class AndraLosenord extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AndraLosenord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AndraLosenordFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AndraLosenord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AndraLosenordFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AndraLosenord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AndraLosenordFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AndraLosenord.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AndraLosenordFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

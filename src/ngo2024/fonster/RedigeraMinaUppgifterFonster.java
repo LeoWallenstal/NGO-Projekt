@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ngo2024;
+package ngo2024.fonster;
 
 import java.awt.*;
+import ngo2024.Anvandare;
+import ngo2024.Validerare;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -12,7 +14,7 @@ import oru.inf.InfException;
  *
  * @author walle
  */
-public class MinaUppgifterRedigera extends javax.swing.JFrame {
+public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
@@ -25,7 +27,7 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
     /**
      * Creates new form MinaUppgifterRedigera
      */
-    public MinaUppgifterRedigera(InfDB idb, Anvandare inloggadAnvandare) {
+    public RedigeraMinaUppgifterFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
@@ -68,13 +70,13 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
         tfLosenord.enable(false);
         String telNr = inloggadAnvandare.getTelNr();
         tfTelefonnr.setText(telNr);
-        String AID = inloggadAnvandare.getAnstallningsId();
+        String AID = inloggadAnvandare.getAnstallningsID();
         tfAID.setText(AID);
         tfAID.enable(false);
         String anstallningsDatum = inloggadAnvandare.getAnstallningsDatum();
         tfAnstallningsdatum.setText(anstallningsDatum);
         tfAnstallningsdatum.enable(false);
-        String avdelningsId = inloggadAnvandare.getAvdelningsId();
+        String avdelningsId = inloggadAnvandare.getAvdelningsID();
         String sqlFraga = "SELECT namn FROM avdelning where avdid = " + avdelningsId;
         System.out.println(sqlFraga);
         try{
@@ -323,7 +325,7 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
     if(formatKorrekt){
         //ÄNDRA SAMTLIGA I DB
         this.setVisible(false);
-        new MinaUppgifter(idb, inloggadAnvandare).setVisible(true);
+        new MinaUppgifterFonster(idb, inloggadAnvandare).setVisible(true);
     }    
     }//GEN-LAST:event_btnSparaNyaUppgifterActionPerformed
 
@@ -356,10 +358,10 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
     
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         if(harOsparadeAndringar()){
-            new OsparadeAndringar(idb, inloggadAnvandare).setVisible(true);
+            new OsparadeAndringarFonster(idb, inloggadAnvandare).setVisible(true);
         }
         else {
-            new MinaUppgifter(idb,inloggadAnvandare).setVisible(true);
+            new MinaUppgifterFonster(idb,inloggadAnvandare).setVisible(true);
         }
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
@@ -380,14 +382,15 @@ public class MinaUppgifterRedigera extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MinaUppgifterRedigera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RedigeraMinaUppgifterFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MinaUppgifterRedigera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RedigeraMinaUppgifterFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MinaUppgifterRedigera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RedigeraMinaUppgifterFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MinaUppgifterRedigera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RedigeraMinaUppgifterFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

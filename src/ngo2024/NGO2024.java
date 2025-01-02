@@ -4,6 +4,7 @@
  */
 package ngo2024;
 
+import ngo2024.fonster.InloggningFonster;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -22,10 +23,11 @@ public class NGO2024 {
         
         try{
             idb = new InfDB("ngo_2024","3306","dbAdmin2024","dbAdmin2024PW");
-            new Inloggning(idb).setVisible(true);
+            new InloggningFonster(idb).setVisible(true);
         }catch (InfException ex){
             System.out.println(ex.getMessage());
         }
+        
     }
     
 }

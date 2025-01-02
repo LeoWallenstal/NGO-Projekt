@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ngo2024;
+package ngo2024.fonster;
 
+import ngo2024.Anvandare;
 import oru.inf.InfDB;
 
 /**
  *
  * @author Gastinlogg
  */
-public class OsparadeAndringar extends javax.swing.JFrame {
+public class OsparadeAndringarFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
@@ -18,7 +19,7 @@ public class OsparadeAndringar extends javax.swing.JFrame {
     /**
      * Creates new form OsparadeAndringar
      */
-    public OsparadeAndringar(InfDB idb, Anvandare inloggadAnvandare) {
+    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
@@ -98,7 +99,7 @@ public class OsparadeAndringar extends javax.swing.JFrame {
 
     private void btnFortsattTillMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFortsattTillMinaUppgifterActionPerformed
         this.setVisible(false);
-        new MinaUppgifter(idb,inloggadAnvandare).setVisible(true);
+        new MinaUppgifterFonster(idb,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnFortsattTillMinaUppgifterActionPerformed
 
     /**
@@ -118,14 +119,15 @@ public class OsparadeAndringar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OsparadeAndringar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OsparadeAndringarFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OsparadeAndringar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OsparadeAndringarFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OsparadeAndringar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OsparadeAndringarFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OsparadeAndringar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OsparadeAndringarFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
