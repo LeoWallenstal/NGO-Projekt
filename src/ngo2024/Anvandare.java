@@ -27,7 +27,7 @@ public class Anvandare {
         setUppgifter(aid);
         setBehorighet(aid);
     }
-
+    
     //Getters 
     public String getFornamn() {
         return uppgifter.get("fornamn");
@@ -49,11 +49,11 @@ public class Anvandare {
         return uppgifter.get("telefon");
     }
     
-    public String getAvdelningsId(){
+    public String getAvdelningsID(){
         return uppgifter.get("avdelning");
     }
     
-    public String getAnstallningsId(){
+    public String getAnstallningsID(){
         return uppgifter.get("aid");
     }
     
@@ -77,6 +77,9 @@ public class Anvandare {
         return handlaggare;
     }
     
+    public boolean isProjektchef(Projekt ettProjekt){
+        return ettProjekt.getProjektchefID().equals(this.getAnstallningsID());
+    }
 
     //Setters
     private void setUppgifter(String aid) {

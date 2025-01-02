@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ngo2024;
+package ngo2024.fonster;
 
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.awt.*;
+import ngo2024.Anvandare;
+import ngo2024.Avdelning;
 
 
 
@@ -14,15 +16,16 @@ import java.awt.*;
  *
  * @author walle
  */
-public class Inloggning extends javax.swing.JFrame {
+public class InloggningFonster extends javax.swing.JFrame {
 
     private final InfDB idb;
     
     /**
      * Creates new form Inloggning
      */
-    public Inloggning(InfDB idb) {
+    public InloggningFonster(InfDB idb) {
         this.idb = idb;
+        
         initComponents();
         lblFelmeddelande.setVisible(false);
         setLocationRelativeTo(null);
@@ -38,7 +41,7 @@ public class Inloggning extends javax.swing.JFrame {
                 sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + ePost + "'";
                 String anstallningsId = idb.fetchSingle(sqlFraga);
                 Anvandare inloggadAnvandare = new Anvandare(idb, anstallningsId);
-                new Meny(idb, inloggadAnvandare).setVisible(true);
+                new MenyFonster(idb, inloggadAnvandare).setVisible(true);
                 this.setVisible(false);
             }
             else{
@@ -234,14 +237,15 @@ public class Inloggning extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Inloggning.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Inloggning.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Inloggning.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inloggning.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

@@ -2,17 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ngo2024;
+package ngo2024.fonster;
 
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.awt.*;
+import ngo2024.Anvandare;
+import ngo2024.Avdelning;
 
 /**
  *
  * @author walle
  */
-public class Meny extends javax.swing.JFrame {
+public class MenyFonster extends javax.swing.JFrame {
 
     private final InfDB idb;
     private Anvandare inloggadAnvandare;
@@ -20,7 +22,7 @@ public class Meny extends javax.swing.JFrame {
     /**
      * Creates new form Meny
      */
-    public Meny(InfDB idb, Anvandare inloggadAnvandare) {
+    public MenyFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         String inloggadNamn = inloggadAnvandare.getFullNamn();
@@ -306,103 +308,103 @@ public class Meny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUppgifterActionPerformed
-        new MinaUppgifter(idb, inloggadAnvandare).setVisible(true);
+        new MinaUppgifterFonster(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnUppgifterActionPerformed
 
     private void btnProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjektActionPerformed
-        new Projekt(idb, inloggadAnvandare).setVisible(true);
+        new ProjektFonster(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnProjektActionPerformed
 
     private void btnMal_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_3ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,3).setVisible(true);
+        new MalInfoFonster(idb,3).setVisible(true);
     }//GEN-LAST:event_btnMal_3ActionPerformed
 
     private void btnMal_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_4ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,4).setVisible(true);
+        new MalInfoFonster(idb,4).setVisible(true);
     }//GEN-LAST:event_btnMal_4ActionPerformed
 
     private void btnMal_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_5ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,5).setVisible(true);
+        new MalInfoFonster(idb,5).setVisible(true);
     }//GEN-LAST:event_btnMal_5ActionPerformed
 
     private void btnMal_8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_8ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,8).setVisible(true);
+        new MalInfoFonster(idb,8).setVisible(true);
     }//GEN-LAST:event_btnMal_8ActionPerformed
 
     private void btnMal_10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_10ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,10).setVisible(true);
+        new MalInfoFonster(idb,10).setVisible(true);
     }//GEN-LAST:event_btnMal_10ActionPerformed
 
     private void btnMal_9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_9ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,9).setVisible(true);
+        new MalInfoFonster(idb,9).setVisible(true);
     }//GEN-LAST:event_btnMal_9ActionPerformed
 
     private void btnMal_13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_13ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,13).setVisible(true);
+        new MalInfoFonster(idb,13).setVisible(true);
     }//GEN-LAST:event_btnMal_13ActionPerformed
 
     private void btnMal_14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_14ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,14).setVisible(true);
+        new MalInfoFonster(idb,14).setVisible(true);
     }//GEN-LAST:event_btnMal_14ActionPerformed
 
     private void btnMal_15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_15ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,15).setVisible(true);
+        new MalInfoFonster(idb,15).setVisible(true);
     }//GEN-LAST:event_btnMal_15ActionPerformed
 
     private void btnMal_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_1ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,1).setVisible(true);
+        new MalInfoFonster(idb,1).setVisible(true);
     }//GEN-LAST:event_btnMal_1ActionPerformed
 
     private void btnMal_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_6ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,6).setVisible(true);
+        new MalInfoFonster(idb,6).setVisible(true);
     }//GEN-LAST:event_btnMal_6ActionPerformed
 
     private void btnMal_11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_11ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,11).setVisible(true);
+        new MalInfoFonster(idb,11).setVisible(true);
     }//GEN-LAST:event_btnMal_11ActionPerformed
 
     private void btnMal_16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_16ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,16).setVisible(true);
+        new MalInfoFonster(idb,16).setVisible(true);
     }//GEN-LAST:event_btnMal_16ActionPerformed
 
     private void btnMal_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_2ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,2).setVisible(true);
+        new MalInfoFonster(idb,2).setVisible(true);
     }//GEN-LAST:event_btnMal_2ActionPerformed
 
     private void btnMal_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_7ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,7).setVisible(true);
+        new MalInfoFonster(idb,7).setVisible(true);
     }//GEN-LAST:event_btnMal_7ActionPerformed
 
     private void btnMal_12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_12ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,12).setVisible(true);
+        new MalInfoFonster(idb,12).setVisible(true);
     }//GEN-LAST:event_btnMal_12ActionPerformed
 
     private void btnMal_17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_17ActionPerformed
         // TODO add your handling code here:
-        new MalInfo(idb,17).setVisible(true);
+        new MalInfoFonster(idb,17).setVisible(true);
     }//GEN-LAST:event_btnMal_17ActionPerformed
 
     private void btnAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvdelningActionPerformed
         // TODO add your handling code here:
-        new Avdelning(idb,inloggadAnvandare).setVisible(true);
+        new AvdelningFonster(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnAvdelningActionPerformed
 
@@ -411,7 +413,7 @@ public class Meny extends javax.swing.JFrame {
     }//GEN-LAST:event_loggaUtButtonActionPerformed
 
     private void loggaUtButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loggaUtButtonMouseClicked
-        new Inloggning(idb).setVisible(true);
+        new InloggningFonster(idb).setVisible(true);
                 this.setVisible(false);
     }//GEN-LAST:event_loggaUtButtonMouseClicked
 
@@ -432,14 +434,15 @@ public class Meny extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Meny.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenyFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Meny.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenyFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Meny.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenyFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Meny.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenyFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

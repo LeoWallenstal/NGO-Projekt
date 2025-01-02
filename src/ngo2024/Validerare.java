@@ -33,6 +33,10 @@ public class Validerare {
     public static boolean formatLosenord(String losenord){
         return losenord.matches("^(?=.*\\d).{8,}$");
     }
+    
+    public static boolean formatProjektKostnadOK(String kostnad){
+        return kostnad.matches("^\\d{1,}(\\.\\d{2})?$");
+    }
 
 }
 
