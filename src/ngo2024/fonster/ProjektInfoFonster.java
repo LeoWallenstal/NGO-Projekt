@@ -33,6 +33,8 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         else{
             redigeraButton.setVisible(false);
         }
+        
+        setLocationRelativeTo(null);
     }   
 
     private void setProjektInfo(){
@@ -87,7 +89,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
             }
         });
 
-        tillbakaButton.setText("jButton1");
+        tillbakaButton.setText("Tillbaka");
         tillbakaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tillbakaButtonActionPerformed(evt);
