@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="title" type="java.lang.String" value="Registrera"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                      <Component id="lblRubrik" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblFornamn" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEfternamn" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAvdelning" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAdress" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEpost" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTelefonNr" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblLosenord" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblRoll" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAnsvarighetsomrade" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblMentor" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="tfFornamn" pref="181" max="32767" attributes="0"/>
+                                          <Component id="tfAdress" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="tfEfternamn" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lblFelMFornamn" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblFelMEfternamn" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="lblFelMAdress" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="cbAvdelning" min="-2" pref="124" max="-2" attributes="0"/>
+                                                  <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblLosenordSlumpas" alignment="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lblFelMAvdelning" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="btnSlumpaLosenord" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="lblFelMLosenord" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="tfTelefonNr" alignment="0" pref="181" max="32767" attributes="0"/>
+                                                  <Component id="tfEpost" alignment="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lblFelMEpost" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblFelMTelefon" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="cbRoll" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="lblFelMRoll" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="tfAnsvarighetsomrade" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="tfMentorsID" min="-2" pref="71" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="lblHanvisningMentor" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnRegistrera" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Component id="lblRubrik" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblFornamn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfFornamn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMFornamn" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblEfternamn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfEfternamn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMEfternamn" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblAdress" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="tfAdress" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblFelMAdress" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblEpost" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfEpost" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMEpost" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblTelefonNr" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfTelefonNr" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMTelefon" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblAvdelning" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbAvdelning" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMAvdelning" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnSlumpaLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLosenordSlumpas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblRoll" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbRoll" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMRoll" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblAnsvarighetsomrade" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfAnsvarighetsomrade" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblMentor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfMentorsID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblHanvisningMentor" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="14" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRegistrera" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="lblRubrik">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Registrera ny anst&#xe4;lld"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tillbaka"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFornamn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="F&#xf6;rnamn:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEfternamn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Efternamn:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAdress">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Adress:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEpost">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Epost:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTelefonNr">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Telefon:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAvdelning">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Avdelning:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbAvdelning">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="5">
+            <StringItem index="0" value="V&#xe4;lj avdelning..."/>
+            <StringItem index="1" value="H&#xe5;llbar Energi och Klimatf&#xf6;r&#xe4;ndringar"/>
+            <StringItem index="2" value="Samh&#xe4;llsutveckling och Utbildning"/>
+            <StringItem index="3" value="Teknologisk Innovation och Entrepen&#xf6;rskap"/>
+            <StringItem index="4" value=" "/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbAvdelningActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfFornamn">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfFornamnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfEfternamn">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfEfternamnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfAdress">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfAdressActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfEpost">
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfTelefonNr">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMFornamn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kan endast inneh&#xe5;lla bokst&#xe4;ver!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMEfternamn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kan endast inneh&#xe5;lla bokst&#xe4;ver!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMAdress">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Adressen m&#xe5;ste anges i formatet &quot;Nummer Gatuadress, Platsnamn&quot;!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLosenord">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="L&#xf6;senord:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnSlumpaLosenord">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Slumpa l&#xf6;senord"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSlumpaLosenordActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel11">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLosenordSlumpas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=" "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMEpost">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Epost b&#xf6;r f&#xf6;lja format: exempel@dom&#xe4;n.com"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMTelefon">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Telefonnumret m&#xe5;ste anges i formatet xxx-xxx-xxxx, d&#xe4;r x &#xe4;r en siffra."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRegistrera">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Registrera"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistreraActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMAvdelning">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="V&#xe4;lj en avdelning!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMLosenord">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Slumpa fram ett l&#xf6;senord!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbRoll">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="V&#xe4;lj roll..."/>
+            <StringItem index="1" value="Handl&#xe4;ggare"/>
+            <StringItem index="2" value="Administrat&#xf6;r"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbRollActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblRoll">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Roll:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMRoll">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="V&#xe4;lj en roll!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAnsvarighetsomrade">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ansvarighetsomr&#xe5;de:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblMentor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mentor:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfAnsvarighetsomrade">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfAnsvarighetsomradeActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfMentorsID">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblHanvisningMentor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ange Anst&#xe4;llningsID p&#xe5; mentorn alternativt l&#xe4;mna tom om mentor saknas!"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
