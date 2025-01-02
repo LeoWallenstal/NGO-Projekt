@@ -19,6 +19,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     private Anvandare inloggadAnvandare;
     private InfDB idb;
     private Projekt aktuelltProjekt;
+    private ProjektFonster forraFonstret;
     
     public ProjektInfoFonster(Anvandare inloggadAnvandare, Projekt ettProjekt, InfDB idb) {
         this.inloggadAnvandare = inloggadAnvandare;
@@ -29,9 +30,31 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         
         if(inloggadAnvandare.isAdmin() || inloggadAnvandare.isProjektchef(aktuelltProjekt)){
             redigeraButton.setVisible(true);
+            taBortButton.setVisible(true);
         }
         else{
             redigeraButton.setVisible(false);
+            taBortButton.setVisible(false);
+        }
+        
+        setLocationRelativeTo(null);
+    }   
+    
+    public ProjektInfoFonster(Anvandare inloggadAnvandare, Projekt ettProjekt, ProjektFonster forraFonstret, InfDB idb) {
+        this.inloggadAnvandare = inloggadAnvandare;
+        this.idb = idb;
+        this.forraFonstret = forraFonstret;
+        aktuelltProjekt = ettProjekt;
+        initComponents();
+        setProjektInfo();
+        
+        if(inloggadAnvandare.isAdmin() || inloggadAnvandare.isProjektchef(aktuelltProjekt)){
+            redigeraButton.setVisible(true);
+            taBortButton.setVisible(true);
+        }
+        else{
+            redigeraButton.setVisible(false);
+            taBortButton.setVisible(false);
         }
         
         setLocationRelativeTo(null);
@@ -67,6 +90,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         startdatumLabel = new javax.swing.JLabel();
         redigeraButton = new javax.swing.JButton();
         tillbakaButton = new javax.swing.JButton();
+        taBortButton = new javax.swing.JButton();
 
         projektnamnLabel.setText("Projektnamn: ");
 
@@ -96,6 +120,13 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
             }
         });
 
+        taBortButton.setText("Ta bort");
+        taBortButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                taBortButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,12 +143,14 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
                             .addComponent(statusLabel)
                             .addComponent(kostnadLabel)
                             .addComponent(startdatumLabel))
-                        .addGap(0, 315, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(321, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(tillbakaButton)
+                        .addGap(85, 85, 85)
+                        .addComponent(redigeraButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(redigeraButton)))
-                .addContainerGap())
+                        .addComponent(taBortButton)
+                        .addGap(25, 25, 25))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +172,8 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(redigeraButton)
-                    .addComponent(tillbakaButton))
+                    .addComponent(tillbakaButton)
+                    .addComponent(taBortButton))
                 .addContainerGap())
         );
 
@@ -154,6 +188,10 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     private void tillbakaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tillbakaButtonActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_tillbakaButtonActionPerformed
+
+    private void taBortButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortButtonMouseClicked
+        new VarningJaNejFonster(aktuelltProjekt, this).setVisible(true);
+    }//GEN-LAST:event_taBortButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -199,6 +237,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     private javax.swing.JButton redigeraButton;
     private javax.swing.JLabel startdatumLabel;
     private javax.swing.JLabel statusLabel;
+    private javax.swing.JButton taBortButton;
     private javax.swing.JButton tillbakaButton;
     // End of variables declaration//GEN-END:variables
 }
