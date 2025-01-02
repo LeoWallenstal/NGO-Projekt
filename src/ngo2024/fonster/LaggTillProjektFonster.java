@@ -409,6 +409,8 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         if(projektOK){
             nyttProjekt.setProjektchefsID();
             nyttProjekt.setProjektID();
+            
+            nyttProjekt.insertProjektDB();
         }
         
         System.out.println(nyttProjekt); //DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG 
@@ -424,7 +426,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         projektchefComboBox.addItem("Välj projektchef...");
         projektchefComboBox.addItem("Ingen");
         
-        anvandarregister.hamtaAvdelningensAnvandare(inloggadAnvandare.getAnstallningsID());
+        anvandarregister.hamtaAvdelningensAnvandare(inloggadAnvandare.getAvdelningsID());
         
         for(Anvandare enAnvandare : anvandarregister.getLista()){
             if(enAnvandare.isHandlaggare()){
@@ -480,6 +482,8 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         }   
         return valdaPartners;
     }
+    
+    
     
     /**
      * @param args the command line arguments
