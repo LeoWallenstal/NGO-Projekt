@@ -2,25 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ngo2024;
+package ngo2024.fonster;
 
 import oru.inf.InfDB;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
+import ngo2024.Anvandare;
 import oru.inf.InfException;
 
 /**
  *
  * @author Gastinlogg
  */
-public class HanteraAnstallda extends javax.swing.JFrame {
+public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
     /**
      * Creates new form HanteraAnstallda
      */
-    public HanteraAnstallda(InfDB idb, Anvandare inloggadAnvandare) {
+    public HanteraAnstalldaFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
@@ -108,7 +109,7 @@ public class HanteraAnstallda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLaggTillAnstalldActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new Meny(idb, inloggadAnvandare).setVisible(true);
+        new MenyFonster(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
@@ -170,14 +171,15 @@ public class HanteraAnstallda extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HanteraAnstallda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HanteraAnstalldaFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HanteraAnstallda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HanteraAnstalldaFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HanteraAnstallda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HanteraAnstalldaFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HanteraAnstallda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HanteraAnstalldaFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

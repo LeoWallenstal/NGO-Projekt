@@ -423,7 +423,7 @@ public class MenyFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_loggaUtButtonMouseClicked
 
     private void btnAnstalldaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnstalldaActionPerformed
-        new HanteraAnstallda(idb, inloggadAnvandare).setVisible(true);
+        new HanteraAnstalldaFonster(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnAnstalldaActionPerformed
 
