@@ -74,6 +74,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_17 = new javax.swing.JButton();
         tpMalInfoText = new javax.swing.JTextPane();
         loggaUtButton = new javax.swing.JButton();
+        partnersButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Start");
@@ -309,6 +310,19 @@ public class MenyFonster extends javax.swing.JFrame {
         });
         getContentPane().add(loggaUtButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, -1, -1));
 
+        partnersButton.setText("Partners");
+        partnersButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                partnersButtonMouseClicked(evt);
+            }
+        });
+        partnersButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                partnersButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(partnersButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 130, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -427,6 +441,15 @@ public class MenyFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnAnstalldaActionPerformed
 
+    private void partnersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partnersButtonActionPerformed
+        new PartnerFonster(inloggadAnvandare, idb).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_partnersButtonActionPerformed
+
+    private void partnersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_partnersButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_partnersButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -488,6 +511,7 @@ public class MenyFonster extends javax.swing.JFrame {
     private javax.swing.JLabel lblInloggadAnvandare;
     private javax.swing.JLabel lblValkommen;
     private javax.swing.JButton loggaUtButton;
+    private javax.swing.JButton partnersButton;
     private javax.swing.JTextPane tpMalInfoText;
     // End of variables declaration//GEN-END:variables
 }

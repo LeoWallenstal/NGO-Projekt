@@ -196,12 +196,12 @@ public class InloggningFonster extends javax.swing.JFrame {
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
-        login("muhammad.a@example.com","password456");
+        login("fatima.alm@example.com","passwordxyz");
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlaggareActionPerformed
         // TODO add your handling code here:
-        login("luis.m@example.com","passwordabc");
+        login("ling.w@example.com","password456");
     }//GEN-LAST:event_btnHandlaggareActionPerformed
 
     /**

@@ -23,7 +23,7 @@ public class Validerare {
     }
     
     public static boolean arAdress(String adress){
-            return adress.matches("^\\d+\\s[A-Za-z\\s]+,\\s[A-Za-z\\s]+$");
+            return adress.matches("^(\\d+)\\s([A-Za-z\\s]+)\\s([A-Za-z]+)$");
     }
     
     public static boolean arSiffror(String siffror){
@@ -36,6 +36,10 @@ public class Validerare {
     
     public static boolean formatProjektKostnadOK(String kostnad){
         return kostnad.matches("^\\d{1,}(\\.\\d{2})?$");
+    }
+    
+    public static boolean formatNamnOK(String namn){
+        return namn.matches("^([A-Za-zÅÄÖåäö]+(?:-[A-Za-zÅÄÖåäö]+)?)\\s([A-Za-zÅÄÖåäö]+(?:-[A-Za-zÅÄÖåäö]+)?)$");
     }
 
 }

@@ -19,7 +19,7 @@ public class PartnerRegister {
     public PartnerRegister(InfDB idb){
         this.idb = idb;
         allaPartners = new ArrayList<>();
-        
+        hamtaAllaPartners();
     }
     
     public ArrayList<Partner> getLista(){
@@ -77,4 +77,17 @@ public class PartnerRegister {
         }
         return false;
     }
+    
+    public int getHogstaPartnerID(){
+        int hogstaID = Integer.parseInt(allaPartners.getFirst().getPartnerID());
+        
+        for(Partner enPartner : allaPartners){
+            int ettID = Integer.parseInt(enPartner.getPartnerID());
+            if(ettID > hogstaID){
+                hogstaID = ettID;
+            }
+        }
+        return hogstaID;
+    }
+    
 }
