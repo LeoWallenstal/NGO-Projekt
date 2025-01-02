@@ -243,8 +243,6 @@ public class AvdelningFonster extends javax.swing.JFrame {
                    anstalldRows.put(aid, "Handläggare");
                }else if(aidAdmin.contains(aid)){
                    anstalldRows.put(aid,"Administratör");
-               }else{
-                   anstalldRows.put(aid,"Anställd");
                }
             }
            
