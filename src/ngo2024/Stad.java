@@ -33,7 +33,7 @@ public class Stad {
         for(String key : enStad.keySet()){
             switch(key){
                 case "sid":
-                    stadID = enStad.get(key);
+                    this.stadID = enStad.get(key);
                     break;
                 case "namn":
                     this.namn = enStad.get(key);

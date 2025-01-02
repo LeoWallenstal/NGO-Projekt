@@ -13,7 +13,7 @@ import oru.inf.InfException;
  * @author james
  */
 public class Partner {
-    
+    //Fields
     private String partnerID;
     private String namn;
     private String kontaktperson;
@@ -25,6 +25,8 @@ public class Partner {
     private String stadID;
     
     private InfDB idb;
+    
+    //Constructors
     
     public Partner(String partnerID, InfDB idb){
         this.idb = idb;
@@ -114,6 +116,12 @@ public class Partner {
             stad = new Stad(stadID, idb);
     }
     
+    public Partner(InfDB idb){
+        this.idb = idb;
+    }
+    
+    //Getters
+    
     public String getPartnerID(){
         return partnerID;
     }
@@ -146,5 +154,77 @@ public class Partner {
         return stad;
     }
     
+    
+    //Setters
+    public void setNamn(String namn){
+        if(!namn.isEmpty() && Validerare.arBokstaver(namn)){
+            this.namn = namn;
+        }
+    }
+    
+    public void setKontaktperson(String namn){
+        if(!namn.isEmpty() && Validerare.arBokstaver(namn)){
+            kontaktperson = namn;
+        }
+    }
+    
+    public void setKontaktepost(String epost){
+        if(!epost.isEmpty() && Validerare.arEpostAdress(epost)){
+            kontaktepost = epost;
+        }
+    }
+    
+    public void setTelefonnummer(String telNr){
+        if(!telNr.isEmpty() && Validerare.arTelefonnummer(telNr)){
+            telefonnummer = telNr;
+        }
+    }
+    
+    public void setAdress(String adress){
+        if(!adress.isEmpty() && Validerare.arAdress(adress)){
+            this.adress = adress;
+        }
+    }
+    
+    public void setBransch(String bransch){
+        if(!bransch.isEmpty() && Validerare.arBokstaver(bransch)){
+            this.bransch = bransch;
+        }
+    }
+    
+    public void setPartnerID(){
+        PartnerRegister allaPartners = new PartnerRegister(idb);
+        int nyttID = allaPartners.getHogstaPartnerID() + 1;
+        String nyttIDStr = Integer.toString(nyttID);
+        
+        partnerID = nyttIDStr;
+    }
+    
+    public void setStad(String stadID){
+        if(!stadID.isEmpty()){
+            this.stad = new Stad(stadID, idb);
+        }
+    }
+    
+    public void setStadID(String stadID){
+        if(!stadID.isEmpty()){
+            this.stadID = stadID;
+        }
+    }
+    
+    public void insertPartnerDB(){
+        try{
+            idb.insert("INSERT INTO partner (pid, namn, kontaktperson, "
+                    + "kontaktepost, telefon, adress, branch, stad) " 
+                    + "VALUES (" + this.getPartnerID() + ", '" + this.getNamn() + "', '"
+                    + this.getKontaktperson() + "', '" + this.getKontaktepost() + "', '"
+                    + this.getTelefonnummer() + "', '" + this.getAdress() + "', '" 
+                    + this.getBransch() + "', " + this.getStad().getStadID() +");");
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i Partner.java, insertPartnerDB()");
+        }
+        
+    }
     
 }

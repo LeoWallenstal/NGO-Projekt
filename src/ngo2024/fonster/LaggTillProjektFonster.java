@@ -322,7 +322,6 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         
         //Projektchef
         if(!projektchefComboBox.getSelectedItem().equals("Välj projektchef...")){
-            String projektchefID = anvandarregister.get(projektchefComboBox.getSelectedIndex()).getAnstallningsID();
             Anvandare enHandlaggare = handlaggare.get(projektchefComboBox.getSelectedIndex() + 1);
             nyttProjekt.setProjektchef(enHandlaggare.getAnstallningsID());
         }
