@@ -37,6 +37,8 @@ public class ProjektFonster extends javax.swing.JFrame {
     private ProjektRegister projektregister;
     private SokKategori kategori;
     private DefaultTableModel tabell;
+    private int hoveredRow = -1;
+    private int hoveredColumn;
     
     /**
      * Creates new form Projekt
@@ -95,6 +97,11 @@ public class ProjektFonster extends javax.swing.JFrame {
         ));
         projektTable.setShowHorizontalLines(true);
         projektTable.setShowVerticalLines(true);
+        projektTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                projektTableMouseMoved(evt);
+            }
+        });
         projektTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 projektTableMouseClicked(evt);
@@ -258,8 +265,6 @@ public class ProjektFonster extends javax.swing.JFrame {
                         .addGap(14, 14, 14))))
         );
 
-        getAccessibleContext().setAccessibleName("SDG Sweden - Projekt");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -404,6 +409,37 @@ public class ProjektFonster extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_projektTableMouseClicked
 
+    private void projektTableMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projektTableMouseMoved
+        int row = projektTable.rowAtPoint(evt.getPoint());
+        int column = projektTable.columnAtPoint(evt.getPoint());
+        
+        if(row >= 0 && column >= 0)
+        {
+            String columnNamn = projektTable.getColumnName(column);
+            
+            if(columnNamn.equals("Projektnamn") || columnNamn.equals("Projektchef"))
+            {
+                projektTable.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                hoveredRow = row;
+                hoveredColumn = column;
+            }
+            else
+            {
+                projektTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                hoveredRow = -1;
+                hoveredColumn = -1;
+            } 
+        }
+        else
+        {
+            projektTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            hoveredRow = -1;
+            hoveredColumn = -1;
+        }
+        projektTable.repaint();
+    }//GEN-LAST:event_projektTableMouseMoved
+
+    
     private void initKolumner(){
         tabell.addColumn("pid"); //denna ska gömmas senare
         tabell.addColumn("Projektnamn");
