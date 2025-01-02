@@ -404,7 +404,6 @@ public class ProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_projektTableMouseClicked
 
     private void initKolumner(){
-        //DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
         tabell.addColumn("pid"); //denna ska gömmas senare
         tabell.addColumn("Projektnamn");
         tabell.addColumn("Projektchef");
@@ -421,7 +420,9 @@ public class ProjektFonster extends javax.swing.JFrame {
     private void visaData(){
         rensaDataFonster();
         for(Projekt ettProjekt : projektregister.getLista()){
-            tabell.addRow(ettProjekt.getProjektVyData());
+            tabell.addRow(new Object[]{ettProjekt.getProjektID(), ettProjekt.getProjektnamn(), 
+                ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
+                ettProjekt.getStartdatum()} );
         }
     }
     
