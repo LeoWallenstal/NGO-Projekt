@@ -55,6 +55,7 @@ public class ProjektFonster extends javax.swing.JFrame {
         initKolumner(); //Skapar och namnsätter kolumner
         
         visaData();
+        setLocationRelativeTo(null);
     }
 
     /**

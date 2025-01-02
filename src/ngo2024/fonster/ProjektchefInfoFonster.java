@@ -21,17 +21,38 @@ public class ProjektchefInfoFonster extends javax.swing.JFrame {
     
     private Anvandare projektchef;
     private Anvandare inloggadAnvandare;
+    private InfDB idb;
     
     public ProjektchefInfoFonster(Anvandare inloggadAnvandare, Anvandare projektchef, InfDB idb) {
         initComponents();
         this.projektchef = projektchef;     
         this.inloggadAnvandare = inloggadAnvandare;
+        this.idb = idb;
         setProjektchefInfo();
+        setLocationRelativeTo(null);
         
     }
 
     private void setProjektchefInfo(){
         this.setTitle("SDG Sweden - " + projektchef.getFornamn() + " " + projektchef.getEfternamn());
+        String namn = projektchef.getFullNamn();
+        lblNamn.setText(namn);
+        
+        String ePost = projektchef.getEPost();
+        lblEposten.setText(ePost);
+        
+        String telefonNummer = projektchef.getTelNr();
+        lblTelefonnumret.setText(telefonNummer);
+        
+        String avdelning = projektchef.getAvdelningsID();
+        String sqlFraga = "SELECT namn FROM avdelning WHERE avdid =" + avdelning;
+        try{
+            String avdelningsNamn = idb.fetchSingle(sqlFraga);
+            lblAvdelningen.setText(avdelningsNamn);
+        }
+        catch(InfException ex){
+            System.out.println(ex.getMessage()); 
+        }
     }
     
     /**
@@ -43,19 +64,101 @@ public class ProjektchefInfoFonster extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnTillbaka = new javax.swing.JButton();
+        lblEpost = new javax.swing.JLabel();
+        lblNamn = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblEposten = new javax.swing.JLabel();
+        lblTelefonnummer = new javax.swing.JLabel();
+        lblTelefonnumret = new javax.swing.JLabel();
+        lblAvdelning = new javax.swing.JLabel();
+        lblAvdelningen = new javax.swing.JLabel();
+
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
+
+        lblEpost.setText("E-post:");
+
+        lblNamn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblNamn.setText("fornamn efternamn");
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/vecteezy_user-icon-on-transparent-background_19879186.png"))); // NOI18N
+        jLabel3.setText("jLabel3");
+
+        lblEposten.setText("exempelEpost");
+
+        lblTelefonnummer.setText("Telefonnummer:");
+
+        lblTelefonnumret.setText("exempelTelefonnummer");
+
+        lblAvdelning.setText("Avdelning:");
+
+        lblAvdelningen.setText("exempelAvdelning");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnTillbaka)
+                .addGap(30, 30, 30))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblTelefonnummer)
+                            .addComponent(lblAvdelning)
+                            .addComponent(lblEpost))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblTelefonnumret, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                .addComponent(lblEposten, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblAvdelningen, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 59, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNamn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(lblNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEpost)
+                    .addComponent(lblEposten))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTelefonnummer)
+                    .addComponent(lblTelefonnumret))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAvdelning)
+                    .addComponent(lblAvdelningen))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                .addComponent(btnTillbaka)
+                .addGap(31, 31, 31))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -93,5 +196,14 @@ public class ProjektchefInfoFonster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblAvdelning;
+    private javax.swing.JLabel lblAvdelningen;
+    private javax.swing.JLabel lblEpost;
+    private javax.swing.JLabel lblEposten;
+    private javax.swing.JLabel lblNamn;
+    private javax.swing.JLabel lblTelefonnummer;
+    private javax.swing.JLabel lblTelefonnumret;
     // End of variables declaration//GEN-END:variables
 }
