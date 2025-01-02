@@ -446,5 +446,16 @@ public class Projekt {
         
     }
     
+    public void deleteProjektDB(){
+        try{
+            idb.delete("DELETE FROM ans_proj WHERE pid = " + this.getProjektID());
+            idb.delete("DELETE FROM proj_hallbarhet WHERE pid = " + this.getProjektID());
+            idb.delete("DELETE FROM projekt_partner WHERE pid = " + this.getProjektID()); 
+            idb.delete("DELETE FROM projekt WHERE pid = " + this.getProjektID());
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i LaggTillProjektFonster.java, insertProjektDB()");
+        }
+    }
+    
 }
 
