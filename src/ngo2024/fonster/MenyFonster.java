@@ -113,6 +113,11 @@ public class MenyFonster extends javax.swing.JFrame {
         getContentPane().add(btnProjekt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 130, -1));
 
         btnAnstallda.setText("Hantera anställda");
+        btnAnstallda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnstalldaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAnstallda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 130, -1));
 
         btnMal_3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/03-god-halsa-och-valbefinnande.png"))); // NOI18N
@@ -416,6 +421,11 @@ public class MenyFonster extends javax.swing.JFrame {
         new InloggningFonster(idb).setVisible(true);
                 this.setVisible(false);
     }//GEN-LAST:event_loggaUtButtonMouseClicked
+
+    private void btnAnstalldaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnstalldaActionPerformed
+        new HanteraAnstalldaFonster(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAnstalldaActionPerformed
 
     /**
      * @param args the command line arguments
