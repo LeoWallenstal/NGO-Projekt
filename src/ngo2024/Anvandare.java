@@ -117,4 +117,20 @@ public class Anvandare {
             System.out.println(ex.getMessage());
         }
     }
+    
+    public void deleteAnvandareDb(){
+        try{
+            idb.delete("DELETE FROM ans_proj WHERE aid = " + this.getAnstallningsID());
+            idb.delete("DELETE FROM anstalld WHERE aid = " + this.getAnstallningsID());
+            idb.delete("DELETE FROM admin WHERE aid = " + this.getAnstallningsID()); 
+            idb.delete("DELETE FROM avdelning WHERE chef = " + this.getAnstallningsID());
+            idb.delete("DELETE FROM handlaggare WHERE aid = " + this.getAnstallningsID());
+            idb.delete("DELETE FROM projekt WHERE projektchef = " + this.getAnstallningsID());
+            } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i LaggTillProjektFonster.java, insertProjektDB()");
+            }
+        }
 }
+
+
+

@@ -126,6 +126,11 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
                 taBortButtonMouseClicked(evt);
             }
         });
+        taBortButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taBortButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,6 +197,10 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     private void taBortButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortButtonMouseClicked
         new VarningJaNejFonster(aktuelltProjekt, this).setVisible(true);
     }//GEN-LAST:event_taBortButtonMouseClicked
+
+    private void taBortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taBortButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_taBortButtonActionPerformed
 
     /**
      * @param args the command line arguments
