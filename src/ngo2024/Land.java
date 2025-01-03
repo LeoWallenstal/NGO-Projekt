@@ -44,15 +44,18 @@ public class Land {
                         namn = ettLand.get("namn");
                         break;
                     case "sprak":
-                        namn = ettLand.get("sprak");
+                        sprak = ettLand.get("sprak");
                         break;
                     case "valuta":
                         valuta = ettLand.get("valuta");
                         break;
+                    case "tidszon":
+                        tidszon = ettLand.get("tidszon");
+                        break;
                     case "politisk_struktur":
                         politiskStruktur = ettLand.get("politisk_struktur");
                         break;
-                    case "ekonomi":
+                        case "ekonomi":
                         ekonomi = ettLand.get("ekonomi");
                         break;
                     default:
@@ -78,10 +81,13 @@ public class Land {
                         namn = ettLand.get("namn");
                         break;
                     case "sprak":
-                        namn = ettLand.get("sprak");
+                        sprak = ettLand.get("sprak");
                         break;
                     case "valuta":
                         valuta = ettLand.get("valuta");
+                        break;
+                    case "tidszon":
+                        tidszon = ettLand.get("tidszon");
                         break;
                     case "politisk_struktur":
                         politiskStruktur = ettLand.get("politisk_struktur");
@@ -117,5 +123,9 @@ public class Land {
     
     public String getEkonomi(){
         return ekonomi;
+    }
+    
+    public String getTidszon(){
+        return tidszon;
     }
 }
