@@ -4,6 +4,8 @@
  */
 package ngo2024.fonster;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ngo2024.AnvandarRegister;
 import ngo2024.Anvandare;
 import ngo2024.Land;
@@ -33,11 +35,13 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     private LandRegister landregister;
     private PartnerRegister partnerregister;
     private ArrayList<Anvandare> handlaggare;
+    private ProjektFonster forraFonstret;
     
     /**
      * Creates new form LaggTillFonster
      */
-    public LaggTillProjektFonster(Anvandare inloggadAnvandare, InfDB idb) {
+    public LaggTillProjektFonster(Anvandare inloggadAnvandare, ProjektFonster forraFonstret, InfDB idb) {
+        this.forraFonstret = forraFonstret;
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
         anvandarregister = new AnvandarRegister(idb);
@@ -46,11 +50,13 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         handlaggare = new ArrayList<>();
         
         
+        
         initComponents();
         initFelmeddelanden();
         initProjektchefComboBox();   
         initLandComboBox();
         initPartnerList();
+        projektRegistreradLabel.setVisible(false);
     }
 
     /**
@@ -90,6 +96,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         startdatumLabel = new javax.swing.JLabel();
         startdatumInput = new javax.swing.JTextField();
         startdatumError = new javax.swing.JLabel();
+        projektRegistreradLabel = new javax.swing.JLabel();
 
         setTitle("SDG Sweden - Lägg till projekt");
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -170,6 +177,9 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         startdatumError.setForeground(new java.awt.Color(255, 0, 0));
         startdatumError.setText("Kan inte vara tomt!");
 
+        projektRegistreradLabel.setForeground(new java.awt.Color(0, 204, 0));
+        projektRegistreradLabel.setText("Projekt registrerat!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,7 +189,9 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
                 .addComponent(tillbakaButton)
                 .addGap(8, 8, 8)
                 .addComponent(sparaButton)
-                .addGap(334, 334, 334))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(projektRegistreradLabel)
+                .addGap(285, 285, 285))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,8 +241,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
                                     .addComponent(prioritetError)
                                     .addComponent(landError)
                                     .addComponent(startdatumError)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, 0))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +292,8 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tillbakaButton)
-                    .addComponent(sparaButton))
+                    .addComponent(sparaButton)
+                    .addComponent(projektRegistreradLabel))
                 .addGap(6, 6, 6))
         );
 
@@ -410,11 +422,12 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
             nyttProjekt.setProjektID();
             
             nyttProjekt.insertProjektDB();
+            projektRegistreradLabel.setVisible(true);
+            forraFonstret.uppdateraFonster();
+            
         }
         
-        System.out.println(nyttProjekt); //DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG 
-        
-        
+        System.out.println(nyttProjekt); //DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG    
     }//GEN-LAST:event_sparaButtonMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -537,6 +550,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> prioritetComboBox;
     private javax.swing.JLabel prioritetError;
     private javax.swing.JLabel prioritetLabel;
+    private javax.swing.JLabel projektRegistreradLabel;
     private javax.swing.JComboBox<String> projektchefComboBox;
     private javax.swing.JLabel projektchefLabel;
     private javax.swing.JLabel projektnamnError;
