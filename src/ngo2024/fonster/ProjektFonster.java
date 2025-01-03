@@ -24,6 +24,7 @@ import ngo2024.Projekt;
 import ngo2024.ProjektRegister;
 import ngo2024.Projektstatus;
 import ngo2024.SokKategori;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -75,13 +76,14 @@ public class ProjektFonster extends javax.swing.JFrame {
         sokLabel = new javax.swing.JLabel();
         sokfalt = new javax.swing.JTextField();
         sokEfterComboBox = new javax.swing.JComboBox<>();
-        sokDatumButton = new javax.swing.JButton();
         statusComboBox = new javax.swing.JComboBox<>();
         allaProjektButton = new javax.swing.JButton();
         avdelningensProjektButton = new javax.swing.JButton();
         minaProjektButton = new javax.swing.JButton();
         laggTillButton = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
+        dcStartDatum = new com.toedter.calendar.JDateChooser();
+        dcSlutDatum = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Projekt");
@@ -137,18 +139,6 @@ public class ProjektFonster extends javax.swing.JFrame {
             }
         });
 
-        sokDatumButton.setText("Sök datum");
-        sokDatumButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sokDatumButtonMouseClicked(evt);
-            }
-        });
-        sokDatumButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sokDatumButtonActionPerformed(evt);
-            }
-        });
-
         statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alla", "Pågående", "Planerat", "Avslutat" }));
         statusComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,76 +181,85 @@ public class ProjektFonster extends javax.swing.JFrame {
 
         lblStatus.setText("Status:");
 
+        dcStartDatum.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dcStartDatumPropertyChange(evt);
+            }
+        });
+
+        dcSlutDatum.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dcSlutDatumPropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addContainerGap()
+                        .addComponent(tillbakaButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(allaProjektButton, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(avdelningensProjektButton, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(minaProjektButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblStatus)
+                                    .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(sokLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(195, 195, 195))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(sokEfterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(65, 65, 65)
-                                        .addComponent(sokDatumButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(laggTillButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(tillbakaButton))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sokEfterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblStatus)
-                                    .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(dcSlutDatum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dcStartDatum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(53, 53, 53)
+                                .addComponent(laggTillButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(lblStatus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(allaProjektButton)
-                    .addComponent(avdelningensProjektButton)
-                    .addComponent(minaProjektButton))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sokLabel)
-                    .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblStatus)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(allaProjektButton)
+                                    .addComponent(avdelningensProjektButton)
+                                    .addComponent(minaProjektButton))
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(sokLabel)
+                                    .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(dcStartDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(sokEfterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sokDatumButton)
-                            .addComponent(laggTillButton))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(tillbakaButton)
-                        .addGap(14, 14, 14))))
+                            .addComponent(dcSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(laggTillButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(tillbakaButton)
+                .addContainerGap())
         );
 
         pack();
@@ -282,14 +281,6 @@ public class ProjektFonster extends javax.swing.JFrame {
             visaData();
         }
     }//GEN-LAST:event_sokfaltKeyPressed
-
-    private void sokDatumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokDatumButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sokDatumButtonActionPerformed
-
-    private void sokDatumButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokDatumButtonMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sokDatumButtonMouseClicked
 
     private void allaProjektButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allaProjektButtonActionPerformed
         // TODO add your handling code here:
@@ -437,6 +428,22 @@ public class ProjektFonster extends javax.swing.JFrame {
         this.uppdateraFonster();
     }//GEN-LAST:event_formWindowGainedFocus
 
+    private void dcStartDatumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcStartDatumPropertyChange
+        if(dcStartDatum.getDate() != null){
+            String datum = new SimpleDateFormat("yyyy-MM-dd").format(dcStartDatum.getDate());
+            System.out.println(datum);
+            dcSlutDatum.setMinSelectableDate(dcStartDatum.getDate());
+        }
+    }//GEN-LAST:event_dcStartDatumPropertyChange
+
+    private void dcSlutDatumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcSlutDatumPropertyChange
+        if(dcSlutDatum.getDate() != null){
+            String datum = new SimpleDateFormat("yyyy-MM-dd").format(dcSlutDatum.getDate());
+            System.out.println(datum);
+            dcStartDatum.setMaxSelectableDate(dcSlutDatum.getDate());
+        }   
+    }//GEN-LAST:event_dcSlutDatumPropertyChange
+
     
     private void initKolumner(){
         tabell.addColumn("pid"); //denna ska gömmas senare
@@ -544,12 +551,13 @@ public class ProjektFonster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton allaProjektButton;
     private javax.swing.JButton avdelningensProjektButton;
+    private com.toedter.calendar.JDateChooser dcSlutDatum;
+    private com.toedter.calendar.JDateChooser dcStartDatum;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton laggTillButton;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JButton minaProjektButton;
     private javax.swing.JTable projektTable;
-    private javax.swing.JButton sokDatumButton;
     private javax.swing.JComboBox<String> sokEfterComboBox;
     private javax.swing.JLabel sokLabel;
     private javax.swing.JTextField sokfalt;
