@@ -19,6 +19,7 @@ public class LandRegister {
     
     public LandRegister(InfDB idb){
         this.idb = idb;
+        hamtaAllaLand();
     }
     
     public ArrayList<Land> getLista(){

@@ -75,6 +75,7 @@ public class MenyFonster extends javax.swing.JFrame {
         tpMalInfoText = new javax.swing.JTextPane();
         loggaUtButton = new javax.swing.JButton();
         partnersButton = new javax.swing.JButton();
+        btnLander = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Start");
@@ -323,6 +324,14 @@ public class MenyFonster extends javax.swing.JFrame {
         });
         getContentPane().add(partnersButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 130, -1));
 
+        btnLander.setText("Länder");
+        btnLander.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLanderActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLander, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 130, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -450,6 +459,11 @@ public class MenyFonster extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_partnersButtonMouseClicked
 
+    private void btnLanderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLanderActionPerformed
+        new LandFonster(inloggadAnvandare, idb).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnLanderActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -489,6 +503,7 @@ public class MenyFonster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnstallda;
     private javax.swing.JButton btnAvdelning;
+    private javax.swing.JButton btnLander;
     private javax.swing.JButton btnMal_1;
     private javax.swing.JButton btnMal_10;
     private javax.swing.JButton btnMal_11;
