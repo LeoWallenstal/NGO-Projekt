@@ -53,10 +53,7 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblFornamnet" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblFornamnet" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
                                   <Component id="lblEfternamnet" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblAdressen" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblEposten" min="-2" max="-2" attributes="0"/>

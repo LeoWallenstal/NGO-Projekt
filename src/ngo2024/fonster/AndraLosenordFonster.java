@@ -9,6 +9,7 @@ package ngo2024.fonster;
 import ngo2024.Anvandare;
 import ngo2024.Validerare;
 import oru.inf.InfDB;
+import oru.inf.InfException;
 
 /**
  *
@@ -18,18 +19,33 @@ public class AndraLosenordFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private MinaUppgifterFonster minaUppgifterFonster;
     /**
      * Creates new form AndraLosenord
      */
-    public AndraLosenordFonster(InfDB idb, Anvandare inloggadAnvandare) {
+    public AndraLosenordFonster(InfDB idb, Anvandare inloggadAnvandare, MinaUppgifterFonster minaUppgifterFonster) {
         initComponents();
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        this.minaUppgifterFonster = minaUppgifterFonster;
         setLocationRelativeTo(null);
         lblFelmeddelandeNyttLosenord.setVisible(false);
         lblFelmeddelandeOrginalLosenord.setVisible(false);
     }
-
+    
+    private void updateDB(String nyttLosenord){
+        String sqlFraga = "UPDATE anstalld SET "
+                + "losenord = '" + nyttLosenord + "' "
+                + "WHERE aid = " + inloggadAnvandare.getAnstallningsID();
+        try{
+            idb.update(sqlFraga);
+            inloggadAnvandare = new Anvandare(idb, inloggadAnvandare.getAnstallningsID());
+        }
+        catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -192,7 +208,12 @@ public class AndraLosenordFonster extends javax.swing.JFrame {
                 if(nyttLosenord1.equals(nyttLosenord2)){
                    if(Validerare.formatLosenord(nyttLosenord1)){
                        //ska ändra i db 
+                       updateDB(nyttLosenord1);
+                       System.out.println("Korrekt");
                        this.setVisible(false);
+                       minaUppgifterFonster.setVisible(false);
+                       new MinaUppgifterFonster(idb,inloggadAnvandare).setVisible(true);
+                       
                     }
                    else {
                         String felMed = "Lösenordet måste innehålla 8 tecken och minst 1 siffra.";

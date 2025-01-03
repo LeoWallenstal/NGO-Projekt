@@ -282,7 +282,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAndraUppgifterActionPerformed
 
     private void btnAndraLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraLosenordActionPerformed
-        new AndraLosenordFonster(idb, inloggadAnvandare).setVisible(true);
+        new AndraLosenordFonster(idb, inloggadAnvandare, this).setVisible(true);
     }//GEN-LAST:event_btnAndraLosenordActionPerformed
 
     private void btnTillbakaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTillbakaMouseClicked
