@@ -30,7 +30,7 @@ public class Avdelning {
     
     public Avdelning(HashMap<String, String> enAvdelning, InfDB idb){
         this.idb = idb;
-        this.anstallda = hamtaAnstallda();
+        hamtaAnstallda();
         
         for(String key : enAvdelning.keySet()){
             switch(key){
@@ -127,7 +127,7 @@ public class Avdelning {
                 }
             }
         }
-        anstallda = hamtaAnstallda();
+        hamtaAnstallda();
     }
     
     public String toString(){
@@ -195,7 +195,27 @@ public class Avdelning {
         return anstallda;
     }
     
-    private ArrayList<Anvandare> hamtaAnstallda(){
+    public Anvandare getAnstalld(int i){
+        if(i >= 0 && i < anstallda.size()){
+            return anstallda.get(i);
+        }
+        else{
+            return null;
+        }
+    }
+    
+    public void hamtaSoktaAnstallda(String sokord){
+        ArrayList<Anvandare> resultat = new ArrayList<>();
+        
+        for(Anvandare enAnstalld : anstallda){
+            if(enAnstalld.getFullNamn().startsWith(sokord)){
+                resultat.add(enAnstalld);
+            }
+        }
+        anstallda = resultat;
+    }
+    
+    public void hamtaAnstallda(){
         ArrayList<Anvandare> avdelningensAnstallda = new ArrayList<>();
         ArrayList<HashMap<String, String>>avdelningensAnstalldaMap = new ArrayList<>();
     
@@ -213,6 +233,7 @@ public class Avdelning {
             String anstalldID = enAnstalld.get("aid");
             avdelningensAnstallda.add(new Anvandare(idb, anstalldID));
         }
-        return avdelningensAnstallda;
+        anstallda = avdelningensAnstallda;
     }
+    
 }
