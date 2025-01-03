@@ -21,13 +21,14 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
     
     public VarningJaNejFonster(Projekt attTaBort, ProjektInfoFonster forrafonstret) {
         initComponents();
+        this.setLocationRelativeTo(forrafonstret);
         this.forrafonstret = forrafonstret;
         this.attTaBort = attTaBort;
         
         this.setTitle("SDG Sweden - Ta bort " + attTaBort.getProjektnamn());
         
-        textLabel.setText("Du håller på att ta bort " + attTaBort.getProjektnamn() + "."
-            + "\nVill du fortsätta?");
+        varningRubrik.setText("Du håller på att ta bort " + attTaBort.getProjektnamn() + ".");
+        varningUndertext.setText("Vill du fortsätta?");
     }
 
     /**
@@ -41,7 +42,12 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
 
         jaButton = new javax.swing.JButton();
         nejButton = new javax.swing.JButton();
-        textLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        varningRubrik = new javax.swing.JLabel();
+        varningUndertext = new javax.swing.JLabel();
+
+        setMinimumSize(new java.awt.Dimension(300, 170));
+        setResizable(false);
 
         jaButton.setText("Ja");
         jaButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -57,27 +63,48 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/icons8-warning-48.png"))); // NOI18N
+
+        varningRubrik.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        varningRubrik.setText("jLabel2");
+
+        varningUndertext.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jaButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addComponent(nejButton)
-                .addGap(40, 40, 40))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(textLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jaButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                        .addComponent(nejButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(varningRubrik))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(varningUndertext)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(textLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                 .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(varningRubrik)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(varningUndertext)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jaButton)
                     .addComponent(nejButton))
@@ -135,8 +162,10 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jaButton;
     private javax.swing.JButton nejButton;
-    private javax.swing.JLabel textLabel;
+    private javax.swing.JLabel varningRubrik;
+    private javax.swing.JLabel varningUndertext;
     // End of variables declaration//GEN-END:variables
 }

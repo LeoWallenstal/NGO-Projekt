@@ -22,8 +22,10 @@ public class Validerare {
             return bokstaver.matches("^[a-zA-ZåäöÅÄÖ ]+$");
     }
     
+    //Kollar formatet på en adress där kommatecken mellan stad är optional
+    //e.g. "123 Main Street, Anytown", men även "123 Main Street Anytown" ska funka
     public static boolean arAdress(String adress){
-            return adress.matches("^(\\d+)\\s([A-Za-z\\s]+)\\s([A-Za-z]+)$");
+            return adress.matches("^(\\d+)\\s([A-Za-z\\s-]+)(?:,\\s)?([A-Za-z\\s-]+)$");
     }
     
     public static boolean arSiffror(String siffror){
