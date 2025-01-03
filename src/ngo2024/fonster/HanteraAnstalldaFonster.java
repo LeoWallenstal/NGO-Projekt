@@ -4,6 +4,8 @@
  */
 package ngo2024.fonster;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import oru.inf.InfDB;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
@@ -28,6 +30,8 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         displayAnstallda();
+        tblAnstallda.setDefaultEditor(Object.class, null);
+        setWindowSize();
     }
 
     /**
@@ -46,6 +50,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         btnTillbaka = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1020, 576));
 
         tblAnstallda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -57,14 +62,19 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblAnstallda);
 
-        btnLaggTillAnstalld.setText("Lägg till ny anställd");
+        btnLaggTillAnstalld.setText("Registrera anställd");
         btnLaggTillAnstalld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLaggTillAnstalldActionPerformed(evt);
             }
         });
 
-        btnTaBortAnstalld.setText("Ta bort en anställd");
+        btnTaBortAnstalld.setText("Ta bort anställd");
+        btnTaBortAnstalld.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaBortAnstalldActionPerformed(evt);
+            }
+        });
 
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
@@ -77,42 +87,65 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(btnTillbaka)
-                .addGap(116, 116, 116)
-                .addComponent(btnLaggTillAnstalld)
-                .addGap(45, 45, 45)
-                .addComponent(btnTaBortAnstalld)
-                .addGap(26, 26, 26))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnTillbaka)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLaggTillAnstalld)
+                            .addComponent(btnTaBortAnstalld))
+                        .addGap(34, 34, 34))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTaBortAnstalld)
-                    .addComponent(btnLaggTillAnstalld)
-                    .addComponent(btnTillbaka))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(btnLaggTillAnstalld)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnTaBortAnstalld)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(19, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addComponent(btnTillbaka)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setWindowSize(){
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int windowWidth = (int) (screenSize.width * 0.75);
+        int windowHeight = (int) (screenSize.height * 0.75);
+        int x = (screenSize.width - windowWidth) / 2;
+        int y = (screenSize.height - windowHeight) / 2;
+        setBounds(x, y, windowWidth, windowHeight);
+        setLocationRelativeTo(null);
+    }
+    
     private void btnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAnstalldActionPerformed
-        // TODO add your handling code here:
+        new RegistreraAnstalldFonster(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnLaggTillAnstalldActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         new MenyFonster(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+
+    private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
+        new TaBortAnstalldFonster(idb, inloggadAnvandare).setVisible(true);
+    }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
+
 
     private void displayAnstallda() {
         try {
@@ -143,6 +176,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
                     model.addRow(new Object[]{aid, namn, "Administratör", uppgifter.get("namn")});
                 }
+
             }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
