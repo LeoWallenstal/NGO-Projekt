@@ -283,7 +283,7 @@ public class ProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_allaProjektButtonActionPerformed
 
     private void laggTillButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillButtonMouseClicked
-        new LaggTillProjektFonster(inloggadAnvandare, idb).setVisible(true);
+        new LaggTillProjektFonster(inloggadAnvandare, this, idb).setVisible(true);
     }//GEN-LAST:event_laggTillButtonMouseClicked
 
     private void avdelningensProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avdelningensProjektButtonMouseClicked
