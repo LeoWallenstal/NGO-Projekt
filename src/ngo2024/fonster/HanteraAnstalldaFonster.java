@@ -10,6 +10,7 @@ import oru.inf.InfDB;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
 import ngo2024.Anvandare;
+import ngo2024.Projekt;
 import oru.inf.InfException;
 
 /**
@@ -48,8 +49,10 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         btnLaggTillAnstalld = new javax.swing.JButton();
         btnTaBortAnstalld = new javax.swing.JButton();
         btnTillbaka = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SDG Sweden - Anställda");
         setMaximumSize(new java.awt.Dimension(1020, 576));
 
         tblAnstallda.setModel(new javax.swing.table.DefaultTableModel(
@@ -60,6 +63,11 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
                 "AnställningsID", "Namn", "Roll", "Avdelning"
             }
         ));
+        tblAnstallda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAnstalldaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblAnstallda);
 
         btnLaggTillAnstalld.setText("Registrera anställd");
@@ -83,6 +91,8 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Klicka på den anställda som du vill ta bort!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,32 +100,28 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTillbaka)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLaggTillAnstalld)
-                            .addComponent(btnTaBortAnstalld))
-                        .addGap(34, 34, 34))))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLaggTillAnstalld)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTaBortAnstalld)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)))
+                .addGap(49, 235, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(btnLaggTillAnstalld)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnTaBortAnstalld)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(19, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(btnTillbaka)
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTillbaka)
+                    .addComponent(btnLaggTillAnstalld)
+                    .addComponent(btnTaBortAnstalld)
+                    .addComponent(jLabel1))
                 .addContainerGap())
         );
 
@@ -133,7 +139,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     }
     
     private void btnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAnstalldActionPerformed
-        new RegistreraAnstalldFonster(idb, inloggadAnvandare).setVisible(true);
+        new RegistreraAnstalldFonster(idb, inloggadAnvandare, this).setVisible(true);
     }//GEN-LAST:event_btnLaggTillAnstalldActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
@@ -143,11 +149,29 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
 
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
-        new TaBortAnstalldFonster(idb, inloggadAnvandare).setVisible(true);
+        
+        
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
+    private void tblAnstalldaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnstalldaMouseClicked
+        // Hämta raden som är vald när musen klickar
+        int rad = tblAnstallda.rowAtPoint(evt.getPoint());
+    
+        // Om rad är vald (inte -1) och är inom tabellens intervall
+        if (rad >= 0 && rad < tblAnstallda.getRowCount()) {
+      
+        // Hämta värdet från den första kolumnen (aid)
+        String aid = tblAnstallda.getValueAt(rad, 0).toString();
+        
+        Anvandare anvandareAttTaBort = new Anvandare(idb, aid);
 
-    private void displayAnstallda() {
+        // Skapa och öppna ett nytt fönster som skickar med aid
+        new VarningJaNejFonster(anvandareAttTaBort, this).setVisible(true);
+        }
+    }//GEN-LAST:event_tblAnstalldaMouseClicked
+
+
+    public void displayAnstallda() {
         try {
 
             String sqlFraga = "SELECT aid FROM anstalld ORDER BY aid ASC";
@@ -223,6 +247,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     private javax.swing.JButton btnLaggTillAnstalld;
     private javax.swing.JButton btnTaBortAnstalld;
     private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAnstallda;
     // End of variables declaration//GEN-END:variables

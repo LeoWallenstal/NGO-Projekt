@@ -15,12 +15,15 @@ public class TaBortAnstalldFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private HanteraAnstalldaFonster forraFonstret;
+    
     /**
      * Creates new form TaBortAnstalldFonster
      */
-    public TaBortAnstalldFonster(InfDB idb, Anvandare inloggadAnvandare) {
+    public TaBortAnstalldFonster(InfDB idb, Anvandare inloggadAnvandare, HanteraAnstalldaFonster forraFonstret) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        this.forraFonstret = forraFonstret;
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -35,6 +38,8 @@ public class TaBortAnstalldFonster extends javax.swing.JFrame {
     private void initComponents() {
 
         btnTillbaka = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setTitle("SDG Sweden - Ta bort anställd");
 
@@ -45,19 +50,30 @@ public class TaBortAnstalldFonster extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Ta bort en anställd");
+
+        jLabel2.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnTillbaka)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(btnTillbaka))
+                .addContainerGap(270, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(271, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
                 .addComponent(btnTillbaka)
                 .addContainerGap())
         );
@@ -106,5 +122,7 @@ public class TaBortAnstalldFonster extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

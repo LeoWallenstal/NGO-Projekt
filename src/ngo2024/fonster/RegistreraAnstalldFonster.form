@@ -285,16 +285,25 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelMFornamn">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Kan endast inneh&#xe5;lla bokst&#xe4;ver!"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelMEfternamn">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Kan endast inneh&#xe5;lla bokst&#xe4;ver!"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelMAdress">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Adressen m&#xe5;ste anges i formatet &quot;Nummer Gatuadress, Platsnamn&quot;!"/>
       </Properties>
     </Component>
@@ -320,11 +329,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelMEpost">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Epost b&#xf6;r f&#xf6;lja format: exempel@dom&#xe4;n.com"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelMTelefon">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Telefonnumret m&#xe5;ste anges i formatet xxx-xxx-xxxx, d&#xe4;r x &#xe4;r en siffra."/>
       </Properties>
     </Component>
@@ -338,11 +353,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelMAvdelning">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="V&#xe4;lj en avdelning!"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelMLosenord">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Slumpa fram ett l&#xf6;senord!"/>
       </Properties>
     </Component>
@@ -370,6 +391,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelMRoll">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="V&#xe4;lj en roll!"/>
       </Properties>
     </Component>
@@ -392,6 +416,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblHanvisningMentor">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ange Anst&#xe4;llningsID p&#xe5; mentorn alternativt l&#xe4;mna tom om mentor saknas!"/>
       </Properties>
     </Component>

@@ -21,10 +21,11 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private HanteraAnstalldaFonster forraFonstret;
     /**
      * Creates new form LaggTillTaBortFonster
      */
-    public RegistreraAnstalldFonster(InfDB idb, Anvandare inloggadAnvandare) {
+    public RegistreraAnstalldFonster(InfDB idb, Anvandare inloggadAnvandare, HanteraAnstalldaFonster forraFonstret) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
@@ -35,7 +36,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         lblMentor.setVisible(false);
         tfMentorsID.setVisible(false);
         lblHanvisningMentor.setVisible(false);
-        
+        this.forraFonstret = forraFonstret;
     }
 
     /**
@@ -130,10 +131,13 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
             }
         });
 
+        lblFelMFornamn.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMFornamn.setText("Kan endast innehålla bokstäver!");
 
+        lblFelMEfternamn.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMEfternamn.setText("Kan endast innehålla bokstäver!");
 
+        lblFelMAdress.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMAdress.setText("Adressen måste anges i formatet \"Nummer Gatuadress, Platsnamn\"!");
 
         lblLosenord.setText("Lösenord:");
@@ -147,8 +151,10 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
 
         lblLosenordSlumpas.setText(" ");
 
+        lblFelMEpost.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMEpost.setText("Epost bör följa format: exempel@domän.com");
 
+        lblFelMTelefon.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMTelefon.setText("Telefonnumret måste anges i formatet xxx-xxx-xxxx, där x är en siffra.");
 
         btnRegistrera.setText("Registrera");
@@ -158,8 +164,10 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
             }
         });
 
+        lblFelMAvdelning.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMAvdelning.setText("Välj en avdelning!");
 
+        lblFelMLosenord.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMLosenord.setText("Slumpa fram ett lösenord!");
 
         cbRoll.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj roll...", "Handläggare", "Administratör" }));
@@ -171,6 +179,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
 
         lblRoll.setText("Roll:");
 
+        lblFelMRoll.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMRoll.setText("Välj en roll!");
 
         lblAnsvarighetsomrade.setText("Ansvarighetsområde:");
@@ -183,6 +192,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
             }
         });
 
+        lblHanvisningMentor.setForeground(new java.awt.Color(255, 0, 51));
         lblHanvisningMentor.setText("Ange AnställningsID på mentorn alternativt lämna tom om mentor saknas!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -381,7 +391,6 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSlumpaLosenordActionPerformed
 
     private void btnRegistreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistreraActionPerformed
-        System.out.println("Knappen 'Registrera' har tryckts.");
         
         boolean formatKorrekt = true;
         lblFelMFornamn.setVisible(false);
@@ -397,33 +406,23 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         String telefonNr = tfTelefonNr.getText();
         String angettID = tfMentorsID.getText();
         
-        if(Validerare.arBokstaver(fornamn)){
-            }
-        else {
+        if(Validerare.arBokstaver(fornamn) == false){
             formatKorrekt = false;
             lblFelMFornamn.setVisible(true);
         }
-        if(Validerare.arBokstaver(efternamn)){
-            }
-        else{
+        if(Validerare.arBokstaver(efternamn) == false){
             formatKorrekt = false;
             lblFelMEfternamn.setVisible(true);
         }
-        if(Validerare.arAdress(adress)){
-            }
-        else{
+        if(Validerare.arAdress(adress) == false){
             formatKorrekt = false;
             lblFelMAdress.setVisible(true);   
         }
-        if(Validerare.arEpostAdress(epost)){
-            }
-        else{
+        if(Validerare.arEpostAdress(epost) == false){
             formatKorrekt = false;
             lblFelMEpost.setVisible(true);  
         }
-        if(Validerare.arTelefonnummer(telefonNr)){
-            }
-        else{
+        if(Validerare.arTelefonnummer(telefonNr) == false){
             formatKorrekt = false;
             lblFelMTelefon.setVisible(true);  
         }
@@ -439,16 +438,13 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
             formatKorrekt = false;
             lblFelMRoll.setVisible(true);
         }
-        if(Validerare.arSiffror(angettID)){
-            }
-        else{
+        
+        if(cbRoll.getSelectedItem().equals("Handläggare")){
+            
+            if(Validerare.arSiffror(angettID) == false){
             formatKorrekt = false;
             lblHanvisningMentor.setText("Anges med siffror!");
             }
-        
-        System.out.println("valideringar klara");
-        
-        if(cbRoll.getSelectedItem().equals("Handläggare")){
             
             try{
                 String sqlFraga = "SELECT aid FROM handlaggare";
@@ -459,24 +455,20 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
                 }
             }
             catch(InfException ex){
-                System.out.println("Fel 1:" + ex.getMessage());
+                ex.getMessage();
             }
         }
         
-   System.out.println("Fel innan");
-        
-    if(formatKorrekt){
-        System.out.println("true");
+   if(formatKorrekt){
         try{
             //hämtar anställd med högst anst.ID och ger ny anställd idt +1
             String sqlFraga = "SELECT MAX(aid) FROM anstalld";
-             System.out.println("Fel");
+            
             ArrayList<String> maxAidList = idb.fetchColumn(sqlFraga);
-             System.out.println("Fel 21");
+            
             int maxAid = Integer.parseInt(maxAidList.get(0));
             int aid = maxAid + 1;
             
-            System.out.println("Fel 1");
             
             //hämtar dagens datum
             LocalDate dagensDatum = LocalDate.now();
@@ -485,8 +477,6 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
             //hämtar lösenordet som slumpats fram för att kunna använda i sql frågan
             String losenord = lblLosenord.getText();
         
-            System.out.println("Fel 2");
-            
             //omvandlar val av avd. till siffra 
             int avdelning;
             if(cbAvdelning.getSelectedItem().equals("Hållbar Energi och Klimatförändringar")){
@@ -499,16 +489,12 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
                 avdelning = 3;
             }
        
-            System.out.println("Fel 3 ");
-            
             //lägger till i anställdtabell
-            System.out.println("Utför insert till databasen...");
             sqlFraga = "INSERT INTO anstalld (aid, fornamn, efternamn, adress, epost, telefon, anstallningsdatum, losenord, avdelning) "
                 + "VALUES (" + aid + ", '" + fornamn + "', '" + efternamn + "', '" + adress + "', '" +
                 epost + "', '" + telefonNr + "', '" + anstallningsdatum + "', '" + losenord + "', " + avdelning + ")";
             idb.insert(sqlFraga);
-            System.out.println("Insert klart.");
-        
+            
             //hämtar data för att kunna lägga till i handläggartabellen
             if(cbRoll.getSelectedItem().equals("Handläggare")){
                 String beskrivningAnsvar = tfAnsvarighetsomrade.getText();
@@ -540,8 +526,11 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
             System.out.println("Fel 2 " + ex.getMessage());
             }
         
+        
         this.setVisible(false);
-        new HanteraAnstalldaFonster(idb, inloggadAnvandare).setVisible(true);
+        
+        forraFonstret.displayAnstallda();
+        
     }
     }//GEN-LAST:event_btnRegistreraActionPerformed
 
