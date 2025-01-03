@@ -15,19 +15,40 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
     /**
      * Creates new form JaNejFonster
      */
+    
     private ProjektInfoFonster forrafonstret;
     private Projekt attTaBort;
-
+    private HanteraAnstalldaFonster forraFonstretAnstallda;
+    private Anvandare anvandareAttTaBort;
+    private String taBortVad;
     
     public VarningJaNejFonster(Projekt attTaBort, ProjektInfoFonster forrafonstret) {
         initComponents();
-        this.setLocationRelativeTo(forrafonstret);
         this.forrafonstret = forrafonstret;
         this.attTaBort = attTaBort;
+        this.anvandareAttTaBort = null;
+        this.forraFonstretAnstallda = null;
+        taBortVad = "Projekt";
+        this.setLocationRelativeTo(forrafonstret);
         
         this.setTitle("SDG Sweden - Ta bort " + attTaBort.getProjektnamn());
         
         varningRubrik.setText("Du håller på att ta bort " + attTaBort.getProjektnamn() + ".");
+        varningUndertext.setText("Vill du fortsätta?");
+    }
+    
+    public VarningJaNejFonster(Anvandare anvandareAttTaBort, HanteraAnstalldaFonster forraFonstretAnstallda){
+        initComponents();
+        this.anvandareAttTaBort = anvandareAttTaBort;
+        this.forraFonstretAnstallda = forraFonstretAnstallda;
+        this.forrafonstret = null;
+        this.attTaBort = null;
+        taBortVad = "Anställd";
+        this.setLocationRelativeTo(forraFonstretAnstallda);
+        
+        this.setTitle("SDG Sweden - Ta bort " + anvandareAttTaBort.getFullNamn());
+        
+        varningRubrik.setText("Du håller på att ta bort anställd " + anvandareAttTaBort.getFullNamn() + ".");
         varningUndertext.setText("Vill du fortsätta?");
     }
 
@@ -105,9 +126,9 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(varningUndertext)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jaButton)
-                    .addComponent(nejButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nejButton)
+                    .addComponent(jaButton))
                 .addGap(16, 16, 16))
         );
 
@@ -115,10 +136,16 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jaButtonMouseClicked
-        attTaBort.deleteProjektDB();
-        forrafonstret.setVisible(false);
-        this.setVisible(false);
-        
+        if(taBortVad.equals("Projekt")){
+            attTaBort.deleteProjektDB();
+            forrafonstret.setVisible(false);
+            this.setVisible(false);
+        }
+        if(taBortVad.equals("Anställd")){
+            anvandareAttTaBort.deleteAnvandareDb();
+            forraFonstretAnstallda.reset();
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_jaButtonMouseClicked
 
     private void nejButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nejButtonMouseClicked
