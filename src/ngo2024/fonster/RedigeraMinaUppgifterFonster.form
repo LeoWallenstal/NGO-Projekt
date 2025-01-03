@@ -26,13 +26,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnSparaNyaUppgifter" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -46,7 +46,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="tfLosenord" alignment="0" pref="94" max="32767" attributes="0"/>
+                          <Component id="tfLosenord" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfTelefonnr" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfAID" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfAnstallningsdatum" alignment="0" max="32767" attributes="0"/>
@@ -54,19 +54,19 @@
                           <Component id="tfEpost" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfAdress" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfEfternamn" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tfFornamn" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfFornamn" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblFornamnFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEfternamnFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAdressFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEpostFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTelefonNrFelM" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblFornamnFelM" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblEfternamnFelM" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblAdressFelM" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblEpostFelM" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblTelefonNrFelM" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="214" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -123,12 +123,12 @@
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfAvdelning" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSparaNyaUppgifter" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="12" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -150,6 +150,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfTelefonnr">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfTelefonnrKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
@@ -196,6 +199,7 @@
     <Component class="javax.swing.JTextField" name="tfFornamn">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfFornamnActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfFornamnKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblEpost">
@@ -204,6 +208,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfEfternamn">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfEfternamnKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLosenord">
       <Properties>
@@ -213,6 +220,7 @@
     <Component class="javax.swing.JTextField" name="tfAdress">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfAdressActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfAdressKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -221,6 +229,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfEpost">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfEpostKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFornamnFelM">
       <Properties>

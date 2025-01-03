@@ -72,7 +72,6 @@ public class InloggningFonster extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         btnAdmin = new javax.swing.JButton();
         btnHandlaggare = new javax.swing.JButton();
-        btnAnstalld = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Inloggning");
@@ -122,13 +121,6 @@ public class InloggningFonster extends javax.swing.JFrame {
             }
         });
 
-        btnAnstalld.setText("Anställd");
-        btnAnstalld.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnstalldActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,9 +149,7 @@ public class InloggningFonster extends javax.swing.JFrame {
                 .addComponent(btnAdmin)
                 .addGap(57, 57, 57)
                 .addComponent(btnHandlaggare)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAnstalld)
-                .addGap(44, 44, 44))
+                .addGap(44, 166, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,8 +171,7 @@ public class InloggningFonster extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdmin)
-                    .addComponent(btnHandlaggare)
-                    .addComponent(btnAnstalld))
+                    .addComponent(btnHandlaggare))
                 .addGap(34, 34, 34))
         );
 
@@ -205,19 +194,14 @@ public class InloggningFonster extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnLoggaInActionPerformed
 
-    private void btnAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnstalldActionPerformed
-        // TODO add your handling code here:
-        login("emily.c@example.com","password123");
-    }//GEN-LAST:event_btnAnstalldActionPerformed
-
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
-        login("muhammad.a@example.com","password456");
+        login("fatima.alm@example.com","passwordxyz");
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlaggareActionPerformed
         // TODO add your handling code here:
-        login("luis.m@example.com","passwordabc");
+        login("ling.w@example.com","password456");
     }//GEN-LAST:event_btnHandlaggareActionPerformed
 
     /**
@@ -258,7 +242,6 @@ public class InloggningFonster extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdmin;
-    private javax.swing.JButton btnAnstalld;
     private javax.swing.JButton btnHandlaggare;
     private javax.swing.JButton btnLoggaIn;
     private javax.swing.JLabel lblEPost;

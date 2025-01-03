@@ -20,6 +20,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+
     /**
      * Creates new form HanteraAnstallda
      */
@@ -140,53 +141,52 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
+
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
         new TaBortAnstalldFonster(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
-    private void displayAnstallda(){
-        try{
-        
-        
-        String sqlFraga = "SELECT aid FROM anstalld ORDER BY aid ASC";
-        
-        ArrayList<String> anstallda = idb.fetchColumn(sqlFraga);
-        
-        sqlFraga = "SELECT aid FROM handlaggare ";
+
+    private void displayAnstallda() {
+        try {
+
+            String sqlFraga = "SELECT aid FROM anstalld ORDER BY aid ASC";
+
+            ArrayList<String> anstallda = idb.fetchColumn(sqlFraga);
+
+            sqlFraga = "SELECT aid FROM handlaggare ";
             ArrayList<String> handlaggare = idb.fetchColumn(sqlFraga);
-            
-        
-        for(String aid: anstallda){
-            
-            sqlFraga = "SELECT fornamn, efternamn, namn FROM anstalld "
-                    + "JOIN avdelning ON anstalld.avdelning = avdelning.avdid "
-                    + "WHERE aid =" + aid;
-                    
-            HashMap<String, String> uppgifter = idb.fetchRow(sqlFraga);
-            
-            String namn = uppgifter.get("fornamn") + " "+ uppgifter.get("efternamn");
-             
-    
-            
-           if(handlaggare.contains(aid)){
-               DefaultTableModel model = (DefaultTableModel) tblAnstallda.getModel();
-        
-               model.addRow(new Object[]{aid, namn, "Handläggare", uppgifter.get("namn")} );
+
+            for (String aid : anstallda) {
+
+                sqlFraga = "SELECT fornamn, efternamn, namn FROM anstalld "
+                        + "JOIN avdelning ON anstalld.avdelning = avdelning.avdid "
+                        + "WHERE aid =" + aid;
+
+                HashMap<String, String> uppgifter = idb.fetchRow(sqlFraga);
+
+                String namn = uppgifter.get("fornamn") + " " + uppgifter.get("efternamn");
+
+                if (handlaggare.contains(aid)) {
+                    DefaultTableModel model = (DefaultTableModel) tblAnstallda.getModel();
+
+                    model.addRow(new Object[]{aid, namn, "Handläggare", uppgifter.get("namn")});
+                } else {
+                    DefaultTableModel model = (DefaultTableModel) tblAnstallda.getModel();
+
+                    model.addRow(new Object[]{aid, namn, "Administratör", uppgifter.get("namn")});
+                }
+
             }
-            else{
-               DefaultTableModel model = (DefaultTableModel) tblAnstallda.getModel();
-        
-               model.addRow(new Object[]{aid, namn, "Administratör", uppgifter.get("namn")} );
-            }
-        }    
-        }
-        catch(InfException ex){
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
     /**
      * @param args the command line arguments
      */
-    //public static void main(String args[]) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

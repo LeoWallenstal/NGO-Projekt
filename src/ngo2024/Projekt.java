@@ -212,6 +212,10 @@ public class Projekt {
     public String getLandID(){
         return landID;
     }
+    
+    public ArrayList<Partner> getPartners(){
+        return partners;
+    }
 
     public String toString(){
             String outForsta = "[ProjektID]: " + projektID + "\n[Projektnamn]: " + projektnamn
@@ -419,6 +423,38 @@ public class Projekt {
             return true;
         }
         return false;
+    }
+    
+    public void insertProjektDB(){
+        try{
+            idb.insert("INSERT INTO projekt (pid, projektnamn, beskrivning, "
+                    + "startdatum, slutdatum, kostnad, status, prioritet, projektchef, land) " 
+                    + "VALUES (" + this.getProjektID() + ", '" + this.getProjektnamn() 
+                    + "', '" + this.getBeskrivning() + "', '" + this.getStartdatum() 
+                    + "', " + null + ", '" + this.getKostnad() + "', '" + this.getStatus() 
+                    + "', '" + this.getPrioritet() + "', " + this.getProjektchefID() 
+                    + ", " + this.getLandID() + ");");
+            
+            for(Partner enPartner : partners){
+                idb.insert("INSERT INTO projekt_partner (pid, partner_pid) " 
+                     + "VALUES (" + this.getProjektID() + ", " + enPartner.getPartnerID() + ");");
+            }
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i LaggTillProjektFonster.java, insertProjektDB()");
+        }
+        
+    }
+    
+    public void deleteProjektDB(){
+        try{
+            idb.delete("DELETE FROM ans_proj WHERE pid = " + this.getProjektID());
+            idb.delete("DELETE FROM proj_hallbarhet WHERE pid = " + this.getProjektID());
+            idb.delete("DELETE FROM projekt_partner WHERE pid = " + this.getProjektID()); 
+            idb.delete("DELETE FROM projekt WHERE pid = " + this.getProjektID());
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i LaggTillProjektFonster.java, insertProjektDB()");
+        }
     }
     
 }

@@ -37,6 +37,8 @@ public class ProjektFonster extends javax.swing.JFrame {
     private ProjektRegister projektregister;
     private SokKategori kategori;
     private DefaultTableModel tabell;
+    private int hoveredRow = -1;
+    private int hoveredColumn;
     
     /**
      * Creates new form Projekt
@@ -55,6 +57,7 @@ public class ProjektFonster extends javax.swing.JFrame {
         initKolumner(); //Skapar och namnsätter kolumner
         
         visaData();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -78,11 +81,17 @@ public class ProjektFonster extends javax.swing.JFrame {
         avdelningensProjektButton = new javax.swing.JButton();
         minaProjektButton = new javax.swing.JButton();
         laggTillButton = new javax.swing.JButton();
-        taBortButton = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Projekt");
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         projektTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,6 +103,11 @@ public class ProjektFonster extends javax.swing.JFrame {
         ));
         projektTable.setShowHorizontalLines(true);
         projektTable.setShowVerticalLines(true);
+        projektTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                projektTableMouseMoved(evt);
+            }
+        });
         projektTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 projektTableMouseClicked(evt);
@@ -175,13 +189,6 @@ public class ProjektFonster extends javax.swing.JFrame {
             }
         });
 
-        taBortButton.setText("Ta bort projekt");
-        taBortButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                taBortButtonMouseClicked(evt);
-            }
-        });
-
         lblStatus.setText("Status:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -205,15 +212,15 @@ public class ProjektFonster extends javax.swing.JFrame {
                                 .addComponent(sokLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(195, 195, 195))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(sokEfterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(65, 65, 65)
-                                        .addComponent(sokDatumButton)))
-                                .addGap(50, 50, 50)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(taBortButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(laggTillButton, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))))
+                                        .addComponent(sokDatumButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(laggTillButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -241,23 +248,20 @@ public class ProjektFonster extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sokLabel)
-                    .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(laggTillButton))
+                    .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(sokEfterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(sokDatumButton)
-                            .addComponent(taBortButton))
+                            .addComponent(laggTillButton))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(tillbakaButton)
                         .addGap(14, 14, 14))))
         );
-
-        getAccessibleContext().setAccessibleName("SDG Sweden - Projekt");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -295,10 +299,6 @@ public class ProjektFonster extends javax.swing.JFrame {
         new LaggTillProjektFonster(inloggadAnvandare, idb).setVisible(true);
     }//GEN-LAST:event_laggTillButtonMouseClicked
 
-    private void taBortButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortButtonMouseClicked
-        //Den här ska bara vara enabled om man är administratör
-    }//GEN-LAST:event_taBortButtonMouseClicked
-
     private void avdelningensProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avdelningensProjektButtonMouseClicked
         projektregister.tomLista();
         resetKnapparOchSokfalt();
@@ -328,7 +328,7 @@ public class ProjektFonster extends javax.swing.JFrame {
  
     private void statusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusComboBoxActionPerformed
         String status = statusComboBox.getSelectedItem().toString();
-        uppdateraFonster(vy);
+        uppdateraFonster();
         
         switch(status){
             case "Alla":
@@ -377,7 +377,7 @@ public class ProjektFonster extends javax.swing.JFrame {
             Projekt aktuelltProjekt = new Projekt(pid, idb);
             
             //Öppnar nytt fönster som visar mer detaljerad information om ett projekt 
-            new ProjektInfoFonster(inloggadAnvandare, aktuelltProjekt, idb).setVisible(true);
+            new ProjektInfoFonster(inloggadAnvandare, aktuelltProjekt, this, idb).setVisible(true);
         }
         else if(kolumnnamn.equals("Projektchef") && (rad >= 0 && rad < projektTable.getRowCount())){
             String pid = (String)tabell.getValueAt(rad, kolumn-2);
@@ -403,8 +403,42 @@ public class ProjektFonster extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_projektTableMouseClicked
 
+    private void projektTableMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projektTableMouseMoved
+        int row = projektTable.rowAtPoint(evt.getPoint());
+        int column = projektTable.columnAtPoint(evt.getPoint());
+        
+        if(row >= 0 && column >= 0)
+        {
+            String columnNamn = projektTable.getColumnName(column);
+            
+            if(columnNamn.equals("Projektnamn") || columnNamn.equals("Projektchef"))
+            {
+                projektTable.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                hoveredRow = row;
+                hoveredColumn = column;
+            }
+            else
+            {
+                projektTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                hoveredRow = -1;
+                hoveredColumn = -1;
+            } 
+        }
+        else
+        {
+            projektTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            hoveredRow = -1;
+            hoveredColumn = -1;
+        }
+        projektTable.repaint();
+    }//GEN-LAST:event_projektTableMouseMoved
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        this.uppdateraFonster();
+    }//GEN-LAST:event_formWindowGainedFocus
+
+    
     private void initKolumner(){
-        //DefaultTableModel tabell = (DefaultTableModel) projektTable.getModel();
         tabell.addColumn("pid"); //denna ska gömmas senare
         tabell.addColumn("Projektnamn");
         tabell.addColumn("Projektchef");
@@ -421,7 +455,9 @@ public class ProjektFonster extends javax.swing.JFrame {
     private void visaData(){
         rensaDataFonster();
         for(Projekt ettProjekt : projektregister.getLista()){
-            tabell.addRow(ettProjekt.getProjektVyData());
+            tabell.addRow(new Object[]{ettProjekt.getProjektID(), ettProjekt.getProjektnamn(), 
+                ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
+                ettProjekt.getStartdatum()} );
         }
     }
     
@@ -434,7 +470,7 @@ public class ProjektFonster extends javax.swing.JFrame {
         
     };
     
-    private void uppdateraFonster(String vy){
+    public void uppdateraFonster(){
         projektregister.tomLista();
         rensaDataFonster();
         
@@ -457,12 +493,9 @@ public class ProjektFonster extends javax.swing.JFrame {
     private void setKnappar(){
         if(inloggadAnvandare.isAdmin()){
             laggTillButton.setVisible(true);
-            taBortButton.setVisible(true);
         }
         else{
-            laggTillButton.setVisible(false);
-            taBortButton.setVisible(false);
-        }
+            laggTillButton.setVisible(false);    }
     }
     
     private void resetKnapparOchSokfalt(){
@@ -521,7 +554,6 @@ public class ProjektFonster extends javax.swing.JFrame {
     private javax.swing.JLabel sokLabel;
     private javax.swing.JTextField sokfalt;
     private javax.swing.JComboBox<String> statusComboBox;
-    private javax.swing.JButton taBortButton;
     private javax.swing.JButton tillbakaButton;
     // End of variables declaration//GEN-END:variables
 }

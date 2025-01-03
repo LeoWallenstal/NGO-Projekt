@@ -5,13 +5,13 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="SDG Sweden - Projekt"/>
   </Properties>
-  <AccessibilityProperties>
-    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="SDG Sweden - Projekt"/>
-  </AccessibilityProperties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowGainedFocus" listener="java.awt.event.WindowFocusListener" parameters="java.awt.event.WindowEvent" handler="formWindowGainedFocus"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -45,17 +45,17 @@
                               <Component id="sokLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="sokfalt" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="sokfalt" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
+                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="sokEfterComboBox" min="-2" pref="111" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                                       <Component id="sokDatumButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="laggTillButton" min="-2" pref="145" max="-2" attributes="0"/>
                                   </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="taBortButton" max="32767" attributes="0"/>
-                                  <Component id="laggTillButton" pref="145" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -96,7 +96,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="sokLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="sokfalt" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="laggTillButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -104,12 +103,12 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="sokEfterComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="sokDatumButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="taBortButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="laggTillButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="25" max="32767" attributes="0"/>
+                      <EmptySpace pref="26" max="32767" attributes="0"/>
                       <Component id="tillbakaButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   </Group>
@@ -141,6 +140,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="projektTableMouseMoved"/>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="projektTableMouseClicked"/>
           </Events>
         </Component>
@@ -239,14 +239,6 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="laggTillButtonMouseClicked"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="taBortButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Ta bort projekt"/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="taBortButtonMouseClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblStatus">
