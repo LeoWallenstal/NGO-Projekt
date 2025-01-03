@@ -33,6 +33,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         initComponents();
         setWindowSize();
         setUppgifter();
+        btnSparaNyaUppgifter.setEnabled(false);
         orginalFornamn = tfFornamn.getText();
         orginalEfternamn = tfEfternamn.getText();
         orginalAdress = tfAdress.getText();
@@ -46,13 +47,31 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         
     }
     
+    private void insertDB(){
+        String nyttFornamn = tfFornamn.getText();
+        String nyttEfternamn = tfEfternamn.getText();
+        String nyAdress = tfAdress.getText();
+        String nyEpost = tfEpost.getText();
+        String nyttTelefonnummer = tfTelefonnr.getText();
+        
+        String sqlFraga = "UPDATE anstalld SET "
+                + "fornamn = '"+nyttFornamn+"', "
+                + "efternamn = '"+nyttEfternamn+"', "
+                +"adress = '"+nyAdress+"', "
+                +"epost = '"+nyEpost+"', "
+                +"telefon = '"+nyttTelefonnummer+"' "
+                +"WHERE aid = "+inloggadAnvandare.getAnstallningsID();
+        try{
+            idb.update(sqlFraga);
+            inloggadAnvandare = new Anvandare(idb, inloggadAnvandare.getAnstallningsID());
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     private void setWindowSize(){
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int windowWidth = (int) (screenSize.width * 0.75);
-        int windowHeight = (int) (screenSize.height * 0.75);
-        int x = (screenSize.width - windowWidth) / 2;
-        int y = (screenSize.height - windowHeight) / 2;
-        setBounds(x, y, windowWidth, windowHeight);
+        setPreferredSize(new Dimension(850, 350));
+        setMinimumSize(new Dimension(800, 328));
         setLocationRelativeTo(null);
     }
     
@@ -78,7 +97,6 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         tfAnstallningsdatum.enable(false);
         String avdelningsId = inloggadAnvandare.getAvdelningsID();
         String sqlFraga = "SELECT namn FROM avdelning where avdid = " + avdelningsId;
-        System.out.println(sqlFraga);
         try{
         String avdelningsNamn = idb.fetchSingle(sqlFraga);
         tfAvdelning.setText(avdelningsNamn);
@@ -138,6 +156,12 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
 
         jLabel3.setText("Anställningsdatum:");
 
+        tfTelefonnr.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfTelefonnrKeyTyped(evt);
+            }
+        });
+
         jLabel4.setText("Avdelning:");
 
         btnSparaNyaUppgifter.setText("Spara uppgifter");
@@ -165,8 +189,19 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
                 tfFornamnActionPerformed(evt);
             }
         });
+        tfFornamn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfFornamnKeyTyped(evt);
+            }
+        });
 
         lblEpost.setText("Epost:");
+
+        tfEfternamn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfEfternamnKeyTyped(evt);
+            }
+        });
 
         lblLosenord.setText("Lösenord:");
 
@@ -175,8 +210,19 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
                 tfAdressActionPerformed(evt);
             }
         });
+        tfAdress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfAdressKeyTyped(evt);
+            }
+        });
 
         jLabel1.setText("Telefonnummer:");
+
+        tfEpost.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfEpostKeyTyped(evt);
+            }
+        });
 
         lblFornamnFelM.setForeground(new java.awt.Color(255, 0, 51));
         lblFornamnFelM.setText("Kan endast innehålla bokstäver!");
@@ -199,10 +245,10 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTillbaka)
-                        .addGap(22, 22, 22)
+                        .addGap(18, 18, 18)
                         .addComponent(btnSparaNyaUppgifter))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -217,7 +263,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
                             .addComponent(lblFornamn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfLosenord, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                            .addComponent(tfLosenord)
                             .addComponent(tfTelefonnr)
                             .addComponent(tfAID)
                             .addComponent(tfAnstallningsdatum)
@@ -225,15 +271,15 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
                             .addComponent(tfEpost)
                             .addComponent(tfAdress)
                             .addComponent(tfEfternamn)
-                            .addComponent(tfFornamn))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFornamnFelM)
-                    .addComponent(lblEfternamnFelM)
-                    .addComponent(lblAdressFelM)
-                    .addComponent(lblEpostFelM)
-                    .addComponent(lblTelefonNrFelM))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tfFornamn, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFornamnFelM)
+                            .addComponent(lblEfternamnFelM)
+                            .addComponent(lblAdressFelM)
+                            .addComponent(lblEpostFelM)
+                            .addComponent(lblTelefonNrFelM))))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,18 +325,18 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tfAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnSparaNyaUppgifter))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLosenordActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tfLosenordActionPerformed
 
     private void btnSparaNyaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaNyaUppgifterActionPerformed
@@ -324,13 +370,14 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     
     if(formatKorrekt){
         //ÄNDRA SAMTLIGA I DB
+        insertDB();
         this.setVisible(false);
         new MinaUppgifterFonster(idb, inloggadAnvandare).setVisible(true);
     }    
     }//GEN-LAST:event_btnSparaNyaUppgifterActionPerformed
 
     private void tfFornamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFornamnActionPerformed
-        // TODO add your handling code here:
+   
     }//GEN-LAST:event_tfFornamnActionPerformed
 
     private void tfAdressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAdressActionPerformed
@@ -363,7 +410,28 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         else {
             new MinaUppgifterFonster(idb,inloggadAnvandare).setVisible(true);
         }
+        this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void tfFornamnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFornamnKeyTyped
+        btnSparaNyaUppgifter.setEnabled(true);
+    }//GEN-LAST:event_tfFornamnKeyTyped
+
+    private void tfEfternamnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfEfternamnKeyTyped
+        btnSparaNyaUppgifter.setEnabled(true);
+    }//GEN-LAST:event_tfEfternamnKeyTyped
+
+    private void tfAdressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfAdressKeyTyped
+        btnSparaNyaUppgifter.setEnabled(true);
+    }//GEN-LAST:event_tfAdressKeyTyped
+
+    private void tfEpostKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfEpostKeyTyped
+        btnSparaNyaUppgifter.setEnabled(true);
+    }//GEN-LAST:event_tfEpostKeyTyped
+
+    private void tfTelefonnrKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefonnrKeyTyped
+        btnSparaNyaUppgifter.setEnabled(true);
+    }//GEN-LAST:event_tfTelefonnrKeyTyped
 
     /**
      * @param args the command line arguments

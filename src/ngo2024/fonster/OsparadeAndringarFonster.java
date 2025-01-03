@@ -23,6 +23,7 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
