@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024.fonster;
+import java.awt.Font;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.*;
 import javax.swing.table.*;
-import ngo2024.Anvandare;
-import ngo2024.Avdelning;
+import ngo2024.*;
 
 /**
  *
@@ -18,7 +18,8 @@ public class AvdelningFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
-    private Avdelning anvandarensAvdelning;
+    private Avdelning anvandarensAvdelning; 
+    private DefaultTableModel tabell;
     
     /**
      * Creates new form Avdelning
@@ -26,14 +27,14 @@ public class AvdelningFonster extends javax.swing.JFrame {
     public AvdelningFonster(InfDB idb,Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
-        
+        anvandarensAvdelning = new Avdelning(inloggadAnvandare.getAvdelningsID(), idb);
         initComponents();
+        tabell = (DefaultTableModel) anstalldTable.getModel();
+        
         setLocationRelativeTo(null);
-        displayAnstallda();
-        setAvdelningsUppgifter();
-        
-        
-        
+        initKolumner();
+        visaAnstallda();
+        nySetAvdelningsUppgifter();
     }
 
     /**
@@ -61,39 +62,32 @@ public class AvdelningFonster extends javax.swing.JFrame {
         lblTelefon = new javax.swing.JLabel();
         lblChef = new javax.swing.JLabel();
         btnTillbaka = new javax.swing.JButton();
+        sokfalt = new javax.swing.JTextField();
+        sokBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Min avdelning");
         setMinimumSize(new java.awt.Dimension(1020, 576));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         anstalldTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Namn", "Roll"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        ));
+        anstalldTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                anstalldTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(anstalldTable);
-        if (anstalldTable.getColumnModel().getColumnCount() > 0) {
-            anstalldTable.getColumnModel().getColumn(0).setResizable(false);
-            anstalldTable.getColumnModel().getColumn(1).setResizable(false);
-        }
 
         lblAvdelningsNamn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblAvdelningsNamn.setText("AvdelningsNamn");
@@ -136,6 +130,21 @@ public class AvdelningFonster extends javax.swing.JFrame {
             }
         });
 
+        sokfalt.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        sokfalt.setText("Sök anställd...");
+        sokfalt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sokfaltMouseClicked(evt);
+            }
+        });
+
+        sokBtn.setText("Sök");
+        sokBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sokBtnMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,19 +160,24 @@ public class AvdelningFonster extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(tpBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblChef)
-                                    .addComponent(lblTelefon)
-                                    .addComponent(lblEpost)
-                                    .addComponent(lblStad)
-                                    .addComponent(lblAdress)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(sokfalt, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel6))
+                                        .addGap(23, 23, 23)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblChef)
+                                            .addComponent(lblTelefon)
+                                            .addComponent(lblEpost)
+                                            .addComponent(lblStad)
+                                            .addComponent(lblAdress))))
+                                .addGap(18, 18, 18)
+                                .addComponent(sokBtn))))
                     .addComponent(btnTillbaka))
                 .addContainerGap(431, Short.MAX_VALUE))
         );
@@ -199,7 +213,11 @@ public class AvdelningFonster extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(lblChef))))
+                            .addComponent(lblChef))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sokBtn))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(btnTillbaka)
                 .addContainerGap())
@@ -213,10 +231,68 @@ public class AvdelningFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
+    private void anstalldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anstalldTableMouseClicked
+        int rad = anstalldTable.rowAtPoint(evt.getPoint());
+        int kolumn = anstalldTable.columnAtPoint(evt.getPoint());
+
+        String kolumnnamn = tabell.getColumnName(kolumn);
+        
+        if(kolumnnamn.equals("Namn") && (rad >= 0 && rad < anstalldTable.getRowCount())){ 
+            Anvandare aktuellAnstalld = anvandarensAvdelning.getAnstalld(rad);
+            
+            //Öppnar nytt fönster som visar mer detaljerad information om ett projekt 
+            new AnstalldInfoFonster(inloggadAnvandare, aktuellAnstalld).setVisible(true);
+        }
+    }//GEN-LAST:event_anstalldTableMouseClicked
+
+    private void sokfaltMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokfaltMouseClicked
+        sokfalt.setText("");
+        sokfalt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+    }//GEN-LAST:event_sokfaltMouseClicked
+
+    private void sokBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokBtnMouseClicked
+        if(!sokfalt.getText().isEmpty()){
+            anvandarensAvdelning.hamtaSoktaAnstallda(sokfalt.getText());
+            rensaDataFonster();
+            visaAnstallda();
+        }
+        else{
+            resetFonster();
+        }
+    }//GEN-LAST:event_sokBtnMouseClicked
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        sokfalt.setText("Sök anställd...");
+        sokfalt.setFont(new Font("Segoe UI", Font.ITALIC, 12));
+        resetFonster();
+    }//GEN-LAST:event_formMouseClicked
+
+    private void initKolumner(){
+        tabell.addColumn("Namn"); //denna ska gömmas senare
+        tabell.addColumn("Roll");
+
+        //Förhindrar användaren från att editera cellerna direkt
+        anstalldTable.setDefaultEditor(Object.class, null);
+    }
+    
     /**
      * @param args the command line arguments
      */
     
+    private void visaAnstallda(){
+        for(Anvandare enAnstalld : anvandarensAvdelning.getAvdelningensAnstallda()){
+            String roll = "";
+            if(enAnstalld.isAdmin()){
+                roll = "Administratör";
+            }
+            else{
+                roll = "Handläggare";
+            }
+                tabell.addRow(new Object[]{enAnstalld.getFullNamn(), roll});
+        }
+    }
+    
+    //Denna kan tas bort vid tillfälle
     private void displayAnstallda(){
         
         try{
@@ -260,6 +336,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
         }
     }
     
+    //Denna kan tas bort vid tillfälle
     private void setAvdelningsUppgifter(){
     try{
         String sqlFraga = "SELECT namn, beskrivning, adress, epost, telefon, stad, chef from avdelning "+
@@ -291,6 +368,41 @@ public class AvdelningFonster extends javax.swing.JFrame {
         System.out.println(ex.getMessage() + " i AvdelningFonster.java, setAvdelningsUppgifter()");
     }
 }
+    
+    //Denna kan döpas om till ovan när den ovan tagits bort
+    private void nySetAvdelningsUppgifter(){
+        lblAvdelningsNamn.setText(anvandarensAvdelning.getNamn());
+        tpBeskrivning.setText(anvandarensAvdelning.getBeskrivning());
+        
+        tpBeskrivning.setOpaque(false);
+        tpBeskrivning.setFocusable(false);
+        
+        lblAdress.setText(anvandarensAvdelning.getAdress());
+        
+        lblStad.setText(anvandarensAvdelning.getStad().getNamn());
+        
+        lblEpost.setText(anvandarensAvdelning.getEpost());
+        
+        lblTelefon.setText(anvandarensAvdelning.getTelefonnummer());
+        
+        lblChef.setText(anvandarensAvdelning.getChef().getFullNamn());
+    }
+    
+    private void rensaDataFonster(){
+        //Tar bort datan
+        tabell.getDataVector().clear();
+
+        //Tar bort datan från fönstret också.
+        anstalldTable.repaint();
+        
+    };
+    
+    public void resetFonster(){
+        rensaDataFonster();
+        anvandarensAvdelning.hamtaAnstallda();
+        visaAnstallda();
+    }
+    
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -341,6 +453,8 @@ public class AvdelningFonster extends javax.swing.JFrame {
     private javax.swing.JLabel lblEpost;
     private javax.swing.JLabel lblStad;
     private javax.swing.JLabel lblTelefon;
+    private javax.swing.JButton sokBtn;
+    private javax.swing.JTextField sokfalt;
     private javax.swing.JTextPane tpBeskrivning;
     // End of variables declaration//GEN-END:variables
 }
