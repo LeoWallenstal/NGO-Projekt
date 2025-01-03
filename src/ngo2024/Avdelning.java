@@ -204,11 +204,22 @@ public class Avdelning {
         }
     }
     
-    public void hamtaSoktaAnstallda(String sokord){
+    public void hamtaSokNamn(String sokord){
         ArrayList<Anvandare> resultat = new ArrayList<>();
         
         for(Anvandare enAnstalld : anstallda){
             if(enAnstalld.getFullNamn().startsWith(sokord)){
+                resultat.add(enAnstalld);
+            }
+        }
+        anstallda = resultat;
+    }
+    
+    public void hamtaSokEpost(String sokord){
+        ArrayList<Anvandare> resultat = new ArrayList<>();
+        
+        for(Anvandare enAnstalld : anstallda){
+            if(enAnstalld.getEPost().startsWith(sokord)){
                 resultat.add(enAnstalld);
             }
         }

@@ -53,6 +53,8 @@ public class ProjektFonster extends javax.swing.JFrame {
         projektregister = new ProjektRegister(idb);
         kategori = SokKategori.ALLA;
         tabell = (DefaultTableModel) projektTable.getModel();
+        sokfalt.setEnabled(false);
+        sokfalt.setText("Sök efter...");
         
         setKnappar();   //Sätter visibility på knappar beroende på behörighet
         initKolumner(); //Skapar och namnsätter kolumner
@@ -119,6 +121,11 @@ public class ProjektFonster extends javax.swing.JFrame {
 
         sokLabel.setText("Sök:");
 
+        sokfalt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sokfaltMouseClicked(evt);
+            }
+        });
         sokfalt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 sokfaltKeyPressed(evt);
@@ -341,13 +348,25 @@ public class ProjektFonster extends javax.swing.JFrame {
         
         switch(status){
             case "Sök efter...":
+            {
+                sokfalt.setEnabled(false);
+                sokfalt.setText("Sök efter...");
                 break;
+            }
             case "Projektchef":
+            {
                 kategori = SokKategori.PROJEKTCHEF;
+                sokfalt.setEnabled(true);
+                sokfalt.setText("Sök projektchef...");
                 break;
+            }
             case "Projektnamn":
+            {
                 kategori = SokKategori.PROJEKTNAMN;
+                sokfalt.setEnabled(true);
+                sokfalt.setText("Sök projektnamn...");
                 break;
+            }
             default:
                 break;
         }
@@ -440,6 +459,11 @@ public class ProjektFonster extends javax.swing.JFrame {
         }   
     }//GEN-LAST:event_dcSlutDatumPropertyChange
 
+    private void sokfaltMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokfaltMouseClicked
+        sokfalt.setText("");
+        sokfalt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+    }//GEN-LAST:event_sokfaltMouseClicked
+
     
     private void initKolumner(){
         tabell.addColumn("pid"); //denna ska gömmas senare
@@ -502,7 +526,10 @@ public class ProjektFonster extends javax.swing.JFrame {
     }
     
     private void resetKnapparOchSokfalt(){
-        sokfalt.setText("");
+        sokfalt.setText("Sök efter...");
+        sokfalt.setFont(new Font("Segoe UI", Font.ITALIC, 12));
+        sokfalt.setEnabled(false);
+        
         sokEfterComboBox.setSelectedIndex(0);
         statusComboBox.setSelectedIndex(0);
         dcStartDatum.setDate(null);

@@ -20,6 +20,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
     private Anvandare inloggadAnvandare;
     private Avdelning anvandarensAvdelning; 
     private DefaultTableModel tabell;
+    private String vy;
     
     /**
      * Creates new form Avdelning
@@ -30,11 +31,13 @@ public class AvdelningFonster extends javax.swing.JFrame {
         anvandarensAvdelning = new Avdelning(inloggadAnvandare.getAvdelningsID(), idb);
         initComponents();
         tabell = (DefaultTableModel) anstalldTable.getModel();
+        sokfalt.setEnabled(false);
         
         setLocationRelativeTo(null);
         initKolumner();
         visaAnstallda();
         nySetAvdelningsUppgifter();
+        vy = "Alla";
     }
 
     /**
@@ -64,6 +67,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
         btnTillbaka = new javax.swing.JButton();
         sokfalt = new javax.swing.JTextField();
         sokBtn = new javax.swing.JButton();
+        sokCB = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Min avdelning");
@@ -123,6 +127,8 @@ public class AvdelningFonster extends javax.swing.JFrame {
 
         lblTelefon.setText("jLabel10");
 
+        lblChef.setText("lblChef");
+
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,22 +151,34 @@ public class AvdelningFonster extends javax.swing.JFrame {
             }
         });
 
+        sokCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sök efter...", "Namn", "Epost" }));
+        sokCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sokCBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblAvdelningsNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTillbaka)
+                            .addComponent(lblAvdelningsNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 137, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(tpBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(sokCB, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(sokfalt, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,9 +195,8 @@ public class AvdelningFonster extends javax.swing.JFrame {
                                             .addComponent(lblStad)
                                             .addComponent(lblAdress))))
                                 .addGap(18, 18, 18)
-                                .addComponent(sokBtn))))
-                    .addComponent(btnTillbaka))
-                .addContainerGap(431, Short.MAX_VALUE))
+                                .addComponent(sokBtn)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +207,6 @@ public class AvdelningFonster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tpBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,7 +233,9 @@ public class AvdelningFonster extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sokBtn))))
+                            .addComponent(sokBtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sokCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(btnTillbaka)
                 .addContainerGap())
@@ -252,9 +270,21 @@ public class AvdelningFonster extends javax.swing.JFrame {
 
     private void sokBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokBtnMouseClicked
         if(!sokfalt.getText().isEmpty()){
-            anvandarensAvdelning.hamtaSoktaAnstallda(sokfalt.getText());
-            rensaDataFonster();
-            visaAnstallda();
+            if(sokCB.getSelectedItem().equals("Namn")){
+                anvandarensAvdelning.hamtaSokNamn(sokfalt.getText());
+                rensaDataFonster();
+                visaAnstallda();
+                vy = "Sökt";
+            }
+            else if(sokCB.getSelectedItem().equals("Epost")){
+                anvandarensAvdelning.hamtaSokEpost(sokfalt.getText());
+                rensaDataFonster();
+                visaAnstallda();
+                vy = "Sökt";
+            }
+            else{
+                resetFonster();
+            }
         }
         else{
             resetFonster();
@@ -262,14 +292,40 @@ public class AvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_sokBtnMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        sokCB.setSelectedIndex(0);
         sokfalt.setText("Sök anställd...");
         sokfalt.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         resetFonster();
     }//GEN-LAST:event_formMouseClicked
 
+    private void sokCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokCBActionPerformed
+        if(sokCB.getSelectedItem().equals("Namn")){
+            sokfalt.setEnabled(true);
+            sokfalt.setText("Sök namn...");
+            if(vy.equals("Sökt")){
+                resetFonster();
+                vy = "Alla";
+            }
+        }
+        else if(sokCB.getSelectedItem().equals("Epost")){
+            sokfalt.setText("Sök epost...");
+            sokfalt.setEnabled(true);
+            if(vy.equals("Sökt")){
+                resetFonster();
+                vy = "Alla";
+            }
+        }
+        else if(sokCB.getSelectedItem().equals("Sök efter...")){
+            sokfalt.setEnabled(false);
+            sokfalt.setText("Sök anställd...");
+        }
+    }//GEN-LAST:event_sokCBActionPerformed
+
     private void initKolumner(){
         tabell.addColumn("Namn"); //denna ska gömmas senare
+        tabell.addColumn("Epost");
         tabell.addColumn("Roll");
+
 
         //Förhindrar användaren från att editera cellerna direkt
         anstalldTable.setDefaultEditor(Object.class, null);
@@ -288,7 +344,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
             else{
                 roll = "Handläggare";
             }
-                tabell.addRow(new Object[]{enAnstalld.getFullNamn(), roll});
+                tabell.addRow(new Object[]{enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
         }
     }
     
@@ -454,6 +510,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
     private javax.swing.JLabel lblStad;
     private javax.swing.JLabel lblTelefon;
     private javax.swing.JButton sokBtn;
+    private javax.swing.JComboBox<String> sokCB;
     private javax.swing.JTextField sokfalt;
     private javax.swing.JTextPane tpBeskrivning;
     // End of variables declaration//GEN-END:variables
