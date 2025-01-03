@@ -26,7 +26,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
               <Component id="btnFortsattTillMinaUppgifter" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="105" max="32767" attributes="0"/>
+              <EmptySpace pref="142" max="32767" attributes="0"/>
               <Component id="btnSparaAndringar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
           </Group>
@@ -65,7 +65,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnSparaAndringar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Spara &#xe4;ndringar"/>
+        <Property name="text" type="java.lang.String" value="Redigera"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSparaAndringarActionPerformed"/>

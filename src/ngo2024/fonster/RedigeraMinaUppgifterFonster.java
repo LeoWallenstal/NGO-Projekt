@@ -408,9 +408,10 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
             new OsparadeAndringarFonster(idb, inloggadAnvandare).setVisible(true);
         }
         else {
+            this.setVisible(false);
             new MinaUppgifterFonster(idb,inloggadAnvandare).setVisible(true);
         }
-        this.setVisible(false);
+        
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void tfFornamnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFornamnKeyTyped

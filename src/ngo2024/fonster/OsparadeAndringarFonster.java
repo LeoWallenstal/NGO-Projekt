@@ -44,7 +44,7 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
 
         lblOsparat.setText("Du har osparade ändringar!");
 
-        btnSparaAndringar.setText("Spara ändringar");
+        btnSparaAndringar.setText("Redigera");
         btnSparaAndringar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSparaAndringarActionPerformed(evt);
@@ -67,7 +67,7 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addComponent(btnFortsattTillMinaUppgifter)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
                 .addComponent(btnSparaAndringar)
                 .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
@@ -95,7 +95,7 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSparaAndringarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaAndringarActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_btnSparaAndringarActionPerformed
 
     private void btnFortsattTillMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFortsattTillMinaUppgifterActionPerformed
