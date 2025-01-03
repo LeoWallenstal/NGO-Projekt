@@ -16,12 +16,14 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
     private Anvandare inloggadAnvandare;
     private InfDB idb;
     private StadRegister stadregister;
+    private PartnerFonster forraFonstret;
     
     /**
      * Creates new form laggTillPartnerFonster
      */
-    public LaggTillPartnerFonster(Anvandare inloggadAnvandare, InfDB idb) {
+    public LaggTillPartnerFonster(Anvandare inloggadAnvandare, PartnerFonster forraFonstret, InfDB idb) {
         stadregister = new StadRegister(idb);
+        this.forraFonstret = forraFonstret;
         this.idb = idb;
         
         initComponents();
@@ -353,6 +355,7 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
             nyPartner.setPartnerID();
             nyPartner.insertPartnerDB();
             partnerRegistreradLabel.setVisible(true);
+            forraFonstret.uppdateraFonster();
         }        
     }
 

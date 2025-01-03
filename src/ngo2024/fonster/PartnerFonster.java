@@ -118,7 +118,7 @@ public class PartnerFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void laggTillPartnerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laggTillPartnerButtonActionPerformed
-        new LaggTillPartnerFonster(inloggadAnvandare, idb).setVisible(true);
+        new LaggTillPartnerFonster(inloggadAnvandare, this, idb).setVisible(true);
     }//GEN-LAST:event_laggTillPartnerButtonActionPerformed
 
     private void tillbakaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillbakaButtonMouseClicked
@@ -156,6 +156,11 @@ public class PartnerFonster extends javax.swing.JFrame {
         partnerTable.repaint();
         
     };
+    
+    public void uppdateraFonster(){
+        partnerregister.hamtaAllaPartners();
+        visaData();
+    }
     
     private void partnerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_partnerTableMouseClicked
         int partnerIndex = partnerTable.rowAtPoint(evt.getPoint());
