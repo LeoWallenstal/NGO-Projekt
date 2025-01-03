@@ -2,6 +2,7 @@ package ngo2024;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.time.LocalDate;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -424,6 +425,28 @@ public class Projekt {
         }
         return false;
     }
+    
+    public boolean arFore(String datum){
+        LocalDate startdatum1 = LocalDate.parse(this.getStartdatum());
+        LocalDate startdatum2 = LocalDate.parse(datum);
+        
+        return startdatum1.isBefore(startdatum2);
+    }
+    
+    public boolean arSamma(String datum){
+        LocalDate startdatum1 = LocalDate.parse(this.getStartdatum());
+        LocalDate startdatum2 = LocalDate.parse(datum);
+        
+        return startdatum1.isEqual(startdatum2);
+    }
+    
+    public boolean arEfter(String datum){
+        LocalDate startdatum1 = LocalDate.parse(this.getStartdatum());
+        LocalDate startdatum2 = LocalDate.parse(datum);
+        
+        return startdatum1.isAfter(startdatum2);
+    }
+    
     
     public void insertProjektDB(){
         try{
