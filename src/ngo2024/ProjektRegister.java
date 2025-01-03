@@ -136,6 +136,38 @@ public class ProjektRegister {
         allaProjekt = resultat;
     }
     
+    public void getListaDatumSpann(String startdatum, String slutdatum){
+        ArrayList<Projekt> resultat = new ArrayList<>();
+        for(Projekt ettProjekt : allaProjekt){
+            if((ettProjekt.arEfter(startdatum) || ettProjekt.arSamma(startdatum))
+                && (ettProjekt.arFore(slutdatum) || ettProjekt.arSamma(slutdatum))){
+                resultat.add(ettProjekt);
+            }
+        }
+        allaProjekt = resultat;
+    }
+    
+    public void getListaStartdatum(String startdatum){
+        ArrayList<Projekt> resultat = new ArrayList<>();
+        for(Projekt ettProjekt : allaProjekt){
+            if(ettProjekt.arSamma(startdatum) || ettProjekt.arEfter(startdatum)){
+                resultat.add(ettProjekt);
+            }
+        }
+        allaProjekt = resultat;
+    }
+    
+    public void getListaSlutdatum(String slutdatum){
+        ArrayList<Projekt> resultat = new ArrayList<>();
+        for(Projekt ettProjekt : allaProjekt){
+            if(ettProjekt.arSamma(slutdatum) || ettProjekt.arFore(slutdatum)){
+                resultat.add(ettProjekt);
+            }
+        }
+        allaProjekt = resultat;
+    }
+    
+    
     public Projekt getProjekt(String pid){
         for(Projekt ettProjekt : allaProjekt){
             if(pid.equals(ettProjekt.getProjektID())){

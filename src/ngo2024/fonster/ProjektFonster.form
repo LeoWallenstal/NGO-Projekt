@@ -9,9 +9,6 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
-  <Events>
-    <EventHandler event="windowGainedFocus" listener="java.awt.event.WindowFocusListener" parameters="java.awt.event.WindowEvent" handler="formWindowGainedFocus"/>
-  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -28,43 +25,46 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tillbakaButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jScrollPane1" pref="580" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="allaProjektButton" pref="115" max="32767" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="avdelningensProjektButton" min="-2" pref="215" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="minaProjektButton" min="-2" pref="115" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
-                                  <Component id="statusComboBox" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="tillbakaButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jScrollPane1" pref="580" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="allaProjektButton" pref="115" max="32767" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="avdelningensProjektButton" min="-2" pref="215" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="minaProjektButton" min="-2" pref="115" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
+                                      <Component id="statusComboBox" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="sokLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="sokfalt" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                                  <Component id="sokEfterComboBox" alignment="0" min="-2" pref="111" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="dcSlutDatum" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
-                                  <Component id="dcStartDatum" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                              <Component id="laggTillButton" min="-2" pref="145" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                      <Component id="sokLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="sokfalt" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                          <Component id="sokEfterComboBox" alignment="0" min="-2" pref="111" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="dcSlutDatum" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
+                          <Component id="dcStartDatum" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="laggTillButton" min="-2" pref="145" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="79" max="32767" attributes="0"/>
@@ -80,7 +80,12 @@
                       <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="dcStartDatum" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="dcSlutDatum" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="statusComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="allaProjektButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -94,13 +99,9 @@
                                   <Component id="sokLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="sokfalt" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="sokEfterComboBox" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="dcStartDatum" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="sokEfterComboBox" min="-2" max="-2" attributes="0"/>
-                          <Component id="dcSlutDatum" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="laggTillButton" min="-2" max="-2" attributes="0"/>
