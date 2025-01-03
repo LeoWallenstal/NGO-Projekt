@@ -21,6 +21,8 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private boolean taBort;
+    private DefaultTableModel tabell;
 
     /**
      * Creates new form HanteraAnstallda
@@ -28,11 +30,15 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     public HanteraAnstalldaFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        taBort = false;
         initComponents();
+        tabell = (DefaultTableModel) tblAnstallda.getModel();
         setLocationRelativeTo(null);
         displayAnstallda();
         tblAnstallda.setDefaultEditor(Object.class, null);
         setWindowSize();
+        lblInfoTaBort.setVisible(false);
+        
     }
 
     /**
@@ -49,11 +55,18 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         btnLaggTillAnstalld = new javax.swing.JButton();
         btnTaBortAnstalld = new javax.swing.JButton();
         btnTillbaka = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblInfoTaBort = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Anställda");
         setMaximumSize(new java.awt.Dimension(1020, 576));
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         tblAnstallda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,7 +104,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Klicka på den anställda som du vill ta bort!");
+        lblInfoTaBort.setText("Klicka på den anställda som du vill ta bort!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,7 +121,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnTaBortAnstalld)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)))
+                        .addComponent(lblInfoTaBort)))
                 .addGap(49, 235, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -121,7 +134,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
                     .addComponent(btnTillbaka)
                     .addComponent(btnLaggTillAnstalld)
                     .addComponent(btnTaBortAnstalld)
-                    .addComponent(jLabel1))
+                    .addComponent(lblInfoTaBort))
                 .addContainerGap())
         );
 
@@ -147,31 +160,44 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
-
+    public void reset(){
+        btnTaBortAnstalld.setEnabled(true);
+        lblInfoTaBort.setVisible(false);
+        taBort = false;
+    }
+    
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
-        
-        
+        this.taBort = true;
+        btnTaBortAnstalld.setEnabled(false);
+        lblInfoTaBort.setVisible(true);
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
     private void tblAnstalldaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnstalldaMouseClicked
         // Hämta raden som är vald när musen klickar
-        int rad = tblAnstallda.rowAtPoint(evt.getPoint());
-    
-        // Om rad är vald (inte -1) och är inom tabellens intervall
-        if (rad >= 0 && rad < tblAnstallda.getRowCount()) {
-      
-        // Hämta värdet från den första kolumnen (aid)
-        String aid = tblAnstallda.getValueAt(rad, 0).toString();
-        
-        Anvandare anvandareAttTaBort = new Anvandare(idb, aid);
+        if(taBort){
+            int rad = tblAnstallda.rowAtPoint(evt.getPoint());
+                // Om rad är vald (inte -1) och är inom tabellens intervall
+                if (rad >= 0 && rad < tblAnstallda.getRowCount()) {
 
-        // Skapa och öppna ett nytt fönster som skickar med aid
-        new VarningJaNejFonster(anvandareAttTaBort, this).setVisible(true);
+                // Hämta värdet från den första kolumnen (aid)
+                String aid = tblAnstallda.getValueAt(rad, 0).toString();
+
+                Anvandare anvandareAttTaBort = new Anvandare(idb, aid);
+
+                // Skapa och öppna ett nytt fönster som skickar med aid
+                new VarningJaNejFonster(anvandareAttTaBort, this).setVisible(true);
+            }
         }
     }//GEN-LAST:event_tblAnstalldaMouseClicked
 
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        displayAnstallda();
+    }//GEN-LAST:event_formWindowGainedFocus
+
 
     public void displayAnstallda() {
+        tabell.getDataVector().clear();
+        tblAnstallda.repaint();
         try {
 
             String sqlFraga = "SELECT aid FROM anstalld ORDER BY aid ASC";
@@ -247,8 +273,8 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     private javax.swing.JButton btnLaggTillAnstalld;
     private javax.swing.JButton btnTaBortAnstalld;
     private javax.swing.JButton btnTillbaka;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblInfoTaBort;
     private javax.swing.JTable tblAnstallda;
     // End of variables declaration//GEN-END:variables
 }

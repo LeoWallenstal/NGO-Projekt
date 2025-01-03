@@ -118,16 +118,28 @@ public class Anvandare {
         }
     }
     
+    public boolean isProjektChef(){
+        ProjektRegister allaProjekt = new ProjektRegister(idb);
+        for(Projekt ettProjekt: allaProjekt.getLista()){
+            if(this.getAnstallningsID().equals(ettProjekt.getProjektchefID())){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void deleteAnvandareDb(){
         try{
             idb.delete("DELETE FROM ans_proj WHERE aid = " + this.getAnstallningsID());
-            idb.delete("DELETE FROM anstalld WHERE aid = " + this.getAnstallningsID());
-            idb.delete("DELETE FROM admin WHERE aid = " + this.getAnstallningsID()); 
-            idb.delete("DELETE FROM avdelning WHERE chef = " + this.getAnstallningsID());
+            idb.update("UPDATE projekt SET projektchef = NULL WHERE projektchef = " + this.getAnstallningsID());
+            idb.update("UPDATE handlaggare SET mentor = NULL WHERE mentor = " + this.getAnstallningsID());
             idb.delete("DELETE FROM handlaggare WHERE aid = " + this.getAnstallningsID());
-            idb.delete("DELETE FROM projekt WHERE projektchef = " + this.getAnstallningsID());
-            } catch (InfException ex) {
-            System.out.println(ex.getMessage() + "i LaggTillProjektFonster.java, insertProjektDB()");
+            idb.delete("DELETE FROM admin WHERE aid = " + this.getAnstallningsID()); 
+            idb.update("UPDATE avdelning SET chef = NULL WHERE chef = " + this.getAnstallningsID());
+            idb.delete("DELETE FROM anstalld WHERE aid = " + this.getAnstallningsID());
+            } 
+            catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i Anvandare.java, deleteAnvandareDb()");
             }
         }
 }

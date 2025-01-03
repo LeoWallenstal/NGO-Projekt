@@ -67,9 +67,9 @@
                   </Group>
               </Group>
               <EmptySpace pref="45" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jaButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="nejButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jaButton" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
           </Group>
