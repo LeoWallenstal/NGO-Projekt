@@ -89,6 +89,13 @@ public class ProjektFonster extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Projekt");
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         projektTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -463,6 +470,10 @@ public class ProjektFonster extends javax.swing.JFrame {
         sokfalt.setText("");
         sokfalt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
     }//GEN-LAST:event_sokfaltMouseClicked
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        uppdateraFonster();
+    }//GEN-LAST:event_formWindowGainedFocus
 
     
     private void initKolumner(){

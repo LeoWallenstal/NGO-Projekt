@@ -4,6 +4,7 @@
  */
 package ngo2024.fonster;
 
+import java.awt.Dimension;
 import ngo2024.*;
 
 /**
@@ -16,40 +17,81 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
      * Creates new form JaNejFonster
      */
     
-    private ProjektInfoFonster forrafonstret;
-    private Projekt attTaBort;
+    private ProjektInfoFonster forraFonstretProjekt;
+    private Projekt projektTaBort;
+    
+    private PartnerInfoFonster forraFonstretPartner;
+    private Partner partnerTaBort;
+    
     private HanteraAnstalldaFonster forraFonstretAnstallda;
-    private Anvandare anvandareAttTaBort;
+    private Anvandare anvandareTaBort;
+    
     private String taBortVad;
     
-    public VarningJaNejFonster(Projekt attTaBort, ProjektInfoFonster forrafonstret) {
+    //Ta bort Projekt
+    public VarningJaNejFonster(Projekt attTaBort, ProjektInfoFonster forraFonstret) {
         initComponents();
-        this.forrafonstret = forrafonstret;
-        this.attTaBort = attTaBort;
-        this.anvandareAttTaBort = null;
-        this.forraFonstretAnstallda = null;
+        this.forraFonstretProjekt = forraFonstret;
+        this.projektTaBort = attTaBort;
         taBortVad = "Projekt";
-        this.setLocationRelativeTo(forrafonstret);
+        
+        this.anvandareTaBort = null;
+        this.forraFonstretAnstallda = null;
         
         this.setTitle("SDG Sweden - Ta bort " + attTaBort.getProjektnamn());
-        
         varningRubrik.setText("Du håller på att ta bort " + attTaBort.getProjektnamn() + ".");
         varningUndertext.setText("Vill du fortsätta?");
+        
+        int bredd = varningRubrik.getWidth();
+        
+        this.setLocationRelativeTo(forraFonstret);
+        this.setMinimumSize(new Dimension(bredd * 2, 170));
+        
     }
     
-    public VarningJaNejFonster(Anvandare anvandareAttTaBort, HanteraAnstalldaFonster forraFonstretAnstallda){
+    //Ta bort Anvandare
+    public VarningJaNejFonster(Anvandare attTaBort, HanteraAnstalldaFonster forraFonstret){
         initComponents();
-        this.anvandareAttTaBort = anvandareAttTaBort;
-        this.forraFonstretAnstallda = forraFonstretAnstallda;
-        this.forrafonstret = null;
-        this.attTaBort = null;
+        this.anvandareTaBort = attTaBort;
+        this.forraFonstretAnstallda = forraFonstret;
         taBortVad = "Anställd";
-        this.setLocationRelativeTo(forraFonstretAnstallda);
         
-        this.setTitle("SDG Sweden - Ta bort " + anvandareAttTaBort.getFullNamn());
+        this.forraFonstretProjekt = null;
+        this.projektTaBort = null;
         
-        varningRubrik.setText("Du håller på att ta bort anställd " + anvandareAttTaBort.getFullNamn() + ".");
+        this.setTitle("SDG Sweden - Ta bort " + attTaBort.getFullNamn());
+        
+        varningRubrik.setText("Du håller på att ta bort anställd " + attTaBort.getFullNamn() + ".");
         varningUndertext.setText("Vill du fortsätta?");
+        
+        int bredd = varningRubrik.getWidth();
+        
+        this.setLocationRelativeTo(forraFonstret);
+        this.setMinimumSize(new Dimension(bredd * 2, 170));
+    }
+    
+    //Ta bort Partner
+    public VarningJaNejFonster(Partner attTaBort, PartnerInfoFonster forraFonstret){
+        initComponents();
+        this.forraFonstretProjekt = null;
+        this.projektTaBort = null;
+        
+        this.forraFonstretPartner = forraFonstret;
+        this.partnerTaBort = attTaBort;
+        taBortVad = "Partner";
+        
+        this.anvandareTaBort = null;
+        this.forraFonstretAnstallda = null;
+        
+        this.setTitle("SDG Sweden - Ta bort " + attTaBort.getNamn());
+        
+        varningRubrik.setText("Du håller på att ta bort " + attTaBort.getNamn() + ".");
+        varningUndertext.setText("Vill du fortsätta?");
+        
+        int bredd = varningRubrik.getWidth();
+        
+        this.setLocationRelativeTo(forraFonstret);
+        this.setMinimumSize(new Dimension(bredd * 2, 170));
     }
 
     /**
@@ -67,7 +109,8 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
         varningRubrik = new javax.swing.JLabel();
         varningUndertext = new javax.swing.JLabel();
 
-        setMinimumSize(new java.awt.Dimension(300, 170));
+        setMaximumSize(null);
+        setMinimumSize(null);
         setResizable(false);
 
         jaButton.setText("Ja");
@@ -100,19 +143,18 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(jaButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                         .addComponent(nejButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
                         .addComponent(jLabel1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(varningRubrik))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
-                                .addComponent(varningUndertext)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(varningUndertext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(varningRubrik, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -126,9 +168,9 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(varningUndertext)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nejButton)
-                    .addComponent(jaButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jaButton)
+                    .addComponent(nejButton))
                 .addGap(16, 16, 16))
         );
 
@@ -137,13 +179,18 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
 
     private void jaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jaButtonMouseClicked
         if(taBortVad.equals("Projekt")){
-            attTaBort.deleteProjektDB();
-            forrafonstret.setVisible(false);
+            projektTaBort.deleteProjektDB();
+            forraFonstretProjekt.setVisible(false);
             this.setVisible(false);
         }
         if(taBortVad.equals("Anställd")){
-            anvandareAttTaBort.deleteAnvandareDb();
+            anvandareTaBort.deleteAnvandareDb();
             forraFonstretAnstallda.reset();
+            this.setVisible(false);
+        }
+        if(taBortVad.equals("Partner")){
+            partnerTaBort.deletePartnerDB();
+            forraFonstretPartner.setVisible(false);
             this.setVisible(false);
         }
     }//GEN-LAST:event_jaButtonMouseClicked

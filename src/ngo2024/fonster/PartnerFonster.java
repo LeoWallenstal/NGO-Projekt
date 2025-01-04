@@ -53,6 +53,13 @@ public class PartnerFonster extends javax.swing.JFrame {
         partnerTable = new javax.swing.JTable();
 
         setTitle("SDG Sweden - Partners");
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         laggTillPartnerButton.setText("Lägg till partner");
         laggTillPartnerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +181,10 @@ public class PartnerFonster extends javax.swing.JFrame {
             new PartnerInfoFonster(inloggadAnvandare, aktuellPartner, idb).setVisible(true);
         }
     }//GEN-LAST:event_partnerTableMouseClicked
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        uppdateraFonster();
+    }//GEN-LAST:event_formWindowGainedFocus
 
     private void setKnappar(){
         if(inloggadAnvandare.isAdmin()){
