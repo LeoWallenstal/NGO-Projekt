@@ -224,7 +224,15 @@ public class Partner {
         } catch (InfException ex) {
             System.out.println(ex.getMessage() + "i Partner.java, insertPartnerDB()");
         }
-        
+    }
+    
+    public void deletePartnerDB(){
+        try{
+            idb.delete("DELETE FROM projekt_partner WHERE partner_pid = " + this.getPartnerID());
+            idb.delete("DELETE FROM partner WHERE pid = " + this.getPartnerID()); 
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i LaggTillProjektFonster.java, insertProjektDB()");
+        }
     }
     
 }

@@ -39,19 +39,54 @@ public class PartnerInfoFonster extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tillbakaBtn = new javax.swing.JButton();
+        taBortBtn = new javax.swing.JButton();
+
+        tillbakaBtn.setText("Tillbaka");
+        tillbakaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tillbakaBtnActionPerformed(evt);
+            }
+        });
+
+        taBortBtn.setText("Ta bort");
+        taBortBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taBortBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tillbakaBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
+                .addComponent(taBortBtn)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(271, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tillbakaBtn)
+                    .addComponent(taBortBtn))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tillbakaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tillbakaBtnActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_tillbakaBtnActionPerformed
+
+    private void taBortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taBortBtnActionPerformed
+        new VarningJaNejFonster(aktuellPartner, this).setVisible(true);
+    }//GEN-LAST:event_taBortBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,5 +124,7 @@ public class PartnerInfoFonster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton taBortBtn;
+    private javax.swing.JButton tillbakaBtn;
     // End of variables declaration//GEN-END:variables
 }
