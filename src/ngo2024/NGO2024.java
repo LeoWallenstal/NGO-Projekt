@@ -4,6 +4,7 @@
  */
 package ngo2024;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import ngo2024.fonster.InloggningFonster;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -20,6 +21,8 @@ public class NGO2024 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        FlatDarkLaf.setup();
         
         try{
             idb = new InfDB("ngo_2024","3306","dbAdmin2024","dbAdmin2024PW");

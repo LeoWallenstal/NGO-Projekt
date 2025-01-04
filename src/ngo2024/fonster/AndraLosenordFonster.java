@@ -69,6 +69,7 @@ public class AndraLosenordFonster extends javax.swing.JFrame {
         lblFelmeddelandeOrginalLosenord = new javax.swing.JLabel();
 
         setTitle("SDG Sweden - Ändra lösenord");
+        setResizable(false);
 
         lblTidigareLosenord.setText("Tidigare lösenord:");
 
