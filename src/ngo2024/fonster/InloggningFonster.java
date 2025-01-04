@@ -75,6 +75,7 @@ public class InloggningFonster extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Inloggning");
+        setResizable(false);
 
         lblEPost.setText("E-Post");
 
@@ -142,14 +143,13 @@ public class InloggningFonster extends javax.swing.JFrame {
                                     .addComponent(tfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(124, 124, 124)
-                        .addComponent(lblLogo)))
+                        .addComponent(lblLogo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(btnAdmin)
+                        .addGap(57, 57, 57)
+                        .addComponent(btnHandlaggare)))
                 .addContainerGap(113, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(btnAdmin)
-                .addGap(57, 57, 57)
-                .addComponent(btnHandlaggare)
-                .addGap(44, 166, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

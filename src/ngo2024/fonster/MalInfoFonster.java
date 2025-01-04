@@ -59,13 +59,13 @@ public class MalInfoFonster extends javax.swing.JFrame {
             tpMalNamn.setText(malNamn);
             tpMalNamn.setOpaque(false);
             tpMalNamn.setFocusable(false);
-            tpMalNamn.setForeground(Color.BLACK);
+            //tpMalNamn.setForeground(Color.BLACK);
             
             String malBeskrivning = dbMalInfo.get("beskrivning");
             tpMalBeskrivning.setText(malBeskrivning);
             tpMalBeskrivning.setOpaque(false);
             tpMalBeskrivning.setFocusable(false);
-            tpMalBeskrivning.setForeground(Color.BLACK);
+            //tpMalBeskrivning.setForeground(Color.BLACK);
 
             String prioritet = dbMalInfo.get("prioritet");
             switch(prioritet){
@@ -110,6 +110,8 @@ public class MalInfoFonster extends javax.swing.JFrame {
         tpMalNamn = new javax.swing.JTextPane();
         lblPrioritet = new javax.swing.JLabel();
         pbPrioritet = new javax.swing.JProgressBar();
+
+        setResizable(false);
 
         lblMalIkon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/01-ingen-fattigdom.png"))); // NOI18N
 
