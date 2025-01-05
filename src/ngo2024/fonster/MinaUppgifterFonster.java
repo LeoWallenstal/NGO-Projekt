@@ -8,7 +8,7 @@ import java.awt.*;
 import ngo2024.Anvandare;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author Gastinlogg
@@ -110,6 +110,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Mina uppgifter");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
 
         lblFornamn.setText("Förnamn:");
 
@@ -199,9 +200,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
                                     .addComponent(lblFornamn))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblFornamnet, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(6, 6, 6))
+                                    .addComponent(lblFornamnet, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblEfternamnet)
                                     .addComponent(lblAdressen)
                                     .addComponent(lblEposten)
