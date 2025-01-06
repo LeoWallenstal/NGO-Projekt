@@ -10,6 +10,7 @@ import oru.inf.InfDB;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
 import ngo2024.Anvandare;
+import ngo2024.AnvandarRegister;
 import ngo2024.Projekt;
 import oru.inf.InfException;
 
@@ -23,6 +24,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     private Anvandare inloggadAnvandare;
     private boolean taBort;
     private DefaultTableModel tabell;
+    private AnvandarRegister anstallda;
 
     /**
      * Creates new form HanteraAnstallda
@@ -31,10 +33,11 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         taBort = false;
+        anstallda = new AnvandarRegister(idb);
         initComponents();
         tabell = (DefaultTableModel) tblAnstallda.getModel();
         setLocationRelativeTo(null);
-        displayAnstallda();
+        visaAnstallda();
         tblAnstallda.setDefaultEditor(Object.class, null);
         setWindowSize();
         lblInfoTaBort.setVisible(false);
@@ -191,10 +194,29 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tblAnstalldaMouseClicked
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        displayAnstallda();
+        visaAnstallda();
     }//GEN-LAST:event_formWindowGainedFocus
 
-
+    public void visaAnstallda(){
+        tabell.getDataVector().clear();
+        tblAnstallda.repaint();
+        
+        for(Anvandare enAnstalld: anstallda.getAllaAnstallda()){
+         String roll = "";
+            if(enAnstalld.isAdmin()){
+                roll = "Administratör";
+            }
+            else{
+                roll = "Handläggare";
+            }
+                tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(), 
+                                           enAnstalld.getFullNamn(), 
+                                           roll, 
+                                           enAnstalld.getAvdelningsID()
+                                           });
+        }
+    }
+    
     public void displayAnstallda() {
         tabell.getDataVector().clear();
         tblAnstallda.repaint();

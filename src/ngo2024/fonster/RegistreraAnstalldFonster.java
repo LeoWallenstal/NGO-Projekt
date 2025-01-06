@@ -529,7 +529,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         
         this.setVisible(false);
         
-        forraFonstret.displayAnstallda();
+        forraFonstret.visaAnstallda();
         
     }
     }//GEN-LAST:event_btnRegistreraActionPerformed

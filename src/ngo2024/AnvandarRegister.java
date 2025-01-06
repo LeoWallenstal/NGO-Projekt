@@ -8,6 +8,7 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,10 +17,14 @@ import java.util.HashMap;
 public class AnvandarRegister {
     private ArrayList<Anvandare> allaAnvandare;
     private InfDB idb;
+    private ArrayList<Anvandare> samtligaAnstallda;
     
     public AnvandarRegister(InfDB idb){
         allaAnvandare = new ArrayList<>();
+        samtligaAnstallda = new ArrayList<>();
         this.idb = idb;
+        
+        hamtaSamtligaAnstallda();
     }
     
     public void hamtaAvdelningensAnvandare(String avdelningsID){
@@ -45,6 +50,31 @@ public class AnvandarRegister {
         }
         
         allaAnvandare = avdelningensAnvandare;
+    }
+    
+    public void hamtaSamtligaAnstallda(){
+        ArrayList<HashMap<String, String>> anstallda = new ArrayList<>();
+        
+        try {
+
+            String sqlFraga = "SELECT aid FROM anstalld ORDER BY aid ASC";
+
+            anstallda = idb.fetchRows(sqlFraga);
+            } 
+        catch (InfException ex) {
+            System.out.println(ex.getMessage());
+            }
+        ArrayList<Anvandare> allaAnstallda = new ArrayList<>();
+        
+        for(HashMap<String, String> enAnstalld : anstallda) {
+            allaAnstallda.add(new Anvandare(idb, enAnstalld.get("aid")));
+
+        }
+        samtligaAnstallda = allaAnstallda;
+    }
+    
+    public ArrayList<Anvandare> getAllaAnstallda(){
+        return samtligaAnstallda;
     }
     
     public Anvandare get(int i){
