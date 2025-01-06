@@ -9,6 +9,7 @@ import oru.inf.InfException;
 import java.awt.*;
 import ngo2024.Anvandare;
 import ngo2024.Avdelning;
+import javax.swing.ImageIcon;
 
 
 
@@ -75,6 +76,7 @@ public class InloggningFonster extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Inloggning");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setResizable(false);
 
         lblEPost.setText("E-Post");

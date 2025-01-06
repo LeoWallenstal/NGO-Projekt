@@ -10,6 +10,7 @@ import ngo2024.Anvandare;
 import ngo2024.Validerare;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -69,6 +70,7 @@ public class AndraLosenordFonster extends javax.swing.JFrame {
         lblFelmeddelandeOrginalLosenord = new javax.swing.JLabel();
 
         setTitle("SDG Sweden - Ändra lösenord");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setResizable(false);
 
         lblTidigareLosenord.setText("Tidigare lösenord:");
