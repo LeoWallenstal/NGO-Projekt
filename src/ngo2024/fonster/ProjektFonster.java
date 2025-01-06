@@ -493,7 +493,7 @@ public class ProjektFonster extends javax.swing.JFrame {
     private void visaData(){
         rensaDataFonster();
         for(Projekt ettProjekt : projektregister.getLista()){
-            tabell.addRow(new Object[]{ettProjekt.getProjektID(), ettProjekt.getProjektnamn(), 
+            tabell.addRow(new Object[]{ettProjekt.getProjektID(), ettProjekt.getNamn(), 
                 ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
                 ettProjekt.getStartdatum()} );
         }
