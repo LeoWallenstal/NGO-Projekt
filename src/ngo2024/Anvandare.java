@@ -8,6 +8,7 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.sql.Date;
 
 /**
  *
@@ -53,6 +54,20 @@ public class Anvandare {
         return uppgifter.get("avdelning");
     }
     
+    public String getAvdelningsNamn(){
+        HashMap<String, String> namn = new HashMap<>();
+        try{
+            String sqlFraga = "SELECT namn FROM avdelning " 
+                + "WHERE avdid = " + getAvdelningsID();
+            namn = idb.fetchRow(sqlFraga);
+        }
+        catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        } 
+        return namn.get("namn");
+    }
+    
+    
     public String getAnstallningsID(){
         return uppgifter.get("aid");
     }
@@ -85,7 +100,7 @@ public class Anvandare {
     private void setUppgifter(String aid) {
         try {
             String sqlFraga = "SELECT fornamn, efternamn, adress, telefon, avdelning, anstallningsdatum, epost, losenord, aid "
-                    + "FROM anstalld where aid = '" + aid+"'";
+                    + "FROM anstalld WHERE aid = '" + aid + "'";
             uppgifter = idb.fetchRow(sqlFraga);
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
@@ -126,6 +141,48 @@ public class Anvandare {
             }
         }
         return false;
+    }
+    
+    public void laggTillAnvandareDb(int aid, String fornamn, String efternamn, String adress, String epost, String telefonNr, Date anstallningsdatum, String losenord, int avdelning){
+         try{
+             String sqlFraga = "INSERT INTO anstalld (aid, fornamn, efternamn, adress, epost, telefon, anstallningsdatum, losenord, avdelning) "
+                + "VALUES (" + aid + ", '" + fornamn + "', '" + efternamn + "', '" + adress + "', '" +
+                epost + "', '" + telefonNr + "', '" + anstallningsdatum + "', '" + losenord + "', " + avdelning + ")";
+            idb.insert(sqlFraga);
+            }
+            catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i Anvandare.java, laggTillAnvandareDb()");
+            }
+    }
+    
+    public void laggTillHandlaggareMedMentorDb(int aid, String beskrivningAnsvar, Integer mentor){
+        try{
+            String sqlFraga = "INSERT INTO handlaggare (aid, ansvarighetsomrade, mentor)" +
+                    "VALUES (" + aid + ", '" + beskrivningAnsvar + "', " + mentor + ")"; 
+            idb.insert(sqlFraga);}
+        catch(InfException ex) {
+            System.out.println(ex.getMessage() + "i Anvandare.java, laggTillHandlaggareMedMentorDb()");
+            }
+    }
+    
+    public void laggTillHandlaggareUtanMentorDb(int aid, String beskrivningAnsvar){
+        try {
+            String sqlFraga = "INSERT INTO handlaggare (aid, ansvarighetsomrade, mentor) " +
+                    "VALUES (" + aid + ", '" + beskrivningAnsvar + "', NULL)";
+            idb.insert(sqlFraga);}
+        catch(InfException ex) {
+            System.out.println(ex.getMessage() + "i Anvandare.java, laggTillHandlaggareUtanMentorDb()");
+            }
+    }
+    
+    public void laggTillAdminDb(int aid){
+        try{
+            String sqlFraga = "INSERT INTO admin (aid, behörighetsniva) " +
+            "VALUES (" + aid +", " + 1 + ")";
+            idb.insert(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i Anvandare.java, laggTillAdminDb()");
+            }
     }
     
     public void deleteAnvandareDb(){

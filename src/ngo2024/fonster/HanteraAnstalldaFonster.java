@@ -11,6 +11,8 @@ import java.util.*;
 import javax.swing.table.DefaultTableModel;
 import ngo2024.Anvandare;
 import ngo2024.Projekt;
+import ngo2024.Avdelning;
+import ngo2024.AnvandarRegister;
 import oru.inf.InfException;
 
 /**
@@ -23,6 +25,8 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     private Anvandare inloggadAnvandare;
     private boolean taBort;
     private DefaultTableModel tabell;
+    private AnvandarRegister anstallda;
+    private Avdelning enAvdelning;
 
     /**
      * Creates new form HanteraAnstallda
@@ -31,14 +35,15 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         taBort = false;
+        anstallda = new AnvandarRegister(idb);
+        enAvdelning = null;
         initComponents();
         tabell = (DefaultTableModel) tblAnstallda.getModel();
         setLocationRelativeTo(null);
-        displayAnstallda();
+        visaAnstallda();
         tblAnstallda.setDefaultEditor(Object.class, null);
         setWindowSize();
         lblInfoTaBort.setVisible(false);
-        
     }
 
     /**
@@ -164,6 +169,8 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         btnTaBortAnstalld.setEnabled(true);
         lblInfoTaBort.setVisible(false);
         taBort = false;
+        tabell.getDataVector().clear();
+        tblAnstallda.repaint();
     }
     
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
@@ -191,45 +198,28 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tblAnstalldaMouseClicked
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        displayAnstallda();
+        visaAnstallda();
     }//GEN-LAST:event_formWindowGainedFocus
 
 
-    public void displayAnstallda() {
+    public void visaAnstallda(){
         tabell.getDataVector().clear();
         tblAnstallda.repaint();
-        try {
-
-            String sqlFraga = "SELECT aid FROM anstalld ORDER BY aid ASC";
-
-            ArrayList<String> anstallda = idb.fetchColumn(sqlFraga);
-
-            sqlFraga = "SELECT aid FROM handlaggare ";
-            ArrayList<String> handlaggare = idb.fetchColumn(sqlFraga);
-
-            for (String aid : anstallda) {
-
-                sqlFraga = "SELECT fornamn, efternamn, namn FROM anstalld "
-                        + "JOIN avdelning ON anstalld.avdelning = avdelning.avdid "
-                        + "WHERE aid =" + aid;
-
-                HashMap<String, String> uppgifter = idb.fetchRow(sqlFraga);
-
-                String namn = uppgifter.get("fornamn") + " " + uppgifter.get("efternamn");
-
-                if (handlaggare.contains(aid)) {
-                    DefaultTableModel model = (DefaultTableModel) tblAnstallda.getModel();
-
-                    model.addRow(new Object[]{aid, namn, "Handläggare", uppgifter.get("namn")});
-                } else {
-                    DefaultTableModel model = (DefaultTableModel) tblAnstallda.getModel();
-
-                    model.addRow(new Object[]{aid, namn, "Administratör", uppgifter.get("namn")});
-                }
-
+        
+        for(Anvandare enAnstalld: anstallda.getAllaAnstallda()){
+         String roll = "";
+            if(enAnstalld.isAdmin()){
+                roll = "Administratör";
             }
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
+            else{
+                roll = "Handläggare";
+            }
+            
+               tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(), 
+                                           enAnstalld.getFullNamn(), 
+                                           roll, 
+                                           enAnstalld.getAvdelningsNamn()
+                                           });
         }
     }
 

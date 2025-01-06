@@ -15,11 +15,19 @@ import java.util.HashMap;
  */
 public class AnvandarRegister {
     private ArrayList<Anvandare> allaAnvandare;
+    private ArrayList<Anvandare> samtligaAnstallda;
+    private ArrayList<String> handlaggare;
+    private ArrayList<String> administrator;
     private InfDB idb;
     
     public AnvandarRegister(InfDB idb){
         allaAnvandare = new ArrayList<>();
+        samtligaAnstallda = new ArrayList<>();
+        handlaggare = new ArrayList<>();
+        administrator = new ArrayList<>();
         this.idb = idb;
+        
+        hamtaSamtligaAnstallda();
     }
     
     public void hamtaAvdelningensAnvandare(String avdelningsID){
@@ -47,11 +55,92 @@ public class AnvandarRegister {
         allaAnvandare = avdelningensAnvandare;
     }
     
+    public void hamtaSamtligaAnstallda(){
+        ArrayList<HashMap<String, String>> anstallda = new ArrayList<>();
+        
+        try {
+            
+            String sqlFraga = "SELECT aid FROM anstalld ORDER BY aid ASC";
+            
+            anstallda = idb.fetchRows(sqlFraga);
+         }
+        catch(InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        ArrayList<Anvandare> allaAnstallda = new ArrayList<>();
+        
+        for(HashMap<String, String> enAnstalld : anstallda) {
+            allaAnstallda.add(new Anvandare(idb, enAnstalld.get("aid")));
+        }
+        
+        samtligaAnstallda = allaAnstallda;
+    }
+    
     public Anvandare get(int i){
         return allaAnvandare.get(i);
     }
     
     public ArrayList<Anvandare> getLista(){
         return allaAnvandare;
+    }
+    
+    public ArrayList<Anvandare> getAllaAnstallda(){
+        return samtligaAnstallda;
+    }
+    
+    public void hamtaHandlaggare(){
+        ArrayList<HashMap<String, String>> allaHandlaggare = new ArrayList<>();
+        try {
+            String sqlFraga = "SELECT aid FROM handlaggare";
+            allaHandlaggare = idb.fetchRows(sqlFraga);
+            }
+        catch(InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        ArrayList<String> handlaggare = new ArrayList<>();
+        for(HashMap<String, String> enHandlaggare : allaHandlaggare){
+            handlaggare.add(enHandlaggare.get("aid)"));
+        }
+        this.handlaggare = handlaggare;
+    }
+    
+    public void hamtaAdmins(){
+        ArrayList<HashMap<String, String>> allaAdmins = new ArrayList<>();
+        try {
+            String sqlFraga = "SELECT aid FROM handlaggare";
+            allaAdmins = idb.fetchRows(sqlFraga);
+            }
+        catch(InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        ArrayList<String> admins = new ArrayList<>();
+        for(HashMap<String, String> enAdmin : allaAdmins){
+            handlaggare.add(enAdmin.get("aid)"));
+        }
+        this.administrator = admins;
+    }
+    
+    public ArrayList<String> getHandlaggare(){
+        return handlaggare;
+    }
+    
+    public ArrayList<String> getAmin(){
+        return administrator;
+    }
+    
+    public int getMaxAID(){
+        int maxAid = 0;
+        try{
+            //hämtar anställd med högst anst.ID
+            String sqlFraga = "SELECT MAX(aid) FROM anstalld";
+            
+            ArrayList<String> maxAidList = idb.fetchColumn(sqlFraga);
+            
+            maxAid = Integer.parseInt(maxAidList.get(0));
+        }
+        catch(InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return maxAid;
     }
 }

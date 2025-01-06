@@ -12,6 +12,7 @@ import java.util.*;
 import oru.inf.InfException;
 import java.time.*;
 import java.sql.Date;
+import ngo2024.AnvandarRegister;
 
 /**
  *
@@ -21,13 +22,18 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private Anvandare anvandareRegistrera;
     private HanteraAnstalldaFonster forraFonstret;
+    private AnvandarRegister anstallda;
+    
     /**
      * Creates new form LaggTillTaBortFonster
      */
     public RegistreraAnstalldFonster(InfDB idb, Anvandare inloggadAnvandare, HanteraAnstalldaFonster forraFonstret) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        anstallda = new AnvandarRegister(idb);
+        anvandareRegistrera = null;
         initComponents();
         setLocationRelativeTo(null);
         doljFelMeddelanden();
@@ -106,7 +112,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
 
         lblAvdelning.setText("Avdelning:");
 
-        cbAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj avdelning...", "Hållbar Energi och Klimatförändringar", "Samhällsutveckling och Utbildning", "Teknologisk Innovation och Entrepenörskap", " " }));
+        cbAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj avdelning...", "Hållbar Energi och Klimatförändringar", "Samhällsutveckling och Utbildning", "Teknologisk Innovation och Entrepenörskap" }));
         cbAvdelning.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbAvdelningActionPerformed(evt);
@@ -189,6 +195,12 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         tfAnsvarighetsomrade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfAnsvarighetsomradeActionPerformed(evt);
+            }
+        });
+
+        tfMentorsID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfMentorsIDActionPerformed(evt);
             }
         });
 
@@ -405,6 +417,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         String epost = tfEpost.getText();
         String telefonNr = tfTelefonNr.getText();
         String angettID = tfMentorsID.getText();
+        Integer mentor = null;
         
         if(Validerare.arBokstaver(fornamn) == false){
             formatKorrekt = false;
@@ -441,97 +454,69 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         
         if(cbRoll.getSelectedItem().equals("Handläggare")){
             
-            if(Validerare.arSiffror(angettID) == false){
-            formatKorrekt = false;
-            lblHanvisningMentor.setText("Anges med siffror!");
-            }
-            
-            try{
-                String sqlFraga = "SELECT aid FROM handlaggare";
-                ArrayList<String> handlaggare = idb.fetchColumn(sqlFraga);
-                    if(!handlaggare.contains(angettID)){
-                    formatKorrekt = false;
-                    lblHanvisningMentor.setText("Finns ej handläggare med angett ID!");
+            if(!tfMentorsID.getText().isEmpty()){
+                if(Validerare.arSiffror(angettID) == false){
+                formatKorrekt = false;
+                lblHanvisningMentor.setText("Anges med siffror!");
+                }
+                else {
+                    mentor = Integer.parseInt(tfMentorsID.getText());
                 }
             }
-            catch(InfException ex){
-                ex.getMessage();
+            if(mentor != null) {
+                if(!anstallda.getHandlaggare().contains(mentor)){
+                    formatKorrekt = false;
+                    lblHanvisningMentor.setText("Finns ej handläggare med angett ID!");
+                    }      
             }
         }
         
    if(formatKorrekt){
-        try{
-            //hämtar anställd med högst anst.ID och ger ny anställd idt +1
-            String sqlFraga = "SELECT MAX(aid) FROM anstalld";
-            
-            ArrayList<String> maxAidList = idb.fetchColumn(sqlFraga);
-            
-            int maxAid = Integer.parseInt(maxAidList.get(0));
-            int aid = maxAid + 1;
-            
-            
-            //hämtar dagens datum
-            LocalDate dagensDatum = LocalDate.now();
-            Date anstallningsdatum = Date.valueOf(dagensDatum);
         
-            //hämtar lösenordet som slumpats fram för att kunna använda i sql frågan
-            String losenord = lblLosenord.getText();
+        int aid = anstallda.getMaxAID() + 1;
+        String aidString = Integer.toString(aid);
+        anvandareRegistrera = new Anvandare(idb, aidString);
         
-            //omvandlar val av avd. till siffra 
-            int avdelning;
-            if(cbAvdelning.getSelectedItem().equals("Hållbar Energi och Klimatförändringar")){
-                avdelning = 1;
+        //hämtar dagens datum
+        LocalDate dagensDatum = LocalDate.now();
+        Date anstallningsdatum = Date.valueOf(dagensDatum);
+        
+        //hämtar lösenordet som slumpats fram för att kunna använda i sql frågan
+        String losenord = lblLosenord.getText();
+        
+        //omvandlar val av avd. till siffra 
+        int avdelning;
+        if(cbAvdelning.getSelectedItem().equals("Hållbar Energi och Klimatförändringar")){
+            avdelning = 1;
             }
-            else if(cbAvdelning.getSelectedItem().equals("Samhällsutveckling och Utbildning")){
-                avdelning = 2;
+        else if(cbAvdelning.getSelectedItem().equals("Samhällsutveckling och Utbildning")){
+            avdelning = 2;
             }
             else{
-                avdelning = 3;
+            avdelning = 3;
+            }
+            
+        anvandareRegistrera.laggTillAnvandareDb(aid, fornamn, efternamn, adress, epost, telefonNr, anstallningsdatum, losenord, avdelning);
+        
+        //hämtar data för att kunna lägga till i handläggartabellen
+        if(cbRoll.getSelectedItem().equals("Handläggare")){
+            String beskrivningAnsvar = tfAnsvarighetsomrade.getText();
+         
+            if(mentor != null){
+                anvandareRegistrera.laggTillHandlaggareMedMentorDb(aid, beskrivningAnsvar, mentor);
+            }else {
+                anvandareRegistrera.laggTillHandlaggareUtanMentorDb(aid, beskrivningAnsvar);
+            }
+        }   
+        //hämtar data för att kunna lägga till i anställd tabellen, kan ta bort villkoret
+        else if(cbRoll.getSelectedItem().equals("Administatör")){
+            anvandareRegistrera.laggTillAdminDb(aid);
             }
        
-            //lägger till i anställdtabell
-            sqlFraga = "INSERT INTO anstalld (aid, fornamn, efternamn, adress, epost, telefon, anstallningsdatum, losenord, avdelning) "
-                + "VALUES (" + aid + ", '" + fornamn + "', '" + efternamn + "', '" + adress + "', '" +
-                epost + "', '" + telefonNr + "', '" + anstallningsdatum + "', '" + losenord + "', " + avdelning + ")";
-            idb.insert(sqlFraga);
-            
-            //hämtar data för att kunna lägga till i handläggartabellen
-            if(cbRoll.getSelectedItem().equals("Handläggare")){
-                String beskrivningAnsvar = tfAnsvarighetsomrade.getText();
-            
-                //kontroll om man fyllt i mentorsfältet, annars blir det null
-                Integer mentor = null;
-                if(!tfMentorsID.getText().isEmpty()){
-                    mentor = Integer.parseInt(tfMentorsID.getText());
-                }
-
-                //lägger till i handläggartabell
-                if(mentor != null){
-                    sqlFraga = "INSERT INTO handlaggare (aid, ansvarighetsomrade, mentor)" +
-                    "VALUES (" + aid + ", '" + beskrivningAnsvar + "', " + mentor + ")"; 
-                }else {
-                    sqlFraga = "INSERT INTO handlaggare (aid, ansvarighetsomrade, mentor) " +
-                    "VALUES (" + aid + ", '" + beskrivningAnsvar + "', NULL)";
-            }
-            idb.insert(sqlFraga);
-            }   
-            //hämtar data för att kunna lägga till i anställd tabellen, kan ta bort villkoret
-        else if(cbRoll.getSelectedItem().equals("Administatör")){
-            sqlFraga = "INSERT INTO admin (aid, behörighetsniva) " +
-            "VALUES (" + aid +", " + 1 + ")";
-            idb.insert(sqlFraga);
-            //SKA ALLA ADMIN HA BEHÖRIGHET 1????
-            }
-        } catch(InfException ex){
-            System.out.println("Fel 2 " + ex.getMessage());
-            }
-        
-        
         this.setVisible(false);
-        
-        forraFonstret.displayAnstallda();
-        
-    }
+        forraFonstret.visaAnstallda();
+    }     
+       
     }//GEN-LAST:event_btnRegistreraActionPerformed
 
     private void cbRollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRollActionPerformed
@@ -554,6 +539,10 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
     private void tfAnsvarighetsomradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAnsvarighetsomradeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfAnsvarighetsomradeActionPerformed
+
+    private void tfMentorsIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfMentorsIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfMentorsIDActionPerformed
 
     /**
      * @param args the command line arguments
