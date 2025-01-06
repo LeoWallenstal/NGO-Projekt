@@ -86,7 +86,7 @@ public class Partner {
         for(String key : enPartner.keySet()){
                 switch(key){
                     case "pid":
-                        partnerID = enPartner.get(key);
+                        this.partnerID = enPartner.get(key);
                         break;
                     case "namn":
                         namn = enPartner.get(key);
@@ -154,6 +154,9 @@ public class Partner {
         return stad;
     }
     
+    public boolean equals(Partner annan){
+        return this.partnerID.equals(annan.partnerID);
+    }
     
     //Setters
     public void setNamn(String namn){
