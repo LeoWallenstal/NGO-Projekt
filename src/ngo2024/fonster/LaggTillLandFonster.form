@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblSprak" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblValuta" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTidszon" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPolitiskStruktur" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEkonomi" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNamn" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="tfTidszon" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfValuta" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfSprak" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfPolitiskStruktur" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfEkonomi" max="32767" attributes="0"/>
+                          <Component id="tfNamn" pref="135" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblFelMSprak" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="lblFelMNamn" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="lblFelMValuta" alignment="1" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="lblFelMTidszon" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="lblFelMPolitiskStruktur" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="lblFelMEkonomi" min="-2" pref="110" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="0" pref="111" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblNamn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfNamn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMNamn" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfSprak" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblSprak" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMSprak" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfValuta" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblValuta" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMValuta" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblTidszon" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfTidszon" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMTidszon" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfPolitiskStruktur" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPolitiskStruktur" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMPolitiskStruktur" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfEkonomi" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblEkonomi" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMEkonomi" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="67" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnSpara" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="lblNamn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Namn:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblSprak">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Spr&#xe5;k:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblValuta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Valuta:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEkonomi">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ekonomi:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTidszon">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tidszon:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPolitiskStruktur">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Politisk struktur:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfEkonomi">
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfSprak">
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfPolitiskStruktur">
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfValuta">
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfTidszon">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnTillbaka">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tillbaka"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTillbakaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnSpara">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Spara"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSparaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfNamn">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMNamn">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Kan inte vara tomt!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMTidszon">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Kan inte vara tomt!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMValuta">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Kan inte vara tomt!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMSprak">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Kan inte vara tomt!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMPolitiskStruktur">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Kan inte vara tomt!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMEkonomi">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Kan inte vara tomt!"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
