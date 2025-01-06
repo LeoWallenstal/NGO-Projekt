@@ -186,6 +186,7 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
         if(taBortVad.equals("Anställd")){
             anvandareTaBort.deleteAnvandareDb();
             forraFonstretAnstallda.reset();
+            forraFonstretAnstallda.visaAnstallda();
             this.setVisible(false);
         }
         if(taBortVad.equals("Partner")){
