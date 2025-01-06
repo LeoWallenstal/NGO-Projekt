@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import ngo2024.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author james
@@ -74,6 +74,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         sparaBtn = new javax.swing.JButton();
 
         setTitle("SDG Sweden - Redigera projekt");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setMinimumSize(new java.awt.Dimension(400, 328));
         setPreferredSize(new java.awt.Dimension(400, 328));
         setResizable(false);
@@ -118,7 +119,6 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         projektchefCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj projektchef..." }));
 
         sparaBtn.setText("Spara");
-        sparaBtn.setPreferredSize(new java.awt.Dimension(72, 23));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,7 +139,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(tillbakaButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(sparaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(sparaBtn))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(statusLabel)
@@ -201,7 +201,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tillbakaButton)
-                    .addComponent(sparaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sparaBtn))
                 .addContainerGap())
         );
 

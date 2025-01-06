@@ -9,7 +9,7 @@ import ngo2024.Anvandare;
 import ngo2024.Validerare;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author walle
@@ -47,7 +47,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         
     }
     
-    private void insertDB(){
+    private void updateDB(){
         String nyttFornamn = tfFornamn.getText();
         String nyttEfternamn = tfEfternamn.getText();
         String nyAdress = tfAdress.getText();
@@ -145,6 +145,8 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Ändra uppgifter");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
 
         jLabel2.setText("AnställningsID:");
 
@@ -370,7 +372,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     
     if(formatKorrekt){
         //ÄNDRA SAMTLIGA I DB
-        insertDB();
+        updateDB();
         this.setVisible(false);
         new MinaUppgifterFonster(idb, inloggadAnvandare).setVisible(true);
     }    
@@ -405,7 +407,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         if(harOsparadeAndringar()){
-            new OsparadeAndringarFonster(idb, inloggadAnvandare).setVisible(true);
+            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Mina Uppgifter").setVisible(true);
         }
         else {
             this.setVisible(false);

@@ -13,7 +13,7 @@ import oru.inf.InfException;
 import java.time.*;
 import java.sql.Date;
 import ngo2024.AnvandarRegister;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author Gastinlogg
@@ -90,6 +90,8 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         lblHanvisningMentor = new javax.swing.JLabel();
 
         setTitle("Registrera");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
 
         lblRubrik.setText("Registrera ny anställd");
 

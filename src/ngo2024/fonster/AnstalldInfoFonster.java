@@ -4,6 +4,7 @@
  */
 package ngo2024.fonster;
 import ngo2024.*;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -33,6 +34,9 @@ public class AnstalldInfoFonster extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

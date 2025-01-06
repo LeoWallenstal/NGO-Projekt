@@ -7,7 +7,7 @@ package ngo2024.fonster;
 import ngo2024.Anvandare;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -73,6 +73,9 @@ public class ProjektchefInfoFonster extends javax.swing.JFrame {
         lblTelefonnumret = new javax.swing.JLabel();
         lblAvdelning = new javax.swing.JLabel();
         lblAvdelningen = new javax.swing.JLabel();
+
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
 
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {

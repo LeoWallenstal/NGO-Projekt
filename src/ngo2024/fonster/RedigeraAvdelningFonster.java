@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024.fonster;
+
 import java.awt.Font;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -21,193 +22,309 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
-    private Avdelning anvandarensAvdelning; 
+    private Avdelning anvandarensAvdelning;
+    private AvdelningsRegister avdelningsRegister;
     private DefaultTableModel tabell;
-     private JPanel glassPaneOverlay;
+    private JPanel glassPaneOverlay;
     private String vy;
-    
+
+    private String orginalNamn;
+    private String orginalBeskrivning;
+    private String orginalAdress;
+    private String orginalStad;
+    private String orginalEpost;
+    private String orginalTelefonnummer;
+    private String orginalChef;
+
     /**
      * Creates new form Avdelning
      */
-    public RedigeraAvdelningFonster(InfDB idb,Anvandare inloggadAnvandare) {
+    public RedigeraAvdelningFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         anvandarensAvdelning = new Avdelning(inloggadAnvandare.getAvdelningsID(), idb);
-        
+        avdelningsRegister = new AvdelningsRegister(idb);
         initComponents();
+        btnSpara.setEnabled(false);
+        btnAterstall.setEnabled(false);
         tabell = (DefaultTableModel) anstalldTable.getModel();
-        
-        setLocationRelativeTo(null);
-        initKolumner();
-        visaAnstallda();
-        setAvdelningsUppgifter();
         initGlassPane();
+        initKolumner();
+        initCB();
+        visaAnstallda();
+        uppdateraAvdelning(anvandarensAvdelning);
         vy = "Alla";
+        setLocationRelativeTo(null);
+    }
+
+    
+    private void uppdateraAnstallda(Avdelning avdelning) {
+        tabell.setRowCount(0);
+        for (Anvandare enAnstalld : avdelning.getAvdelningensAnstallda()) {
+            String roll = "";
+            if (enAnstalld.isAdmin()) {
+                roll = "Administratör";
+            } else {
+                roll = "Handläggare";
+            }
+            tabell.addRow(new Object[]{enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
+        }
+    }
+    
+    private void uppdateraAvdelning(Avdelning avdelning) {
+    uppdateraAnstallda(avdelning);
+    orginalNamn = avdelning.getNamn();
+    orginalBeskrivning = avdelning.getBeskrivning();
+    orginalAdress = avdelning.getAdress();
+    orginalStad = avdelning.getStad().getNamn();
+    orginalEpost = avdelning.getEpost();
+    orginalTelefonnummer = avdelning.getTelefonnummer();
+    orginalChef = avdelning.getChef().getFullNamn();
+
+    tfAvdelningsNamn.setText(orginalNamn);
+    taBeskrivning.setText(orginalBeskrivning);
+    tfAdress.setText(orginalAdress);
+    tfStad.setText(orginalStad);
+    tfEpost.setText(orginalEpost);
+    tfTelefon.setText(orginalTelefonnummer);
+    lblChef.setText(orginalChef);
+}
+
+    private void bytAvdelning(){
+        String valdAvdelningNamn = (String) cbAvdelningar.getSelectedItem();
+        for (Avdelning avdelning : avdelningsRegister.getLista()) {
+            if (avdelning.getNamn().equals(valdAvdelningNamn)) {
+                anvandarensAvdelning = avdelning;
+                uppdateraAvdelning(avdelning);
+                break;
+            }
+        }
+    }
+    
+    private void initCB(){
+        cbAvdelningar.removeAllItems();
+        for(Avdelning enAvdelning : avdelningsRegister.getLista()){
+            cbAvdelningar.addItem(enAvdelning.getNamn());
+        }
+        cbAvdelningar.setSelectedItem(anvandarensAvdelning.getNamn());
         
-        
+        cbAvdelningar.setRenderer(new DefaultListCellRenderer() {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+            if (!cbAvdelningar.isEnabled()) { // Index -1 indicates the "selected" display
+                label.setText("Du kan inte byta avdelning med osparade ändringar");
+            }
+
+            return label;
+        }
+    });
+    }
+    
+    private boolean harOsparadeAndringar() {
+        if (!orginalNamn.equals(tfAvdelningsNamn.getText())) {
+            return true;
+        }
+        if (!orginalBeskrivning.equals(taBeskrivning.getText())) {
+            return true;
+        }
+        if (!orginalAdress.equals(tfAdress.getText())) {
+            return true;
+        }
+        if (!orginalStad.equals(tfStad.getText())) {
+            return true;
+        }
+        if (!orginalEpost.equals(tfEpost.getText())) {
+            return true;
+        }
+        if (!orginalTelefonnummer.equals(tfTelefon.getText())) {
+            return true;
+        }
+        if (!orginalChef.equals(lblChef.getText())) {
+            return true;
+        }
+        return false;
     }
 
     private void initGlassPane() {
-    glassPaneOverlay = new JPanel() {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
+        glassPaneOverlay = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
 
-            Graphics2D g2d = (Graphics2D) g.create();
+                Graphics2D g2d = (Graphics2D) g.create();
 
-            // Draw semi-transparent black overlay
-            g2d.setColor(new Color(0, 0, 0, 150));
-            g2d.fillRect(0, 0, getWidth(), getHeight());
+                // Rita halvgenomskinlig svart överlagring
+                g2d.setColor(new Color(0, 0, 0, 150));
+                g2d.fillRect(0, 0, getWidth(), getHeight());
 
-            // Exclude jScrollPane1
-            paintExcludedComponent(g2d, jScrollPane1);
+                // Exkludera jScrollPane1
+                paintExcludedComponent(g2d, jScrollPane1);
 
-            // Exclude sokfalt
-            paintExcludedComponent(g2d, sokfalt);
+                // Exkludera sokfalt
+                paintExcludedComponent(g2d, sokfalt);
 
-            // Exclude sokBtn
-            paintExcludedComponent(g2d, sokBtn);
+                // Exkludera sokBtn
+                paintExcludedComponent(g2d, sokBtn);
 
-            // Exclude sokCB
-            paintExcludedComponent(g2d, sokCB);
+                // Exkludera sokCB
+                paintExcludedComponent(g2d, sokCB);
 
-            g2d.dispose();
+                g2d.dispose();
+            }
+
+            private void paintExcludedComponent(Graphics2D g2d, JComponent komponent) {
+                // Spara aktuellt tillstånd
+                Graphics2D gCopy = (Graphics2D) g2d.create();
+
+                // Hämta komponentens position och bounds
+                Point komponentPlats = SwingUtilities.convertPoint(komponent.getParent(), komponent.getLocation(), this);
+
+                // Översätt grafikens kontext till komponentens position
+                gCopy.translate(komponentPlats.x, komponentPlats.y);
+
+                // Måla komponenten
+                komponent.paint(gCopy);
+
+                // Återställ grafikens kontext
+                gCopy.dispose();
+            }
+        };
+
+        // Säkerställ att glaspanelen är transparent
+        glassPaneOverlay.setOpaque(false);
+
+        // Vidarebefordra mus- och mushjulshändelser till exkluderade komponenter
+        glassPaneOverlay.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+        });
+
+        glassPaneOverlay.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+        });
+
+        glassPaneOverlay.addMouseWheelListener(e -> vidarebefordraMusHjulHandelse(e));
+
+        setGlassPane(glassPaneOverlay);
+    }
+
+    private void vidarebefordraMusHandelse(MouseEvent e) {
+        // Lista över exkluderade komponenter
+        JComponent[] exkluderadeKomponenter = {jScrollPane1,sokfalt, sokBtn, sokCB};
+
+        for (JComponent komponent : exkluderadeKomponenter) {
+            if (komponent != null && komponent.isVisible()) {
+                // Hämta komponentens bounds och position
+                Rectangle komponentBounds = komponent.getBounds();
+                Point komponentPlats = SwingUtilities.convertPoint(komponent.getParent(), komponent.getLocation(), glassPaneOverlay);
+                komponentBounds.setLocation(komponentPlats);
+
+                if (komponentBounds.contains(e.getPoint())) {
+                    // Översätt musens händelse till komponentens koordinater
+                    Point översattPunkt = SwingUtilities.convertPoint(glassPaneOverlay, e.getPoint(), komponent);
+
+                    // Vidarebefordra händelsen
+                    MouseEvent nyHandelse = new MouseEvent(
+                            komponent,
+                            e.getID(),
+                            e.getWhen(),
+                            e.getModifiersEx(),
+                            översattPunkt.x,
+                            översattPunkt.y,
+                            e.getClickCount(),
+                            e.isPopupTrigger(),
+                            e.getButton()
+                    );
+
+                    komponent.dispatchEvent(nyHandelse);
+
+                    // Hantera radval om JTable är i JScrollPane
+                    if (komponent == jScrollPane1 && e.getID() == MouseEvent.MOUSE_CLICKED) {
+                        // Översätt punkt till JTable-koordinater
+                        Point tabellPunkt = SwingUtilities.convertPoint(glassPaneOverlay, e.getPoint(), anstalldTable);
+                        int valdRad = anstalldTable.rowAtPoint(tabellPunkt);
+
+                        if (valdRad != -1) {
+                            // Säkerställ rätt kolumnindex (t.ex. 0 för namn)
+                            String anstalldNamn = anstalldTable.getValueAt(valdRad, 0).toString();
+                            glassPaneOverlay.setVisible(false);
+                            lblChef.setText(anstalldNamn);
+                        }
+                    }
+
+                    return; // Sluta efter att händelsen skickats till första matchande komponent
+                }
+            }
         }
 
-        private void paintExcludedComponent(Graphics2D g2d, JComponent component) {
-            // Save the current state
-            Graphics2D gCopy = (Graphics2D) g2d.create();
-
-            // Get the bounds and location of the component
-            Point componentLocation = SwingUtilities.convertPoint(component.getParent(), component.getLocation(), this);
-
-            // Translate graphics context to the component's position
-            gCopy.translate(componentLocation.x, componentLocation.y);
-
-            // Paint the component
-            component.paint(gCopy);
-
-            // Dispose the copied graphics context
-            gCopy.dispose();
-        }
-    };
-
-    // Ensure the glass pane is transparent
-    glassPaneOverlay.setOpaque(false);
-
-    // Forward mouse and mouse wheel events to excluded components
-    glassPaneOverlay.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            forwardMouseEvent(e);
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            forwardMouseEvent(e);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            forwardMouseEvent(e);
-        }
-    });
-
-    glassPaneOverlay.addMouseMotionListener(new MouseMotionAdapter() {
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            forwardMouseEvent(e);
-        }
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            forwardMouseEvent(e);
-        }
-    });
-
-    glassPaneOverlay.addMouseWheelListener(e -> forwardMouseWheelEvent(e));
-
-    setGlassPane(glassPaneOverlay);
-}
-
-    private void forwardMouseEvent(MouseEvent e) {
-    // List of excluded components
-    JComponent[] excludedComponents = {jScrollPane1, sokfalt, sokBtn, sokCB};
-
-    boolean clickedInsideExcluded = false;
-
-    for (JComponent component : excludedComponents) {
-        // Get the component's bounds and location
-        Rectangle componentBounds = component.getBounds();
-        Point componentLocation = SwingUtilities.convertPoint(component.getParent(), component.getLocation(), glassPaneOverlay);
-        componentBounds.setLocation(componentLocation);
-
-        // Check if the mouse event is within the component's bounds
-        if (componentBounds.contains(e.getPoint())) {
-            // Translate the mouse event to the component's coordinates
-            MouseEvent newEvent = SwingUtilities.convertMouseEvent(glassPaneOverlay, e, component);
-
-            // Dispatch the event to the component
-            component.dispatchEvent(newEvent);
-
-            // Indicate that the click was inside an excluded component
-            clickedInsideExcluded = true;
-            break; // Stop checking further components
+        // Om händelsen är utanför alla exkluderade komponenter
+        if (e.getID() == MouseEvent.MOUSE_CLICKED) {
+            glassPaneOverlay.setVisible(false);
+            System.out.println("Overlay dold.");
         }
     }
 
-    // If the click was outside all excluded components, hide the overlay
-    if (!clickedInsideExcluded && e.getID() == MouseEvent.MOUSE_CLICKED) {
-        glassPaneOverlay.setVisible(false);
-    }
-}
+    private void vidarebefordraMusHjulHandelse(MouseWheelEvent e) {
+        // Lista över exkluderade komponenter (fokusera på jScrollPane1 för scrollning)
+        JComponent[] exkluderadeKomponenter = {jScrollPane1};
 
-    private void forwardMouseWheelEvent(MouseWheelEvent e) {
-    // List of excluded components (focus on jScrollPane1 for scrolling)
-    JComponent[] excludedComponents = {jScrollPane1};
+        for (JComponent komponent : exkluderadeKomponenter) {
+            // Hämta komponentens bounds och position
+            Rectangle komponentBounds = komponent.getBounds();
+            Point komponentPlats = SwingUtilities.convertPoint(komponent.getParent(), komponent.getLocation(), glassPaneOverlay);
+            komponentBounds.setLocation(komponentPlats);
 
-    for (JComponent component : excludedComponents) {
-        // Get the component's bounds and location
-        Rectangle componentBounds = component.getBounds();
-        Point componentLocation = SwingUtilities.convertPoint(component.getParent(), component.getLocation(), glassPaneOverlay);
-        componentBounds.setLocation(componentLocation);
+            // Kontrollera om mushjulseventet är inom komponentens bounds
+            if (komponentBounds.contains(e.getPoint())) {
+                // Översätt mushjulsevent till komponentens koordinater
+                MouseWheelEvent nyHandelse = new MouseWheelEvent(
+                        komponent,
+                        e.getID(),
+                        e.getWhen(),
+                        e.getModifiersEx(),
+                        e.getX() - komponentPlats.x,
+                        e.getY() - komponentPlats.y,
+                        e.getClickCount(),
+                        e.isPopupTrigger(),
+                        e.getScrollType(),
+                        e.getScrollAmount(),
+                        e.getWheelRotation()
+                );
 
-        // Check if the mouse wheel event is within the component's bounds
-        if (componentBounds.contains(e.getPoint())) {
-            // Translate the mouse wheel event to the component's coordinates
-            MouseWheelEvent newEvent = new MouseWheelEvent(
-                component,
-                e.getID(),
-                e.getWhen(),
-                e.getModifiersEx(),
-                e.getX() - componentLocation.x,
-                e.getY() - componentLocation.y,
-                e.getClickCount(),
-                e.isPopupTrigger(),
-                e.getScrollType(),
-                e.getScrollAmount(),
-                e.getWheelRotation()
-            );
-
-            // Dispatch the event to the component
-            component.dispatchEvent(newEvent);
-            return; // Stop after dispatching to the first matching component
+                // Skicka händelsen till komponenten
+                komponent.dispatchEvent(nyHandelse);
+                return; // Sluta efter att händelsen skickats till första matchande komponent
+            }
         }
     }
-}
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-
-
-
-
-
-
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -231,10 +348,16 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         tfTelefon = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
         taBeskrivning = new javax.swing.JTextArea();
+        lblChef = new javax.swing.JLabel();
+        cbAvdelningar = new javax.swing.JComboBox<>();
+        btnSpara = new javax.swing.JButton();
+        btnAterstall = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SDG Sweden - Min avdelning");
+        setTitle("SDG Sweden - Redigera avdelning");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setMinimumSize(new java.awt.Dimension(1020, 576));
+        setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -310,11 +433,21 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
                 tfAvdelningsNamnActionPerformed(evt);
             }
         });
+        tfAvdelningsNamn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfAvdelningsNamnKeyTyped(evt);
+            }
+        });
 
         tfAdress.setText("jTextField3");
         tfAdress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfAdressActionPerformed(evt);
+            }
+        });
+        tfAdress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfAdressKeyTyped(evt);
             }
         });
 
@@ -324,6 +457,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
                 tfStadActionPerformed(evt);
             }
         });
+        tfStad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfStadKeyTyped(evt);
+            }
+        });
 
         tfEpost.setText("jTextField5");
         tfEpost.addActionListener(new java.awt.event.ActionListener() {
@@ -331,11 +469,21 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
                 tfEpostActionPerformed(evt);
             }
         });
+        tfEpost.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfEpostKeyTyped(evt);
+            }
+        });
 
         tfTelefon.setText("jTextField6");
+        tfTelefon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfTelefonKeyTyped(evt);
+            }
+        });
 
         jTextField7.setEditable(false);
-        jTextField7.setText("Klicka här för att välja en anställd");
+        jTextField7.setText("Klicka här för att välja en ny chef");
         jTextField7.setFocusable(false);
         jTextField7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -357,6 +505,45 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         taBeskrivning.setLineWrap(true);
         taBeskrivning.setRows(5);
         taBeskrivning.setWrapStyleWord(true);
+        taBeskrivning.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                taBeskrivningKeyTyped(evt);
+            }
+        });
+
+        lblChef.setText("jLabel7");
+        lblChef.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                lblChefPropertyChange(evt);
+            }
+        });
+        lblChef.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                lblChefKeyTyped(evt);
+            }
+        });
+
+        cbAvdelningar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbAvdelningar.setName(""); // NOI18N
+        cbAvdelningar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbAvdelningarItemStateChanged(evt);
+            }
+        });
+        cbAvdelningar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAvdelningarActionPerformed(evt);
+            }
+        });
+
+        btnSpara.setText("Spara");
+
+        btnAterstall.setText("Återställ");
+        btnAterstall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAterstallActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -365,56 +552,61 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfAvdelningsNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                            .addComponent(cbAvdelningar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(sokCB, javax.swing.GroupLayout.Alignment.LEADING, 0, 112, Short.MAX_VALUE)
-                                    .addComponent(sokfalt, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(29, 29, 29)
-                                .addComponent(sokBtn))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5))
-                                .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(tfTelefon)
-                                        .addGap(88, 88, 88))))
                             .addComponent(taBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel2)
+                                .addGap(29, 29, 29)
+                                .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGap(18, 18, 18)
                                     .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(13, 13, 13)
-                                    .addComponent(jLabel4)
                                     .addGap(29, 29, 29)
-                                    .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(tfAvdelningsNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTillbaka))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(13, 13, 13)
+                                            .addComponent(jLabel4))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel5)))
+                                    .addGap(29, 29, 29)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tfEpost)
+                                        .addComponent(tfTelefon)
+                                        .addComponent(lblChef, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(sokCB, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(sokfalt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(29, 29, 29)
+                                .addComponent(sokBtn))
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnTillbaka)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSpara)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAterstall)))
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfAvdelningsNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -436,17 +628,27 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblChef, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(sokfalt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sokBtn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(sokCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(btnTillbaka)
+                            .addComponent(sokBtn)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sokCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(cbAvdelningar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTillbaka)
+                    .addComponent(btnSpara)
+                    .addComponent(btnAterstall))
                 .addContainerGap())
         );
 
@@ -454,8 +656,12 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new MenyFonster(idb,inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
+        if (harOsparadeAndringar()) {
+            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Avdelning").setVisible(true);
+        } else {
+            this.setVisible(false);
+            new MenyFonster(idb, inloggadAnvandare).setVisible(true);
+        }
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void anstalldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anstalldTableMouseClicked
@@ -463,10 +669,10 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         int kolumn = anstalldTable.columnAtPoint(evt.getPoint());
 
         String kolumnnamn = tabell.getColumnName(kolumn);
-        
-        if(kolumnnamn.equals("Namn") && (rad >= 0 && rad < anstalldTable.getRowCount())){ 
+
+        if (kolumnnamn.equals("Namn") && (rad >= 0 && rad < anstalldTable.getRowCount())) {
             Anvandare aktuellAnstalld = anvandarensAvdelning.getAnstalld(rad);
-            
+
             //Öppnar nytt fönster som visar mer detaljerad information om ett projekt 
             new AnstalldInfoFonster(inloggadAnvandare, aktuellAnstalld).setVisible(true);
         }
@@ -493,28 +699,25 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfAvdelningsNamnActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        
+
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void sokBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokBtnMouseClicked
-        if(!sokfalt.getText().isEmpty()){
-            if(sokCB.getSelectedItem().equals("Namn")){
+        if (!sokfalt.getText().isEmpty()) {
+            if (sokCB.getSelectedItem().equals("Namn")) {
                 anvandarensAvdelning.hamtaSokNamn(sokfalt.getText());
                 rensaDataFonster();
                 visaAnstallda();
                 vy = "Sökt";
-            }
-            else if(sokCB.getSelectedItem().equals("Epost")){
+            } else if (sokCB.getSelectedItem().equals("Epost")) {
                 anvandarensAvdelning.hamtaSokEpost(sokfalt.getText());
                 rensaDataFonster();
                 visaAnstallda();
                 vy = "Sökt";
-            }
-            else{
+            } else {
                 resetFonster();
             }
-        }
-        else{
+        } else {
             resetFonster();
         }
     }//GEN-LAST:event_sokBtnMouseClicked
@@ -525,23 +728,21 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_sokfaltMouseClicked
 
     private void sokCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokCBActionPerformed
-        if(sokCB.getSelectedItem().equals("Namn")){
+        if (sokCB.getSelectedItem().equals("Namn")) {
             sokfalt.setEnabled(true);
             sokfalt.setText("Sök namn...");
-            if(vy.equals("Sökt")){
+            if (vy.equals("Sökt")) {
                 resetFonster();
                 vy = "Alla";
             }
-        }
-        else if(sokCB.getSelectedItem().equals("Epost")){
+        } else if (sokCB.getSelectedItem().equals("Epost")) {
             sokfalt.setText("Sök epost...");
             sokfalt.setEnabled(true);
-            if(vy.equals("Sökt")){
+            if (vy.equals("Sökt")) {
                 resetFonster();
                 vy = "Alla";
             }
-        }
-        else if(sokCB.getSelectedItem().equals("Sök efter...")){
+        } else if (sokCB.getSelectedItem().equals("Sök efter...")) {
             sokfalt.setEnabled(false);
             sokfalt.setText("Sök anställd...");
         }
@@ -557,65 +758,161 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7KeyPressed
 
-    private void initKolumner(){
+    private void cbAvdelningarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAvdelningarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbAvdelningarActionPerformed
+
+    private void cbAvdelningarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbAvdelningarItemStateChanged
+        bytAvdelning();
+    }//GEN-LAST:event_cbAvdelningarItemStateChanged
+
+    private void tfAvdelningsNamnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfAvdelningsNamnKeyTyped
+        if(tfAvdelningsNamn.getText().equals(orginalNamn)){
+            btnSpara.setEnabled(false);
+            btnAterstall.setEnabled(false);
+            cbAvdelningar.setEnabled(true);
+        }
+        else{
+            btnSpara.setEnabled(true);
+            btnAterstall.setEnabled(true);
+            cbAvdelningar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfAvdelningsNamnKeyTyped
+
+    private void taBeskrivningKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taBeskrivningKeyTyped
+        if(taBeskrivning.getText().equals(orginalBeskrivning)){
+            btnSpara.setEnabled(false);
+            btnAterstall.setEnabled(false);
+            cbAvdelningar.setEnabled(true);
+        }
+        else{
+            btnSpara.setEnabled(true);
+            btnAterstall.setEnabled(true);
+            cbAvdelningar.setEnabled(false);
+        }
+    }//GEN-LAST:event_taBeskrivningKeyTyped
+
+    private void tfAdressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfAdressKeyTyped
+        if(tfAdress.getText().equals(orginalAdress)){
+            btnSpara.setEnabled(false);
+            btnAterstall.setEnabled(false);
+            cbAvdelningar.setEnabled(true);
+        }
+        else{
+            btnSpara.setEnabled(true);
+            btnAterstall.setEnabled(true);
+            cbAvdelningar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfAdressKeyTyped
+
+    private void tfStadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfStadKeyTyped
+        if(tfStad.getText().equals(orginalStad)){
+            btnSpara.setEnabled(false);
+            btnAterstall.setEnabled(false);
+            cbAvdelningar.setEnabled(true);
+        }
+        else{
+            btnSpara.setEnabled(true);
+            btnAterstall.setEnabled(true);
+            cbAvdelningar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfStadKeyTyped
+
+    private void tfEpostKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfEpostKeyTyped
+        if(tfEpost.getText().equals(orginalEpost)){
+            btnSpara.setEnabled(false);
+            btnAterstall.setEnabled(false);
+            cbAvdelningar.setEnabled(true);
+        }
+        else{
+            btnSpara.setEnabled(true);
+            btnAterstall.setEnabled(true);
+            cbAvdelningar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfEpostKeyTyped
+
+    private void tfTelefonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefonKeyTyped
+        if(tfTelefon.getText().equals(orginalTelefonnummer)){
+            btnSpara.setEnabled(false);
+            btnAterstall.setEnabled(false);
+            cbAvdelningar.setEnabled(true);
+        }
+        else{
+            btnSpara.setEnabled(true);
+            btnAterstall.setEnabled(true);
+            cbAvdelningar.setEnabled(false);
+        }
+    }//GEN-LAST:event_tfTelefonKeyTyped
+
+    private void lblChefPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lblChefPropertyChange
+        if(lblChef.getText().equals(orginalChef)){
+            btnSpara.setEnabled(false);
+            btnAterstall.setEnabled(false);
+            cbAvdelningar.setEnabled(true);
+        }
+        else{
+            btnSpara.setEnabled(true);
+            btnAterstall.setEnabled(true);
+            cbAvdelningar.setEnabled(false);
+        }
+    }//GEN-LAST:event_lblChefPropertyChange
+
+    private void lblChefKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblChefKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblChefKeyTyped
+
+    private void btnAterstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAterstallActionPerformed
+        String valdAvdelningNamn = (String) cbAvdelningar.getSelectedItem();
+        for (Avdelning avdelning : avdelningsRegister.getLista()) {
+            if (avdelning.getNamn().equals(valdAvdelningNamn)) {
+                anvandarensAvdelning = avdelning;
+                uppdateraAvdelning(avdelning);
+                break;
+            }
+        }
+    }//GEN-LAST:event_btnAterstallActionPerformed
+
+    private void initKolumner() {
         tabell.addColumn("Namn"); //denna ska gömmas senare
         tabell.addColumn("Epost");
         tabell.addColumn("Roll");
 
-
         //Förhindrar användaren från att editera cellerna direkt
         anstalldTable.setDefaultEditor(Object.class, null);
     }
-    
+
     /**
      * @param args the command line arguments
      */
-    
-    private void visaAnstallda(){
-        for(Anvandare enAnstalld : anvandarensAvdelning.getAvdelningensAnstallda()){
+    private void visaAnstallda() {
+        for (Anvandare enAnstalld : anvandarensAvdelning.getAvdelningensAnstallda()) {
             String roll = "";
-            if(enAnstalld.isAdmin()){
+            if (enAnstalld.isAdmin()) {
                 roll = "Administratör";
-            }
-            else{
+            } else {
                 roll = "Handläggare";
             }
-                tabell.addRow(new Object[]{enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
+            tabell.addRow(new Object[]{enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
         }
     }
-    
-    //Denna kan döpas om till ovan när den ovan tagits bort
-    private void setAvdelningsUppgifter(){
-        tfAvdelningsNamn.setText(anvandarensAvdelning.getNamn());
-        taBeskrivning.setText(anvandarensAvdelning.getBeskrivning());
-   
-        tfAdress.setText(anvandarensAvdelning.getAdress());
-        
-        tfStad.setText(anvandarensAvdelning.getStad().getNamn());
-        
-        tfEpost.setText(anvandarensAvdelning.getEpost());
-        
-        tfTelefon.setText(anvandarensAvdelning.getTelefonnummer());
-        
-        //lblChef.setText(anvandarensAvdelning.getChef().getFullNamn());
-    }
-    
-    private void rensaDataFonster(){
+
+    private void rensaDataFonster() {
         //Tar bort datan
         tabell.getDataVector().clear();
 
         //Tar bort datan från fönstret också.
         anstalldTable.repaint();
-        
-    };
+
+    }
+
+    ;
     
-    public void resetFonster(){
+    public void resetFonster() {
         rensaDataFonster();
         anvandarensAvdelning.hamtaAnstallda();
         visaAnstallda();
     }
-    
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -653,7 +950,10 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable anstalldTable;
+    private javax.swing.JButton btnAterstall;
+    private javax.swing.JButton btnSpara;
     private javax.swing.JButton btnTillbaka;
+    private javax.swing.JComboBox<String> cbAvdelningar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -662,6 +962,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel lblChef;
     private javax.swing.JButton sokBtn;
     private javax.swing.JComboBox<String> sokCB;
     private javax.swing.JTextField sokfalt;

@@ -9,7 +9,7 @@ import oru.inf.InfException;
 import java.awt.*;
 import ngo2024.Anvandare;
 import ngo2024.Avdelning;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author walle
@@ -79,7 +79,9 @@ public class MenyFonster extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Start");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setMinimumSize(new java.awt.Dimension(1020, 576));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblInloggadAnvandare.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N

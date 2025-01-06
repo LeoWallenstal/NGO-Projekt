@@ -9,6 +9,7 @@ import oru.inf.InfException;
 import java.util.*;
 import javax.swing.table.*;
 import ngo2024.*;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -72,7 +73,10 @@ public class AvdelningFonster extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Min avdelning");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setIconImages(null);
         setMinimumSize(new java.awt.Dimension(1020, 576));
+        setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);

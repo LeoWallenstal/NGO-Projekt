@@ -6,7 +6,7 @@ package ngo2024.fonster;
 
 import ngo2024.*;
 import oru.inf.InfDB;
-
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -69,6 +69,9 @@ public class LaggTillLandFonster extends javax.swing.JFrame {
         lblFelMSprak = new javax.swing.JLabel();
         lblFelMPolitiskStruktur = new javax.swing.JLabel();
         lblFelMEkonomi = new javax.swing.JLabel();
+
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
 
         lblNamn.setText("Namn:");
 
