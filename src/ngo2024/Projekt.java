@@ -20,6 +20,7 @@ public class Projekt {
     private String landID;
     private String land;
     private ArrayList<Partner> partners;
+    //ArrayList med handlaggare som jobbar på detta projekt
     
     private final InfDB idb;
 
@@ -158,6 +159,7 @@ public class Projekt {
         else{
             projektchef = null;
         }
+        hamtaPartners();
     }
     
     public Projekt(InfDB idb){
@@ -170,7 +172,7 @@ public class Projekt {
         return projektID;
     }
 
-    public String getProjektnamn() {
+    public String getNamn() {
         return projektnamn;
     }
 
@@ -426,6 +428,28 @@ public class Projekt {
         return false;
     }
     
+    public void hamtaPartners(){
+        ArrayList<HashMap<String, String>> partnerMap = new ArrayList<>();
+        ArrayList<Partner> hamtadePartners = new ArrayList<>();
+        
+        try{
+            partnerMap = idb.fetchRows("SELECT partner.pid FROM partner "
+                + "JOIN projekt_partner ON projekt_partner.partner_pid = partner.pid "
+                + "JOIN projekt ON projekt.pid = projekt_partner.pid "
+                + "WHERE projekt.pid = " + projektID );
+        }catch(InfException ex){
+            System.out.println(ex.getMessage() + "i Projekt.java, hamtaPartners()");
+        }
+        
+        for(HashMap<String, String> enPartner : partnerMap){
+            for(String key : enPartner.keySet()){
+                String partnerID = enPartner.get(key);
+                hamtadePartners.add(new Partner(partnerID, idb));
+            }
+        }
+        partners = hamtadePartners;
+    }
+    
     public boolean arFore(String datum){
         LocalDate startdatum1 = LocalDate.parse(this.getStartdatum());
         LocalDate startdatum2 = LocalDate.parse(datum);
@@ -452,7 +476,7 @@ public class Projekt {
         try{
             idb.insert("INSERT INTO projekt (pid, projektnamn, beskrivning, "
                     + "startdatum, slutdatum, kostnad, status, prioritet, projektchef, land) " 
-                    + "VALUES (" + this.getProjektID() + ", '" + this.getProjektnamn() 
+                    + "VALUES (" + this.getProjektID() + ", '" + this.getNamn() 
                     + "', '" + this.getBeskrivning() + "', '" + this.getStartdatum() 
                     + "', " + null + ", '" + this.getKostnad() + "', '" + this.getStatus() 
                     + "', '" + this.getPrioritet() + "', " + this.getProjektchefID() 

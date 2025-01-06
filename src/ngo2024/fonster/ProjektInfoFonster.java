@@ -5,8 +5,8 @@
 
 package ngo2024.fonster;
 
-import ngo2024.Anvandare;
-import ngo2024.Projekt;
+import javax.swing.DefaultListModel;
+import ngo2024.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -16,17 +16,20 @@ import oru.inf.InfException;
  */
 public class ProjektInfoFonster extends javax.swing.JFrame {
     
-    private Anvandare inloggadAnvandare;
-    private InfDB idb;
-    private Projekt aktuelltProjekt;
-    private ProjektFonster forraFonstret;
+    private final Anvandare inloggadAnvandare;
+    private final InfDB idb;
+    private final Projekt aktuelltProjekt;
+    private final ProjektFonster forraFonstret;
     
     public ProjektInfoFonster(Anvandare inloggadAnvandare, Projekt ettProjekt, InfDB idb) {
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
         aktuelltProjekt = ettProjekt;
+        forraFonstret = null;
         initComponents();
+        
         setProjektInfo();
+        
         
         if(inloggadAnvandare.isAdmin() || inloggadAnvandare.isProjektchef(aktuelltProjekt)){
             redigeraButton.setVisible(true);
@@ -46,6 +49,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         this.forraFonstret = forraFonstret;
         aktuelltProjekt = ettProjekt;
         initComponents();
+        
         setProjektInfo();
         
         if(inloggadAnvandare.isAdmin() || inloggadAnvandare.isProjektchef(aktuelltProjekt)){
@@ -60,16 +64,56 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }   
 
+    private void initPartnerList(){
+        DefaultListModel<String> listModell = new DefaultListModel<>();
+        if(aktuelltProjekt.getPartners().isEmpty()){
+            partnerList.setEnabled(false);
+            listModell.addElement("Inga partners kopplade till projektet.");
+        }
+        else{
+            for(Partner enPartner : aktuelltProjekt.getPartners()){
+                listModell.addElement(enPartner.getNamn());
+            }
+        }
+        partnerList.setModel(listModell);
+    }
+    
     private void setProjektInfo(){
-        this.setTitle("SDG Sweden - " + aktuelltProjekt.getProjektnamn());
+        initPartnerList();
+        this.setTitle("SDG Sweden - " + aktuelltProjekt.getNamn());
         
-        projektnamnLabel.setText("Projektnamn: " + aktuelltProjekt.getProjektnamn());
+        projektnamnLabel.setText("Projektnamn: " + aktuelltProjekt.getNamn());
         beskrivningLabel.setText("Beskrivning: " + aktuelltProjekt.getBeskrivning());
         projektchefLabel.setText("Projektchef: " + aktuelltProjekt.getProjektchef().getFullNamn());
         prioritetLabel.setText("Prioritet: " + aktuelltProjekt.getPrioritet());
         statusLabel.setText("Status: " + aktuelltProjekt.getStatus());
         kostnadLabel.setText("Kostnad: " + aktuelltProjekt.getKostnad());
         startdatumLabel.setText("Startdatum: " + aktuelltProjekt.getStartdatum());
+    }
+    
+    private void rensaLista(){
+        //Tar bort datan
+        partnerList.setModel(new DefaultListModel<>());
+        //Tar bort datan från fönstret också.
+        partnerList.repaint();
+        
+    };
+    
+    private void refreshaLista(){
+        rensaLista();
+        aktuelltProjekt.hamtaPartners();
+        
+        DefaultListModel<String> listModell = new DefaultListModel<>();
+        if(aktuelltProjekt.getPartners().isEmpty()){
+            partnerList.setEnabled(false);
+            listModell.addElement("Inga partners kopplade till projektet.");
+        }
+        else{
+            for(Partner enPartner : aktuelltProjekt.getPartners()){
+                listModell.addElement(enPartner.getNamn());
+            }
+        }
+        partnerList.setModel(listModell);
     }
     
     /**
@@ -91,6 +135,17 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         redigeraButton = new javax.swing.JButton();
         tillbakaButton = new javax.swing.JButton();
         taBortButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        partnerList = new javax.swing.JList<>();
+        partnerLbl = new javax.swing.JLabel();
+
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         projektnamnLabel.setText("Projektnamn: ");
 
@@ -132,6 +187,16 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
             }
         });
 
+        partnerList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                partnerListMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(partnerList);
+
+        partnerLbl.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        partnerLbl.setText("Partners kopplade till projektet");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,21 +206,30 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(projektnamnLabel)
-                            .addComponent(beskrivningLabel)
-                            .addComponent(projektchefLabel)
-                            .addComponent(prioritetLabel)
-                            .addComponent(statusLabel)
-                            .addComponent(kostnadLabel)
-                            .addComponent(startdatumLabel))
-                        .addContainerGap(321, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(partnerLbl)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(tillbakaButton)
-                        .addGap(85, 85, 85)
-                        .addComponent(redigeraButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(taBortButton)
-                        .addGap(25, 25, 25))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(projektnamnLabel)
+                                    .addComponent(beskrivningLabel)
+                                    .addComponent(projektchefLabel)
+                                    .addComponent(prioritetLabel)
+                                    .addComponent(statusLabel)
+                                    .addComponent(kostnadLabel)
+                                    .addComponent(startdatumLabel))
+                                .addGap(0, 315, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tillbakaButton)
+                                .addGap(85, 85, 85)
+                                .addComponent(redigeraButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(taBortButton)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +248,11 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
                 .addComponent(kostnadLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(startdatumLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(partnerLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(redigeraButton)
                     .addComponent(tillbakaButton)
@@ -186,7 +264,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void redigeraButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_redigeraButtonMouseClicked
-        new RedigeraProjektInfoFonster(aktuelltProjekt, inloggadAnvandare, idb).setVisible(true);
+        new RedigeraProjektFonster(inloggadAnvandare, aktuelltProjekt, this, idb).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_redigeraButtonMouseClicked
 
@@ -201,6 +279,15 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     private void taBortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taBortButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_taBortButtonActionPerformed
+
+    private void partnerListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_partnerListMouseClicked
+        Partner aktuellPartner = aktuelltProjekt.getPartners().get(partnerList.getSelectedIndex());
+        new PartnerInfoFonster(inloggadAnvandare, aktuellPartner, idb).setVisible(true);
+    }//GEN-LAST:event_partnerListMouseClicked
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        refreshaLista();
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments
@@ -239,7 +326,10 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel beskrivningLabel;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel kostnadLabel;
+    private javax.swing.JLabel partnerLbl;
+    private javax.swing.JList<String> partnerList;
     private javax.swing.JLabel prioritetLabel;
     private javax.swing.JLabel projektchefLabel;
     private javax.swing.JLabel projektnamnLabel;
