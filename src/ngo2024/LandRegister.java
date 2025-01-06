@@ -61,4 +61,15 @@ public class LandRegister {
         return false;
     }
     
+    public int getHogstaLandID(){
+        int hogstaID = Integer.parseInt(allaLand.getFirst().getLandID());
+        
+        for(Land ettLand : allaLand){
+            int ettID = Integer.parseInt(ettLand.getLandID());
+            if(ettID > hogstaID){
+                hogstaID = ettID;
+            }
+        }
+        return hogstaID;
+    }  
 }
