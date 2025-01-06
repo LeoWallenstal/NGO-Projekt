@@ -38,8 +38,8 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
         this.anvandareTaBort = null;
         this.forraFonstretAnstallda = null;
         
-        this.setTitle("SDG Sweden - Ta bort " + attTaBort.getProjektnamn());
-        varningRubrik.setText("Du håller på att ta bort " + attTaBort.getProjektnamn() + ".");
+        this.setTitle("SDG Sweden - Ta bort " + attTaBort.getNamn());
+        varningRubrik.setText("Du håller på att ta bort " + attTaBort.getNamn() + ".");
         varningUndertext.setText("Vill du fortsätta?");
         
         int bredd = varningRubrik.getWidth();
@@ -186,6 +186,7 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
         if(taBortVad.equals("Anställd")){
             anvandareTaBort.deleteAnvandareDb();
             forraFonstretAnstallda.reset();
+            forraFonstretAnstallda.visaAnstallda();
             this.setVisible(false);
         }
         if(taBortVad.equals("Partner")){

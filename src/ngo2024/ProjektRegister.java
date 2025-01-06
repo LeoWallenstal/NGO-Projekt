@@ -47,31 +47,17 @@ public class ProjektRegister {
     }
     
     public void hamtaAvdelningensProjekt(String avdelningsID){
-        
-        ArrayList<HashMap<String, String>> avdelningensProjekt = new ArrayList<>();
-        try {
-            //Hämtar bara ut projektIDt här
-            String sqlFraga = 
-                  "SELECT DISTINCT projekt.pid "
-                + "FROM projekt "
-                + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
-                + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
-                + "JOIN avdelning on anstalld.avdelning = avdelning.avdid "
-                + "WHERE avdelning.avdid = " + avdelningsID;
-            
-            avdelningensProjekt = idb.fetchRows(sqlFraga);
-            
-        }catch (InfException ex) {
-            System.out.println(ex.getMessage());
+        Avdelning minAvdelning = new Avdelning(avdelningsID, idb);
+        hamtaAllaProjekt();
+        ArrayList<Projekt> resultat = new ArrayList<>();
+        for(Anvandare enAnstalld : minAvdelning.getAvdelningensAnstallda()){
+            for(Projekt ettProjekt : allaProjekt){
+                if(ettProjekt.getProjektchefID().equals(enAnstalld.getAnstallningsID())){
+                    resultat.add(ettProjekt);
+                }
+            }
         }
-        
-        ArrayList<Projekt> avdelningensProj = new ArrayList<>();
-        for(HashMap<String, String> ettProjekt : avdelningensProjekt){
-            //Här skapar jag ett Projekt-objekt med det hämtade ProjektIDt från förut
-            avdelningensProj.add(new Projekt(ettProjekt.get("pid"), idb));
-        }
-        
-        allaProjekt = avdelningensProj;
+        allaProjekt = resultat;
     }
     
     public void hamtaMinaProjekt(String anstallningsID){
@@ -128,7 +114,7 @@ public class ProjektRegister {
         }
         else if(kategori == SokKategori.PROJEKTNAMN){
             for(Projekt ettProjekt : allaProjekt){
-                if(ettProjekt.getProjektnamn().startsWith(sokStr)){
+                if(ettProjekt.getNamn().startsWith(sokStr)){
                     resultat.add(ettProjekt);
                 }
             }
