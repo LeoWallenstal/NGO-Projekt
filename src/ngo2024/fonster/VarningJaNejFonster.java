@@ -6,7 +6,7 @@ package ngo2024.fonster;
 
 import java.awt.Dimension;
 import ngo2024.*;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author james
@@ -109,6 +109,7 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
         varningRubrik = new javax.swing.JLabel();
         varningUndertext = new javax.swing.JLabel();
 
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setMaximumSize(null);
         setMinimumSize(null);
         setResizable(false);

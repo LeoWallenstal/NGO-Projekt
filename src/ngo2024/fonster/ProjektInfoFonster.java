@@ -9,7 +9,7 @@ import javax.swing.DefaultListModel;
 import ngo2024.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author james
@@ -139,6 +139,8 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         partnerList = new javax.swing.JList<>();
         partnerLbl = new javax.swing.JLabel();
 
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);

@@ -6,7 +6,7 @@ package ngo2024.fonster;
 import ngo2024.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author james
@@ -67,6 +67,8 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
         partnerRegistreradLabel = new javax.swing.JLabel();
 
         setTitle("SDG - Lägg till partner");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);

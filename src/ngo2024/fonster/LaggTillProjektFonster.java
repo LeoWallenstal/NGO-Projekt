@@ -16,7 +16,7 @@ import ngo2024.Projekt;
 import ngo2024.Validerare;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author james
@@ -99,6 +99,8 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         projektRegistreradLabel = new javax.swing.JLabel();
 
         setTitle("SDG Sweden - Lägg till projekt");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);

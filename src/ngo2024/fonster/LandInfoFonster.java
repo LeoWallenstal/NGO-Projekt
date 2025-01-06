@@ -6,7 +6,7 @@ package ngo2024.fonster;
 
 import ngo2024.*;
 import oru.inf.InfDB;
-
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -40,6 +40,9 @@ public class LandInfoFonster extends javax.swing.JFrame {
     private void initComponents() {
 
         btnTillbaka = new javax.swing.JButton();
+
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
 
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {

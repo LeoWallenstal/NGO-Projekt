@@ -111,6 +111,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Mina uppgifter");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
 
         lblFornamn.setText("Förnamn:");
 

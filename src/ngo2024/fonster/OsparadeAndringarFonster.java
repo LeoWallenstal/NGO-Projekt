@@ -6,7 +6,7 @@ package ngo2024.fonster;
 
 import ngo2024.Anvandare;
 import oru.inf.InfDB;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author Gastinlogg
@@ -15,11 +15,13 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private String redigeringslage;
     
     /**
      * Creates new form OsparadeAndringar
      */
-    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare) {
+    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, String redigeringslage) {
+        this.redigeringslage = redigeringslage;
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
@@ -41,6 +43,8 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
         lblFraga = new javax.swing.JLabel();
 
         setTitle("SDG Sweden - Osparade ändringar");
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
 
         lblOsparat.setText("Du har osparade ändringar!");
 
@@ -100,7 +104,13 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
 
     private void btnFortsattTillMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFortsattTillMinaUppgifterActionPerformed
         this.setVisible(false);
-        new MinaUppgifterFonster(idb,inloggadAnvandare).setVisible(true);
+        if(redigeringslage.equals("Mina Uppgifter")){
+            new MinaUppgifterFonster(idb,inloggadAnvandare).setVisible(true);
+        }
+        else if(redigeringslage.equals("Avdelning")){
+            new MenyFonster(idb,inloggadAnvandare).setVisible(true);
+        }
+        
     }//GEN-LAST:event_btnFortsattTillMinaUppgifterActionPerformed
 
     /**

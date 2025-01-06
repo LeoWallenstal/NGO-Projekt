@@ -7,7 +7,7 @@ package ngo2024.fonster;
 import ngo2024.*;
 import oru.inf.InfDB;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author annae
@@ -79,6 +79,8 @@ public class LandFonster extends javax.swing.JFrame {
         btnLaggTillLand = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
+        setResizable(false);
 
         landTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -111,6 +111,7 @@ public class MalInfoFonster extends javax.swing.JFrame {
         lblPrioritet = new javax.swing.JLabel();
         pbPrioritet = new javax.swing.JProgressBar();
 
+        setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setResizable(false);
 
         lblMalIkon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/01-ingen-fattigdom.png"))); // NOI18N

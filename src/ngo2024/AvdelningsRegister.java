@@ -19,7 +19,9 @@ public class AvdelningsRegister {
     
     
     public AvdelningsRegister(InfDB idb){
-        
+        this.idb = idb;
+        allaAvdelningar = new ArrayList<>();
+        hamtaAllaAvdelningar();
     }
     
     public void hamtaAllaAvdelningar(){
@@ -47,5 +49,9 @@ public class AvdelningsRegister {
     
     public void tomLista(){
         allaAvdelningar.clear();
+    }
+    
+    public ArrayList<Avdelning> getLista(){
+        return allaAvdelningar;
     }
 }
