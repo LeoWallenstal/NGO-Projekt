@@ -16,7 +16,7 @@ public class Land {
     private String landID;
     private String namn;
     private String sprak;
-    private String valuta;
+    private String valuta; 
     private String tidszon;
     private String politiskStruktur;
     private String ekonomi;
@@ -101,6 +101,10 @@ public class Land {
             }
     }
     
+    public Land(InfDB idb){
+        this.idb = idb;
+    }
+    
     public String getLandID(){
         return landID;
     }
@@ -127,5 +131,63 @@ public class Land {
     
     public String getTidszon(){
         return tidszon;
+    }
+    
+    public void setNamn(String namn){
+        if(!namn.isEmpty()){
+            this.namn = namn;
+        }
+    }
+    
+    public void setSprak(String sprak){
+        if(!sprak.isEmpty()){
+            this.sprak = sprak;
+        }
+    }
+        
+    public void setValuta(String valuta){
+        if(!valuta.isEmpty()){
+            this.valuta = valuta;
+        }
+    }
+        
+    public void setTidszon(String tidszon){
+        if(!tidszon.isEmpty()){
+            this.tidszon = tidszon;
+        }
+    }
+    
+    public void setPolitiskStruktur(String politiskStruktur){
+        if(!politiskStruktur.isEmpty()){
+            this.politiskStruktur = politiskStruktur;
+        }
+    }
+    
+    public void setEkonomi(String ekonomi){
+        if(!ekonomi.isEmpty()){
+            this.ekonomi = ekonomi;
+        }
+    }
+    
+    public void setLandID(){
+        LandRegister allaLand = new LandRegister(idb);
+        int nyttID = allaLand.getHogstaLandID() + 1;
+        String nyttIDStr = Integer.toString(nyttID);
+        
+        landID = nyttIDStr;
+    }
+    
+    public void insertLandDB(){
+        try{
+            idb.insert("INSERT INTO land (lid, namn, sprak, "
+                    + "valuta, tidszon, politisk_struktur, ekonomi) " 
+                    + "VALUES (" + this.getLandID() + ", '" + this.getNamn() + "', '"
+                    + this.getSprak() + "', '" + this.getValuta() + "', '"
+                    + this.getTidszon() + "', '" + this.getPolitiskStruktur() + "', '" 
+                    + this.getEkonomi() +"');");
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i Land.java, insertLandDB()");
+        }
     }
 }

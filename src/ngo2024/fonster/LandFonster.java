@@ -76,7 +76,7 @@ public class LandFonster extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         landTable = new javax.swing.JTable();
         btnTillbaka = new javax.swing.JButton();
-        btnAndraUppgifter = new javax.swing.JButton();
+        btnLaggTillLand = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,7 +91,11 @@ public class LandFonster extends javax.swing.JFrame {
 
             }
         ));
-        landTable.setCellSelectionEnabled(true);
+        landTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                landTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(landTable);
 
         btnTillbaka.setText("Tillbaka");
@@ -101,10 +105,10 @@ public class LandFonster extends javax.swing.JFrame {
             }
         });
 
-        btnAndraUppgifter.setText("Ändra uppgifter");
-        btnAndraUppgifter.addActionListener(new java.awt.event.ActionListener() {
+        btnLaggTillLand.setText("Lägg till land");
+        btnLaggTillLand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAndraUppgifterActionPerformed(evt);
+                btnLaggTillLandActionPerformed(evt);
             }
         });
 
@@ -118,7 +122,7 @@ public class LandFonster extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnTillbaka)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAndraUppgifter))
+                        .addComponent(btnLaggTillLand, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -133,7 +137,7 @@ public class LandFonster extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
-                    .addComponent(btnAndraUppgifter))
+                    .addComponent(btnLaggTillLand))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -145,9 +149,19 @@ public class LandFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
-    private void btnAndraUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraUppgifterActionPerformed
+    private void btnLaggTillLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillLandActionPerformed
+        new LaggTillLandFonster(inloggadAnvandare, this, idb).setVisible(true);
+    }//GEN-LAST:event_btnLaggTillLandActionPerformed
+
+    private void landTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landTableMouseClicked
+        int landIndex = landTable.rowAtPoint(evt.getPoint());
+        String kolumnNamn = tabell.getColumnName(landTable.columnAtPoint(evt.getPoint()));
         
-    }//GEN-LAST:event_btnAndraUppgifterActionPerformed
+        if(kolumnNamn.equals("Namn")&& (landIndex>= 0 && landIndex < landTable.getRowCount())){
+            Land aktuelltLand = landRegister.get(landIndex);
+            new LandInfoFonster(inloggadAnvandare, aktuelltLand, idb).setVisible(true);
+        }
+    }//GEN-LAST:event_landTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -185,7 +199,7 @@ public class LandFonster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAndraUppgifter;
+    private javax.swing.JButton btnLaggTillLand;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable landTable;
