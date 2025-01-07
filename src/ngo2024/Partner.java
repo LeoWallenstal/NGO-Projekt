@@ -62,7 +62,7 @@ public class Partner {
                     case "adress":
                         adress = enPartner.get(key);
                         break;
-                    case "bransch":
+                    case "branch":
                         bransch = enPartner.get(key);
                         break;
                     case "stad":
@@ -212,6 +212,21 @@ public class Partner {
     public void setStadID(String stadID){
         if(!stadID.isEmpty()){
             this.stadID = stadID;
+        }
+    }
+    
+    public void uppdateraPartnerDB(){
+        try{
+            String sqlFraga = "UPDATE partner " +
+                "SET kontaktperson = '" + this.getKontaktperson() + "', kontaktepost = '" +
+                this.getKontaktepost() + "', telefon = '" + this.getTelefonnummer() + "', adress = '" + this.getAdress() +
+                "', branch = '" + this.getBransch() + "', stad = " + this.getStad().getStadID() + 
+                " WHERE pid = " + this.getPartnerID();
+            
+            idb.update(sqlFraga);
+        }
+        catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i LaggTillProjektFonster.java, insertProjektDB()");
         }
     }
     

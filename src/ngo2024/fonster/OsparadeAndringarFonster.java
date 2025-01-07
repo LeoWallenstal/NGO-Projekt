@@ -4,6 +4,7 @@
  */
 package ngo2024.fonster;
 
+import ngo2024.Partner;
 import ngo2024.Anvandare;
 import oru.inf.InfDB;
 import javax.swing.ImageIcon;
@@ -15,7 +16,10 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private Partner aktuellPartner;
     private String redigeringslage;
+    private RedigeraPartnerInfoFonster forraFonstret;
+    
     
     /**
      * Creates new form OsparadeAndringar
@@ -24,6 +28,18 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
         this.redigeringslage = redigeringslage;
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        this.aktuellPartner = null;
+        this.forraFonstret = null;
+        initComponents();
+        setLocationRelativeTo(null);
+    }
+    
+    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, Partner aktuellPartner, String redigeringslage, RedigeraPartnerInfoFonster forraFonstret){
+        this.idb = idb;
+        this.inloggadAnvandare = inloggadAnvandare;
+        this.redigeringslage = redigeringslage;
+        this.aktuellPartner = aktuellPartner;
+        this.forraFonstret = forraFonstret;
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -109,6 +125,10 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
         }
         else if(redigeringslage.equals("Avdelning")){
             new MenyFonster(idb,inloggadAnvandare).setVisible(true);
+        }
+        else if(redigeringslage.equals("Partner")){
+//            forraFonstret.setVisible(false);
+            new PartnerInfoFonster(inloggadAnvandare, aktuellPartner, idb).setVisible(true);   
         }
         
     }//GEN-LAST:event_btnFortsattTillMinaUppgifterActionPerformed

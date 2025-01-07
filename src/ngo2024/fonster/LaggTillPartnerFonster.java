@@ -101,6 +101,11 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
                 sparaButtonMouseClicked(evt);
             }
         });
+        sparaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sparaButtonActionPerformed(evt);
+            }
+        });
 
         namnError.setForeground(new java.awt.Color(255, 0, 0));
         namnError.setText("Kan inte vara tomt!");
@@ -158,7 +163,7 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
                                     .addComponent(telefonnummerInput, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                                     .addComponent(adressInput)
                                     .addComponent(branschInput)
-                                    .addComponent(stadComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(stadComboBox, 0, 163, Short.MAX_VALUE))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(namnError)
@@ -232,6 +237,10 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
             partnerRegistreradLabel.setVisible(false);
         }
     }//GEN-LAST:event_formMouseClicked
+
+    private void sparaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sparaButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sparaButtonActionPerformed
 
     private void namnInputActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:

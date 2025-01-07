@@ -27,7 +27,6 @@ public class AnvandarRegister {
         administrator = new ArrayList<>();
         this.idb = idb;
         
-        hamtaSamtligaAnstallda();
     }
     
     public void hamtaAvdelningensAnvandare(String avdelningsID){
@@ -85,6 +84,7 @@ public class AnvandarRegister {
     }
     
     public ArrayList<Anvandare> getAllaAnstallda(){
+        hamtaSamtligaAnstallda();
         return samtligaAnstallda;
     }
     
@@ -121,10 +121,12 @@ public class AnvandarRegister {
     }
     
     public ArrayList<String> getHandlaggare(){
+        hamtaHandlaggare();
         return handlaggare;
     }
     
     public ArrayList<String> getAmin(){
+        hamtaAdmins();
         return administrator;
     }
     

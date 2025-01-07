@@ -51,6 +51,7 @@ public class PartnerFonster extends javax.swing.JFrame {
         tillbakaButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         partnerTable = new javax.swing.JTable();
+        lblRubrik = new javax.swing.JLabel();
 
         setTitle("SDG Sweden - Partners");
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
@@ -94,6 +95,8 @@ public class PartnerFonster extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(partnerTable);
 
+        lblRubrik.setText("SDG Swedens samarbetpartners!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,14 +108,21 @@ public class PartnerFonster extends javax.swing.JFrame {
                 .addComponent(laggTillPartnerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addComponent(lblRubrik)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(70, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addComponent(lblRubrik)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -172,9 +182,7 @@ public class PartnerFonster extends javax.swing.JFrame {
     private void partnerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_partnerTableMouseClicked
         int partnerIndex = partnerTable.rowAtPoint(evt.getPoint());
 
-        String kolumnnamn = tabell.getColumnName(partnerTable.columnAtPoint(evt.getPoint()) + 1);
-
-        if(kolumnnamn.equals("Namn") && (partnerIndex>= 0 && partnerIndex < partnerTable.getRowCount())){;
+        if(partnerIndex>= 0 && partnerIndex < partnerTable.getRowCount()){;
             Partner aktuellPartner = partnerregister.get(partnerIndex);
 
             //Öppnar nytt fönster som visar mer detaljerad information om en partner
@@ -235,6 +243,7 @@ public class PartnerFonster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton laggTillPartnerButton;
+    private javax.swing.JLabel lblRubrik;
     private javax.swing.JTable partnerTable;
     private javax.swing.JButton tillbakaButton;
     // End of variables declaration//GEN-END:variables
