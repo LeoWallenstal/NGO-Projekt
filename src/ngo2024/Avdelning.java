@@ -254,21 +254,20 @@ public class Avdelning {
     
     public void hamtaAnstallda(){
         ArrayList<Anvandare> avdelningensAnstallda = new ArrayList<>();
-        ArrayList<HashMap<String, String>>avdelningensAnstalldaMap = new ArrayList<>();
+        ArrayList<String>avdelningensAnstalldaLista = new ArrayList<>();
     
         try{
             String sqlFraga = "SELECT anstalld.aid "
                             + "FROM anstalld "
                             + "WHERE anstalld.avdelning = " + avdelningsID;
             
-            avdelningensAnstalldaMap = idb.fetchRows(sqlFraga);
+            avdelningensAnstalldaLista = idb.fetchColumn(sqlFraga);
         }catch (InfException ex) {
             System.out.println(ex.getMessage() + "i Avdelning.java, getAnstallningsID()");
         }
         
-        for(HashMap<String, String> enAnstalld : avdelningensAnstalldaMap){
-            String anstalldID = enAnstalld.get("aid");
-            avdelningensAnstallda.add(new Anvandare(idb, anstalldID));
+        for(String aid : avdelningensAnstalldaLista){            
+            avdelningensAnstallda.add(new Anvandare(idb, aid));
         }
         anstallda = avdelningensAnstallda;
     }
@@ -292,6 +291,7 @@ public class Avdelning {
             this.epost = epost;
             this.telefonnummer = telefon;
             this.chefID = chefId;
+            this.chef = new Anvandare(idb,chefID);
             return true;
         }catch(InfException ex){
             System.out.println(ex.getMessage());
