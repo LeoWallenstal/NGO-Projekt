@@ -7,7 +7,7 @@
       <Connection code="new ImageIcon(getClass().getResource(&quot;/resources/icons/appLogo.png&quot;)).getImage()" type="code"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[540, 357]"/>
+      <Dimension value="[540, 393]"/>
     </Property>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -36,56 +36,68 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tillbakaButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="sparaBtn" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                              <Component id="partnerLbl" min="-2" max="-2" attributes="0"/>
+                              <Component id="tillbakaButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="sparaBtn" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="statusLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="beskrivningLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="startdatumLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="projektnamnLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="projektchefLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="prioritetLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="kostnadLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="statusLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="beskrivningLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="startdatumLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="projektnamnLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="projektchefLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="prioritetLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="kostnadLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="projektnamnInput" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="kostnadInput" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="statusCB" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="prioritetCB" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="beskrivningInput" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="startdatumInput" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="projektchefCB" pref="140" max="32767" attributes="0"/>
+                                          <Component id="slutdatumInput" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jScrollPane1" min="-2" pref="205" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="laggTillBtn" min="-2" max="-2" attributes="0"/>
+                                          <Component id="taBortBtn" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jScrollPane2" min="-2" pref="205" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="projektnamnInput" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="kostnadInput" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="statusCB" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="prioritetCB" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="beskrivningInput" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="startdatumInput" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="projektchefCB" pref="140" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="205" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="laggTillBtn" min="-2" max="-2" attributes="0"/>
-                                  <Component id="taBortBtn" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="205" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="34" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="34" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                      <Component id="partnerLbl" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -127,8 +139,16 @@
                   <Component id="startdatumLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="startdatumInput" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="partnerLbl" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="8" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="slutdatumInput" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="partnerLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -229,8 +249,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="projektnamnInput">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="projektnamnInputKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="beskrivningInput">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="beskrivningInputKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="statusCB">
       <Properties>
@@ -243,6 +269,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="statusCBActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -258,13 +287,22 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="prioritetCBActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="kostnadInput">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="kostnadInputKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="startdatumInput">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="startdatumInputKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="projektchefCB">
       <Properties>
@@ -274,6 +312,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="projektchefCBActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -281,6 +322,7 @@
     <Component class="javax.swing.JButton" name="sparaBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Spara"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -321,6 +363,24 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="taBortBtnMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="2"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Tillg&#xe4;ngliga partners"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Slutdatum:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="slutdatumInput">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="slutdatumInputKeyReleased"/>
       </Events>
     </Component>
   </SubComponents>

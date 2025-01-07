@@ -277,7 +277,6 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
 
     private void redigeraButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_redigeraButtonMouseClicked
         new RedigeraProjektFonster(inloggadAnvandare, aktuelltProjekt, this, idb).setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_redigeraButtonMouseClicked
 
     private void tillbakaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tillbakaButtonActionPerformed
