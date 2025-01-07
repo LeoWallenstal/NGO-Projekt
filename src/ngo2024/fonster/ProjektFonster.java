@@ -59,7 +59,7 @@ public class ProjektFonster extends javax.swing.JFrame {
         setKnappar();   //Sätter visibility på knappar beroende på behörighet
         initKolumner(); //Skapar och namnsätter kolumner
         
-        visaData();
+        visaData(projektregister.getAllaProjekt());
         setLocationRelativeTo(null);
     }
 
@@ -91,13 +91,6 @@ public class ProjektFonster extends javax.swing.JFrame {
         setTitle("SDG Sweden - Projekt");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setResizable(false);
-        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
-            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
-                formWindowGainedFocus(evt);
-            }
-            public void windowLostFocus(java.awt.event.WindowEvent evt) {
-            }
-        });
 
         projektTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -130,11 +123,6 @@ public class ProjektFonster extends javax.swing.JFrame {
 
         sokLabel.setText("Sök:");
 
-        sokfalt.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sokfaltMouseClicked(evt);
-            }
-        });
         sokfalt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 sokfaltKeyPressed(evt);
@@ -285,12 +273,9 @@ public class ProjektFonster extends javax.swing.JFrame {
     private void sokfaltKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sokfaltKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             if(sokfalt.getText().equals("")){
-                projektregister.hamtaAllaProjekt();
-                visaData();
                 return;
             }
-            projektregister.getSoktLista(kategori, sokfalt.getText());
-            visaData();
+            visaData(projektregister.getSoktLista(kategori, sokfalt.getText()));
         }
     }//GEN-LAST:event_sokfaltKeyPressed
 
@@ -299,85 +284,71 @@ public class ProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_allaProjektButtonActionPerformed
 
     private void laggTillButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillButtonMouseClicked
-        new LaggTillProjektFonster(inloggadAnvandare, this, idb).setVisible(true);
+        new LaggTillProjektFonster(inloggadAnvandare, this, projektregister, idb).setVisible(true);
     }//GEN-LAST:event_laggTillButtonMouseClicked
 
     private void avdelningensProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avdelningensProjektButtonMouseClicked
-        projektregister.tomLista();
+
         resetKnapparOchSokfalt();
         
         vy = "Avdelningens projekt";
-        projektregister.hamtaAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
-        visaData();
+        visaData(projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID()));
     }//GEN-LAST:event_avdelningensProjektButtonMouseClicked
 
     private void allaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allaProjektButtonMouseClicked
-        projektregister.tomLista();
         resetKnapparOchSokfalt();
-        
         vy = "Alla projekt";
-        projektregister.hamtaAllaProjekt();
-        visaData();
+        visaData(projektregister.getAllaProjekt());
     }//GEN-LAST:event_allaProjektButtonMouseClicked
 
     private void minaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minaProjektButtonMouseClicked
-        projektregister.tomLista();
         resetKnapparOchSokfalt();
         
         vy = "Mina projekt";
-        projektregister.hamtaMinaProjekt(inloggadAnvandare.getAnstallningsID());
-        visaData();
+        visaData(projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID()));
     }//GEN-LAST:event_minaProjektButtonMouseClicked
  
     private void statusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusComboBoxActionPerformed
         String status = statusComboBox.getSelectedItem().toString();
-        uppdateraFonster();
         
         switch(status){
             case "Alla":
-                projektregister.getListaStatus(Projektstatus.ALLA);
+                visaData(projektregister.getAllaProjekt());
                 break;
             case "Pågående":
-                projektregister.getListaStatus(Projektstatus.PÅGÅENDE);
+                visaData(projektregister.getListaStatus(Projektstatus.PÅGÅENDE));
                 break;
             case "Planerat":
-                projektregister.getListaStatus(Projektstatus.PLANERAT);
+                visaData(projektregister.getListaStatus(Projektstatus.PLANERAT));
                 break;
             case "Avslutat":
-                projektregister.getListaStatus(Projektstatus.AVSLUTAT);
+                visaData(projektregister.getListaStatus(Projektstatus.AVSLUTAT));
                 break;
             default:
                 break;
-        }
-        visaData();
+        }    
     }//GEN-LAST:event_statusComboBoxActionPerformed
 
     private void sokEfterComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokEfterComboBoxActionPerformed
         String status = sokEfterComboBox.getSelectedItem().toString();
         
         switch(status){
-            case "Sök efter...":
-            {
+            case "Sök efter..." ->             {
                 sokfalt.setEnabled(false);
                 sokfalt.setText("Sök efter...");
-                break;
             }
-            case "Projektchef":
-            {
+            case "Projektchef" ->             {
                 kategori = SokKategori.PROJEKTCHEF;
                 sokfalt.setEnabled(true);
                 sokfalt.setText("Sök projektchef...");
-                break;
             }
-            case "Projektnamn":
-            {
+            case "Projektnamn" ->             {
                 kategori = SokKategori.PROJEKTNAMN;
                 sokfalt.setEnabled(true);
                 sokfalt.setText("Sök projektnamn...");
-                break;
             }
-            default:
-                break;
+            default -> {
+            }
         }
     }//GEN-LAST:event_sokEfterComboBoxActionPerformed
 
@@ -392,7 +363,8 @@ public class ProjektFonster extends javax.swing.JFrame {
             Projekt aktuelltProjekt = new Projekt(pid, idb);
             
             //Öppnar nytt fönster som visar mer detaljerad information om ett projekt 
-            new ProjektInfoFonster(inloggadAnvandare, aktuelltProjekt, this, idb).setVisible(true);
+            new ProjektInfoFonster(inloggadAnvandare, aktuelltProjekt, 
+                    this, projektregister, idb).setVisible(true);
         }
         else if(kolumnnamn.equals("Projektchef") && (rad >= 0 && rad < projektTable.getRowCount())){
             String pid = (String)tabell.getValueAt(rad, kolumn-2);
@@ -449,33 +421,29 @@ public class ProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_projektTableMouseMoved
 
     private void dcStartDatumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcStartDatumPropertyChange
+
         if(dcStartDatum.getDate() != null){
-            String datum = new SimpleDateFormat("yyyy-MM-dd").format(dcStartDatum.getDate());
+            String startdatum = new SimpleDateFormat("yyyy-MM-dd").format(dcStartDatum.getDate());
             dcSlutDatum.setMinSelectableDate(dcStartDatum.getDate());
             
-            projektregister.getListaStartdatum(datum);
-            visaData();
+            visaData(projektregister.getListaStartdatum(startdatum));
         }
     }//GEN-LAST:event_dcStartDatumPropertyChange
 
     private void dcSlutDatumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcSlutDatumPropertyChange
+        
         if(dcSlutDatum.getDate() != null){
-            String datum = new SimpleDateFormat("yyyy-MM-dd").format(dcSlutDatum.getDate());
+            String slutdatum = new SimpleDateFormat("yyyy-MM-dd").format(dcSlutDatum.getDate());
             dcStartDatum.setMaxSelectableDate(dcSlutDatum.getDate());
-            
-            projektregister.getListaSlutdatum(datum);
-            visaData();
-        }   
+            if(dcStartDatum.getDate() != null){
+                String startdatum = new SimpleDateFormat("yyyy-MM-dd").format(dcStartDatum.getDate());
+                visaData(projektregister.getListaDatumSpann(startdatum, slutdatum));
+            }
+            else{
+                visaData(projektregister.getListaSlutdatum(slutdatum));
+            }
+        }
     }//GEN-LAST:event_dcSlutDatumPropertyChange
-
-    private void sokfaltMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokfaltMouseClicked
-        sokfalt.setText("");
-        sokfalt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-    }//GEN-LAST:event_sokfaltMouseClicked
-
-    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        uppdateraFonster();
-    }//GEN-LAST:event_formWindowGainedFocus
 
     
     private void initKolumner(){
@@ -492,44 +460,32 @@ public class ProjektFonster extends javax.swing.JFrame {
         projektTable.removeColumn(projektTable.getColumnModel().getColumn(0));
     }
     
-    private void visaData(){
+    public void visaData(ArrayList<Projekt> allaProjekt){
         rensaDataFonster();
-        for(Projekt ettProjekt : projektregister.getLista()){
-            tabell.addRow(new Object[]{ettProjekt.getProjektID(), ettProjekt.getNamn(), 
+        for(Projekt ettProjekt : allaProjekt){
+            if(ettProjekt.getProjektchefID() == null){
+                tabell.addRow(new Object[]{ettProjekt.getProjektID(), ettProjekt.getNamn(), 
+                "", ettProjekt.getPrioritet(),
+                ettProjekt.getStartdatum()} );
+            }
+            else{
+                tabell.addRow(new Object[]{ettProjekt.getProjektID(), ettProjekt.getNamn(), 
                 ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
                 ettProjekt.getStartdatum()} );
+            }
+            
         }
     }
     
     private void rensaDataFonster(){
         //Tar bort datan
         tabell.getDataVector().clear();
-        
         //Tar bort datan från fönstret också.
         projektTable.repaint();
         
     };
     
-    public void uppdateraFonster(){
-        projektregister.tomLista();
-        rensaDataFonster();
-        
-        switch(vy){
-            case "Alla projekt":
-                projektregister.hamtaAllaProjekt();
-                break;
-            case "Avdelningens projekt":
-                projektregister.hamtaAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
-                break;
-            case "Mina projekt":
-                projektregister.hamtaMinaProjekt(inloggadAnvandare.getAnstallningsID());
-                break;
-            default:
-                break;
-        }
-        visaData();
-    }
-        
+    
     private void setKnappar(){
         if(inloggadAnvandare.isAdmin()){
             laggTillButton.setVisible(true);

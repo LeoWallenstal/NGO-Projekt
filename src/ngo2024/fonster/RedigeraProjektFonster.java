@@ -6,6 +6,7 @@ package ngo2024.fonster;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import ngo2024.*;
 import oru.inf.InfDB;
@@ -28,6 +29,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private final ProjektInfoFonster forraFonstret;
     private final InfDB idb;
     private final Projekt attRedigera;
+    private ArrayList<Partner> projektetsPartners;
     
     public RedigeraProjektFonster(Anvandare inloggadAnvandare, Projekt attRedigera,
             ProjektInfoFonster forraFonstret, InfDB idb)    
@@ -43,21 +45,13 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         handlaggare = new ArrayList<>();
         this.inloggadAnvandare = inloggadAnvandare;
         this.attRedigera = attRedigera;
+        this.projektetsPartners = attRedigera.getPartners();
         initProjektchefCB();
         initTillgangligaPartners();
         visaTillgangligaPartners();
         
         initFalt();
         
-        for(Partner enPartner : partnerregister.getLista()){
-            System.out.println(enPartner.getPartnerID());
-        }
-        
-        System.out.println("\n\n");
-        
-        for(Partner enPartner : attRedigera.getPartners()){
-            System.out.println(enPartner.getPartnerID());
-        }
     }
 
     /**
@@ -289,15 +283,15 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
 
     private void laggTillBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillBtnMouseClicked
         int i = tillgangligaPartnersList.getSelectedIndex();
-        attRedigera.getPartners().add(partnerregister.get(i));
+        projektetsPartners.add(partnerregister.get(i));
         partnerregister.remove(i);
         refreshaListor();
     }//GEN-LAST:event_laggTillBtnMouseClicked
 
     private void taBortBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortBtnMouseClicked
-        int i = tillgangligaPartnersList.getSelectedIndex();
-        //partnerregister.add(attRedigera.getPartner(i));
-        attRedigera.getPartners().remove(i);
+        int i = projektetsPartnersList.getSelectedIndex();
+        partnerregister.add(projektetsPartners.get(i));
+        projektetsPartners.remove(i);
         refreshaListor();
     }//GEN-LAST:event_taBortBtnMouseClicked
 
@@ -360,11 +354,11 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     }
     
     private void initTillgangligaPartners(){
-        for(int i = 0; i < partnerregister.size(); i++){
-            for(int j = 0; j < attRedigera.getPartners().size(); j++){
-               // if(attRedigera.getPartner(j).equals(partnerregister.get(i))){
-                    //partnerregister.remove(i);
-              //  }
+        Iterator<Partner> it = partnerregister.getLista().iterator();
+        while(it.hasNext()){
+            Partner enPartner = it.next();
+            if(attRedigera.harPartner(enPartner.getPartnerID())){
+                it.remove();
             }
         }
     }
@@ -390,12 +384,12 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     
     private void initProjektetsPartnerLista(){
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        if(attRedigera.getPartners().isEmpty()){
+        if(attRedigera.getPartnersID().isEmpty()){
             projektetsPartnersList.setEnabled(false);
             listModell.addElement("Inga partners kopplade till projektet.");
         }
         else{
-            for(Partner enPartner : attRedigera.getPartners()){
+            for(Partner enPartner : projektetsPartners){
                 listModell.addElement(enPartner.getNamn());
             }
         }
@@ -419,7 +413,6 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     }
     
     private void refreshPartnerLista(){
-        attRedigera.hamtaPartners();
         
         DefaultListModel<String> listModell = new DefaultListModel<>();
         if(attRedigera.getPartners().isEmpty()){
@@ -427,7 +420,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
             listModell.addElement("Inga partners kopplade till projektet.");
         }
         else{
-            for(Partner enPartner : attRedigera.getPartners()){
+            for(Partner enPartner : projektetsPartners){
                 listModell.addElement(enPartner.getNamn());
             }
         }

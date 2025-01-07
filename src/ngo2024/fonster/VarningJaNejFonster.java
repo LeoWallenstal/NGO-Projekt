@@ -17,6 +17,8 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
      * Creates new form JaNejFonster
      */
     
+    private ProjektRegister projektregister;
+    private ProjektFonster forstaFonstretProjekt;
     private ProjektInfoFonster forraFonstretProjekt;
     private Projekt projektTaBort;
     
@@ -29,9 +31,13 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
     private String taBortVad;
     
     //Ta bort Projekt
-    public VarningJaNejFonster(Projekt attTaBort, ProjektInfoFonster forraFonstret) {
+    public VarningJaNejFonster(Projekt attTaBort, ProjektFonster forstaFonstret, ProjektInfoFonster forraFonstretProjekt, 
+        ProjektRegister projektregister) 
+    {
         initComponents();
-        this.forraFonstretProjekt = forraFonstret;
+        this.projektregister = projektregister;
+        this.forstaFonstretProjekt = forstaFonstret;
+        this.forraFonstretProjekt = forraFonstretProjekt;
         this.projektTaBort = attTaBort;
         taBortVad = "Projekt";
         
@@ -44,7 +50,7 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
         
         int bredd = varningRubrik.getWidth();
         
-        this.setLocationRelativeTo(forraFonstret);
+        this.setLocationRelativeTo(forraFonstretProjekt);
         this.setMinimumSize(new Dimension(bredd * 2, 170));
         
     }
@@ -181,6 +187,8 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
     private void jaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jaButtonMouseClicked
         if(taBortVad.equals("Projekt")){
             projektTaBort.deleteProjektDB();
+            projektregister.remove(projektTaBort.getProjektID());
+            forstaFonstretProjekt.visaData(projektregister.getAllaProjekt());
             forraFonstretProjekt.setVisible(false);
             this.setVisible(false);
         }

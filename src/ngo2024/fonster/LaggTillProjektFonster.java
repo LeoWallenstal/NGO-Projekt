@@ -6,14 +6,7 @@ package ngo2024.fonster;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ngo2024.AnvandarRegister;
-import ngo2024.Anvandare;
-import ngo2024.Land;
-import ngo2024.LandRegister;
-import ngo2024.Partner;
-import ngo2024.PartnerRegister;
-import ngo2024.Projekt;
-import ngo2024.Validerare;
+import ngo2024.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import javax.swing.ImageIcon;
@@ -36,11 +29,14 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     private PartnerRegister partnerregister;
     private ArrayList<Anvandare> handlaggare;
     private ProjektFonster forraFonstret;
+    private ProjektRegister projektregister;
     
     /**
      * Creates new form LaggTillFonster
      */
-    public LaggTillProjektFonster(Anvandare inloggadAnvandare, ProjektFonster forraFonstret, InfDB idb) {
+    public LaggTillProjektFonster(Anvandare inloggadAnvandare, ProjektFonster forraFonstret, 
+            ProjektRegister projektregister, InfDB idb) 
+    {
         this.forraFonstret = forraFonstret;
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
@@ -48,6 +44,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         landregister = new LandRegister(idb);
         partnerregister = new PartnerRegister(idb);
         handlaggare = new ArrayList<>();
+        this.projektregister = projektregister;
         
         
         
@@ -335,9 +332,13 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         }
         
         //Projektchef
-        if(!projektchefComboBox.getSelectedItem().equals("Välj projektchef...")){
-            Anvandare enHandlaggare = handlaggare.get(projektchefComboBox.getSelectedIndex() + 1);
-            nyttProjekt.setProjektchef(enHandlaggare.getAnstallningsID());
+        if(!projektchefComboBox.getSelectedItem().equals("Välj projektchef...") && 
+                !projektchefComboBox.getSelectedItem().equals("Ingen")){
+            Anvandare enHandlaggare = handlaggare.get(projektchefComboBox.getSelectedIndex() - 2);
+            nyttProjekt.setProjektchefsID(enHandlaggare.getAnstallningsID());
+        }
+        if(projektchefComboBox.getSelectedItem().equals("Ingen")){
+            nyttProjekt.setProjektchefsID(null);
         }
         
         //Beskrivning
@@ -409,23 +410,24 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         }
         
         //Partners
-        ArrayList <Partner> valdaPartners = sparaPartners();
+        ArrayList <String> valdaPartners = sparaPartners();
         
         partnerregister.hamtaAllaPartners();
-        for(Partner enPartner : valdaPartners){
-            if(!partnerregister.harID(enPartner.getPartnerID())){
+        for(String ettPartnerID : valdaPartners){
+            if(!partnerregister.harID(ettPartnerID)){
                 projektOK = false;
             }
         }
         nyttProjekt.setPartners(valdaPartners);
         
         if(projektOK){
-            nyttProjekt.setProjektchefsID();
             nyttProjekt.setProjektID();
             
             nyttProjekt.insertProjektDB();
             projektRegistreradLabel.setVisible(true);
-            forraFonstret.uppdateraFonster();
+            projektregister.add(nyttProjekt);
+            forraFonstret.visaData(projektregister.getAllaProjekt());
+            this.setVisible(false);
             
         }
         
@@ -487,12 +489,12 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         landError.setVisible(false);
     }
     
-    private ArrayList<Partner> sparaPartners(){
+    private ArrayList<String> sparaPartners(){
         int[] partnerIndex = partnerList.getSelectedIndices();
-        ArrayList<Partner> valdaPartners = new ArrayList<>();
+        ArrayList<String> valdaPartners = new ArrayList<>();
         
         for(int i = 0; i < partnerIndex.length; i++){
-            valdaPartners.add(partnerregister.get(partnerIndex[i]));
+            valdaPartners.add(partnerregister.get(partnerIndex[i]).getPartnerID());
         }   
         return valdaPartners;
     }
