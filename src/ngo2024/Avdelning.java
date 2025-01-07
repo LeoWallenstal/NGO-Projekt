@@ -273,4 +273,29 @@ public class Avdelning {
         anstallda = avdelningensAnstallda;
     }
     
+    public boolean updateUppgifter(String namn, String beskrivning, String adress, String epost, String telefon, String chefId){
+        String sqlFraga = "UPDATE avdelning SET "
+                + "namn = '"+namn+"', "
+                + "beskrivning = '"+beskrivning+"', "
+                + "adress = '"+adress+"', "
+                + "epost = '"+epost+"', "
+                + "telefon = '"+telefon+"', "
+                + "chef = "+chefId+" "
+                + "WHERE avdid = "+avdelningsID;
+        System.out.println(sqlFraga);
+        
+        try{
+            idb.update(sqlFraga);
+            this.namn = namn;
+            this.beskrivning = beskrivning;
+            this.adress = adress;
+            this.epost = epost;
+            this.telefonnummer = telefon;
+            this.chefID = chefId;
+            return true;
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
 }
