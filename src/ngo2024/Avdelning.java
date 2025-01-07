@@ -271,9 +271,9 @@ public class Avdelning {
         }
         
         try{
-            String sqlFraga = "SELECT anstalld.aid "
+            String sqlFraga = "SELECT * "
                             + "FROM anstalld "
-                            + "WHERE anstalld.avdelning = " + avdelningsID;
+                            + "WHERE avdelning = " + avdelningsID;
             
             avdelningensAnstalldaMap = idb.fetchRows(sqlFraga);
         }catch (InfException ex) {
