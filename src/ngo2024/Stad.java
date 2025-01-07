@@ -46,6 +46,10 @@ public class Stad {
         land = new Land(landID, idb);
     }
     
+    public boolean equals(Stad annan){
+        return this.stadID.equals(annan.stadID);
+    }
+    
     public String getStadID(){
         return stadID;
     }

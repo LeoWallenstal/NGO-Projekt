@@ -8,6 +8,7 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
@@ -202,6 +203,31 @@ public class Avdelning {
         else{
             return null;
         }
+    }
+    
+    public boolean harAnstalld(String anstallningsID){
+        for(Anvandare enAnstalld : anstallda){
+            if(enAnstalld.getAnstallningsID().equals(anstallningsID)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean removeAnstalld(String anstallningsID){
+        Iterator<Anvandare> it = anstallda.iterator();
+        while(it.hasNext()){
+            Anvandare enAnstalld = it.next();
+            if(enAnstalld.getAvdelningsID().equals(anstallningsID)){
+                anstallda.remove(enAnstalld);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean equals(Avdelning annan){
+        return this.avdelningsID.equals(annan.getAvdelningsID());
     }
     
     public void hamtaSokNamn(String sokord){
