@@ -19,6 +19,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private AvdelningsRegister avdelningsRegister;
     private Avdelning anvandarensAvdelning; 
     private DefaultTableModel tabell;
     private String vy;
@@ -29,7 +30,8 @@ public class AvdelningFonster extends javax.swing.JFrame {
     public AvdelningFonster(InfDB idb,Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
-        anvandarensAvdelning = new Avdelning(inloggadAnvandare.getAvdelningsID(), idb);
+        avdelningsRegister = new AvdelningsRegister(idb);
+        anvandarensAvdelning = avdelningsRegister.getAvdelningFranId(inloggadAnvandare.getAvdelningsID());
         initComponents();
         tabell = (DefaultTableModel) anstalldTable.getModel();
         sokfalt.setEnabled(false);

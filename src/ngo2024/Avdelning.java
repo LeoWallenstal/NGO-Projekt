@@ -31,8 +31,7 @@ public class Avdelning {
     private InfDB idb;
 
     public Avdelning(HashMap<String, String> enAvdelning, InfDB idb) {
-        this.idb = idb;
-        hamtaAnstallda();
+        this.idb = idb;  
         avdelningsID = enAvdelning.get("avdid");
         namn = enAvdelning.get("namn");
         beskrivning = enAvdelning.get("beskrivning");
@@ -47,7 +46,7 @@ public class Avdelning {
         } else {
             chef = null;
         }
-
+        hamtaAnstallda();
     }
 
     public Avdelning(String avdelningsID, InfDB idb) {

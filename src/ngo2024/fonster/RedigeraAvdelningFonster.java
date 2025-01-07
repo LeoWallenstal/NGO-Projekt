@@ -45,8 +45,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     public RedigeraAvdelningFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
-        valdAvdelning = new Avdelning(inloggadAnvandare.getAvdelningsID(), idb);
         avdelningsRegister = new AvdelningsRegister(idb);
+        valdAvdelning = avdelningsRegister.getAvdelningFranId(inloggadAnvandare.getAvdelningsID());
         initComponents();
         btnSpara.setEnabled(false);
         btnAterstall.setEnabled(false);
@@ -54,7 +54,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         initGlassPane();
         initKolumner();
         initCB();
-        //visaAnstallda();
+        visaAnstallda();
         uppdateraAvdelningsInfo(valdAvdelning);
         vy = "Alla";
         setLocationRelativeTo(null);

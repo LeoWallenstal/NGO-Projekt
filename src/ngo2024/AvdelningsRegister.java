@@ -41,6 +41,16 @@ public class AvdelningsRegister {
         }
     }
     
+    public Avdelning getAvdelningFranId(String avdid){
+        for(Avdelning enAvdelning : allaAvdelningar){
+            if(enAvdelning.getAvdelningsID().equals(avdid))
+            {
+              return enAvdelning;
+            }
+        }
+        return null;
+    }
+    
     public void tomLista(){
         allaAvdelningar.clear();
     }
