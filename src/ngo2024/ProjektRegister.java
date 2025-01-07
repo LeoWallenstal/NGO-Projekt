@@ -6,6 +6,7 @@ package ngo2024;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -85,6 +86,27 @@ public class ProjektRegister {
         
         this.tomLista();
         allaProjekt = minaProj;
+    }
+    
+    public boolean contains(String projektID){
+        for(Projekt ettProjekt : allaProjekt){
+            if(ettProjekt.getProjektID().equals(projektID)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean remove(String projektID){
+        Iterator<Projekt> it = allaProjekt.iterator();
+        while(it.hasNext()){
+            Projekt ettProjekt = it.next();
+            if(ettProjekt.getProjektID().equals(projektID)){
+                allaProjekt.remove(ettProjekt);
+                return true;
+            }
+        }
+        return false;
     }
     
     public void getListaStatus(Projektstatus status){

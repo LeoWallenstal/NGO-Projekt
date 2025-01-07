@@ -7,6 +7,7 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
@@ -53,6 +54,18 @@ public class PartnerRegister {
         else{
             return false;
         }
+    }
+    
+    public boolean remove(String partnerID){
+        Iterator<Partner> it = allaPartners.iterator();
+        while(it.hasNext()){
+            Partner enPartner = it.next();
+            if(enPartner.getPartnerID().equals(partnerID)){
+                allaPartners.remove(enPartner);
+                return true;
+            }
+        }
+        return false;
     }
     
     public int size(){
