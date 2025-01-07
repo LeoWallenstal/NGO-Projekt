@@ -19,13 +19,27 @@ public class ProjektRegister {
     private InfDB idb;
     
     public ProjektRegister(InfDB idb){
-        allaProjekt = new ArrayList<>();
         this.idb = idb;
-        hamtaAllaProjekt();
+        allaProjekt = hamtaAllaProjekt();
     }
     
-    public void hamtaAllaProjekt(){
-        this.tomLista();
+    public void refreshaAllaProjekt(){
+        ArrayList<Projekt> allaProjekt = new ArrayList<>();
+        ArrayList<HashMap<String, String>> projektMap = new ArrayList<>();
+        
+        try{
+            projektMap = idb.fetchRows("SELECT pid FROM projekt");
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+            for(HashMap<String, String> ettProjekt : projektMap){
+                allaProjekt.add(new Projekt(ettProjekt.get("pid"), idb));
+            }
+        this.allaProjekt = allaProjekt;
+    }
+    
+    public ArrayList<Projekt> hamtaAllaProjekt(){
         
         ArrayList<Projekt> allaProjekt = new ArrayList<>();
         ArrayList<HashMap<String, String>> projektMap = new ArrayList<>();
@@ -36,56 +50,38 @@ public class ProjektRegister {
             System.out.println(ex.getMessage());
         }
         
-        if(projektMap != null){
             for(HashMap<String, String> ettProjekt : projektMap){
-                String projektID = ettProjekt.get("pid");
-                allaProjekt.add(new Projekt(projektID, idb));
+                allaProjekt.add(new Projekt(ettProjekt.get("pid"), idb));
             }
-            if(!allaProjekt.isEmpty()){
-                this.allaProjekt = allaProjekt;
-            }
-        }
+        return allaProjekt;
     }
     
-    public void hamtaAvdelningensProjekt(String avdelningsID){
-        Avdelning minAvdelning = new Avdelning(avdelningsID, idb);
-        hamtaAllaProjekt();
-        ArrayList<Projekt> resultat = new ArrayList<>();
-        for(Anvandare enAnstalld : minAvdelning.getAvdelningensAnstallda()){
-            for(Projekt ettProjekt : allaProjekt){
-                if(ettProjekt.getProjektchefID().equals(enAnstalld.getAnstallningsID())){
-                    resultat.add(ettProjekt);
-                }
-            }
-        }
-        allaProjekt = resultat;
+    public ArrayList<Projekt> getAllaProjekt(){
+        return allaProjekt;
     }
     
-    public void hamtaMinaProjekt(String anstallningsID){
-       
-        ArrayList<HashMap<String, String>> minaProjekt = new ArrayList<>();
-        try {
-            //Hämtar bara ut projektIDt här
-            String sqlFraga = 
-                  "SELECT DISTINCT projekt.pid from projekt "
-                + "JOIN ans_proj on projekt.pid = ans_proj.pid "
-                + "JOIN anstalld on ans_proj.aid = anstalld.aid "
-                + "WHERE ans_proj.aid = " + anstallningsID + " "
-                + "OR projektchef = " + anstallningsID;
-            
-            minaProjekt = idb.fetchRows(sqlFraga);     
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-         
-        ArrayList<Projekt> minaProj = new ArrayList<>();
-        for(HashMap<String, String> ettProjekt : minaProjekt){
-            //Här skapar jag ett Projekt-objekt med det hämtade ProjektIDt från förut
-            minaProj.add(new Projekt(ettProjekt.get("pid"), idb));
-        }
+    public ArrayList<Projekt> getAvdelningensProjekt(String avdelningsID){
         
-        this.tomLista();
-        allaProjekt = minaProj;
+        ArrayList<Projekt> resultat = new ArrayList<>();
+        for(Projekt ettProjekt : allaProjekt){
+            if(ettProjekt.getProjektchef().getAvdelningsID().equals(avdelningsID)){
+                resultat.add(ettProjekt);
+            }
+        }
+        return resultat;
+    }
+    
+    public ArrayList<Projekt> getMinaProjekt(String anstallningsID){
+       
+        ArrayList<Projekt> resultat = new ArrayList<>();
+        for(Projekt ettProjekt : allaProjekt){
+            if(ettProjekt.getProjektchefID().equals(anstallningsID) ||
+                ettProjekt.harHandlaggare(anstallningsID))
+            {
+                resultat.add(ettProjekt);
+            }
+        }
+        return resultat;
     }
     
     public boolean contains(String projektID){
@@ -95,6 +91,17 @@ public class ProjektRegister {
             }
         }
         return false;
+    }
+    
+    public boolean add(Projekt ettProjekt){
+        if(!this.contains(ettProjekt.getProjektID())){
+            allaProjekt.add(ettProjekt);
+            return true;
+        }
+        else{
+            System.out.println(ettProjekt.getNamn() + " finns redan!");
+            return false;
+        }
     }
     
     public boolean remove(String projektID){
@@ -109,11 +116,11 @@ public class ProjektRegister {
         return false;
     }
     
-    public void getListaStatus(Projektstatus status){
+    public ArrayList<Projekt> getListaStatus(Projektstatus status){
         
         ArrayList<Projekt> listaStatus = new ArrayList<>();
         if(status.equals("Alla")){
-            return;
+            //return getAllaProjekt();
         }
         
         for(Projekt ettProjekt : allaProjekt){
@@ -121,10 +128,10 @@ public class ProjektRegister {
                 listaStatus.add(ettProjekt);
             }
         }
-        allaProjekt = listaStatus;
+        return listaStatus;
     }
     
-    public void getSoktLista(SokKategori kategori, String sokStr){
+    public ArrayList<Projekt> getSoktLista(SokKategori kategori, String sokStr){
         
         ArrayList<Projekt> resultat = new ArrayList<>();
         if(kategori == SokKategori.PROJEKTCHEF){
@@ -141,10 +148,10 @@ public class ProjektRegister {
                 }
             }
         }
-        allaProjekt = resultat;
+        return resultat;
     }
     
-    public void getListaDatumSpann(String startdatum, String slutdatum){
+    public ArrayList<Projekt> getListaDatumSpann(String startdatum, String slutdatum){
         ArrayList<Projekt> resultat = new ArrayList<>();
         for(Projekt ettProjekt : allaProjekt){
             if((ettProjekt.arEfter(startdatum) || ettProjekt.arSamma(startdatum))
@@ -152,33 +159,33 @@ public class ProjektRegister {
                 resultat.add(ettProjekt);
             }
         }
-        allaProjekt = resultat;
+        return resultat;
     }
     
-    public void getListaStartdatum(String startdatum){
+    public ArrayList<Projekt> getListaStartdatum(String startdatum){
         ArrayList<Projekt> resultat = new ArrayList<>();
         for(Projekt ettProjekt : allaProjekt){
             if(ettProjekt.arSamma(startdatum) || ettProjekt.arEfter(startdatum)){
                 resultat.add(ettProjekt);
             }
         }
-        allaProjekt = resultat;
+        return resultat;
     }
     
-    public void getListaSlutdatum(String slutdatum){
+    public ArrayList<Projekt> getListaSlutdatum(String slutdatum){
         ArrayList<Projekt> resultat = new ArrayList<>();
         for(Projekt ettProjekt : allaProjekt){
             if(ettProjekt.arSamma(slutdatum) || ettProjekt.arFore(slutdatum)){
                 resultat.add(ettProjekt);
             }
         }
-        allaProjekt = resultat;
+        return resultat;
     }
     
     
-    public Projekt getProjekt(String pid){
+    public Projekt getProjekt(String projektID){
         for(Projekt ettProjekt : allaProjekt){
-            if(pid.equals(ettProjekt.getProjektID())){
+            if(projektID.equals(ettProjekt.getProjektID())){
                 return ettProjekt;
             }
         }
@@ -190,7 +197,7 @@ public class ProjektRegister {
     }
     
     public int getHogstaProjektchefID(){
-        int hogstaID = Integer.parseInt(allaProjekt.getFirst().getProjektchefID());
+        int hogstaID = 0;
         
         for(Projekt ettProjekt : allaProjekt){
             int ettID = Integer.parseInt(ettProjekt.getProjektchefID());
@@ -202,7 +209,7 @@ public class ProjektRegister {
     }
     
     public int getHogstaProjektID(){
-        int hogstaID = Integer.parseInt(allaProjekt.getFirst().getProjektID());
+        int hogstaID = 0;
         
         for(Projekt ettProjekt : allaProjekt){
             int ettID = Integer.parseInt(ettProjekt.getProjektID());

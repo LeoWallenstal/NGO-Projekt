@@ -5,6 +5,7 @@
 
 package ngo2024.fonster;
 
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import ngo2024.*;
 import oru.inf.InfDB;
@@ -19,11 +20,14 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     private final Anvandare inloggadAnvandare;
     private final InfDB idb;
     private final Projekt aktuelltProjekt;
+    private final ProjektRegister projektregister;
     private final ProjektFonster forraFonstret;
     
-    public ProjektInfoFonster(Anvandare inloggadAnvandare, Projekt ettProjekt, InfDB idb) {
+    public ProjektInfoFonster(Anvandare inloggadAnvandare, Projekt ettProjekt, 
+            ProjektRegister projektregister, InfDB idb) {
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
+        this.projektregister = projektregister;
         aktuelltProjekt = ettProjekt;
         forraFonstret = null;
         initComponents();
@@ -43,10 +47,12 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }   
     
-    public ProjektInfoFonster(Anvandare inloggadAnvandare, Projekt ettProjekt, ProjektFonster forraFonstret, InfDB idb) {
+    public ProjektInfoFonster(Anvandare inloggadAnvandare, Projekt ettProjekt, 
+            ProjektFonster forraFonstret, ProjektRegister projektregister, InfDB idb) {
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
         this.forraFonstret = forraFonstret;
+        this.projektregister = projektregister;
         aktuelltProjekt = ettProjekt;
         initComponents();
         
@@ -98,6 +104,10 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         partnerList.repaint();
         
     };
+    
+    public ProjektRegister getProjektRegister(){
+        return projektregister;
+    }
     
     private void refreshaLista(){
         rensaLista();
@@ -275,7 +285,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tillbakaButtonActionPerformed
 
     private void taBortButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortButtonMouseClicked
-        new VarningJaNejFonster(aktuelltProjekt, this).setVisible(true);
+        new VarningJaNejFonster(aktuelltProjekt, forraFonstret, this, projektregister).setVisible(true);
     }//GEN-LAST:event_taBortButtonMouseClicked
 
     private void taBortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taBortButtonActionPerformed

@@ -19,11 +19,11 @@ public class Projekt {
     private Anvandare projektchef;
     private String landID;
     private Land land;
-    private ArrayList<Partner> partners;
+    private ArrayList<String> partners;
     
     //OKLART OM DETTA ÄR RÄTT TERMINOLOGI?? ASSÅ DE SOM JOBBAR PÅ PROJEKTET
     //ÄNDRA ANNARS OCKSÅ hamtaHandlaggare() KRING RAD 434
-    private ArrayList<Anvandare> handlaggare;
+    private ArrayList<String> handlaggare;
     
     private final InfDB idb;
 
@@ -103,8 +103,7 @@ public class Projekt {
             ettProjekt = idb.fetchRow(sqlFraga);
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
-        }
-        
+        }     
         
         if(ettProjekt != null){
             for(String key : ettProjekt.keySet()){
@@ -134,21 +133,11 @@ public class Projekt {
                         prioritet = ettProjekt.get(key);
                         break;
                     case "projektchef":
-                    {
-                        if(ettProjekt.get(key) != null){
-                            projektchefID = ettProjekt.get(key);
-                        }
-                        else{
-                            projektchef = null;
-                        }
+                        projektchefID = ettProjekt.get(key);
                         break;
-                    }
                     case "land":
-                    {
                         landID = ettProjekt.get(key);
-                        land = new Land(landID, idb);
                         break;
-                    }
                     default:
                         break;
                 }
@@ -157,12 +146,6 @@ public class Projekt {
         else{
             System.out.println("Nånting gick fel, kolla IDT?");
             //Byta detta felmeddelande mot något annat senare
-        }
-        if(projektchefID != null && !projektchefID.isEmpty()){
-            projektchef = new Anvandare(idb, this.getAnstalldID(idb, projektchefID));
-        }
-        else{
-            projektchef = null;
         }
         hamtaPartners();
         hamtaHandlaggare();
@@ -207,7 +190,7 @@ public class Projekt {
     }
 
     public Anvandare getProjektchef() {
-        return projektchef;
+        return new Anvandare(idb, projektchefID);
     }
 
     public String getProjektchefID(){
@@ -222,38 +205,51 @@ public class Projekt {
         return landID;
     }
     
-    public ArrayList<Partner> getPartners(){
+    public ArrayList<String> getPartnersID(){
         return partners;
+    }
+    
+    public ArrayList<Partner> getPartners(){
+        ArrayList<Partner> projektetsPartners = new ArrayList<>();
+        for(String ettID : partners){
+            projektetsPartners.add(new Partner(ettID, idb));
+        }
+        return projektetsPartners;
     }
 
     public ArrayList<Anvandare> getHandlaggare(){
-        return handlaggare;
+        ArrayList<Anvandare> projektetsHandlaggare = new ArrayList<>();
+        for(String ettID : handlaggare){
+            projektetsHandlaggare.add(new Anvandare(idb, ettID));
+        }
+        
+        return projektetsHandlaggare;
     }
     
     public Partner getPartner(String partnerID){
-        for(Partner enPartner : partners){
-            if(partnerID.equals(enPartner.getPartnerID())){
-                return enPartner;
+        for(String ettPartnerID : partners){
+            if(partnerID.equals(ettPartnerID)){
+                return new Partner(ettPartnerID, idb);
             }
         }
-        System.out.println("getPartner() failed, ID wasn't found!");
+        System.out.println("getPartner() misslyckades, ID fanns inte!");
         return null;
     }
     
     public boolean removePartner(String partnerID){
-        for(Partner enPartner : partners){
-            if(partnerID.equals(enPartner.getPartnerID())){
-                partners.remove(enPartner);
+        for(String ettPartnerID : partners){
+            if(partnerID.equals(ettPartnerID)){
+                partners.remove(ettPartnerID);
                 return true;
             }
         }
-        System.out.println("removePartner() failed, ID wasn't found!");
+        System.out.println("removePartner() misslyckades, IDt fanns inte!");
         return false;
     }
     
     public boolean harPartner(String partnerID){
-        for(Partner enPartner : partners){
-            if(partnerID.equals(enPartner.getPartnerID())){
+        for(String ettID : partners){
+            if(partnerID.equals(ettID)){
                 return true;
             }
         }
@@ -275,11 +271,20 @@ public class Projekt {
     //Se kommentar kring rad 24-25 ang. namn
     public Anvandare getHandlaggare(int i){
         if(i >= 0 && i < handlaggare.size()){
-            return handlaggare.get(i);
+            return new Anvandare(idb, handlaggare.get(i));
         }
         else{
             return null;
         }
+    }
+    
+    public boolean harHandlaggare(String anstallningsID){
+        for(String ettAnstallningsID : handlaggare){
+            if(anstallningsID.equals(ettAnstallningsID)){
+                return true;
+            }
+        }
+        return false;
     }
     
     public boolean taBortHandlaggare(int i){
@@ -377,21 +382,8 @@ public class Projekt {
         projektID = nyttIDStr;
     }
     
-    public void setProjektchefsID(){
-        ProjektRegister allaProjekt = new ProjektRegister(idb);
-        int nyttID = allaProjekt.getHogstaProjektchefID() + 1;
-        String nyttIDStr = Integer.toString(nyttID);
-        
-        projektchefID = nyttIDStr;
-    }
-    
-    //KANSKE TA BORT, OANVÄND ÄN SÅ LÄNGE
-    private void setProjektchef(){
-        projektchef = new Anvandare(idb, Projekt.getAnstalldID(idb, projektchefID));
-    }
-    
-    public void setProjektchef(String anstallningsID){
-        projektchef = new Anvandare(idb, Projekt.getAnstalldID(idb, anstallningsID));
+    public void setProjektchefsID(String anstallningsID){
+        projektchefID = anstallningsID;
     }
     
     public boolean setBeskrivning(String beskrivning){
@@ -481,13 +473,13 @@ public class Projekt {
         }
     }
     
-    public boolean setPartners(ArrayList<Partner> partners){
+    public boolean setPartners(ArrayList<String> partners){
         boolean partnersOK = true;
         PartnerRegister allaPartners = new PartnerRegister(idb);
         allaPartners.hamtaAllaPartners();
         
-        for(Partner enPartner : partners){
-            if(!allaPartners.harID(enPartner.getPartnerID())){
+        for(String ettPartnerID : partners){
+            if(!allaPartners.harID(ettPartnerID)){
                 partnersOK = false;
             }
         }
@@ -500,7 +492,7 @@ public class Projekt {
     
     public void hamtaPartners(){
         ArrayList<HashMap<String, String>> partnerMap = new ArrayList<>();
-        ArrayList<Partner> hamtadePartners = new ArrayList<>();
+        ArrayList<String> hamtadePartners = new ArrayList<>();
         
         try{
             partnerMap = idb.fetchRows("SELECT partner.pid FROM partner "
@@ -514,7 +506,7 @@ public class Projekt {
         for(HashMap<String, String> enPartner : partnerMap){
             for(String key : enPartner.keySet()){
                 String partnerID = enPartner.get(key);
-                hamtadePartners.add(new Partner(partnerID, idb));
+                hamtadePartners.add(enPartner.get(key));
             }
         }
         partners = hamtadePartners;
@@ -523,7 +515,7 @@ public class Projekt {
     
     
     private void hamtaHandlaggare(){
-        ArrayList<Anvandare> handlaggare = new ArrayList<>();
+        ArrayList<String> handlaggare = new ArrayList<>();
         ArrayList<HashMap<String, String>> handlaggareMap = new ArrayList<>();
         
         try{
@@ -537,8 +529,7 @@ public class Projekt {
         
         for(HashMap<String, String> enHandlaggare : handlaggareMap){
             for(String key : enHandlaggare.keySet()){
-                String anstalldID = enHandlaggare.get(key);
-                handlaggare.add(new Anvandare(idb, anstalldID));
+                handlaggare.add(enHandlaggare.get(key));
             }
         }
         this.handlaggare = handlaggare;
@@ -576,7 +567,8 @@ public class Projekt {
                     + "', '" + this.getPrioritet() + "', " + this.getProjektchefID() 
                     + ", " + this.getLandID() + ");");
             
-            for(Partner enPartner : partners){
+            for(String ettPartnerID : partners){
+                Partner enPartner = new Partner(ettPartnerID, idb);
                 idb.insert("INSERT INTO projekt_partner (pid, partner_pid) " 
                      + "VALUES (" + this.getProjektID() + ", " + enPartner.getPartnerID() + ");");
             }
