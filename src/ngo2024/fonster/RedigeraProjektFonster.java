@@ -23,19 +23,21 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
      */
     
     private ArrayList<Anvandare> handlaggare;
+    private ArrayList<Partner> projektetsPartners;
     private AnvandarRegister anvandarregister;
     private PartnerRegister partnerregister;
-    private final Anvandare inloggadAnvandare;
-    private final ProjektInfoFonster forraFonstret;
-    private final InfDB idb;
     private final Projekt attRedigera;
-    private ArrayList<Partner> projektetsPartners;
+    private final ProjektInfoFonster forraFonstret;
+    private final Anvandare inloggadAnvandare;
+    private final InfDB idb;
+    
+    
     
     public RedigeraProjektFonster(Anvandare inloggadAnvandare, Projekt attRedigera,
             ProjektInfoFonster forraFonstret, InfDB idb)    
     {
         initComponents();
-        this.setSize(forraFonstret.getSize());
+        //this.setSize(forraFonstret.getSize());
         this.setLocationRelativeTo(forraFonstret);
         this.forraFonstret = forraFonstret;
         
@@ -86,11 +88,13 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         tillgangligaPartnersList = new javax.swing.JList<>();
         laggTillBtn = new javax.swing.JButton();
         taBortBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        slutdatumInput = new javax.swing.JTextField();
 
         setTitle("SDG Sweden - Redigera projekt");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
-        setMinimumSize(new java.awt.Dimension(540, 357));
-        setPreferredSize(new java.awt.Dimension(540, 357));
+        setMinimumSize(new java.awt.Dimension(540, 393));
         setResizable(false);
         setSize(new java.awt.Dimension(540, 357));
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,13 +134,53 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         partnerLbl.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         partnerLbl.setText("Partners kopplade till projektet");
 
+        projektnamnInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                projektnamnInputKeyReleased(evt);
+            }
+        });
+
+        beskrivningInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                beskrivningInputKeyReleased(evt);
+            }
+        });
+
         statusCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj status...", "Planerat", "Pågående", "Avslutat" }));
+        statusCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusCBActionPerformed(evt);
+            }
+        });
 
         prioritetCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj prioritet...", "Låg", "Medel", "Hög" }));
+        prioritetCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prioritetCBActionPerformed(evt);
+            }
+        });
+
+        kostnadInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                kostnadInputKeyReleased(evt);
+            }
+        });
+
+        startdatumInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                startdatumInputKeyReleased(evt);
+            }
+        });
 
         projektchefCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj projektchef..." }));
+        projektchefCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                projektchefCBActionPerformed(evt);
+            }
+        });
 
         sparaBtn.setText("Spara");
+        sparaBtn.setEnabled(false);
 
         tillgangligaPartnersList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -161,6 +205,17 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel1.setText("Tillgängliga partners");
+
+        jLabel2.setText("Slutdatum:");
+
+        slutdatumInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                slutdatumInputKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,42 +224,51 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(tillbakaButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(sparaBtn))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(partnerLbl))
-                            .addComponent(statusLabel)
+                                .addComponent(tillbakaButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(sparaBtn))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(beskrivningLabel)
-                                    .addComponent(startdatumLabel)
-                                    .addComponent(projektnamnLabel)
-                                    .addComponent(projektchefLabel)
-                                    .addComponent(prioritetLabel)
-                                    .addComponent(kostnadLabel))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(projektnamnInput)
-                                    .addComponent(kostnadInput)
-                                    .addComponent(statusCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(prioritetCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(beskrivningInput)
-                                    .addComponent(startdatumInput)
-                                    .addComponent(projektchefCB, 0, 140, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(laggTillBtn)
-                                    .addComponent(taBortBtn))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 34, Short.MAX_VALUE)))
-                .addContainerGap())
+                                    .addComponent(statusLabel)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(beskrivningLabel)
+                                            .addComponent(startdatumLabel)
+                                            .addComponent(projektnamnLabel)
+                                            .addComponent(projektchefLabel)
+                                            .addComponent(prioritetLabel)
+                                            .addComponent(kostnadLabel))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(projektnamnInput)
+                                            .addComponent(kostnadInput)
+                                            .addComponent(statusCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(prioritetCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(beskrivningInput)
+                                            .addComponent(startdatumInput)
+                                            .addComponent(projektchefCB, 0, 140, Short.MAX_VALUE)
+                                            .addComponent(slutdatumInput)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(laggTillBtn)
+                                            .addComponent(taBortBtn))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 34, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(partnerLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(92, 92, 92))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,8 +301,14 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startdatumLabel)
                     .addComponent(startdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(partnerLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(slutdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(partnerLbl)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -282,6 +352,9 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tillgangligaPartnersListMouseClicked
 
     private void laggTillBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillBtnMouseClicked
+        if(projektetsPartners.isEmpty()){
+            projektetsPartnersList.setEnabled(true);
+        }
         int i = tillgangligaPartnersList.getSelectedIndex();
         projektetsPartners.add(partnerregister.get(i));
         partnerregister.remove(i);
@@ -294,6 +367,88 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         projektetsPartners.remove(i);
         refreshaListor();
     }//GEN-LAST:event_taBortBtnMouseClicked
+
+    private void projektnamnInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_projektnamnInputKeyReleased
+        if(!projektnamnInput.getText().isEmpty() && 
+                !projektnamnInput.getText().equals(attRedigera.getNamn()))
+        {
+            sparaBtn.setEnabled(true);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_projektnamnInputKeyReleased
+
+    private void beskrivningInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_beskrivningInputKeyReleased
+        if(!beskrivningInput.getText().isEmpty() && 
+                !beskrivningInput.getText().equals(attRedigera.getBeskrivning()))
+        {
+            sparaBtn.setEnabled(true);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_beskrivningInputKeyReleased
+
+    private void projektchefCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projektchefCBActionPerformed
+        if(!projektchefCB.getSelectedItem().equals(attRedigera.getProjektchef().getFullNamn())){
+            sparaBtn.setEnabled(true);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_projektchefCBActionPerformed
+
+    private void prioritetCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prioritetCBActionPerformed
+        if(!prioritetCB.getSelectedItem().equals(attRedigera.getPrioritet())){
+            sparaBtn.setEnabled(true);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_prioritetCBActionPerformed
+
+    private void statusCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusCBActionPerformed
+        if(!statusCB.getSelectedItem().equals(attRedigera.getStatus())){
+            sparaBtn.setEnabled(true);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_statusCBActionPerformed
+
+    private void kostnadInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kostnadInputKeyReleased
+        if(!kostnadInput.getText().isEmpty() && 
+                !kostnadInput.getText().equals(attRedigera.getKostnad()))
+        {
+            sparaBtn.setEnabled(true);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_kostnadInputKeyReleased
+
+    private void startdatumInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_startdatumInputKeyReleased
+        if(!startdatumInput.getText().isEmpty() && 
+                !startdatumInput.getText().equals(attRedigera.getStartdatum()))
+        {
+            sparaBtn.setEnabled(true);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_startdatumInputKeyReleased
+
+    private void slutdatumInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_slutdatumInputKeyReleased
+        if(!slutdatumInput.getText().isEmpty() && 
+                !slutdatumInput.getText().equals(attRedigera.getSlutdatum()))
+        {
+            sparaBtn.setEnabled(true);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_slutdatumInputKeyReleased
 
     private void initProjektchefCB(){
         projektchefCB.addItem("Ingen");
@@ -379,6 +534,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         statusCB.setSelectedIndex(getStatusIndex());
         kostnadInput.setText(attRedigera.getKostnad());
         startdatumInput.setText(attRedigera.getStartdatum());
+        slutdatumInput.setText(attRedigera.getSlutdatum());
         initProjektetsPartnerLista();
     }
     
@@ -415,9 +571,9 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private void refreshPartnerLista(){
         
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        if(attRedigera.getPartners().isEmpty()){
-            projektetsPartnersList.setEnabled(false);
+        if(projektetsPartners.isEmpty()){
             listModell.addElement("Inga partners kopplade till projektet.");
+            projektetsPartnersList.setEnabled(false);
         }
         else{
             for(Partner enPartner : projektetsPartners){
@@ -480,6 +636,8 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField beskrivningInput;
     private javax.swing.JLabel beskrivningLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField kostnadInput;
@@ -493,6 +651,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private javax.swing.JList<String> projektetsPartnersList;
     private javax.swing.JTextField projektnamnInput;
     private javax.swing.JLabel projektnamnLabel;
+    private javax.swing.JTextField slutdatumInput;
     private javax.swing.JButton sparaBtn;
     private javax.swing.JTextField startdatumInput;
     private javax.swing.JLabel startdatumLabel;
