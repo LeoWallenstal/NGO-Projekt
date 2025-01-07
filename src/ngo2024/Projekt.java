@@ -18,9 +18,12 @@ public class Projekt {
     private String projektchefID;
     private Anvandare projektchef;
     private String landID;
-    private String land;
+    private Land land;
     private ArrayList<Partner> partners;
-    //ArrayList med handlaggare som jobbar på detta projekt
+    
+    //OKLART OM DETTA ÄR RÄTT TERMINOLOGI?? ASSÅ DE SOM JOBBAR PÅ PROJEKTET
+    //ÄNDRA ANNARS OCKSÅ hamtaHandlaggare() KRING RAD 434
+    private ArrayList<Anvandare> handlaggare;
     
     private final InfDB idb;
 
@@ -71,7 +74,7 @@ public class Projekt {
                 case "land":
                 {
                     landID = ettProjekt.get(key);
-                    land = getLand(landID);
+                    land = new Land(landID, idb);
                     break;
                 }
                 default:
@@ -84,6 +87,8 @@ public class Projekt {
         else{
             projektchef = null;
         }
+        hamtaPartners();
+        hamtaHandlaggare();
         
     }
 
@@ -141,7 +146,7 @@ public class Projekt {
                     case "land":
                     {
                         landID = ettProjekt.get(key);
-                        land = getLand(landID);
+                        land = new Land(landID, idb);
                         break;
                     }
                     default:
@@ -160,6 +165,7 @@ public class Projekt {
             projektchef = null;
         }
         hamtaPartners();
+        hamtaHandlaggare();
     }
     
     public Projekt(InfDB idb){
@@ -208,7 +214,7 @@ public class Projekt {
         return projektchefID;
     }
 
-    public String getLand() {
+    public Land getLand() {
         return land;
     }
 
@@ -220,6 +226,70 @@ public class Projekt {
         return partners;
     }
 
+    public ArrayList<Anvandare> getHandlaggare(){
+        return handlaggare;
+    }
+    
+    public Partner getPartner(String partnerID){
+        for(Partner enPartner : partners){
+            if(partnerID.equals(enPartner.getPartnerID())){
+                return enPartner;
+            }
+        }
+        System.out.println("getPartner() failed, ID wasn't found!");
+        return null;
+    }
+    
+    public boolean removePartner(String partnerID){
+        for(Partner enPartner : partners){
+            if(partnerID.equals(enPartner.getPartnerID())){
+                partners.remove(enPartner);
+                return true;
+            }
+        }
+        System.out.println("removePartner() failed, ID wasn't found!");
+        return false;
+    }
+    
+    public boolean harPartner(String partnerID){
+        for(Partner enPartner : partners){
+            if(partnerID.equals(enPartner.getPartnerID())){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean equals(Projekt annat){
+        return this.projektID.equals(annat.projektID);
+    }
+    
+    public boolean taBortPartner(int i){
+        if(i >= 0 && i < partners.size()){
+            partners.remove(i);
+            return true;
+        }
+        return false;
+    }
+    
+    //Se kommentar kring rad 24-25 ang. namn
+    public Anvandare getHandlaggare(int i){
+        if(i >= 0 && i < handlaggare.size()){
+            return handlaggare.get(i);
+        }
+        else{
+            return null;
+        }
+    }
+    
+    public boolean taBortHandlaggare(int i){
+        if(i >= 0 && i < handlaggare.size()){
+            handlaggare.remove(i);
+            return true;
+        }
+        return false;
+    }
+    
     public String toString(){
             String outForsta = "[ProjektID]: " + projektID + "\n[Projektnamn]: " + projektnamn
             + "\n[Beskrivning]: " + beskrivning +  "\n[Startdatum]: " + startdatum
@@ -237,6 +307,7 @@ public class Projekt {
 
     /*den här returnerar en string array med datan som ska visas i
       data-grid fönstret, visuellt, om man sen stoppar in i .addRow()*/
+    //TROR DENNA KAN TAS BORT /JAMES
     public String[] getProjektVyData(){
         String[] data = new String[5];
         data[0] = projektID;
@@ -314,6 +385,7 @@ public class Projekt {
         projektchefID = nyttIDStr;
     }
     
+    //KANSKE TA BORT, OANVÄND ÄN SÅ LÄNGE
     private void setProjektchef(){
         projektchef = new Anvandare(idb, Projekt.getAnstalldID(idb, projektchefID));
     }
@@ -399,16 +471,14 @@ public class Projekt {
         }
     }
     
-    public void setLandNamn(){
-        String landNamn = "";
-        
-        try{
-            landNamn = idb.fetchSingle("SELECT namn FROM land WHERE lid = " 
-                + landID);
-        }catch(InfException ex){
-            System.out.println(ex.getMessage() + "i Projekt.java, setLand()");
+    public boolean setLand(Land ettLand){
+        if(ettLand != null){
+            this.land = ettLand;
+            return true;
         }
-        land = landNamn;
+        else{
+            return false;
+        }
     }
     
     public boolean setPartners(ArrayList<Partner> partners){
@@ -448,6 +518,30 @@ public class Projekt {
             }
         }
         partners = hamtadePartners;
+    }
+    
+    
+    
+    private void hamtaHandlaggare(){
+        ArrayList<Anvandare> handlaggare = new ArrayList<>();
+        ArrayList<HashMap<String, String>> handlaggareMap = new ArrayList<>();
+        
+        try{
+            handlaggareMap = idb.fetchRows("SELECT anstalld.aid FROM anstalld " +
+                "JOIN ans_proj ON anstalld.aid = ans_proj.aid " +
+                "JOIN projekt ON ans_proj.pid = projekt.pid " +
+                "WHERE projekt.pid = " + projektID);
+        }catch(InfException ex){
+            System.out.println(ex.getMessage() + "i Projekt.java, hamtahandlaggare()");
+        }
+        
+        for(HashMap<String, String> enHandlaggare : handlaggareMap){
+            for(String key : enHandlaggare.keySet()){
+                String anstalldID = enHandlaggare.get(key);
+                handlaggare.add(new Anvandare(idb, anstalldID));
+            }
+        }
+        this.handlaggare = handlaggare;
     }
     
     public boolean arFore(String datum){

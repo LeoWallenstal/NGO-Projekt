@@ -401,7 +401,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
             landregister.hamtaAllaLand();
             Land ettLand = landregister.get(landComboBox.getSelectedIndex());
             nyttProjekt.setLandID(ettLand.getLandID());
-            nyttProjekt.setLandNamn();
+            nyttProjekt.setLand(ettLand);
         }
         else{
             landError.setVisible(true);

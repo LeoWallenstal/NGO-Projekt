@@ -64,7 +64,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }   
 
-    private void initPartnerList(){
+    private void initPartnerLista(){
         DefaultListModel<String> listModell = new DefaultListModel<>();
         if(aktuelltProjekt.getPartners().isEmpty()){
             partnerList.setEnabled(false);
@@ -79,7 +79,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     }
     
     private void setProjektInfo(){
-        initPartnerList();
+        initPartnerLista();
         this.setTitle("SDG Sweden - " + aktuelltProjekt.getNamn());
         
         projektnamnLabel.setText("Projektnamn: " + aktuelltProjekt.getNamn());

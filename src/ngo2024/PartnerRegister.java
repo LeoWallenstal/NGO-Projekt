@@ -35,8 +35,37 @@ public class PartnerRegister {
         }
     }
     
+    public boolean add(Partner enPartner){
+        if(this.contains(enPartner.getPartnerID())){
+            return false;
+        }
+        else{
+            allaPartners.add(enPartner);
+            return true;
+        }
+    }
+    
+    public boolean remove(int i){
+        if(i >= 0 && i < allaPartners.size()){
+            allaPartners.remove(i);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     public int size(){
         return allaPartners.size();
+    }
+    
+    public boolean contains(String partnerID){
+        for(Partner enPartner : allaPartners){
+            if(partnerID.equals(enPartner.getPartnerID())){
+                return true;
+            }
+        }
+        return false;
     }
     
     public void hamtaAllaPartners(){
