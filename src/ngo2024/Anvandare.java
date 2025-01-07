@@ -34,9 +34,6 @@ public class Anvandare {
         this.uppgifter = uppgifter;
         this.admin = admin;
         this.handlaggare = handlaggare;
-        //uppgifter = new HashMap<>();
-        //setUppgifter(aid);
-        //setBehorighet(aid);
     }
     
     

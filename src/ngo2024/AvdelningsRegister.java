@@ -26,17 +26,17 @@ public class AvdelningsRegister {
     
     public void hamtaAllaAvdelningar(){
         this.tomLista();
-        ArrayList<String> avdelningLista = new ArrayList<>();
+        ArrayList<HashMap<String, String>> avdelningLista = new ArrayList<>();
         
         try{
-            avdelningLista = idb.fetchColumn("SELECT avdid FROM avdelning");
+            avdelningLista = idb.fetchRows("SELECT * FROM avdelning");
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
         
         if(avdelningLista != null){
-            for(String avdid : avdelningLista){
-                allaAvdelningar.add(new Avdelning(avdid, idb));
+            for(HashMap<String,String> enAvdelning : avdelningLista){
+                allaAvdelningar.add(new Avdelning(enAvdelning, idb));
             }
         }
     }
