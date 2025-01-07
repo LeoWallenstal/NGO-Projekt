@@ -27,7 +27,14 @@ public class PartnerInfoFonster extends javax.swing.JFrame {
         this.idb = idb;
         this.aktuellPartner = aktuellPartner;
         
-        this.setTitle("SDG Sweden - " + aktuellPartner.getNamn());
+        this.setLocationRelativeTo(null);
+        
+        setText();
+        
+        if(!inloggadAnvandare.isAdmin()){
+            btnRedigera.setVisible(false);
+            btnTaBort.setVisible(false);
+        }
     }
 
     /**
@@ -40,7 +47,21 @@ public class PartnerInfoFonster extends javax.swing.JFrame {
     private void initComponents() {
 
         tillbakaBtn = new javax.swing.JButton();
-        taBortBtn = new javax.swing.JButton();
+        btnTaBort = new javax.swing.JButton();
+        lblNamnPartner = new javax.swing.JLabel();
+        lblKontaktPersonR = new javax.swing.JLabel();
+        lblEpostR = new javax.swing.JLabel();
+        lblTfNr = new javax.swing.JLabel();
+        lblAdressT = new javax.swing.JLabel();
+        lblBranchR = new javax.swing.JLabel();
+        lblStadR = new javax.swing.JLabel();
+        lblBranch = new javax.swing.JLabel();
+        lblStad = new javax.swing.JLabel();
+        lblAdress = new javax.swing.JLabel();
+        lblKontaktPersonNamn = new javax.swing.JLabel();
+        lblTfnNr = new javax.swing.JLabel();
+        lblEpost = new javax.swing.JLabel();
+        btnRedigera = new javax.swing.JButton();
 
         tillbakaBtn.setText("Tillbaka");
         tillbakaBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -49,10 +70,43 @@ public class PartnerInfoFonster extends javax.swing.JFrame {
             }
         });
 
-        taBortBtn.setText("Ta bort");
-        taBortBtn.addActionListener(new java.awt.event.ActionListener() {
+        btnTaBort.setText("Ta bort");
+        btnTaBort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                taBortBtnActionPerformed(evt);
+                btnTaBortActionPerformed(evt);
+            }
+        });
+
+        lblNamnPartner.setText("NamnPartner");
+
+        lblKontaktPersonR.setText("Kontaktperson:");
+
+        lblEpostR.setText("Epost:");
+
+        lblTfNr.setText("Telefon:");
+
+        lblAdressT.setText("Adress:");
+
+        lblBranchR.setText("Bransch:");
+
+        lblStadR.setText("Stad:");
+
+        lblBranch.setText("Bransch");
+
+        lblStad.setText("Stad");
+
+        lblAdress.setText("Adress");
+
+        lblKontaktPersonNamn.setText("Namn");
+
+        lblTfnNr.setText("T-NR");
+
+        lblEpost.setText("Epost");
+
+        btnRedigera.setText("Redigera");
+        btnRedigera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRedigeraActionPerformed(evt);
             }
         });
 
@@ -61,19 +115,71 @@ public class PartnerInfoFonster extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tillbakaBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
-                .addComponent(taBortBtn)
+                .addGap(154, 154, 154)
+                .addComponent(lblNamnPartner)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblAdressT)
+                            .addComponent(lblStadR)
+                            .addComponent(lblBranchR)
+                            .addComponent(lblKontaktPersonR)
+                            .addComponent(lblTfNr)
+                            .addComponent(lblEpostR))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBranch)
+                            .addComponent(lblStad)
+                            .addComponent(lblAdress)
+                            .addComponent(lblKontaktPersonNamn)
+                            .addComponent(lblTfnNr)
+                            .addComponent(lblEpost))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tillbakaBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                        .addComponent(btnRedigera)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTaBort)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(271, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addComponent(lblNamnPartner)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBranchR)
+                    .addComponent(lblBranch))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStadR)
+                    .addComponent(lblStad))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAdressT)
+                    .addComponent(lblAdress))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblKontaktPersonR)
+                    .addComponent(lblKontaktPersonNamn))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTfNr)
+                    .addComponent(lblTfnNr))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEpostR)
+                    .addComponent(lblEpost))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tillbakaBtn)
-                    .addComponent(taBortBtn))
+                    .addComponent(btnTaBort)
+                    .addComponent(btnRedigera))
                 .addContainerGap())
         );
 
@@ -84,10 +190,27 @@ public class PartnerInfoFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_tillbakaBtnActionPerformed
 
-    private void taBortBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taBortBtnActionPerformed
+    private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
         new VarningJaNejFonster(aktuellPartner, this).setVisible(true);
-    }//GEN-LAST:event_taBortBtnActionPerformed
+    }//GEN-LAST:event_btnTaBortActionPerformed
 
+    private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
+        new RedigeraPartnerInfoFonster(idb, aktuellPartner, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRedigeraActionPerformed
+    
+    private void setText(){
+        
+        this.setTitle("SDG Sweden - " + aktuellPartner.getNamn());
+        
+        lblNamnPartner.setText(aktuellPartner.getNamn());
+        lblBranch.setText(aktuellPartner.getBransch());
+        lblStad.setText(aktuellPartner.getStad().getNamn());
+        lblAdress.setText(aktuellPartner.getAdress());
+        lblKontaktPersonNamn.setText(aktuellPartner.getKontaktperson());
+        lblTfnNr.setText(aktuellPartner.getTelefonnummer());
+        lblEpost.setText(aktuellPartner.getKontaktepost());
+    }
     /**
      * @param args the command line arguments
      */
@@ -124,7 +247,21 @@ public class PartnerInfoFonster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton taBortBtn;
+    private javax.swing.JButton btnRedigera;
+    private javax.swing.JButton btnTaBort;
+    private javax.swing.JLabel lblAdress;
+    private javax.swing.JLabel lblAdressT;
+    private javax.swing.JLabel lblBranch;
+    private javax.swing.JLabel lblBranchR;
+    private javax.swing.JLabel lblEpost;
+    private javax.swing.JLabel lblEpostR;
+    private javax.swing.JLabel lblKontaktPersonNamn;
+    private javax.swing.JLabel lblKontaktPersonR;
+    private javax.swing.JLabel lblNamnPartner;
+    private javax.swing.JLabel lblStad;
+    private javax.swing.JLabel lblStadR;
+    private javax.swing.JLabel lblTfNr;
+    private javax.swing.JLabel lblTfnNr;
     private javax.swing.JButton tillbakaBtn;
     // End of variables declaration//GEN-END:variables
 }

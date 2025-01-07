@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="tillbakaBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblFelMTomtFalt" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblAdressT" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStadR" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblBranchR" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblKontaktPersonR" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTfNr" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEpostR" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="tfNamnPartner" min="-2" pref="71" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="tfBranch" alignment="0" pref="114" max="32767" attributes="0"/>
+                                  <Component id="tfAdress" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="tfKontaktPersonNamn" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="tfKontaktPersonTel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="tfEpost" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cbStad" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblBranschFelM" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblStadFelM" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblAdressFelM" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblKontaktPersonFelM" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblTelefonFelM" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblEpostFelM" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <Component id="tfNamnPartner" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblBranchR" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfBranch" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblBranschFelM" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblStadR" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblStadFelM" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbStad" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblAdressT" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfAdress" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAdressFelM" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblKontaktPersonR" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfKontaktPersonNamn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblKontaktPersonFelM" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblTfNr" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfKontaktPersonTel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTelefonFelM" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblEpostR" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfEpost" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblEpostFelM" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="10" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tillbakaBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnSpara" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelMTomtFalt" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="lblAdressT">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Adress:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblBranchR">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Bransch:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblStadR">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Stad:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="tillbakaBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tillbaka"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tillbakaBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblKontaktPersonR">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kontaktperson:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEpostR">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Epost:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnSpara">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Spara"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSparaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTfNr">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Telefon:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfBranch">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfAdress">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jTextField3"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfKontaktPersonNamn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jTextField4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfKontaktPersonTel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jTextField5"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfEpost">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jTextField6"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblBranschFelM">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Kan endast inneh&#xe5;lla bokst&#xe4;ver!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblStadFelM">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Ange en stad!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAdressFelM">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Adressen m&#xe5;ste inneh&#xe5;lla minst en bokstav &amp; en siffra!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblKontaktPersonFelM">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Kan endast inneh&#xe5;lla bokst&#xe4;ver!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTelefonFelM">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Telefonnummer kan endast inneh&#xe5;lla siffror, bindestreck och det kan b&#xf6;rja med +!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEpostFelM">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Epost b&#xf6;r f&#xf6;lja format: exempel@dom&#xe4;n.com"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelMTomtFalt">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Inget av f&#xe4;lten f&#xe5;r vara tomt!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbStad">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="7">
+            <StringItem index="0" value="V&#xe4;lj stad..."/>
+            <StringItem index="1" value="&#xd6;rebro"/>
+            <StringItem index="2" value="Stockholm"/>
+            <StringItem index="3" value="Horndal"/>
+            <StringItem index="4" value="Stad 4"/>
+            <StringItem index="5" value="Stad 5"/>
+            <StringItem index="6" value="Stad 6"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfNamnPartner">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Namn"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfNamnPartnerActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

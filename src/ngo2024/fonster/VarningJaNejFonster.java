@@ -91,7 +91,7 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
         
         this.setTitle("SDG Sweden - Ta bort " + attTaBort.getNamn());
         
-        varningRubrik.setText("Du håller på att ta bort " + attTaBort.getNamn() + ".");
+        varningRubrik.setText("Du håller på att ta bort partner " + attTaBort.getNamn() + ".");
         varningUndertext.setText("Vill du fortsätta?");
         
         int bredd = varningRubrik.getWidth();
