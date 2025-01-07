@@ -8,6 +8,8 @@ import ngo2024.*;
 import oru.inf.InfDB;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
+import java.awt.*;
+
 /**
  *
  * @author annae
@@ -21,6 +23,8 @@ public class LandFonster extends javax.swing.JFrame {
     private InfDB idb;
     private DefaultTableModel tabell;
     private LandRegister landRegister;
+    private int hoveredRow = -1;
+    private int hoveredColumn;
     
     public LandFonster(Anvandare inloggadAnvandare, InfDB idb){
         this.inloggadAnvandare = inloggadAnvandare;
@@ -31,7 +35,9 @@ public class LandFonster extends javax.swing.JFrame {
         tabell = (DefaultTableModel) landTable.getModel();
         initKolumner();
         visaData();
+        checkBehorighet();
         setLocationRelativeTo(null);
+        this.setTitle("SDG Sweden - Länder");
     }
 
     private void initKolumner(){
@@ -64,6 +70,15 @@ public class LandFonster extends javax.swing.JFrame {
         visaData();
     }
     
+    private void checkBehorighet()
+    {
+        if(!inloggadAnvandare.isAdmin())
+        {
+            btnLaggTillLand.setVisible(false);
+            lblInstruktion.setVisible(false);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,6 +92,7 @@ public class LandFonster extends javax.swing.JFrame {
         landTable = new javax.swing.JTable();
         btnTillbaka = new javax.swing.JButton();
         btnLaggTillLand = new javax.swing.JButton();
+        lblInstruktion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
@@ -93,6 +109,11 @@ public class LandFonster extends javax.swing.JFrame {
 
             }
         ));
+        landTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                landTableMouseMoved(evt);
+            }
+        });
         landTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 landTableMouseClicked(evt);
@@ -114,6 +135,8 @@ public class LandFonster extends javax.swing.JFrame {
             }
         });
 
+        lblInstruktion.setText("Klicka på en rad för att ändra uppgifter!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,21 +149,25 @@ public class LandFonster extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLaggTillLand, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 45, Short.MAX_VALUE)))
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblInstruktion)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 44, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(lblInstruktion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnLaggTillLand))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -157,14 +184,35 @@ public class LandFonster extends javax.swing.JFrame {
 
     private void landTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landTableMouseClicked
         int landIndex = landTable.rowAtPoint(evt.getPoint());
-        String kolumnNamn = tabell.getColumnName(landTable.columnAtPoint(evt.getPoint()));
         
-        if(kolumnNamn.equals("Namn")&& (landIndex>= 0 && landIndex < landTable.getRowCount())){
+        if(inloggadAnvandare.isAdmin() && landIndex>= 0 && landIndex < landTable.getRowCount()){
             Land aktuelltLand = landRegister.get(landIndex);
-            new LandInfoFonster(inloggadAnvandare, aktuelltLand, idb).setVisible(true);
+            new RedigeraLandFonster(inloggadAnvandare, aktuelltLand, idb, this).setVisible(true);
         }
     }//GEN-LAST:event_landTableMouseClicked
 
+    private void landTableMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landTableMouseMoved
+        int row = landTable.rowAtPoint(evt.getPoint());
+        int column = landTable.columnAtPoint(evt.getPoint());
+        
+        if(inloggadAnvandare.isAdmin() && row >= 0 && column >= 0)
+        {
+            {
+                landTable.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                hoveredRow = row;
+                hoveredColumn = column;
+            }
+        }
+        else
+        {
+            landTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            hoveredRow = -1;
+            hoveredColumn = -1;
+        }
+        landTable.repaint();
+    }//GEN-LAST:event_landTableMouseMoved
+
+    
     /**
      * @param args the command line arguments
      */
@@ -205,5 +253,6 @@ public class LandFonster extends javax.swing.JFrame {
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable landTable;
+    private javax.swing.JLabel lblInstruktion;
     // End of variables declaration//GEN-END:variables
 }

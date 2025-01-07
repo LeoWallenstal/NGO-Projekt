@@ -190,4 +190,18 @@ public class Land {
             System.out.println(ex.getMessage() + "i Land.java, insertLandDB()");
         }
     }
+    
+    public void updateLandDB(){
+        try{
+            String sqlFraga = ("UPDATE land SET namn = '" + this.getNamn() + "', sprak = '"
+                    + this.getSprak() + "', valuta = " + this.getValuta()
+                    + ", tidszon = '" + this.getTidszon() + "', politisk_struktur = '"
+                    + this.getPolitiskStruktur() + "', ekonomi = '" + this.getEkonomi()
+                    + "' WHERE lid = " + this.getLandID() + ";");
+            idb.update(sqlFraga);
+        }
+        catch(InfException ex){
+            System.out.println(ex.getMessage() + "i Land.java, updateLandDB()");
+        }
+    }
 }
