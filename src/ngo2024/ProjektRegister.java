@@ -104,6 +104,13 @@ public class ProjektRegister {
         }
     }
     
+    public Projekt get(int i){
+        if(i >= 0 && i < allaProjekt.size()){
+            return allaProjekt.get(i);
+        }
+        return null;
+    }
+    
     public boolean remove(String projektID){
         Iterator<Projekt> it = allaProjekt.iterator();
         while(it.hasNext()){

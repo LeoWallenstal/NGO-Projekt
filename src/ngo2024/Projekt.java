@@ -511,9 +511,7 @@ public class Projekt {
         }
         partners = hamtadePartners;
     }
-    
-    
-    
+
     private void hamtaHandlaggare(){
         ArrayList<String> handlaggare = new ArrayList<>();
         ArrayList<HashMap<String, String>> handlaggareMap = new ArrayList<>();
