@@ -29,6 +29,17 @@ public class Anvandare {
         setBehorighet(aid);
     }
     
+    public Anvandare(InfDB idb, String aid, HashMap<String,String> uppgifter, boolean admin, boolean handlaggare) {
+        this.idb = idb;
+        this.uppgifter = uppgifter;
+        this.admin = admin;
+        this.handlaggare = handlaggare;
+        //uppgifter = new HashMap<>();
+        //setUppgifter(aid);
+        //setBehorighet(aid);
+    }
+    
+    
     //Getters 
     public String getFornamn() {
         return uppgifter.get("fornamn");

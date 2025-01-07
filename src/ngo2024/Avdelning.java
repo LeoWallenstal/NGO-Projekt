@@ -254,20 +254,41 @@ public class Avdelning {
     
     public void hamtaAnstallda(){
         ArrayList<Anvandare> avdelningensAnstallda = new ArrayList<>();
-        ArrayList<String>avdelningensAnstalldaLista = new ArrayList<>();
-    
+        ArrayList<HashMap<String,String>>avdelningensAnstalldaMap = new ArrayList<>();
+        
+        ArrayList<String> adminAid = new ArrayList<>();
+        ArrayList<String> handlaggareAid = new ArrayList<>();
+        
+        try{
+        String sqlFragaAdmin = "SELECT aid FROM admin";
+        String sqlFragaHandlaggare = "SELECT aid FROM handlaggare";
+        
+        adminAid = idb.fetchColumn(sqlFragaAdmin);
+        handlaggareAid = idb.fetchColumn(sqlFragaHandlaggare);
+        
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        
         try{
             String sqlFraga = "SELECT anstalld.aid "
                             + "FROM anstalld "
                             + "WHERE anstalld.avdelning = " + avdelningsID;
             
-            avdelningensAnstalldaLista = idb.fetchColumn(sqlFraga);
+            avdelningensAnstalldaMap = idb.fetchRows(sqlFraga);
         }catch (InfException ex) {
             System.out.println(ex.getMessage() + "i Avdelning.java, getAnstallningsID()");
         }
         
-        for(String aid : avdelningensAnstalldaLista){            
-            avdelningensAnstallda.add(new Anvandare(idb, aid));
+        for(HashMap<String,String> enAnstalld : avdelningensAnstalldaMap){  
+            String aid = enAnstalld.get("aid");
+            boolean admin = false;
+            boolean handlaggare = false;
+            if(adminAid.contains(aid))
+                admin = true;
+            if(handlaggareAid.contains(aid))
+                handlaggare=true;
+            avdelningensAnstallda.add(new Anvandare(idb, aid, enAnstalld, admin, handlaggare));
         }
         anstallda = avdelningensAnstallda;
     }
