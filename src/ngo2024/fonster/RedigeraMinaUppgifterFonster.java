@@ -406,6 +406,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     }
     
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+
         if(harOsparadeAndringar()){
             new OsparadeAndringarFonster(idb, inloggadAnvandare, "Mina Uppgifter", this).setVisible(true);
         }
