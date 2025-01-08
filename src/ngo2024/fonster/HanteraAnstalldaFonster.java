@@ -15,6 +15,7 @@ import ngo2024.Avdelning;
 import ngo2024.AnvandarRegister;
 import oru.inf.InfException;
 import javax.swing.ImageIcon;
+import ngo2024.AvdelningsRegister;
 
 /**
  *
@@ -24,6 +25,8 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private AvdelningsRegister avdelningsRegister;
+
     private boolean taBort;
     private DefaultTableModel tabell;
     private AnvandarRegister anstallda;
@@ -35,6 +38,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     public HanteraAnstalldaFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        avdelningsRegister = new AvdelningsRegister(idb);
         taBort = false;
         anstallda = new AnvandarRegister(idb);
         enAvdelning = null;
@@ -149,7 +153,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setWindowSize(){
+    private void setWindowSize() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int windowWidth = (int) (screenSize.width * 0.75);
         int windowHeight = (int) (screenSize.height * 0.75);
@@ -158,7 +162,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         setBounds(x, y, windowWidth, windowHeight);
         setLocationRelativeTo(null);
     }
-    
+
     private void btnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAnstalldActionPerformed
         new RegistreraAnstalldFonster(idb, inloggadAnvandare, this).setVisible(true);
     }//GEN-LAST:event_btnLaggTillAnstalldActionPerformed
@@ -168,14 +172,14 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
-    public void reset(){
+    public void reset() {
         btnTaBortAnstalld.setEnabled(true);
         lblInfoTaBort.setVisible(false);
         taBort = false;
         tabell.getDataVector().clear();
         tblAnstallda.repaint();
     }
-    
+
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
         this.taBort = true;
         btnTaBortAnstalld.setEnabled(false);
@@ -184,10 +188,10 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
     private void tblAnstalldaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnstalldaMouseClicked
         // Hämta raden som är vald när musen klickar
-        if(taBort){
+        if (taBort) {
             int rad = tblAnstallda.rowAtPoint(evt.getPoint());
-                // Om rad är vald (inte -1) och är inom tabellens intervall
-                if (rad >= 0 && rad < tblAnstallda.getRowCount()) {
+            // Om rad är vald (inte -1) och är inom tabellens intervall
+            if (rad >= 0 && rad < tblAnstallda.getRowCount()) {
 
                 // Hämta värdet från den första kolumnen (aid)
                 String aid = tblAnstallda.getValueAt(rad, 0).toString();
@@ -201,28 +205,28 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tblAnstalldaMouseClicked
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        visaAnstallda();
+
     }//GEN-LAST:event_formWindowGainedFocus
 
-
-    public void visaAnstallda(){
+    public void visaAnstallda() {
         tabell.getDataVector().clear();
         tblAnstallda.repaint();
-        
-        for(Anvandare enAnstalld: anstallda.getAllaAnstallda()){
-         String roll = "";
-            if(enAnstalld.isAdmin()){
-                roll = "Administratör";
+
+        for (Avdelning enAvdelning : avdelningsRegister.getLista()) {
+            for (Anvandare enAnstalld : enAvdelning.getAvdelningensAnstallda()) {
+                String roll = "";
+                if (enAnstalld.isAdmin()) {
+                    roll = "Administratör";
+                } else {
+                    roll = "Handläggare";
+                }
+
+                tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(),
+                    enAnstalld.getFullNamn(),
+                    roll,
+                    enAvdelning.getNamn()
+                });
             }
-            else{
-                roll = "Handläggare";
-            }
-            
-               tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(), 
-                                           enAnstalld.getFullNamn(), 
-                                           roll, 
-                                           enAnstalld.getAvdelningsNamn()
-                                           });
         }
     }
 

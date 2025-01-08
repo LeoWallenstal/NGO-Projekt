@@ -22,6 +22,31 @@ public class Anvandare {
     private boolean admin = false;
     private boolean handlaggare = false;
     
+    private String fornamn;
+    private String efternamn;
+    private String adress;
+    private String telefon;
+    private String avdelningsId;
+    private String anstallningsdatum;
+    private String epost;
+    private String losenord;
+    private String aid;
+    
+    private Avdelning avdelning;
+    
+    public Anvandare(HashMap<String,String> enAnvandare, InfDB idb){
+        this.idb = idb;
+        fornamn = enAnvandare.get("fornamn");
+        efternamn = enAnvandare.get("efternamn");
+        adress = enAnvandare.get("adress");
+        telefon = enAnvandare.get("telefon");
+        avdelningsId = enAnvandare.get("avdelning");
+        anstallningsdatum = enAnvandare.get("anstallningsdatum");
+        epost = enAnvandare.get("epost");
+        losenord = enAnvandare.get("losenord");
+        aid = enAnvandare.get("aid");
+    }
+    
     public Anvandare(InfDB idb, String aid) {
         this.idb = idb;
         uppgifter = new HashMap<>();
@@ -29,7 +54,7 @@ public class Anvandare {
         setBehorighet(aid);
     }
     
-    public Anvandare(InfDB idb, String aid, HashMap<String,String> uppgifter, boolean admin, boolean handlaggare) {
+    public Anvandare(InfDB idb, HashMap<String,String> uppgifter, boolean admin, boolean handlaggare) {
         this.idb = idb;
         this.uppgifter = uppgifter;
         this.admin = admin;
@@ -63,16 +88,16 @@ public class Anvandare {
     }
     
     public String getAvdelningsNamn(){
-        HashMap<String, String> namn = new HashMap<>();
+        String namn = "";
         try{
             String sqlFraga = "SELECT namn FROM avdelning " 
                 + "WHERE avdid = " + getAvdelningsID();
-            namn = idb.fetchRow(sqlFraga);
+            namn = idb.fetchSingle(sqlFraga);
         }
         catch (InfException ex) {
             System.out.println(ex.getMessage());
         } 
-        return namn.get("namn");
+        return namn;
     }
     
     
