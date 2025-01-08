@@ -186,7 +186,6 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
         else if(redigeringslage.equals("Lägg till Land")){
             laggTillLandFonstret.setVisible(false);
         }
-        
     }//GEN-LAST:event_btnFortsattTillMinaUppgifterActionPerformed
 
     /**
