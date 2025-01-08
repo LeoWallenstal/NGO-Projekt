@@ -291,7 +291,7 @@ public class RedigeraLandFonster extends javax.swing.JFrame {
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         if(harOsparadeAndringar()){
-            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Land").setVisible(true);
+            new OsparadeAndringarFonster(idb, inloggadAnvandare, aktuelltLand, forraFonstret, "Redigera Land", this).setVisible(true);
         }
         else{
             this.setVisible(false);
