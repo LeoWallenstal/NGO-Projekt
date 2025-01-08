@@ -683,7 +683,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         if (harOsparadeAndringar()) {
-            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Avdelning").setVisible(true);
+            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Avdelning", this).setVisible(true);
         } else {
             this.setVisible(false);
             new MenyFonster(idb, inloggadAnvandare).setVisible(true);
