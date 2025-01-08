@@ -127,10 +127,9 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
             new MenyFonster(idb,inloggadAnvandare).setVisible(true);
         }
         else if(redigeringslage.equals("Partner")){
-//            forraFonstret.setVisible(false);
+            //forraFonstret.setVisible(false);
             new PartnerInfoFonster(inloggadAnvandare, aktuellPartner, idb).setVisible(true);   
         }
-        
     }//GEN-LAST:event_btnFortsattTillMinaUppgifterActionPerformed
 
     /**

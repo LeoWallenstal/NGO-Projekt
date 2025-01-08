@@ -12,13 +12,9 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent; 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 import ngo2024.Anvandare;
 import ngo2024.Projekt;
 import ngo2024.ProjektRegister;
@@ -360,7 +356,7 @@ public class ProjektFonster extends javax.swing.JFrame {
         
         if(kolumnnamn.equals("Projektnamn") && (rad >= 0 && rad < projektTable.getRowCount())){
             String pid = (String)tabell.getValueAt(rad, kolumn-1);  
-            Projekt aktuelltProjekt = new Projekt(pid, idb);
+            Projekt aktuelltProjekt = projektregister.get(rad);
             
             //Öppnar nytt fönster som visar mer detaljerad information om ett projekt 
             new ProjektInfoFonster(inloggadAnvandare, aktuelltProjekt, 
@@ -475,6 +471,23 @@ public class ProjektFonster extends javax.swing.JFrame {
             }
             
         }
+    }
+    
+    public void visaData(){
+       rensaDataFonster();
+        for(Projekt ettProjekt : projektregister.getLista()){
+            if(ettProjekt.getProjektchefID() == null){
+                tabell.addRow(new Object[]{ettProjekt.getProjektID(), ettProjekt.getNamn(), 
+                "", ettProjekt.getPrioritet(),
+                ettProjekt.getStartdatum()} );
+            }
+            else{
+                tabell.addRow(new Object[]{ettProjekt.getProjektID(), ettProjekt.getNamn(), 
+                ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
+                ettProjekt.getStartdatum()} );
+            }
+            
+        } 
     }
     
     private void rensaDataFonster(){

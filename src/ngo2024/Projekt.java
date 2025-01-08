@@ -153,6 +153,8 @@ public class Projekt {
     
     public Projekt(InfDB idb){
         this.idb = idb;
+        this.partners = new ArrayList<>();
+        this.handlaggare = new ArrayList<>();
     }
 
     
@@ -226,6 +228,10 @@ public class Projekt {
         return projektetsHandlaggare;
     }
     
+    public ArrayList<String> getHandlaggareID(){
+        return handlaggare;
+    }
+    
     public Partner getPartner(String partnerID){
         for(String ettPartnerID : partners){
             if(partnerID.equals(ettPartnerID)){
@@ -259,6 +265,36 @@ public class Projekt {
     public boolean equals(Projekt annat){
         return this.projektID.equals(annat.projektID);
     }
+    
+    //Jämför this.partners mot en annan partnerlista
+    public boolean partnersEquals(ArrayList<Partner> annanPartnerLista){
+        //Är de inte samma storlek kan det inte vara samma lista
+        if(partners.size() != annanPartnerLista.size()){
+            return false;
+        }
+        //Kollar om en partner från den andra listan finns i this.partners
+        for(Partner enPartner : annanPartnerLista){
+            if(!this.harPartner(enPartner.getPartnerID())){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean handlaggareEquals(ArrayList<Anvandare> annanHandlaggareLista){
+        //Är de inte samma storlek kan det inte vara samma lista
+        if(handlaggare.size() != annanHandlaggareLista.size()){
+            return false;
+        }
+        //Kollar om en partner från den andra listan finns i this.partners
+        for(Anvandare enHandlaggare : annanHandlaggareLista){
+            if(!this.harHandlaggare(enHandlaggare.getAnstallningsID())){
+                return false;
+            }
+        }
+        return true;
+    }
+
     
     public boolean taBortPartner(int i){
         if(i >= 0 && i < partners.size()){
@@ -308,41 +344,6 @@ public class Projekt {
             String outAndra = "\n[Land]: " + land + "\n[Partners]:" + partners;
             
             return outForsta + outAndra;       
-    }
-
-    /*den här returnerar en string array med datan som ska visas i
-      data-grid fönstret, visuellt, om man sen stoppar in i .addRow()*/
-    //TROR DENNA KAN TAS BORT /JAMES
-    public String[] getProjektVyData(){
-        String[] data = new String[5];
-        data[0] = projektID;
-        data[1] = projektnamn;
-        if(projektchef.getFullNamn() != null){
-            data[2] = projektchef.getFullNamn();
-        }
-        else{
-            data[2] = "";
-        }
-        data[3] = prioritet;
-        data[4] = startdatum;
-
-        return data;
-    }
-
-    //Den här hämtar namnet från databasen på landet med hjälp av landID
-    private String getLand(String landID){
-        String land = "";
-
-        String sqlLand = "SELECT namn FROM land "
-            + "JOIN projekt on land = lid "
-            + "WHERE land = " + landID;
-
-        try{
-            land = idb.fetchSingle(sqlLand);
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage() + "i Projekt.java, getLand()");
-        }
-        return land;
     }
     
     //Hämtar ett anstallningsID från ett projektchefID
@@ -408,7 +409,7 @@ public class Projekt {
     
     public boolean setSlutdatum(String datum){
          if(!datum.isEmpty() && Validerare.arDatum(datum)){
-            startdatum = datum;
+            slutdatum = datum;
             return true;
         }
         else{
@@ -473,21 +474,22 @@ public class Projekt {
         }
     }
     
-    public boolean setPartners(ArrayList<String> partners){
-        boolean partnersOK = true;
-        PartnerRegister allaPartners = new PartnerRegister(idb);
-        allaPartners.hamtaAllaPartners();
-        
-        for(String ettPartnerID : partners){
-            if(!allaPartners.harID(ettPartnerID)){
-                partnersOK = false;
-            }
+    public void setPartners(ArrayList<Partner> annanPartnerLista){
+        if(partners != null){
+            partners.clear();
         }
-        if(partnersOK){
-            this.partners = partners;
-            return true;
+        for(Partner enPartner : annanPartnerLista){
+            partners.add(enPartner.getPartnerID());
         }
-        return false;
+    }
+   
+    public void setHandlaggare(ArrayList<Anvandare> annanHandlaggareLista){
+        if(handlaggare != null){
+            handlaggare.clear();
+        }
+        for(Anvandare enHandlaggare : annanHandlaggareLista){
+            handlaggare.add(enHandlaggare.getAnstallningsID());
+        }
     }
     
     public void hamtaPartners(){
@@ -556,25 +558,95 @@ public class Projekt {
     
     
     public void insertProjektDB(){
+        String sqlFraga;
+        
         try{
-            idb.insert("INSERT INTO projekt (pid, projektnamn, beskrivning, "
-                    + "startdatum, slutdatum, kostnad, status, prioritet, projektchef, land) " 
-                    + "VALUES (" + this.getProjektID() + ", '" + this.getNamn() 
-                    + "', '" + this.getBeskrivning() + "', '" + this.getStartdatum() 
-                    + "', " + null + ", '" + this.getKostnad() + "', '" + this.getStatus() 
-                    + "', '" + this.getPrioritet() + "', " + this.getProjektchefID() 
-                    + ", " + this.getLandID() + ");");
+            sqlFraga = "INSERT INTO projekt (pid, projektnamn, beskrivning, "
+                + "startdatum, slutdatum, kostnad, status, prioritet, projektchef, land) " 
+                + "VALUES (" + this.getProjektID() + ", '" + this.getNamn() 
+                + "', '" + this.getBeskrivning() + "', '" + this.getStartdatum() 
+                + "', " + null + ", '" + this.getKostnad() + "', '" + this.getStatus() 
+                + "', '" + this.getPrioritet() + "', " + this.getProjektchefID() 
+                + ", " + this.getLandID() + ");";
             
-            for(String ettPartnerID : partners){
-                Partner enPartner = new Partner(ettPartnerID, idb);
-                idb.insert("INSERT INTO projekt_partner (pid, partner_pid) " 
-                     + "VALUES (" + this.getProjektID() + ", " + enPartner.getPartnerID() + ");");
+            idb.insert(sqlFraga);
+            
+            if(!handlaggare.isEmpty()){
+                for(String ettHandlaggareID : handlaggare){
+                    sqlFraga = "INSERT INTO ans_proj (pid, aid) "
+                        + "VALUES (" + this.projektID + ", " + ettHandlaggareID + ");";
+                    idb.insert(sqlFraga);
+                }
             }
+            if(!partners.isEmpty()){
+                for(String ettPartnerID  : partners){
+                    sqlFraga = "INSERT INTO projekt_partner (pid, partner_pid) "
+                            + "VALUES (" + this.projektID + ", " + ettPartnerID + ");";
+                    idb.insert(sqlFraga);
+                }
+            }
+                
+            
             
         } catch (InfException ex) {
             System.out.println(ex.getMessage() + "i LaggTillProjektFonster.java, insertProjektDB()");
         }
         
+    }
+    
+    public void updateProjektDB(){
+        String sqlFraga;
+        
+        if(this.slutdatum == null || this.slutdatum.isEmpty()){
+            sqlFraga = "UPDATE projekt SET "
+            + "projektnamn = '" + this.projektnamn + "', "
+            + "beskrivning = '" + this.beskrivning + "', " 
+            + "startdatum = '" + this.startdatum + "', "
+            + "slutdatum = NULL, "
+            + "kostnad = '" + this.kostnad + "', "    
+            + "status = '" + this.status + "', "
+            + "prioritet = '" + this.prioritet + "', "
+            + "projektchef = " + this.projektchefID + " "
+            + "WHERE pid = " + this.getProjektID();
+        }
+        else{
+            sqlFraga = "UPDATE projekt SET "
+            + "projektnamn = '" + this.projektnamn + "', "
+            + "beskrivning = '" + this.beskrivning + "', " 
+            + "startdatum = '" + this.startdatum + "', "
+            + "slutdatum = '" + this.slutdatum + "', "
+            + "kostnad = '" + this.kostnad + "', "    
+            + "status = '" + this.status + "', "
+            + "prioritet = '" + this.prioritet + "', "
+            + "projektchef = " + this.projektchefID + " "
+            + "WHERE pid = " + this.getProjektID();
+        }
+        
+            
+        try{
+            idb.update(sqlFraga);
+            if(!handlaggare.isEmpty()){
+                sqlFraga = "DELETE from ans_proj WHERE pid = " + this.getProjektID();
+                idb.delete(sqlFraga);
+                for(String ettHandlaggareID : handlaggare){
+                    sqlFraga = "INSERT INTO ans_proj (pid, aid) "
+                        + "VALUES (" + this.projektID + ", " + ettHandlaggareID + ");";
+                    idb.insert(sqlFraga);
+                }
+            }
+            if(!partners.isEmpty()){
+                sqlFraga = "DELETE from projekt_partner WHERE pid = " + this.getProjektID();
+                idb.delete(sqlFraga);
+                for(String ettPartnerID  : partners){
+                    sqlFraga = "INSERT INTO projekt_partner (pid, partner_pid) "
+                            + "VALUES (" + this.projektID + ", " + ettPartnerID + ");";
+                    idb.insert(sqlFraga);
+                }
+            }
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }     
     }
     
     public void deleteProjektDB(){
