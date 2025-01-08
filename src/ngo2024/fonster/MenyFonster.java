@@ -38,6 +38,9 @@ public class MenyFonster extends javax.swing.JFrame {
         {
             btnAnstallda.setVisible(false);
         }
+        else{
+            btnStatistik.setVisible(false);
+        }
     }
     
     /**
@@ -76,6 +79,7 @@ public class MenyFonster extends javax.swing.JFrame {
         loggaUtButton = new javax.swing.JButton();
         partnersButton = new javax.swing.JButton();
         btnLander = new javax.swing.JButton();
+        btnStatistik = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Start");
@@ -334,6 +338,14 @@ public class MenyFonster extends javax.swing.JFrame {
         });
         getContentPane().add(btnLander, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 130, -1));
 
+        btnStatistik.setText("Statistik");
+        btnStatistik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStatistikActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnStatistik, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 130, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -466,6 +478,10 @@ public class MenyFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnLanderActionPerformed
 
+    private void btnStatistikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatistikActionPerformed
+        new StatistikFonster(idb, inloggadAnvandare).setVisible(true);
+    }//GEN-LAST:event_btnStatistikActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -524,6 +540,7 @@ public class MenyFonster extends javax.swing.JFrame {
     private javax.swing.JButton btnMal_8;
     private javax.swing.JButton btnMal_9;
     private javax.swing.JButton btnProjekt;
+    private javax.swing.JButton btnStatistik;
     private javax.swing.JButton btnUppgifter;
     private javax.swing.JLabel lblInloggadAnvandare;
     private javax.swing.JLabel lblValkommen;

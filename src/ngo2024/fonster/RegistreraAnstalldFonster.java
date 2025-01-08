@@ -89,6 +89,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         tfMentorsID = new javax.swing.JTextField();
         lblHanvisningMentor = new javax.swing.JLabel();
         lblFelMAnsvar = new javax.swing.JLabel();
+        lblFelMTommaFalt = new javax.swing.JLabel();
 
         setTitle("Registrera");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
@@ -213,6 +214,9 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         lblFelMAnsvar.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMAnsvar.setText("Ange ansvarighetsområde!");
 
+        lblFelMTommaFalt.setForeground(new java.awt.Color(255, 0, 51));
+        lblFelMTommaFalt.setText("Inget av fälten får vara tomt!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -291,6 +295,8 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addComponent(btnRegistrera)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblFelMTommaFalt)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -355,7 +361,8 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(btnRegistrera))
+                    .addComponent(btnRegistrera)
+                    .addComponent(lblFelMTommaFalt))
                 .addContainerGap())
         );
 
@@ -372,6 +379,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         lblFelMLosenord.setVisible(false);
         lblFelMRoll.setVisible(false);
         lblFelMAnsvar.setVisible(false);
+        lblFelMTommaFalt.setVisible(false);
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
@@ -415,6 +423,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
 
     private void btnRegistreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistreraActionPerformed
         
+        boolean faltIfyllda = true;
         boolean formatKorrekt = true;
         doljFelmeddelanden();
         
@@ -426,75 +435,68 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         String angettID = tfMentorsID.getText();
         Integer mentor = null;
         
-        if(Validerare.arBokstaver(fornamn) == false){
+        if(fornamn.isEmpty() || efternamn.isEmpty() || adress.isEmpty() || epost.isEmpty() || telefonNr.isEmpty()){
+            faltIfyllda = false;
             formatKorrekt = false;
-            if(fornamn.isEmpty()){
-                lblFelMFornamn.setText("Kan ej vara tomt!");
-            }
-            lblFelMFornamn.setVisible(true);
-        }
-        if(Validerare.arBokstaver(efternamn) == false){
-            formatKorrekt = false;
-            if(efternamn.isEmpty()){
-                lblFelMEfternamn.setText("Kan ej vara tomt!");
-            }
-            lblFelMEfternamn.setVisible(true);
-        }
-        if(Validerare.arAdress(adress) == false){
-            formatKorrekt = false;
-            if(adress.isEmpty()){
-                lblFelMAdress.setText("Kan ej vara tomt!");
-            }
-            lblFelMAdress.setVisible(true);   
-        }
-        if(Validerare.arEpostAdress(epost) == false){
-            formatKorrekt = false;
-            if(epost.isEmpty()){
-                lblFelMEpost.setText("Kan ej vara tomt!");
-            }
-            lblFelMEpost.setVisible(true);  
-        }
-        if(Validerare.arTelefonnummer(telefonNr) == false){
-            formatKorrekt = false;
-            if(telefonNr.isEmpty()){
-                lblFelMTelefon.setText("Kan ej vara tomt!");
-            }
-            lblFelMTelefon.setVisible(true);  
-        }
-        if(cbAvdelning.getSelectedItem().equals("Välj avdelning...")){
-            formatKorrekt = false;
-            lblFelMAvdelning.setVisible(true);
-        }
-        if(lblLosenordSlumpas.getText().isEmpty()){
-            formatKorrekt = false;
-            lblFelMLosenord.setVisible(true);
-        }
-        if(cbRoll.getSelectedItem().equals("Välj roll...")){
-            formatKorrekt = false;
-            lblFelMRoll.setVisible(true);
+            lblFelMTommaFalt.setVisible(true);
         }
         
-        if(cbRoll.getSelectedItem().equals("Handläggare")){
-            
-            if(tfAnsvarighetsomrade.getText().isEmpty()){
+        if(faltIfyllda){
+            if(!Validerare.formatEnkeltNamnOK(fornamn)){
                 formatKorrekt = false;
-                lblFelMAnsvar.setVisible(true);
+                lblFelMFornamn.setVisible(true);
             }
-            
-            if(!tfMentorsID.getText().isEmpty()){
-                if(Validerare.arSiffror(angettID) == false){
+            if(!Validerare.formatEnkeltNamnOK(efternamn)){
                 formatKorrekt = false;
-                lblHanvisningMentor.setText("Anges med siffror!");
-                }
-                else {
-                    mentor = Integer.parseInt(tfMentorsID.getText());
-                }
+                lblFelMEfternamn.setVisible(true);
             }
-            if(mentor != null) {
-                if(!anstallda.getHandlaggare().contains(mentor)){
+            if(!Validerare.arAdress(adress)){
+                formatKorrekt = false;
+                lblFelMAdress.setVisible(true);   
+            }
+            if(!Validerare.arEpostAdress(epost)){
+                formatKorrekt = false;
+                lblFelMEpost.setVisible(true);  
+            }
+            if(!Validerare.arTelefonnummer(telefonNr)){
+                formatKorrekt = false;
+                lblFelMTelefon.setVisible(true);  
+            }
+            if(cbAvdelning.getSelectedItem().equals("Välj avdelning...")){
+                formatKorrekt = false;
+                lblFelMAvdelning.setVisible(true);
+            }
+            if(lblLosenordSlumpas.getText().isEmpty()){
+                formatKorrekt = false;
+                lblFelMLosenord.setVisible(true);
+            }
+            if(cbRoll.getSelectedItem().equals("Välj roll...")){
+                formatKorrekt = false;
+                lblFelMRoll.setVisible(true);
+            }
+        
+            if(cbRoll.getSelectedItem().equals("Handläggare")){
+            
+                if(tfAnsvarighetsomrade.getText().isEmpty()){
                     formatKorrekt = false;
-                    lblHanvisningMentor.setText("Finns ej handläggare med angett ID!");
+                    lblFelMAnsvar.setVisible(true);
+                }
+            
+                if(!tfMentorsID.getText().isEmpty()){
+                    if(!Validerare.arSiffror(angettID)){
+                    formatKorrekt = false;
+                    lblHanvisningMentor.setText("Anges med siffror!");
+                    }
+                    else {
+                    mentor = Integer.parseInt(tfMentorsID.getText());
+                    }
+                }
+                if(mentor != null) {
+                    if(!anstallda.getHandlaggare().contains(mentor)){
+                        formatKorrekt = false;
+                        lblHanvisningMentor.setText("Finns ej handläggare med angett ID!");
                     }      
+                }
             }
         }
         
@@ -630,6 +632,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelMLosenord;
     private javax.swing.JLabel lblFelMRoll;
     private javax.swing.JLabel lblFelMTelefon;
+    private javax.swing.JLabel lblFelMTommaFalt;
     private javax.swing.JLabel lblFornamn;
     private javax.swing.JLabel lblHanvisningMentor;
     private javax.swing.JLabel lblLosenord;
