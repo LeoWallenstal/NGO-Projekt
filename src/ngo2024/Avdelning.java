@@ -260,7 +260,7 @@ public class Avdelning {
             if (handlaggareAid.contains(aid)) {
                 handlaggare = true;
             }
-            avdelningensAnstallda.add(new Anvandare(idb, aid, enAnstalld, admin, handlaggare));
+            avdelningensAnstallda.add(new Anvandare(idb, enAnstalld, admin, handlaggare));
         }
         anstallda = avdelningensAnstallda;
     }

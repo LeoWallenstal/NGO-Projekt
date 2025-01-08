@@ -30,48 +30,87 @@ public class AnvandarRegister {
     }
     
     public void hamtaAvdelningensAnvandare(String avdelningsID){
-        ArrayList<HashMap<String, String>> avdelningensProjekt = new ArrayList<>();
+        ArrayList<Anvandare> avdelningensAnstallda = new ArrayList<>();
+        ArrayList<HashMap<String, String>> avdelningensAnstalldaMap = new ArrayList<>();
+
+        ArrayList<String> adminAid = new ArrayList<>();
+        ArrayList<String> handlaggareAid = new ArrayList<>();
+
         try {
-            //Hämtar bara ut projektIDt här
-            String sqlFraga = 
-                   "SELECT anstalld.aid "
-                +  "FROM anstalld "
-                +  "JOIN avdelning ON avdelning.avdid = anstalld.avdelning " 
-                +  "WHERE avdelning.avdid = " + avdelningsID;
-            
-            avdelningensProjekt = idb.fetchRows(sqlFraga);
-            
-        }catch (InfException ex) {
+            String sqlFragaAdmin = "SELECT aid FROM admin";
+            String sqlFragaHandlaggare = "SELECT aid FROM handlaggare";
+
+            adminAid = idb.fetchColumn(sqlFragaAdmin);
+            handlaggareAid = idb.fetchColumn(sqlFragaHandlaggare);
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        
-        ArrayList<Anvandare> avdelningensAnvandare = new ArrayList<>();
-        for(HashMap<String, String> enAnvandare : avdelningensProjekt){
-            //Här skapar jag ett Projekt-objekt med det hämtade ProjektIDt från förut
-            avdelningensAnvandare.add(new Anvandare(idb, enAnvandare.get("aid")));
+
+        try {
+            String sqlFraga = "SELECT * "
+                    + "FROM anstalld "
+                    + "WHERE avdelning = " + avdelningsID;
+
+            avdelningensAnstalldaMap = idb.fetchRows(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i Avdelning.java, getAnstallningsID()");
         }
-        
-        allaAnvandare = avdelningensAnvandare;
+
+        for (HashMap<String, String> enAnstalld : avdelningensAnstalldaMap) {
+            String aid = enAnstalld.get("aid");
+            boolean admin = false;
+            boolean handlaggare = false;
+            if (adminAid.contains(aid)) {
+                admin = true;
+            }
+            if (handlaggareAid.contains(aid)) {
+                handlaggare = true;
+            }
+            avdelningensAnstallda.add(new Anvandare(idb, enAnstalld, admin, handlaggare));
+        }
+        allaAnvandare = avdelningensAnstallda;
     }
     
     public void hamtaSamtligaAnstallda(){
-        ArrayList<HashMap<String, String>> anstallda = new ArrayList<>();
-        
+        ArrayList<Anvandare> allaAnstallda = new ArrayList<>();
+        ArrayList<HashMap<String, String>> allaAnstalldaMap = new ArrayList<>();
+
+        ArrayList<String> adminAid = new ArrayList<>();
+        ArrayList<String> handlaggareAid = new ArrayList<>();
+
         try {
-            
-            String sqlFraga = "SELECT aid FROM anstalld ORDER BY aid ASC";
-            
-            anstallda = idb.fetchRows(sqlFraga);
-         }
-        catch(InfException ex) {
+            String sqlFragaAdmin = "SELECT aid FROM admin";
+            String sqlFragaHandlaggare = "SELECT aid FROM handlaggare";
+
+            adminAid = idb.fetchColumn(sqlFragaAdmin);
+            handlaggareAid = idb.fetchColumn(sqlFragaHandlaggare);
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        ArrayList<Anvandare> allaAnstallda = new ArrayList<>();
-        
-        for(HashMap<String, String> enAnstalld : anstallda) {
-            allaAnstallda.add(new Anvandare(idb, enAnstalld.get("aid")));
+
+        try {
+            String sqlFraga = "SELECT * "
+                    + "FROM anstalld";
+
+            allaAnstalldaMap = idb.fetchRows(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i Avdelning.java, getAnstallningsID()");
         }
-        
+
+        for (HashMap<String, String> enAnstalld : allaAnstalldaMap) {
+            String aid = enAnstalld.get("aid");
+            boolean admin = false;
+            boolean handlaggare = false;
+            if (adminAid.contains(aid)) {
+                admin = true;
+            }
+            if (handlaggareAid.contains(aid)) {
+                handlaggare = true;
+            }
+            allaAnstallda.add(new Anvandare(idb, enAnstalld, admin, handlaggare));
+        }
         samtligaAnstallda = allaAnstallda;
     }
     
