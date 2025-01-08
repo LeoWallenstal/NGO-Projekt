@@ -24,6 +24,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private Anvandare inloggadAnvandare;
     private Avdelning valdAvdelning;
     private AvdelningsRegister avdelningsRegister;
+    private StadRegister stadRegister;
+    private HashMap<String,Stad> stadMap;
     private DefaultTableModel tabell;
     private JPanel glassPaneOverlay;
     private String vy;
@@ -36,7 +38,6 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private String orginalTelefonnummer;
     private String orginalChefNamn;
     private String orginalChefId;
-    
     private String nyttChefId;
 
     /**
@@ -45,15 +46,18 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     public RedigeraAvdelningFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        stadMap = new HashMap<>();
         avdelningsRegister = new AvdelningsRegister(idb);
+        stadRegister  = new StadRegister(idb);
         valdAvdelning = avdelningsRegister.getAvdelningFranId(inloggadAnvandare.getAvdelningsID());
         initComponents();
         btnSpara.setEnabled(false);
         btnAterstall.setEnabled(false);
         tabell = (DefaultTableModel) anstalldTable.getModel();
         initGlassPane();
+        initStadCB();
         initKolumner();
-        initCB();
+        initAvdelningCB();
         visaAnstallda();
         uppdateraAvdelningsInfo(valdAvdelning);
         vy = "Alla";
@@ -87,7 +91,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     tfAvdelningsNamn.setText(orginalNamn);
     taBeskrivning.setText(orginalBeskrivning);
     tfAdress.setText(orginalAdress);
-    tfStad.setText(orginalStad);
+    cbStad.setSelectedItem(orginalStad);
     tfEpost.setText(orginalEpost);
     tfTelefon.setText(orginalTelefonnummer);
     lblChef.setText(orginalChefNamn);
@@ -96,7 +100,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private void uppdateraAvdelning(){
         //valdAvdelning = new Avdelning(valdAvdelning.getAvdelningsID(),idb);
         uppdateraAvdelningsInfo(valdAvdelning);
-        initCB();
+        initAvdelningCB();
     }
     
     private void bytAvdelning(){
@@ -110,7 +114,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         }
     }
     
-    private void initCB(){
+    private void initAvdelningCB(){
         cbAvdelningar.removeAllItems();
         for(Avdelning enAvdelning : avdelningsRegister.getLista()){
             cbAvdelningar.addItem(enAvdelning.getNamn());
@@ -122,7 +126,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-            if (!cbAvdelningar.isEnabled()) { // Index -1 indicates the "selected" display
+            if (!cbAvdelningar.isEnabled()) {
                 label.setText("Du kan inte byta avdelning med osparade ändringar");
             }
 
@@ -131,26 +135,37 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     });
     }
     
+    private void initStadCB(){
+        cbStad.removeAllItems();  
+        for(Stad enStad : stadRegister.getLista()){
+            String stadNamn = enStad.getNamn();
+            stadMap.put(stadNamn, enStad);
+            cbStad.addItem(stadNamn);
+        }
+            
+        cbStad.setSelectedItem(valdAvdelning.getStad().getNamn());
+    }
+    
     private boolean harOsparadeAndringar() {
-        if (!orginalNamn.equals(tfAvdelningsNamn.getText())) {
+        if (orginalNamn!=null&&!orginalNamn.equals(tfAvdelningsNamn.getText())) {
             return true;
         }
-        if (!orginalBeskrivning.equals(taBeskrivning.getText())) {
+        if (orginalBeskrivning!=null&&!orginalBeskrivning.equals(taBeskrivning.getText())) {
             return true;
         }
-        if (!orginalAdress.equals(tfAdress.getText())) {
+        if (orginalAdress!=null&&!orginalAdress.equals(tfAdress.getText())) {
             return true;
         }
-        if (!orginalStad.equals(tfStad.getText())) {
+        if (orginalStad!=null&&!orginalStad.equals(cbStad.getSelectedItem())) {
             return true;
         }
-        if (!orginalEpost.equals(tfEpost.getText())) {
+        if (orginalEpost!=null&&!orginalEpost.equals(tfEpost.getText())) {
             return true;
         }
-        if (!orginalTelefonnummer.equals(tfTelefon.getText())) {
+        if (orginalTelefonnummer!=null&&!orginalTelefonnummer.equals(tfTelefon.getText())) {
             return true;
         }
-        if (!orginalChefNamn.equals(lblChef.getText())) {
+        if (orginalChefNamn!=null&&!orginalChefNamn.equals(lblChef.getText())) {
             return true;
         }
         return false;
@@ -353,7 +368,6 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         sokCB = new javax.swing.JComboBox<>();
         tfAvdelningsNamn = new javax.swing.JTextField();
         tfAdress = new javax.swing.JTextField();
-        tfStad = new javax.swing.JTextField();
         tfEpost = new javax.swing.JTextField();
         tfTelefon = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
@@ -362,6 +376,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         cbAvdelningar = new javax.swing.JComboBox<>();
         btnSpara = new javax.swing.JButton();
         btnAterstall = new javax.swing.JButton();
+        cbStad = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Redigera avdelning");
@@ -461,18 +476,6 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
             }
         });
 
-        tfStad.setText("jTextField4");
-        tfStad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfStadActionPerformed(evt);
-            }
-        });
-        tfStad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tfStadKeyTyped(evt);
-            }
-        });
-
         tfEpost.setText("jTextField5");
         tfEpost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -521,7 +524,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
             }
         });
 
-        lblChef.setText("jLabel7");
+        lblChef.setText("lblChef");
         lblChef.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 lblChefPropertyChange(evt);
@@ -560,6 +563,13 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
             }
         });
 
+        cbStad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbStad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbStadItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -577,43 +587,44 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(taBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel2)
-                                .addGap(29, 29, 29)
-                                .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel3)
-                                    .addGap(29, 29, 29)
-                                    .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(13, 13, 13)
-                                            .addComponent(jLabel4))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel5)))
-                                    .addGap(29, 29, 29)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(tfEpost)
-                                        .addComponent(tfTelefon)
-                                        .addComponent(lblChef, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(sokCB, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(sokfalt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(29, 29, 29)
                                 .addComponent(sokBtn))
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(13, 13, 13)
+                                        .addComponent(jLabel4))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel5)))
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(tfTelefon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                                    .addComponent(lblChef, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tfEpost)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3)))
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfAdress)
+                                    .addComponent(cbStad, 0, 119, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTillbaka)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSpara)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAterstall)))
-                .addGap(60, 60, 60))
+                .addGap(60, 60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -630,10 +641,10 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -704,10 +715,6 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private void tfEpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEpostActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfEpostActionPerformed
-
-    private void tfStadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfStadActionPerformed
 
     private void tfAvdelningsNamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAvdelningsNamnActionPerformed
         // TODO add your handling code here:
@@ -782,7 +789,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_cbAvdelningarItemStateChanged
 
     private void tfAvdelningsNamnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfAvdelningsNamnKeyTyped
-        if(tfAvdelningsNamn.getText().equals(orginalNamn)){
+        if(!harOsparadeAndringar()){
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
@@ -795,7 +802,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfAvdelningsNamnKeyTyped
 
     private void taBeskrivningKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taBeskrivningKeyTyped
-        if(taBeskrivning.getText().equals(orginalBeskrivning)){
+        if(!harOsparadeAndringar()){
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
@@ -808,7 +815,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_taBeskrivningKeyTyped
 
     private void tfAdressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfAdressKeyTyped
-        if(tfAdress.getText().equals(orginalAdress)){
+        if(!harOsparadeAndringar()){
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
@@ -820,21 +827,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tfAdressKeyTyped
 
-    private void tfStadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfStadKeyTyped
-        if(tfStad.getText().equals(orginalStad)){
-            btnSpara.setEnabled(false);
-            btnAterstall.setEnabled(false);
-            cbAvdelningar.setEnabled(true);
-        }
-        else{
-            btnSpara.setEnabled(true);
-            btnAterstall.setEnabled(true);
-            cbAvdelningar.setEnabled(false);
-        }
-    }//GEN-LAST:event_tfStadKeyTyped
-
     private void tfEpostKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfEpostKeyTyped
-        if(tfEpost.getText().equals(orginalEpost)){
+        if(!harOsparadeAndringar()){
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
@@ -847,7 +841,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfEpostKeyTyped
 
     private void tfTelefonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefonKeyTyped
-        if(tfTelefon.getText().equals(orginalTelefonnummer)){
+        if(!harOsparadeAndringar()){
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
@@ -860,7 +854,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfTelefonKeyTyped
 
     private void lblChefPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lblChefPropertyChange
-        if(nyttChefId != null && nyttChefId.equals(orginalChefId)&&!harOsparadeAndringar()){
+        if(!harOsparadeAndringar()){
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
@@ -891,8 +885,9 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         boolean formatKorrekt = true;
         // Validering här
         if(formatKorrekt){
+            String stadId = stadMap.get(cbStad.getSelectedItem().toString()).getStadID();
             boolean lyckadDbUpdate = valdAvdelning.updateUppgifter(tfAvdelningsNamn.getText(),taBeskrivning.getText(),
-                    tfAdress.getText(),tfEpost.getText(),tfTelefon.getText(),nyttChefId);
+                    tfAdress.getText(),stadId,tfEpost.getText(),tfTelefon.getText(),nyttChefId);
             if(lyckadDbUpdate){
                 uppdateraAvdelning();
                 btnSpara.setEnabled(false);
@@ -901,6 +896,19 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnSparaActionPerformed
+
+    private void cbStadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbStadItemStateChanged
+        if(!harOsparadeAndringar()){
+            btnSpara.setEnabled(false);
+            btnAterstall.setEnabled(false);
+            cbAvdelningar.setEnabled(true);
+        }
+        else{
+            btnSpara.setEnabled(true);
+            btnAterstall.setEnabled(true);
+            cbAvdelningar.setEnabled(false);
+        }
+    }//GEN-LAST:event_cbStadItemStateChanged
 
     private void initKolumner() {
         tabell.addColumn("AID");
@@ -989,6 +997,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private javax.swing.JButton btnSpara;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JComboBox<String> cbAvdelningar;
+    private javax.swing.JComboBox<String> cbStad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1005,7 +1014,6 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private javax.swing.JTextField tfAdress;
     private javax.swing.JTextField tfAvdelningsNamn;
     private javax.swing.JTextField tfEpost;
-    private javax.swing.JTextField tfStad;
     private javax.swing.JTextField tfTelefon;
     // End of variables declaration//GEN-END:variables
 }

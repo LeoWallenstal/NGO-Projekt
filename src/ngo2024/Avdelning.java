@@ -265,11 +265,12 @@ public class Avdelning {
         anstallda = avdelningensAnstallda;
     }
 
-    public boolean updateUppgifter(String namn, String beskrivning, String adress, String epost, String telefon, String chefId) {
+    public boolean updateUppgifter(String namn, String beskrivning, String adress, String stadId, String epost, String telefon, String chefId) {
         String sqlFraga = "UPDATE avdelning SET "
                 + "namn = '" + namn + "', "
                 + "beskrivning = '" + beskrivning + "', "
                 + "adress = '" + adress + "', "
+                + "stad = " + stadId + ", "
                 + "epost = '" + epost + "', "
                 + "telefon = '" + telefon + "', "
                 + "chef = " + chefId + " "
@@ -281,6 +282,7 @@ public class Avdelning {
             this.namn = namn;
             this.beskrivning = beskrivning;
             this.adress = adress;
+            this.stad = new Stad(stadId,idb);
             this.epost = epost;
             this.telefonnummer = telefon;
             this.chefID = chefId;
