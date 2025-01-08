@@ -127,20 +127,16 @@ public class AnvandarRegister {
         return samtligaAnstallda;
     }
     
-    public void hamtaHandlaggare(){
-        ArrayList<HashMap<String, String>> allaHandlaggare = new ArrayList<>();
+    public ArrayList<String> hamtaHandlaggare(){
+        ArrayList<String> allaHandlaggare = new ArrayList<>();
         try {
             String sqlFraga = "SELECT aid FROM handlaggare";
-            allaHandlaggare = idb.fetchRows(sqlFraga);
+            allaHandlaggare = idb.fetchColumn(sqlFraga);
             }
         catch(InfException ex) {
             System.out.println(ex.getMessage());
         }
-        ArrayList<String> handlaggare = new ArrayList<>();
-        for(HashMap<String, String> enHandlaggare : allaHandlaggare){
-            handlaggare.add(enHandlaggare.get("aid)"));
-        }
-        this.handlaggare = handlaggare;
+        return allaHandlaggare;
     }
     
     public void hamtaAdmins(){
@@ -159,10 +155,6 @@ public class AnvandarRegister {
         this.administrator = admins;
     }
     
-    public ArrayList<String> getHandlaggare(){
-        hamtaHandlaggare();
-        return handlaggare;
-    }
     
     public ArrayList<String> getAmin(){
         hamtaAdmins();

@@ -79,7 +79,6 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         lblFelMTelefon = new javax.swing.JLabel();
         btnRegistrera = new javax.swing.JButton();
         lblFelMAvdelning = new javax.swing.JLabel();
-        lblFelMLosenord = new javax.swing.JLabel();
         cbRoll = new javax.swing.JComboBox<>();
         lblRoll = new javax.swing.JLabel();
         lblFelMRoll = new javax.swing.JLabel();
@@ -177,9 +176,6 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         lblFelMAvdelning.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMAvdelning.setText("Välj en avdelning!");
 
-        lblFelMLosenord.setForeground(new java.awt.Color(255, 0, 51));
-        lblFelMLosenord.setText("Slumpa fram ett lösenord!");
-
         cbRoll.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj roll...", "Handläggare", "Administratör" }));
         cbRoll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,10 +263,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(lblFelMAvdelning)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(btnSlumpaLosenord)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(lblFelMLosenord))))
+                                                    .addComponent(btnSlumpaLosenord)))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                     .addComponent(tfTelefonNr, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
@@ -341,8 +334,7 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
                     .addComponent(lblLosenord)
                     .addComponent(btnSlumpaLosenord)
                     .addComponent(jLabel11)
-                    .addComponent(lblLosenordSlumpas)
-                    .addComponent(lblFelMLosenord))
+                    .addComponent(lblLosenordSlumpas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRoll)
@@ -376,7 +368,6 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         lblFelMEpost.setVisible(false);
         lblFelMTelefon.setVisible(false);
         lblFelMAvdelning.setVisible(false);
-        lblFelMLosenord.setVisible(false);
         lblFelMRoll.setVisible(false);
         lblFelMAnsvar.setVisible(false);
         lblFelMTommaFalt.setVisible(false);
@@ -433,9 +424,9 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
         String epost = tfEpost.getText();
         String telefonNr = tfTelefonNr.getText();
         String angettID = tfMentorsID.getText();
-        Integer mentor = null;
+        String mentor = null;
         
-        if(fornamn.isEmpty() || efternamn.isEmpty() || adress.isEmpty() || epost.isEmpty() || telefonNr.isEmpty()){
+        if(fornamn.isEmpty() || efternamn.isEmpty() || adress.isEmpty() || epost.isEmpty() || telefonNr.isEmpty() || lblLosenordSlumpas.getText().isEmpty()){
             faltIfyllda = false;
             formatKorrekt = false;
             lblFelMTommaFalt.setVisible(true);
@@ -466,10 +457,6 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
                 formatKorrekt = false;
                 lblFelMAvdelning.setVisible(true);
             }
-            if(lblLosenordSlumpas.getText().isEmpty()){
-                formatKorrekt = false;
-                lblFelMLosenord.setVisible(true);
-            }
             if(cbRoll.getSelectedItem().equals("Välj roll...")){
                 formatKorrekt = false;
                 lblFelMRoll.setVisible(true);
@@ -488,11 +475,13 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
                     lblHanvisningMentor.setText("Anges med siffror!");
                     }
                     else {
-                    mentor = Integer.parseInt(tfMentorsID.getText());
+                    mentor = tfMentorsID.getText();
                     }
                 }
                 if(mentor != null) {
-                    if(!anstallda.getHandlaggare().contains(mentor)){
+                    System.out.println(mentor);
+                    System.out.println(anstallda.hamtaHandlaggare());
+                    if(!anstallda.hamtaHandlaggare().contains(mentor)){
                         formatKorrekt = false;
                         lblHanvisningMentor.setText("Finns ej handläggare med angett ID!");
                     }      
@@ -629,7 +618,6 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelMEfternamn;
     private javax.swing.JLabel lblFelMEpost;
     private javax.swing.JLabel lblFelMFornamn;
-    private javax.swing.JLabel lblFelMLosenord;
     private javax.swing.JLabel lblFelMRoll;
     private javax.swing.JLabel lblFelMTelefon;
     private javax.swing.JLabel lblFelMTommaFalt;

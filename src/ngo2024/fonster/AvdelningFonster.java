@@ -304,7 +304,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
                 visaAnstallda();
                 vy = "Sökt";
             }
-            else{
+            else {
                 resetFonster();
             }
         }

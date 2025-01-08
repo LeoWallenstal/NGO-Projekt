@@ -185,7 +185,7 @@ public class Anvandare {
             }
     }
     
-    public void laggTillHandlaggareMedMentorDb(int aid, String beskrivningAnsvar, Integer mentor){
+    public void laggTillHandlaggareMedMentorDb(int aid, String beskrivningAnsvar, String mentor){
         try{
             String sqlFraga = "INSERT INTO handlaggare (aid, ansvarighetsomrade, mentor)" +
                     "VALUES (" + aid + ", '" + beskrivningAnsvar + "', " + mentor + ")"; 
@@ -214,6 +214,38 @@ public class Anvandare {
             System.out.println(ex.getMessage() + "i Anvandare.java, laggTillAdminDb()");
             }
     }
+    
+    public void bytRoll(){
+        
+        try{
+            if(admin){
+                
+                idb.delete("DELETE FROM admin WHERE aid = " + getAnstallningsID());
+                
+                idb.insert("INSERT INTO handlaggare " +
+                        "VALUES ( " + getAnstallningsID() + ", null, null)");
+                
+                
+                setBehorighet(getAnstallningsID());
+                }
+            
+            else if(handlaggare){
+            
+                idb.update("UPDATE projekt SET projektchef = NULL WHERE projektchef = " + this.getAnstallningsID());
+                idb.update("UPDATE handlaggare SET mentor = NULL WHERE mentor = " + this.getAnstallningsID());
+                idb.delete("DELETE FROM handlaggare WHERE aid = " + getAnstallningsID());
+                
+                idb.insert("INSERT INTO admin " +
+                        "VALUES ( " + getAnstallningsID() + ", '1')");
+                
+                setBehorighet(getAnstallningsID());
+                }
+        }
+            
+        catch (InfException ex) {
+            System.out.println(ex.getMessage() + "i Anvandare.java, deleteAnvandareDb()");
+            }
+        }
     
     public void deleteAnvandareDb(){
         try{

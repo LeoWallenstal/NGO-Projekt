@@ -195,6 +195,7 @@ public class Avdelning {
         }
         return false;
     }
+    
 
     public boolean equals(Avdelning annan) {
         return this.avdelningsID.equals(annan.getAvdelningsID());
@@ -204,7 +205,7 @@ public class Avdelning {
         ArrayList<Anvandare> resultat = new ArrayList<>();
 
         for (Anvandare enAnstalld : anstallda) {
-            if (enAnstalld.getFullNamn().startsWith(sokord)) {
+            if (enAnstalld.getFullNamn().toLowerCase().startsWith(sokord)) {
                 resultat.add(enAnstalld);
             }
         }
@@ -215,7 +216,7 @@ public class Avdelning {
         ArrayList<Anvandare> resultat = new ArrayList<>();
 
         for (Anvandare enAnstalld : anstallda) {
-            if (enAnstalld.getEPost().startsWith(sokord)) {
+            if (enAnstalld.getEPost().toLowerCase().startsWith(sokord)) {
                 resultat.add(enAnstalld);
             }
         }
