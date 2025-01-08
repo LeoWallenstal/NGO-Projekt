@@ -29,6 +29,14 @@ public class Anvandare {
         setBehorighet(aid);
     }
     
+    public Anvandare(InfDB idb, String aid, HashMap<String,String> uppgifter, boolean admin, boolean handlaggare) {
+        this.idb = idb;
+        this.uppgifter = uppgifter;
+        this.admin = admin;
+        this.handlaggare = handlaggare;
+    }
+    
+    
     //Getters 
     public String getFornamn() {
         return uppgifter.get("fornamn");
@@ -115,18 +123,15 @@ public class Anvandare {
             ArrayList<String> adminAid = idb.fetchColumn(sqlFragaAdmin);
             ArrayList<String> handlaggareAid = idb.fetchColumn(sqlFragaHandlaggare);
             
-            for(String dbAid : adminAid){
-                if(aid.equals(dbAid)){
-                    admin = true;
-                    break;
-                }
+            if(handlaggareAid.contains(aid)){
+                handlaggare = true;
+                return;
             }
-            for(String dbAid : handlaggareAid){
-                if(aid.equals(dbAid)){
-                    handlaggare = true;
-                    break;
-                }
+            if(adminAid.contains(aid)){
+                admin = true;
+                return;
             }
+            
         }
         catch(InfException ex){
             System.out.println(ex.getMessage());

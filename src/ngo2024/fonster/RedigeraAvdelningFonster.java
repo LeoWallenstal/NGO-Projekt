@@ -22,7 +22,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
-    private Avdelning anvandarensAvdelning;
+    private Avdelning valdAvdelning;
     private AvdelningsRegister avdelningsRegister;
     private DefaultTableModel tabell;
     private JPanel glassPaneOverlay;
@@ -34,7 +34,10 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private String orginalStad;
     private String orginalEpost;
     private String orginalTelefonnummer;
-    private String orginalChef;
+    private String orginalChefNamn;
+    private String orginalChefId;
+    
+    private String nyttChefId;
 
     /**
      * Creates new form Avdelning
@@ -42,8 +45,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     public RedigeraAvdelningFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
-        anvandarensAvdelning = new Avdelning(inloggadAnvandare.getAvdelningsID(), idb);
         avdelningsRegister = new AvdelningsRegister(idb);
+        valdAvdelning = avdelningsRegister.getAvdelningFranId(inloggadAnvandare.getAvdelningsID());
         initComponents();
         btnSpara.setEnabled(false);
         btnAterstall.setEnabled(false);
@@ -52,7 +55,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         initKolumner();
         initCB();
         visaAnstallda();
-        uppdateraAvdelning(anvandarensAvdelning);
+        uppdateraAvdelningsInfo(valdAvdelning);
         vy = "Alla";
         setLocationRelativeTo(null);
     }
@@ -62,16 +65,14 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         tabell.setRowCount(0);
         for (Anvandare enAnstalld : avdelning.getAvdelningensAnstallda()) {
             String roll = "";
-            if (enAnstalld.isAdmin()) {
-                roll = "Administratör";
-            } else {
+            if (!enAnstalld.isAdmin()) {
                 roll = "Handläggare";
+                tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(),enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
             }
-            tabell.addRow(new Object[]{enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
         }
     }
     
-    private void uppdateraAvdelning(Avdelning avdelning) {
+    private void uppdateraAvdelningsInfo(Avdelning avdelning) {
     uppdateraAnstallda(avdelning);
     orginalNamn = avdelning.getNamn();
     orginalBeskrivning = avdelning.getBeskrivning();
@@ -79,7 +80,9 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     orginalStad = avdelning.getStad().getNamn();
     orginalEpost = avdelning.getEpost();
     orginalTelefonnummer = avdelning.getTelefonnummer();
-    orginalChef = avdelning.getChef().getFullNamn();
+    orginalChefNamn = avdelning.getChef().getFullNamn();
+    orginalChefId = avdelning.getChef().getAnstallningsID();
+    nyttChefId = avdelning.getChef().getAnstallningsID();
 
     tfAvdelningsNamn.setText(orginalNamn);
     taBeskrivning.setText(orginalBeskrivning);
@@ -87,15 +90,21 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     tfStad.setText(orginalStad);
     tfEpost.setText(orginalEpost);
     tfTelefon.setText(orginalTelefonnummer);
-    lblChef.setText(orginalChef);
+    lblChef.setText(orginalChefNamn);
 }
 
+    private void uppdateraAvdelning(){
+        //valdAvdelning = new Avdelning(valdAvdelning.getAvdelningsID(),idb);
+        uppdateraAvdelningsInfo(valdAvdelning);
+        initCB();
+    }
+    
     private void bytAvdelning(){
         String valdAvdelningNamn = (String) cbAvdelningar.getSelectedItem();
         for (Avdelning avdelning : avdelningsRegister.getLista()) {
             if (avdelning.getNamn().equals(valdAvdelningNamn)) {
-                anvandarensAvdelning = avdelning;
-                uppdateraAvdelning(avdelning);
+                valdAvdelning = avdelning;
+                uppdateraAvdelningsInfo(avdelning);
                 break;
             }
         }
@@ -106,7 +115,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         for(Avdelning enAvdelning : avdelningsRegister.getLista()){
             cbAvdelningar.addItem(enAvdelning.getNamn());
         }
-        cbAvdelningar.setSelectedItem(anvandarensAvdelning.getNamn());
+        cbAvdelningar.setSelectedItem(valdAvdelning.getNamn());
         
         cbAvdelningar.setRenderer(new DefaultListCellRenderer() {
         @Override
@@ -141,7 +150,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         if (!orginalTelefonnummer.equals(tfTelefon.getText())) {
             return true;
         }
-        if (!orginalChef.equals(lblChef.getText())) {
+        if (!orginalChefNamn.equals(lblChef.getText())) {
             return true;
         }
         return false;
@@ -268,9 +277,10 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
 
                         if (valdRad != -1) {
                             // Säkerställ rätt kolumnindex (t.ex. 0 för namn)
-                            String anstalldNamn = anstalldTable.getValueAt(valdRad, 0).toString();
+                            String chefNamn = anstalldTable.getValueAt(valdRad, 1).toString();
+                            nyttChefId = anstalldTable.getValueAt(valdRad, 0).toString();
                             glassPaneOverlay.setVisible(false);
-                            lblChef.setText(anstalldNamn);
+                            lblChef.setText(chefNamn);
                         }
                     }
 
@@ -537,6 +547,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         });
 
         btnSpara.setText("Spara");
+        btnSpara.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSparaActionPerformed(evt);
+            }
+        });
 
         btnAterstall.setText("Återställ");
         btnAterstall.addActionListener(new java.awt.event.ActionListener() {
@@ -671,7 +686,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         String kolumnnamn = tabell.getColumnName(kolumn);
 
         if (kolumnnamn.equals("Namn") && (rad >= 0 && rad < anstalldTable.getRowCount())) {
-            Anvandare aktuellAnstalld = anvandarensAvdelning.getAnstalld(rad);
+            Anvandare aktuellAnstalld = valdAvdelning.getAnstalld(rad);
 
             //Öppnar nytt fönster som visar mer detaljerad information om ett projekt 
             new AnstalldInfoFonster(inloggadAnvandare, aktuellAnstalld).setVisible(true);
@@ -705,12 +720,12 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private void sokBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokBtnMouseClicked
         if (!sokfalt.getText().isEmpty()) {
             if (sokCB.getSelectedItem().equals("Namn")) {
-                anvandarensAvdelning.hamtaSokNamn(sokfalt.getText());
+                valdAvdelning.hamtaSokNamn(sokfalt.getText());
                 rensaDataFonster();
                 visaAnstallda();
                 vy = "Sökt";
             } else if (sokCB.getSelectedItem().equals("Epost")) {
-                anvandarensAvdelning.hamtaSokEpost(sokfalt.getText());
+                valdAvdelning.hamtaSokEpost(sokfalt.getText());
                 rensaDataFonster();
                 visaAnstallda();
                 vy = "Sökt";
@@ -845,7 +860,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfTelefonKeyTyped
 
     private void lblChefPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lblChefPropertyChange
-        if(lblChef.getText().equals(orginalChef)){
+        if(nyttChefId != null && nyttChefId.equals(orginalChefId)&&!harOsparadeAndringar()){
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
@@ -865,27 +880,47 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         String valdAvdelningNamn = (String) cbAvdelningar.getSelectedItem();
         for (Avdelning avdelning : avdelningsRegister.getLista()) {
             if (avdelning.getNamn().equals(valdAvdelningNamn)) {
-                anvandarensAvdelning = avdelning;
-                uppdateraAvdelning(avdelning);
+                valdAvdelning = avdelning;
+                uppdateraAvdelningsInfo(avdelning);
                 break;
             }
         }
     }//GEN-LAST:event_btnAterstallActionPerformed
 
+    private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+        boolean formatKorrekt = true;
+        // Validering här
+        if(formatKorrekt){
+            boolean lyckadDbUpdate = valdAvdelning.updateUppgifter(tfAvdelningsNamn.getText(),taBeskrivning.getText(),
+                    tfAdress.getText(),tfEpost.getText(),tfTelefon.getText(),nyttChefId);
+            if(lyckadDbUpdate){
+                uppdateraAvdelning();
+                btnSpara.setEnabled(false);
+                btnAterstall.setEnabled(false);
+                cbAvdelningar.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_btnSparaActionPerformed
+
     private void initKolumner() {
+        tabell.addColumn("AID");
         tabell.addColumn("Namn"); //denna ska gömmas senare
         tabell.addColumn("Epost");
         tabell.addColumn("Roll");
 
         //Förhindrar användaren från att editera cellerna direkt
         anstalldTable.setDefaultEditor(Object.class, null);
+        TableColumnModel columnModel = anstalldTable.getColumnModel();
+        columnModel.getColumn(0).setMinWidth(0);
+        columnModel.getColumn(0).setMaxWidth(0);
+        columnModel.getColumn(0).setWidth(0);
     }
 
     /**
      * @param args the command line arguments
      */
     private void visaAnstallda() {
-        for (Anvandare enAnstalld : anvandarensAvdelning.getAvdelningensAnstallda()) {
+        for (Anvandare enAnstalld : valdAvdelning.getAvdelningensAnstallda()) {
             String roll = "";
             if (enAnstalld.isAdmin()) {
                 roll = "Administratör";
@@ -909,7 +944,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     
     public void resetFonster() {
         rensaDataFonster();
-        anvandarensAvdelning.hamtaAnstallda();
+        valdAvdelning.hamtaAnstallda();
         visaAnstallda();
     }
 

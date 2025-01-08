@@ -14,44 +14,43 @@ import oru.inf.InfException;
  * @author james
  */
 public class AvdelningsRegister {
-    private ArrayList<Avdelning> allaAvdelningar;
+    private HashMap<String, Avdelning> avdelningMap;
     private InfDB idb;
     
     
     public AvdelningsRegister(InfDB idb){
         this.idb = idb;
-        allaAvdelningar = new ArrayList<>();
+        avdelningMap = new HashMap<>();
         hamtaAllaAvdelningar();
     }
     
-    public void hamtaAllaAvdelningar(){
+    public final void hamtaAllaAvdelningar(){
         this.tomLista();
+        ArrayList<HashMap<String, String>> avdelningLista = new ArrayList<>();
         
-        ArrayList<Avdelning> allaAvdelningar = new ArrayList<>();
-        ArrayList<HashMap<String, String>> avdelningMap = new ArrayList<>();
         
         try{
-            avdelningMap = idb.fetchRows("SELECT avdid FROM avdelning");
+            avdelningLista = idb.fetchRows("SELECT * FROM avdelning");
+            if(avdelningLista != null){
+            for(HashMap<String,String> enAvdelning : avdelningLista){
+                Avdelning avdelning = new Avdelning(enAvdelning, idb);
+                avdelningMap.put(avdelning.getAvdelningsID(), avdelning);
+            }
+        }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        
-        if(avdelningMap != null){
-            for(HashMap<String, String> enAvdelning : avdelningMap){
-                String avdelningsID = enAvdelning.get("avdid");
-                allaAvdelningar.add(new Avdelning(avdelningsID, idb));
-            }
-            if(!allaAvdelningar.isEmpty()){
-                this.allaAvdelningar = allaAvdelningar;
-            }
-        }
+    }
+    
+    public Avdelning getAvdelningFranId(String avdid){
+        return avdelningMap.get(avdid);
     }
     
     public void tomLista(){
-        allaAvdelningar.clear();
+        avdelningMap.clear();
     }
     
     public ArrayList<Avdelning> getLista(){
-        return allaAvdelningar;
+        return new ArrayList<>(avdelningMap.values());
     }
 }
