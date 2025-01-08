@@ -406,13 +406,13 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     }
     
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        if(harOsparadeAndringar()){
-            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Mina Uppgifter").setVisible(true);
-        }
-        else {
+//        if(harOsparadeAndringar()){
+//            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Mina Uppgifter").setVisible(true);
+//        }
+//        else {
             this.setVisible(false);
             new MinaUppgifterFonster(idb,inloggadAnvandare).setVisible(true);
-        }
+//        }
         
     }//GEN-LAST:event_btnTillbakaActionPerformed
 

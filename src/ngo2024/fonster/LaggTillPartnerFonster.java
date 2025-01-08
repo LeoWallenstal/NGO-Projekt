@@ -30,6 +30,7 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
         initStadComboBox();
         initFelmeddelanden();
         partnerRegistreradLabel.setVisible(false);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -94,6 +95,11 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
         });
 
         tillbakaButton.setText("Tillbaka");
+        tillbakaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tillbakaButtonActionPerformed(evt);
+            }
+        });
 
         sparaButton.setText("Spara");
         sparaButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -179,7 +185,7 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
                         .addComponent(sparaButton)
                         .addGap(18, 18, 18)
                         .addComponent(partnerRegistreradLabel)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,6 +247,10 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
     private void sparaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sparaButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_sparaButtonActionPerformed
+
+    private void tillbakaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tillbakaButtonActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_tillbakaButtonActionPerformed
 
     private void namnInputActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
