@@ -14,13 +14,13 @@ import oru.inf.InfException;
  * @author james
  */
 public class AvdelningsRegister {
-    private ArrayList<Avdelning> allaAvdelningar;
+    private HashMap<String, Avdelning> avdelningMap;
     private InfDB idb;
     
     
     public AvdelningsRegister(InfDB idb){
         this.idb = idb;
-        allaAvdelningar = new ArrayList<>();
+        avdelningMap = new HashMap<>();
         hamtaAllaAvdelningar();
     }
     
@@ -28,34 +28,29 @@ public class AvdelningsRegister {
         this.tomLista();
         ArrayList<HashMap<String, String>> avdelningLista = new ArrayList<>();
         
+        
         try{
             avdelningLista = idb.fetchRows("SELECT * FROM avdelning");
+            if(avdelningLista != null){
+            for(HashMap<String,String> enAvdelning : avdelningLista){
+                Avdelning avdelning = new Avdelning(enAvdelning, idb);
+                avdelningMap.put(avdelning.getAvdelningsID(), avdelning);
+            }
+        }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
-        }
-        
-        if(avdelningLista != null){
-            for(HashMap<String,String> enAvdelning : avdelningLista){
-                allaAvdelningar.add(new Avdelning(enAvdelning, idb));
-            }
         }
     }
     
     public Avdelning getAvdelningFranId(String avdid){
-        for(Avdelning enAvdelning : allaAvdelningar){
-            if(enAvdelning.getAvdelningsID().equals(avdid))
-            {
-              return enAvdelning;
-            }
-        }
-        return null;
+        return avdelningMap.get(avdid);
     }
     
     public void tomLista(){
-        allaAvdelningar.clear();
+        avdelningMap.clear();
     }
     
-    public ArrayList<Avdelning> getLista(){
-        return allaAvdelningar;
+    public HashMap<String,Avdelning> getLista(){
+        return avdelningMap;
     }
 }
