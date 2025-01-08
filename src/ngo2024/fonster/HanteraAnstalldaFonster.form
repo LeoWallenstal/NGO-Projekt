@@ -46,6 +46,8 @@
                       <Component id="btnTaBortAnstalld" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblInfoTaBort" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnBytRoll" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="49" pref="235" max="32767" attributes="0"/>
@@ -63,6 +65,7 @@
                   <Component id="btnLaggTillAnstalld" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnTaBortAnstalld" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblInfoTaBort" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBytRoll" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -146,9 +149,14 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblInfoTaBort">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnBytRoll">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Klicka p&#xe5; den anst&#xe4;llda som du vill ta bort!"/>
+        <Property name="text" type="java.lang.String" value="Byt roll"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBytRollActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

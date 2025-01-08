@@ -81,11 +81,7 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="lblFelMAvdelning" min="-2" max="-2" attributes="0"/>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="btnSlumpaLosenord" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="lblFelMLosenord" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
+                                                  <Component id="btnSlumpaLosenord" alignment="0" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
@@ -182,7 +178,6 @@
                   <Component id="btnSlumpaLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblLosenordSlumpas" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFelMLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -368,14 +363,6 @@
           <Color blue="33" green="0" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="V&#xe4;lj en avdelning!"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblFelMLosenord">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Slumpa fram ett l&#xf6;senord!"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbRoll">

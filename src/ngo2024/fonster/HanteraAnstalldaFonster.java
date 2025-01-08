@@ -5,6 +5,7 @@
 package ngo2024.fonster;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -40,10 +41,11 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     private AvdelningsRegister avdelningsRegister;
 
     private boolean taBort;
+    private boolean bytRoll;
     private DefaultTableModel tabell;
     private AnvandarRegister anstallda;
-    private JPanel glassPaneOverlay;    
-    private HashMap<String,Anvandare> anstalldaMap;
+    private JPanel glassPaneOverlay;
+    private HashMap<String, Anvandare> anstalldaMap;
 
     /**
      * Creates new form HanteraAnstallda
@@ -54,6 +56,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         avdelningsRegister = new AvdelningsRegister(idb);
         anstalldaMap = new HashMap<>();
         taBort = false;
+        bytRoll = false;
         anstallda = new AnvandarRegister(idb);
         initComponents();
         tabell = (DefaultTableModel) tblAnstallda.getModel();
@@ -80,6 +83,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         btnTaBortAnstalld = new javax.swing.JButton();
         btnTillbaka = new javax.swing.JButton();
         lblInfoTaBort = new javax.swing.JLabel();
+        btnBytRoll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Anställda");
@@ -130,7 +134,12 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
             }
         });
 
-        lblInfoTaBort.setText("Klicka på den anställda som du vill ta bort!");
+        btnBytRoll.setText("Byt roll");
+        btnBytRoll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBytRollActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,7 +156,9 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnTaBortAnstalld)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblInfoTaBort)))
+                        .addComponent(lblInfoTaBort)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBytRoll)))
                 .addGap(49, 235, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -160,7 +171,8 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
                     .addComponent(btnTillbaka)
                     .addComponent(btnLaggTillAnstalld)
                     .addComponent(btnTaBortAnstalld)
-                    .addComponent(lblInfoTaBort))
+                    .addComponent(lblInfoTaBort)
+                    .addComponent(btnBytRoll))
                 .addContainerGap())
         );
 
@@ -288,15 +300,21 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
                         if (valdRad != -1) {
                             // Säkerställ rätt kolumnindex (t.ex. 0 för namn)
-                            if (taBort) {
-                                if (valdRad >= 0 && valdRad < tblAnstallda.getRowCount()) {
 
-                                    // Hämta värdet från den första kolumnen (aid)
-                                    String aid = tblAnstallda.getValueAt(valdRad, 0).toString();
+                            if (valdRad >= 0 && valdRad < tblAnstallda.getRowCount()) {
 
+                                // Hämta värdet från den första kolumnen (aid)
+                                String aid = tblAnstallda.getValueAt(valdRad, 0).toString();
+
+                                if (taBort) {
                                     // Skapa och öppna ett nytt fönster som skickar med aid
                                     new VarningJaNejFonster(anstalldaMap.get(aid), this).setVisible(true);
                                 }
+                             else if (bytRoll) {
+                                    anstalldaMap.get(aid).bytRoll();
+                                    reset();
+                                    visaAnstallda();
+                            }
                             }
                         }
                     }
@@ -311,6 +329,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
             glassPaneOverlay.setVisible(false);
             btnTaBortAnstalld.setEnabled(true);
             lblInfoTaBort.setVisible(false);
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
     }
 
@@ -364,12 +383,13 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         taBort = false;
         tabell.setRowCount(0);
         tblAnstallda.repaint();
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.taBort = true;
         btnTaBortAnstalld.setEnabled(false);
-        lblInfoTaBort.setVisible(true);
         glassPaneOverlay.setVisible(true);
         glassPaneOverlay.revalidate();
         glassPaneOverlay.repaint();
@@ -383,15 +403,26 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowGainedFocus
 
-   public void deleteAnstalld(Anvandare anvandareTaBort){
-            System.out.println(avdelningsRegister.getAvdelningFranId(anvandareTaBort.getAvdelningsID()).removeAnstalld(anvandareTaBort.getAnstallningsID()));
-            anvandareTaBort.deleteAnvandareDb();
-            reset();
-            visaAnstallda();
-   }
-    
+    private void btnBytRollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBytRollActionPerformed
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.bytRoll = true;
+        btnTaBortAnstalld.setEnabled(false);
+        lblInfoTaBort.setVisible(true);
+        glassPaneOverlay.setVisible(true);
+        glassPaneOverlay.revalidate();
+        glassPaneOverlay.repaint();
+    }//GEN-LAST:event_btnBytRollActionPerformed
+
+    public void deleteAnstalld(Anvandare anvandareTaBort) {
+        System.out.println(avdelningsRegister.getAvdelningFranId(anvandareTaBort.getAvdelningsID()).removeAnstalld(anvandareTaBort.getAnstallningsID()));
+        anvandareTaBort.deleteAnvandareDb();
+        reset();
+        visaAnstallda();
+    }
+
     public void visaAnstallda() {
         tblAnstallda.repaint();
+        avdelningsRegister.hamtaAllaAvdelningar();
         for (Avdelning enAvdelning : avdelningsRegister.getLista()) {
             for (Anvandare enAnstalld : enAvdelning.getAvdelningensAnstallda()) {
                 String roll = "";
@@ -400,7 +431,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
                 } else {
                     roll = "Handläggare";
                 }
-                anstalldaMap.put(enAnstalld.getAnstallningsID(),enAnstalld);
+                this.anstalldaMap.put(enAnstalld.getAnstallningsID(), enAnstalld);
                 tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(),
                     enAnstalld.getFullNamn(),
                     roll,
@@ -447,6 +478,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBytRoll;
     private javax.swing.JButton btnLaggTillAnstalld;
     private javax.swing.JButton btnTaBortAnstalld;
     private javax.swing.JButton btnTillbaka;
