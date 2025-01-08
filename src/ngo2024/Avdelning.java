@@ -188,7 +188,7 @@ public class Avdelning {
         Iterator<Anvandare> it = anstallda.iterator();
         while (it.hasNext()) {
             Anvandare enAnstalld = it.next();
-            if (enAnstalld.getAvdelningsID().equals(anstallningsID)) {
+            if (enAnstalld.getAnstallningsID().equals(anstallningsID)) {
                 anstallda.remove(enAnstalld);
                 return true;
             }
@@ -260,16 +260,17 @@ public class Avdelning {
             if (handlaggareAid.contains(aid)) {
                 handlaggare = true;
             }
-            avdelningensAnstallda.add(new Anvandare(idb, aid, enAnstalld, admin, handlaggare));
+            avdelningensAnstallda.add(new Anvandare(idb, enAnstalld, admin, handlaggare));
         }
         anstallda = avdelningensAnstallda;
     }
 
-    public boolean updateUppgifter(String namn, String beskrivning, String adress, String epost, String telefon, String chefId) {
+    public boolean updateUppgifter(String namn, String beskrivning, String adress, String stadId, String epost, String telefon, String chefId) {
         String sqlFraga = "UPDATE avdelning SET "
                 + "namn = '" + namn + "', "
                 + "beskrivning = '" + beskrivning + "', "
                 + "adress = '" + adress + "', "
+                + "stad = " + stadId + ", "
                 + "epost = '" + epost + "', "
                 + "telefon = '" + telefon + "', "
                 + "chef = " + chefId + " "
@@ -281,6 +282,7 @@ public class Avdelning {
             this.namn = namn;
             this.beskrivning = beskrivning;
             this.adress = adress;
+            this.stad = new Stad(stadId,idb);
             this.epost = epost;
             this.telefonnummer = telefon;
             this.chefID = chefId;

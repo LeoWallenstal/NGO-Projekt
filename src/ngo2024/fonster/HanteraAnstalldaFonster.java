@@ -4,8 +4,17 @@
  */
 package ngo2024.fonster;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
 import oru.inf.InfDB;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,6 +24,10 @@ import ngo2024.Avdelning;
 import ngo2024.AnvandarRegister;
 import oru.inf.InfException;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import ngo2024.AvdelningsRegister;
 
 /**
  *
@@ -24,10 +37,13 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private AvdelningsRegister avdelningsRegister;
+
     private boolean taBort;
     private DefaultTableModel tabell;
     private AnvandarRegister anstallda;
-    private Avdelning enAvdelning;
+    private JPanel glassPaneOverlay;    
+    private HashMap<String,Anvandare> anstalldaMap;
 
     /**
      * Creates new form HanteraAnstallda
@@ -35,15 +51,17 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     public HanteraAnstalldaFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        avdelningsRegister = new AvdelningsRegister(idb);
+        anstalldaMap = new HashMap<>();
         taBort = false;
         anstallda = new AnvandarRegister(idb);
-        enAvdelning = null;
         initComponents();
         tabell = (DefaultTableModel) tblAnstallda.getModel();
         setLocationRelativeTo(null);
         visaAnstallda();
         tblAnstallda.setDefaultEditor(Object.class, null);
         setWindowSize();
+        initGlassPane();
         lblInfoTaBort.setVisible(false);
     }
 
@@ -149,7 +167,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setWindowSize(){
+    private void setWindowSize() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int windowWidth = (int) (screenSize.width * 0.75);
         int windowHeight = (int) (screenSize.height * 0.75);
@@ -158,7 +176,178 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         setBounds(x, y, windowWidth, windowHeight);
         setLocationRelativeTo(null);
     }
-    
+
+    private void initGlassPane() {
+        glassPaneOverlay = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                Graphics2D g2d = (Graphics2D) g.create();
+
+                // Rita halvgenomskinlig svart överlagring
+                g2d.setColor(new Color(0, 0, 0, 150));
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+
+                // Exkludera jScrollPane1
+                paintExcludedComponent(g2d, jScrollPane1);
+                g2d.dispose();
+            }
+
+            private void paintExcludedComponent(Graphics2D g2d, JComponent komponent) {
+                // Spara aktuellt tillstånd
+                Graphics2D gCopy = (Graphics2D) g2d.create();
+
+                // Hämta komponentens position och bounds
+                Point komponentPlats = SwingUtilities.convertPoint(komponent.getParent(), komponent.getLocation(), this);
+
+                // Översätt grafikens kontext till komponentens position
+                gCopy.translate(komponentPlats.x, komponentPlats.y);
+
+                // Måla komponenten
+                komponent.paint(gCopy);
+
+                // Återställ grafikens kontext
+                gCopy.dispose();
+            }
+        };
+
+        // Säkerställ att glaspanelen är transparent
+        glassPaneOverlay.setOpaque(false);
+
+        // Vidarebefordra mus- och mushjulshändelser till exkluderade komponenter
+        glassPaneOverlay.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+        });
+
+        glassPaneOverlay.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                vidarebefordraMusHandelse(e);
+            }
+        });
+
+        glassPaneOverlay.addMouseWheelListener(e -> vidarebefordraMusHjulHandelse(e));
+
+        setGlassPane(glassPaneOverlay);
+    }
+
+    private void vidarebefordraMusHandelse(MouseEvent e) {
+        // Lista över exkluderade komponenter
+        JComponent[] exkluderadeKomponenter = {jScrollPane1};
+
+        for (JComponent komponent : exkluderadeKomponenter) {
+            if (komponent != null && komponent.isVisible()) {
+                // Hämta komponentens bounds och position
+                Rectangle komponentBounds = komponent.getBounds();
+                Point komponentPlats = SwingUtilities.convertPoint(komponent.getParent(), komponent.getLocation(), glassPaneOverlay);
+                komponentBounds.setLocation(komponentPlats);
+
+                if (komponentBounds.contains(e.getPoint())) {
+                    // Översätt musens händelse till komponentens koordinater
+                    Point översattPunkt = SwingUtilities.convertPoint(glassPaneOverlay, e.getPoint(), komponent);
+
+                    // Vidarebefordra händelsen
+                    MouseEvent nyHandelse = new MouseEvent(
+                            komponent,
+                            e.getID(),
+                            e.getWhen(),
+                            e.getModifiersEx(),
+                            översattPunkt.x,
+                            översattPunkt.y,
+                            e.getClickCount(),
+                            e.isPopupTrigger(),
+                            e.getButton()
+                    );
+
+                    komponent.dispatchEvent(nyHandelse);
+
+                    // Hantera radval om JTable är i JScrollPane
+                    if (komponent == jScrollPane1 && e.getID() == MouseEvent.MOUSE_CLICKED) {
+                        // Översätt punkt till JTable-koordinater
+                        Point tabellPunkt = SwingUtilities.convertPoint(glassPaneOverlay, e.getPoint(), tblAnstallda);
+                        int valdRad = tblAnstallda.rowAtPoint(tabellPunkt);
+
+                        if (valdRad != -1) {
+                            // Säkerställ rätt kolumnindex (t.ex. 0 för namn)
+                            if (taBort) {
+                                if (valdRad >= 0 && valdRad < tblAnstallda.getRowCount()) {
+
+                                    // Hämta värdet från den första kolumnen (aid)
+                                    String aid = tblAnstallda.getValueAt(valdRad, 0).toString();
+
+                                    // Skapa och öppna ett nytt fönster som skickar med aid
+                                    new VarningJaNejFonster(anstalldaMap.get(aid), this).setVisible(true);
+                                }
+                            }
+                        }
+                    }
+
+                    return; // Sluta efter att händelsen skickats till första matchande komponent
+                }
+            }
+        }
+
+        // Om händelsen är utanför alla exkluderade komponenter
+        if (e.getID() == MouseEvent.MOUSE_CLICKED) {
+            glassPaneOverlay.setVisible(false);
+            btnTaBortAnstalld.setEnabled(true);
+            lblInfoTaBort.setVisible(false);
+        }
+    }
+
+    private void vidarebefordraMusHjulHandelse(MouseWheelEvent e) {
+        // Lista över exkluderade komponenter (fokusera på jScrollPane1 för scrollning)
+        JComponent[] exkluderadeKomponenter = {jScrollPane1};
+
+        for (JComponent komponent : exkluderadeKomponenter) {
+            // Hämta komponentens bounds och position
+            Rectangle komponentBounds = komponent.getBounds();
+            Point komponentPlats = SwingUtilities.convertPoint(komponent.getParent(), komponent.getLocation(), glassPaneOverlay);
+            komponentBounds.setLocation(komponentPlats);
+
+            // Kontrollera om mushjulseventet är inom komponentens bounds
+            if (komponentBounds.contains(e.getPoint())) {
+                // Översätt mushjulsevent till komponentens koordinater
+                MouseWheelEvent nyHandelse = new MouseWheelEvent(
+                        komponent,
+                        e.getID(),
+                        e.getWhen(),
+                        e.getModifiersEx(),
+                        e.getX() - komponentPlats.x,
+                        e.getY() - komponentPlats.y,
+                        e.getClickCount(),
+                        e.isPopupTrigger(),
+                        e.getScrollType(),
+                        e.getScrollAmount(),
+                        e.getWheelRotation()
+                );
+
+                // Skicka händelsen till komponenten
+                komponent.dispatchEvent(nyHandelse);
+                return; // Sluta efter att händelsen skickats till första matchande komponent
+            }
+        }
+    }
+
     private void btnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAnstalldActionPerformed
         new RegistreraAnstalldFonster(idb, inloggadAnvandare, this).setVisible(true);
     }//GEN-LAST:event_btnLaggTillAnstalldActionPerformed
@@ -168,61 +357,56 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
-    public void reset(){
+    public void reset() {
+        glassPaneOverlay.setVisible(false);
         btnTaBortAnstalld.setEnabled(true);
         lblInfoTaBort.setVisible(false);
         taBort = false;
-        tabell.getDataVector().clear();
+        tabell.setRowCount(0);
         tblAnstallda.repaint();
     }
-    
+
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
         this.taBort = true;
         btnTaBortAnstalld.setEnabled(false);
         lblInfoTaBort.setVisible(true);
+        glassPaneOverlay.setVisible(true);
+        glassPaneOverlay.revalidate();
+        glassPaneOverlay.repaint();
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
     private void tblAnstalldaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnstalldaMouseClicked
         // Hämta raden som är vald när musen klickar
-        if(taBort){
-            int rad = tblAnstallda.rowAtPoint(evt.getPoint());
-                // Om rad är vald (inte -1) och är inom tabellens intervall
-                if (rad >= 0 && rad < tblAnstallda.getRowCount()) {
-
-                // Hämta värdet från den första kolumnen (aid)
-                String aid = tblAnstallda.getValueAt(rad, 0).toString();
-
-                Anvandare anvandareAttTaBort = new Anvandare(idb, aid);
-
-                // Skapa och öppna ett nytt fönster som skickar med aid
-                new VarningJaNejFonster(anvandareAttTaBort, this).setVisible(true);
-            }
-        }
     }//GEN-LAST:event_tblAnstalldaMouseClicked
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        visaAnstallda();
+
     }//GEN-LAST:event_formWindowGainedFocus
 
-
-    public void visaAnstallda(){
-        tabell.getDataVector().clear();
+   public void deleteAnstalld(Anvandare anvandareTaBort){
+            System.out.println(avdelningsRegister.getAvdelningFranId(anvandareTaBort.getAvdelningsID()).removeAnstalld(anvandareTaBort.getAnstallningsID()));
+            anvandareTaBort.deleteAnvandareDb();
+            reset();
+            visaAnstallda();
+   }
+    
+    public void visaAnstallda() {
         tblAnstallda.repaint();
-        
-        for(Anvandare enAnstalld: anstallda.getAllaAnstallda()){
-         String roll = "";
-            if(enAnstalld.isAdmin()){
-                roll = "Administratör";
+        for (Avdelning enAvdelning : avdelningsRegister.getLista()) {
+            for (Anvandare enAnstalld : enAvdelning.getAvdelningensAnstallda()) {
+                String roll = "";
+                if (enAnstalld.isAdmin()) {
+                    roll = "Administratör";
+                } else {
+                    roll = "Handläggare";
+                }
+                anstalldaMap.put(enAnstalld.getAnstallningsID(),enAnstalld);
+                tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(),
+                    enAnstalld.getFullNamn(),
+                    roll,
+                    enAvdelning.getNamn()
+                });
             }
-            else{
-                roll = "Handläggare";
-            }
-            
-               tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(), 
-                                           enAnstalld.getFullNamn(), 
-                                           roll, 
-                                           enAnstalld.getAvdelningsNamn()
-                                           });
         }
     }
 

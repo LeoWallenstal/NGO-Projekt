@@ -222,7 +222,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="0" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Kan endast inneh&#xe5;lla bokst&#xe4;ver!"/>
+        <Property name="text" type="java.lang.String" value="Ange: FORNAMN EFTERNAMN!"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTelefonFelM">

@@ -120,7 +120,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
         lblAdressFelM.setText("Adressen måste innehålla minst en bokstav & en siffra!");
 
         lblKontaktPersonFelM.setForeground(new java.awt.Color(255, 0, 51));
-        lblKontaktPersonFelM.setText("Kan endast innehålla bokstäver!");
+        lblKontaktPersonFelM.setText("Ange: FORNAMN EFTERNAMN!");
 
         lblTelefonFelM.setForeground(new java.awt.Color(255, 0, 51));
         lblTelefonFelM.setText("Telefonnummer kan endast innehålla siffror, bindestreck och det kan börja med +!");
@@ -331,7 +331,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
                 lblStadFelM.setVisible(true);
             }
         
-            if(!Validerare.arBokstaver(kontaktpersonNamn)){
+            if(!Validerare.formatNamnOK(kontaktpersonNamn)){
                 formatKorrekt = false;
                 lblKontaktPersonFelM.setVisible(true);
             }

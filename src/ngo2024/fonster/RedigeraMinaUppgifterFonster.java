@@ -349,11 +349,11 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         lblAdressFelM.setVisible(false);   
         lblEpostFelM.setVisible(false);  
         
-        if(!Validerare.arBokstaver(tfFornamn.getText())){
+        if(!Validerare.formatEnkeltNamnOK(tfFornamn.getText())){
             formatKorrekt = false;
             lblFornamnFelM.setVisible(true);
         }
-        if(!Validerare.arBokstaver(tfEfternamn.getText())){
+        if(!Validerare.formatEnkeltNamnOK(tfEfternamn.getText())){
             formatKorrekt = false;
             lblEfternamnFelM.setVisible(true);
         }
@@ -407,7 +407,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         if(harOsparadeAndringar()){
-            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Mina Uppgifter").setVisible(true);
+            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Mina Uppgifter", this).setVisible(true);
         }
         else {
             this.setVisible(false);
