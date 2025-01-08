@@ -636,7 +636,8 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private void tillbakaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillbakaButtonMouseClicked
         //Om sparaknappen är enabled har man osparade ändringar.
         if(sparaBtn.isEnabled()){
-            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Projekt").setVisible(true);
+            //new OsparadeAndringarFonster(idb, inloggadAnvandare, "Projekt").setVisible(true);
+            //nånting nånting osparade ändringar...
         }
         else{
             this.setVisible(false);
