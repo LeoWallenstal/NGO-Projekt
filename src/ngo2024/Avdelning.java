@@ -188,7 +188,7 @@ public class Avdelning {
         Iterator<Anvandare> it = anstallda.iterator();
         while (it.hasNext()) {
             Anvandare enAnstalld = it.next();
-            if (enAnstalld.getAvdelningsID().equals(anstallningsID)) {
+            if (enAnstalld.getAnstallningsID().equals(anstallningsID)) {
                 anstallda.remove(enAnstalld);
                 return true;
             }
