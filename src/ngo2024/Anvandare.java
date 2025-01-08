@@ -217,12 +217,12 @@ public class Anvandare {
     
     public void deleteAnvandareDb(){
         try{
-            idb.delete("DELETE FROM ans_proj WHERE aid = " + this.getAnstallningsID());
             idb.update("UPDATE projekt SET projektchef = NULL WHERE projektchef = " + this.getAnstallningsID());
             idb.update("UPDATE handlaggare SET mentor = NULL WHERE mentor = " + this.getAnstallningsID());
+            idb.update("UPDATE avdelning SET chef = NULL WHERE chef = " + this.getAnstallningsID());
+            idb.delete("DELETE FROM ans_proj WHERE aid = " + this.getAnstallningsID());
             idb.delete("DELETE FROM handlaggare WHERE aid = " + this.getAnstallningsID());
             idb.delete("DELETE FROM admin WHERE aid = " + this.getAnstallningsID()); 
-            idb.update("UPDATE avdelning SET chef = NULL WHERE chef = " + this.getAnstallningsID());
             idb.delete("DELETE FROM anstalld WHERE aid = " + this.getAnstallningsID());
             } 
             catch (InfException ex) {
