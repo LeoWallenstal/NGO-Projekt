@@ -50,7 +50,7 @@ public class AvdelningsRegister {
         avdelningMap.clear();
     }
     
-    public HashMap<String,Avdelning> getLista(){
-        return avdelningMap;
+    public ArrayList<Avdelning> getLista(){
+        return new ArrayList<>(avdelningMap.values());
     }
 }
