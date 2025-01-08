@@ -24,7 +24,7 @@ public class AvdelningsRegister {
         hamtaAllaAvdelningar();
     }
     
-    public void hamtaAllaAvdelningar(){
+    public final void hamtaAllaAvdelningar(){
         this.tomLista();
         ArrayList<HashMap<String, String>> avdelningLista = new ArrayList<>();
         
