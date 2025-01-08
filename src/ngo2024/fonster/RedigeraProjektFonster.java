@@ -22,38 +22,52 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
      * Creates new form RedigeraProjektFonster
      */
     
-    private ArrayList<Anvandare> handlaggare;
+    private ArrayList<Anvandare> projektetsHandlaggare;
+    private ArrayList<Anvandare> avdelningensHandlaggare;
     private ArrayList<Partner> projektetsPartners;
+    
+    private Anvandare valdProjektchef;
+    
     private AnvandarRegister anvandarregister;
     private PartnerRegister partnerregister;
+    
     private final Projekt attRedigera;
-    private final ProjektInfoFonster forraFonstret;
+    private final ProjektFonster forstaFonstret;
+    private ProjektInfoFonster forraFonstret;
     private final Anvandare inloggadAnvandare;
     private final InfDB idb;
     
     
     
     public RedigeraProjektFonster(Anvandare inloggadAnvandare, Projekt attRedigera,
-            ProjektInfoFonster forraFonstret, InfDB idb)    
+            ProjektInfoFonster forraFonstret, ProjektFonster forstaFonstret, InfDB idb)    
     {
         initComponents();
-        //this.setSize(forraFonstret.getSize());
-        this.setLocationRelativeTo(forraFonstret);
+        andringarSparadeLbl.setVisible(false);
+        this.setLocationRelativeTo(null);
+        this.forstaFonstret = forstaFonstret;
         this.forraFonstret = forraFonstret;
         
         this.idb = idb;
         anvandarregister = new AnvandarRegister(idb);
+        anvandarregister.hamtaAvdelningensAnvandare(attRedigera.getProjektchef().getAvdelningsID());
+        
         partnerregister = new PartnerRegister(idb);
-        handlaggare = new ArrayList<>();
         this.inloggadAnvandare = inloggadAnvandare;
         this.attRedigera = attRedigera;
         this.projektetsPartners = attRedigera.getPartners();
+        this.projektetsHandlaggare = attRedigera.getHandlaggare();
+        this.avdelningensHandlaggare = getAvdelningensHandlaggare();
+        valdProjektchef = attRedigera.getProjektchef();
         initProjektchefCB();
+        
+        
         initTillgangligaPartners();
         visaTillgangligaPartners();
+        visaTillgangligaHandlaggare();
+        initFalt();  
         
-        initFalt();
-        
+            
     }
 
     /**
@@ -86,11 +100,20 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         sparaBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tillgangligaPartnersList = new javax.swing.JList<>();
-        laggTillBtn = new javax.swing.JButton();
-        taBortBtn = new javax.swing.JButton();
+        laggTillPartnerBtn = new javax.swing.JButton();
+        taBortPartnerBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         slutdatumInput = new javax.swing.JTextField();
+        andringarSparadeLbl = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        projektetsHandlaggareList = new javax.swing.JList<>();
+        pHandlaggareLbl = new javax.swing.JLabel();
+        laggTillHandlaggareBtn = new javax.swing.JButton();
+        taBortHandlaggareBtn = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tillgangligaHandlaggareList = new javax.swing.JList<>();
+        tillgangligaHandlaggareLbl = new javax.swing.JLabel();
 
         setTitle("SDG Sweden - Redigera projekt");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
@@ -104,6 +127,11 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         });
 
         tillbakaButton.setText("Tillbaka");
+        tillbakaButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tillbakaButtonMouseClicked(evt);
+            }
+        });
         tillbakaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tillbakaButtonActionPerformed(evt);
@@ -181,6 +209,11 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
 
         sparaBtn.setText("Spara");
         sparaBtn.setEnabled(false);
+        sparaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sparaBtnMouseClicked(evt);
+            }
+        });
 
         tillgangligaPartnersList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -189,19 +222,19 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tillgangligaPartnersList);
 
-        laggTillBtn.setText("Lägg till");
-        laggTillBtn.setEnabled(false);
-        laggTillBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        laggTillPartnerBtn.setText("Lägg till");
+        laggTillPartnerBtn.setEnabled(false);
+        laggTillPartnerBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                laggTillBtnMouseClicked(evt);
+                laggTillPartnerBtnMouseClicked(evt);
             }
         });
 
-        taBortBtn.setText("Ta bort");
-        taBortBtn.setEnabled(false);
-        taBortBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        taBortPartnerBtn.setText("Ta bort");
+        taBortPartnerBtn.setEnabled(false);
+        taBortPartnerBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                taBortBtnMouseClicked(evt);
+                taBortPartnerBtnMouseClicked(evt);
             }
         });
 
@@ -215,6 +248,45 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 slutdatumInputKeyReleased(evt);
             }
         });
+
+        andringarSparadeLbl.setForeground(new java.awt.Color(51, 255, 51));
+        andringarSparadeLbl.setText("Ändringar sparade!");
+
+        projektetsHandlaggareList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                projektetsHandlaggareListMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(projektetsHandlaggareList);
+
+        pHandlaggareLbl.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        pHandlaggareLbl.setText("Handläggare kopplade till projektet");
+
+        laggTillHandlaggareBtn.setText("Lägg till");
+        laggTillHandlaggareBtn.setEnabled(false);
+        laggTillHandlaggareBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                laggTillHandlaggareBtnMouseClicked(evt);
+            }
+        });
+
+        taBortHandlaggareBtn.setText("Ta bort");
+        taBortHandlaggareBtn.setEnabled(false);
+        taBortHandlaggareBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                taBortHandlaggareBtnMouseClicked(evt);
+            }
+        });
+
+        tillgangligaHandlaggareList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tillgangligaHandlaggareListMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tillgangligaHandlaggareList);
+
+        tillgangligaHandlaggareLbl.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        tillgangligaHandlaggareLbl.setText("Tillgängliga handläggare");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,27 +320,47 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                                             .addComponent(prioritetCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(beskrivningInput)
                                             .addComponent(startdatumInput)
-                                            .addComponent(projektchefCB, 0, 140, Short.MAX_VALUE)
-                                            .addComponent(slutdatumInput)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(laggTillBtn)
-                                            .addComponent(taBortBtn))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 34, Short.MAX_VALUE)))
+                                            .addComponent(projektchefCB, 0, 140, Short.MAX_VALUE))))
+                                .addGap(0, 297, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(partnerLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(92, 92, 92))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(34, 34, 34)
+                                .addComponent(slutdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(andringarSparadeLbl))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(laggTillPartnerBtn)
+                                    .addComponent(taBortPartnerBtn))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(laggTillHandlaggareBtn)
+                                    .addComponent(taBortHandlaggareBtn))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 40, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(partnerLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addGap(92, 92, 92))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pHandlaggareLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tillgangligaHandlaggareLbl)
+                                .addGap(78, 78, 78))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,35 +393,60 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startdatumLabel)
                     .addComponent(startdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(slutdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(slutdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(andringarSparadeLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(partnerLbl)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(laggTillBtn)
-                                .addGap(9, 9, 9)
-                                .addComponent(taBortBtn)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tillbakaButton)
-                            .addComponent(sparaBtn)))
+                        .addGap(8, 8, 8)
+                        .addComponent(laggTillPartnerBtn)
+                        .addGap(9, 9, 9)
+                        .addComponent(taBortPartnerBtn))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pHandlaggareLbl)
+                    .addComponent(tillgangligaHandlaggareLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(laggTillHandlaggareBtn)
+                        .addGap(9, 9, 9)
+                        .addComponent(taBortHandlaggareBtn))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tillbakaButton)
+                    .addComponent(sparaBtn))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private ArrayList<Anvandare> getAvdelningensHandlaggare(){
+        ArrayList<Anvandare> avdelningensHandlaggare = new ArrayList<>();
+        for(Anvandare enAnstalld : anvandarregister.getLista()){
+            if(enAnstalld.isHandlaggare()){
+                if(!attRedigera.harHandlaggare(enAnstalld.getAnstallningsID()))
+                {
+                    avdelningensHandlaggare.add(enAnstalld);
+                }
+            }
+        }
+        return avdelningensHandlaggare;
+    }
+    
     private void tillbakaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tillbakaButtonActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_tillbakaButtonActionPerformed
@@ -337,42 +454,65 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         projektetsPartnersList.clearSelection();
         tillgangligaPartnersList.clearSelection();
-        laggTillBtn.setEnabled(false);
-        taBortBtn.setEnabled(false);
+        projektetsHandlaggareList.clearSelection();
+        tillgangligaHandlaggareList.clearSelection();
+        
+        laggTillPartnerBtn.setEnabled(false);
+        taBortPartnerBtn.setEnabled(false);
+        laggTillHandlaggareBtn.setEnabled(false);
+        taBortHandlaggareBtn.setEnabled(false);
     }//GEN-LAST:event_formMouseClicked
 
     private void projektetsPartnersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projektetsPartnersListMouseClicked
-        taBortBtn.setEnabled(true);
-        laggTillBtn.setEnabled(false);
+        taBortPartnerBtn.setEnabled(true);
+        laggTillPartnerBtn.setEnabled(false);
     }//GEN-LAST:event_projektetsPartnersListMouseClicked
 
     private void tillgangligaPartnersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillgangligaPartnersListMouseClicked
-        laggTillBtn.setEnabled(true);
-        taBortBtn.setEnabled(false);
+        laggTillPartnerBtn.setEnabled(true);
+        taBortPartnerBtn.setEnabled(false);
     }//GEN-LAST:event_tillgangligaPartnersListMouseClicked
 
-    private void laggTillBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillBtnMouseClicked
-        if(projektetsPartners.isEmpty()){
+    private void laggTillPartnerBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillPartnerBtnMouseClicked
+        if(!projektetsPartners.isEmpty()){
             projektetsPartnersList.setEnabled(true);
         }
+        
         int i = tillgangligaPartnersList.getSelectedIndex();
         projektetsPartners.add(partnerregister.get(i));
         partnerregister.remove(i);
-        refreshaListor();
-    }//GEN-LAST:event_laggTillBtnMouseClicked
+        refreshaPartnerListor();
+        
+        if(!attRedigera.partnersEquals(projektetsPartners)){
+            sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);   
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_laggTillPartnerBtnMouseClicked
 
-    private void taBortBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortBtnMouseClicked
+    private void taBortPartnerBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortPartnerBtnMouseClicked
         int i = projektetsPartnersList.getSelectedIndex();
         partnerregister.add(projektetsPartners.get(i));
         projektetsPartners.remove(i);
-        refreshaListor();
-    }//GEN-LAST:event_taBortBtnMouseClicked
+        refreshaPartnerListor();
+        
+        if(!attRedigera.partnersEquals(projektetsPartners)){
+            sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_taBortPartnerBtnMouseClicked
 
     private void projektnamnInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_projektnamnInputKeyReleased
         if(!projektnamnInput.getText().isEmpty() && 
                 !projektnamnInput.getText().equals(attRedigera.getNamn()))
         {
             sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
         }
         else{
             sparaBtn.setEnabled(false);
@@ -384,6 +524,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 !beskrivningInput.getText().equals(attRedigera.getBeskrivning()))
         {
             sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
         }
         else{
             sparaBtn.setEnabled(false);
@@ -393,6 +534,13 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private void projektchefCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projektchefCBActionPerformed
         if(!projektchefCB.getSelectedItem().equals(attRedigera.getProjektchef().getFullNamn())){
             sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
+            
+//            int i = projektchefCB.getSelectedIndex();
+//            projektetsHandlaggare.add(valdProjektchef);
+//            valdProjektchef = projektetsHandlaggare.get(i);
+//            projektetsHandlaggare.remove(i);
+//            refreshaHandlaggareListor();
         }
         else{
             sparaBtn.setEnabled(false);
@@ -402,6 +550,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private void prioritetCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prioritetCBActionPerformed
         if(!prioritetCB.getSelectedItem().equals(attRedigera.getPrioritet())){
             sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
         }
         else{
             sparaBtn.setEnabled(false);
@@ -411,6 +560,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private void statusCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusCBActionPerformed
         if(!statusCB.getSelectedItem().equals(attRedigera.getStatus())){
             sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
         }
         else{
             sparaBtn.setEnabled(false);
@@ -422,6 +572,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 !kostnadInput.getText().equals(attRedigera.getKostnad()))
         {
             sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
         }
         else{
             sparaBtn.setEnabled(false);
@@ -433,6 +584,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 !startdatumInput.getText().equals(attRedigera.getStartdatum()))
         {
             sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
         }
         else{
             sparaBtn.setEnabled(false);
@@ -444,31 +596,111 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 !slutdatumInput.getText().equals(attRedigera.getSlutdatum()))
         {
             sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
         }
         else{
             sparaBtn.setEnabled(false);
         }
     }//GEN-LAST:event_slutdatumInputKeyReleased
 
+    private void sparaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sparaBtnMouseClicked
+        attRedigera.setProjektnamn(projektnamnInput.getText());
+        if(projektchefCB.getSelectedItem().equals("Ingen")){
+            attRedigera.setProjektchefsID(null);
+        }
+        else{
+            int i = projektchefCB.getSelectedIndex() - 2;
+            attRedigera.setProjektchefsID(avdelningensHandlaggare.get(i).getAnstallningsID());
+        }
+        attRedigera.setBeskrivning(beskrivningInput.getText());
+        attRedigera.setStartdatum(startdatumInput.getText());
+        attRedigera.setSlutdatum(slutdatumInput.getText());
+        attRedigera.setKostnad(kostnadInput.getText());
+        attRedigera.setStatus((String)statusCB.getSelectedItem());
+        attRedigera.setPrioritet((String)prioritetCB.getSelectedItem());
+        System.out.println("innan setPartner()");
+        attRedigera.setPartners(projektetsPartners);
+        System.out.println("625");
+        attRedigera.setHandlaggare(projektetsHandlaggare);
+        //Inte kunna ändra land... eller??
+        attRedigera.updateProjektDB();
+        andringarSparadeLbl.setVisible(true);
+        sparaBtn.setEnabled(false);
+        
+        forraFonstret.refreshProjektInfo();
+        forstaFonstret.visaData();
+        
+        System.out.println(attRedigera);
+    }//GEN-LAST:event_sparaBtnMouseClicked
+
+    private void tillbakaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillbakaButtonMouseClicked
+        //Om sparaknappen är enabled har man osparade ändringar.
+        if(sparaBtn.isEnabled()){
+            //new OsparadeAndringarFonster(idb, inloggadAnvandare, "Projekt").setVisible(true);
+            //nånting nånting osparade ändringar...
+        }
+        else{
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_tillbakaButtonMouseClicked
+
+    private void laggTillHandlaggareBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillHandlaggareBtnMouseClicked
+        if(!projektetsHandlaggare.isEmpty()){
+            projektetsHandlaggareList.setEnabled(true);
+        }
+        
+        int i = tillgangligaHandlaggareList.getSelectedIndex();
+        projektetsHandlaggare.add(avdelningensHandlaggare.get(i));
+        avdelningensHandlaggare.remove(i);
+        refreshaHandlaggareListor();
+        
+        if(!attRedigera.handlaggareEquals(projektetsHandlaggare)){
+            sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);   
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_laggTillHandlaggareBtnMouseClicked
+
+    private void taBortHandlaggareBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortHandlaggareBtnMouseClicked
+        int i = projektetsHandlaggareList.getSelectedIndex();
+        avdelningensHandlaggare.add(projektetsHandlaggare.get(i));
+        projektetsHandlaggare.remove(i);
+        refreshaHandlaggareListor();
+        
+        if(!attRedigera.handlaggareEquals(projektetsHandlaggare)){
+            sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
+        }
+        else{
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_taBortHandlaggareBtnMouseClicked
+
+    private void projektetsHandlaggareListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projektetsHandlaggareListMouseClicked
+        taBortHandlaggareBtn.setEnabled(true);
+        laggTillHandlaggareBtn.setEnabled(false);
+    }//GEN-LAST:event_projektetsHandlaggareListMouseClicked
+
+    private void tillgangligaHandlaggareListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillgangligaHandlaggareListMouseClicked
+        laggTillHandlaggareBtn.setEnabled(true);
+        taBortHandlaggareBtn.setEnabled(false);
+    }//GEN-LAST:event_tillgangligaHandlaggareListMouseClicked
+
     private void initProjektchefCB(){
         projektchefCB.addItem("Ingen");
         
-        anvandarregister.hamtaAvdelningensAnvandare(attRedigera.getProjektchef().getAvdelningsID());
-        
-        for(Anvandare enAnvandare : anvandarregister.getLista()){
-            if(enAnvandare.isHandlaggare()){
-                projektchefCB.addItem(enAnvandare.getFullNamn());
-                handlaggare.add(enAnvandare);
-            }
+        for(Anvandare enAnvandare : avdelningensHandlaggare){
+            projektchefCB.addItem(enAnvandare.getFullNamn());
         }
-        projektchefCB.setSelectedIndex(0);
     }
     
     private int getProjektchefIndex(){
         String projektchef = attRedigera.getProjektchef().getFullNamn();
         
-        for(int i = 0; i<handlaggare.size(); i++){
-            if(handlaggare.get(i).getFullNamn().equals(projektchef)){
+        for(int i = 0; i<avdelningensHandlaggare.size(); i++){
+            if(avdelningensHandlaggare.get(i).getFullNamn().equals(projektchef)){
                 return i;
             }
         }
@@ -526,16 +758,26 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         tillgangligaPartnersList.setModel(listModell);
     }
     
+    
+    private void visaTillgangligaHandlaggare(){
+        DefaultListModel<String> listModell = new DefaultListModel<>();
+        for(Anvandare enHandlaggare : avdelningensHandlaggare){
+            listModell.addElement(enHandlaggare.getFullNamn());
+        }
+        tillgangligaHandlaggareList.setModel(listModell);
+    }
+    
     private void initFalt(){
         projektnamnInput.setText(attRedigera.getNamn());
         beskrivningInput.setText(attRedigera.getBeskrivning());
-        projektchefCB.setSelectedIndex(getProjektchefIndex() + 2); //För att skippa "välj" och "ingen"
+        projektchefCB.setSelectedIndex(getProjektchefIndex() + 2); // + 2 För att skippa "välj" och "ingen"
         prioritetCB.setSelectedIndex(getPrioritetIndex());
         statusCB.setSelectedIndex(getStatusIndex());
         kostnadInput.setText(attRedigera.getKostnad());
         startdatumInput.setText(attRedigera.getStartdatum());
         slutdatumInput.setText(attRedigera.getSlutdatum());
         initProjektetsPartnerLista();
+        initProjektetsHandlaggareLista();
     }
     
     private void initProjektetsPartnerLista(){
@@ -552,20 +794,33 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         projektetsPartnersList.setModel(listModell);
     }
     
-    private void rensaListor(){
+    private void initProjektetsHandlaggareLista(){
+        DefaultListModel<String> listModell = new DefaultListModel<>();
+        if(attRedigera.getPartnersID().isEmpty()){
+            projektetsHandlaggareList.setEnabled(false);
+            listModell.addElement("Inga handläggare kopplade till projektet.");
+        }
+        else{
+            for(Anvandare enHandlaggare : attRedigera.getHandlaggare()){
+                listModell.addElement(enHandlaggare.getFullNamn());
+            }
+        }
+        projektetsHandlaggareList.setModel(listModell);
+    }
+    
+    private void rensaPartnerListor(){
         //Tar bort datan
         projektetsPartnersList.setModel(new DefaultListModel<>());
         tillgangligaPartnersList.setModel(new DefaultListModel<>());
         //Tar bort datan från fönstret också.
         projektetsPartnersList.repaint();
         tillgangligaPartnersList.repaint();
-        
     };
     
-    private void refreshaListor(){
-        rensaListor();
+    private void refreshaPartnerListor(){
+        rensaPartnerListor();
         refreshPartnerLista();
-        refreshTillgangligaLista();
+        refreshTillgangligaPartnersLista();
     }
     
     private void refreshPartnerLista(){
@@ -583,7 +838,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         projektetsPartnersList.setModel(listModell);
     }
     
-    private void refreshTillgangligaLista(){
+    private void refreshTillgangligaPartnersLista(){
         
         DefaultListModel<String> listModell = new DefaultListModel<>();
         if(partnerregister.getLista().isEmpty()){
@@ -596,6 +851,49 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
             }
         }
         tillgangligaPartnersList.setModel(listModell);
+    }
+    
+    private void rensaHandlaggareListor(){
+        //Tar bort datan
+        projektetsHandlaggareList.setModel(new DefaultListModel<>());
+        tillgangligaHandlaggareList.setModel(new DefaultListModel<>());
+        //Tar bort datan från fönstret också.
+        projektetsHandlaggareList.repaint();
+        tillgangligaHandlaggareList.repaint();
+    }
+    
+    private void refreshaHandlaggareListor(){
+        rensaHandlaggareListor();
+        refreshHandlaggareLista();
+        refreshTillgangligaHandlaggareLista();
+    }
+    
+    private void refreshHandlaggareLista(){
+        DefaultListModel<String> listModell = new DefaultListModel<>();
+        if(projektetsHandlaggare.isEmpty()){
+            listModell.addElement("Inga partners kopplade till projektet.");
+            projektetsHandlaggareList.setEnabled(false);
+        }
+        else{
+            for(Anvandare enHandlaggare : projektetsHandlaggare){
+                listModell.addElement(enHandlaggare.getFullNamn());
+            }
+        }
+        projektetsHandlaggareList.setModel(listModell);
+    }
+    
+    private void refreshTillgangligaHandlaggareLista(){
+        DefaultListModel<String> listModell = new DefaultListModel<>();
+        if(avdelningensHandlaggare.isEmpty()){
+            tillgangligaHandlaggareList.setEnabled(false);
+            listModell.addElement("");
+        }
+        else{
+            for(Anvandare enHandlaggare : avdelningensHandlaggare){
+                listModell.addElement(enHandlaggare.getFullNamn());
+            }
+        }
+        tillgangligaHandlaggareList.setModel(listModell);
     }
     
     /**
@@ -634,20 +932,26 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel andringarSparadeLbl;
     private javax.swing.JTextField beskrivningInput;
     private javax.swing.JLabel beskrivningLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField kostnadInput;
     private javax.swing.JLabel kostnadLabel;
-    private javax.swing.JButton laggTillBtn;
+    private javax.swing.JButton laggTillHandlaggareBtn;
+    private javax.swing.JButton laggTillPartnerBtn;
+    private javax.swing.JLabel pHandlaggareLbl;
     private javax.swing.JLabel partnerLbl;
     private javax.swing.JComboBox<String> prioritetCB;
     private javax.swing.JLabel prioritetLabel;
     private javax.swing.JComboBox<String> projektchefCB;
     private javax.swing.JLabel projektchefLabel;
+    private javax.swing.JList<String> projektetsHandlaggareList;
     private javax.swing.JList<String> projektetsPartnersList;
     private javax.swing.JTextField projektnamnInput;
     private javax.swing.JLabel projektnamnLabel;
@@ -657,8 +961,11 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private javax.swing.JLabel startdatumLabel;
     private javax.swing.JComboBox<String> statusCB;
     private javax.swing.JLabel statusLabel;
-    private javax.swing.JButton taBortBtn;
+    private javax.swing.JButton taBortHandlaggareBtn;
+    private javax.swing.JButton taBortPartnerBtn;
     private javax.swing.JButton tillbakaButton;
+    private javax.swing.JLabel tillgangligaHandlaggareLbl;
+    private javax.swing.JList<String> tillgangligaHandlaggareList;
     private javax.swing.JList<String> tillgangligaPartnersList;
     // End of variables declaration//GEN-END:variables
 }

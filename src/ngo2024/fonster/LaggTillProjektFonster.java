@@ -410,11 +410,11 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         }
         
         //Partners
-        ArrayList <String> valdaPartners = sparaPartners();
+        ArrayList <Partner> valdaPartners = sparaPartners();
         
         partnerregister.hamtaAllaPartners();
-        for(String ettPartnerID : valdaPartners){
-            if(!partnerregister.harID(ettPartnerID)){
+        for(Partner enPartner : valdaPartners){
+            if(!partnerregister.harID(enPartner.getPartnerID())){
                 projektOK = false;
             }
         }
@@ -489,12 +489,12 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         landError.setVisible(false);
     }
     
-    private ArrayList<String> sparaPartners(){
+    private ArrayList<Partner> sparaPartners(){
         int[] partnerIndex = partnerList.getSelectedIndices();
-        ArrayList<String> valdaPartners = new ArrayList<>();
+        ArrayList<Partner> valdaPartners = new ArrayList<>();
         
         for(int i = 0; i < partnerIndex.length; i++){
-            valdaPartners.add(partnerregister.get(partnerIndex[i]).getPartnerID());
+            valdaPartners.add(partnerregister.get(partnerIndex[i]));
         }   
         return valdaPartners;
     }
