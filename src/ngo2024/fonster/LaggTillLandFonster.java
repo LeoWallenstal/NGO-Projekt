@@ -271,7 +271,6 @@ public class LaggTillLandFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
-        //lägga till validerare som kollar format
         doljFelMeddelanden();
         
         boolean formatKorrekt = true;

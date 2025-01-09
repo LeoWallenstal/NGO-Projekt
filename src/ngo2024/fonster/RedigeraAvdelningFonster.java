@@ -63,17 +63,6 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         vy = "Alla";
         setLocationRelativeTo(null);
         doljFelMeddelanden();
-        
-        //Försök till att ta bort linjerna runt TextArean
-        //JScrollPane scrollPane = new JScrollPane(taFelMNamn);
-        //scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        //taFelMNamn.setBorder(BorderFactory.createEmptyBorder());
-        //scrollPane.setBorder();
-        
-        //taFelMNamn.setOpaque(false);
-        //UIManager.put("taFelMNamn.border", BorderFactory.createEmptyBorder());
-        //SwingUtilities.updateComponentTreeUI(taFelMNamn);
-        //taFelMNamn.repaint();
     }
 
     private void doljFelMeddelanden(){
@@ -396,10 +385,10 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         btnSpara = new javax.swing.JButton();
         btnAterstall = new javax.swing.JButton();
         cbStad = new javax.swing.JComboBox<>();
-        lblFelMEpost = new javax.swing.JLabel();
         lblFelMTelefon = new javax.swing.JLabel();
         lblFelMTomt = new javax.swing.JLabel();
         taFelMNamn = new javax.swing.JTextArea();
+        lblFelMEpost = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Redigera avdelning");
@@ -593,9 +582,6 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
             }
         });
 
-        lblFelMEpost.setForeground(new java.awt.Color(255, 0, 51));
-        lblFelMEpost.setText("Eposten är skriven i felaktigt format!");
-
         lblFelMTelefon.setForeground(new java.awt.Color(255, 0, 51));
         lblFelMTelefon.setText("Telefonnumret är skrivet i felaktigt format!");
 
@@ -607,8 +593,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         taFelMNamn.setForeground(new java.awt.Color(255, 0, 51));
         taFelMNamn.setLineWrap(true);
         taFelMNamn.setRows(5);
-        taFelMNamn.setText("Avdelningens namn måste\nanges i bokstäver!");
+        taFelMNamn.setText("Avdelningens namn måste\nanges i endast bokstäver!");
         taFelMNamn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        lblFelMEpost.setForeground(new java.awt.Color(255, 0, 51));
+        lblFelMEpost.setText("Epost bör följa format: exempel@domän.com!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -669,8 +658,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblFelMEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                                        .addComponent(lblFelMEpost)))))))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
