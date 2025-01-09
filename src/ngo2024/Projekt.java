@@ -407,14 +407,8 @@ public class Projekt {
         }
     }
     
-    public boolean setSlutdatum(String datum){
-         if(!datum.isEmpty() && Validerare.arDatum(datum)){
-            slutdatum = datum;
-            return true;
-        }
-        else{
-            return false;
-        }
+    public void setSlutdatum(String datum){
+        slutdatum = datum;
     }
     
     public boolean setKostnad(String kostnad){
@@ -561,13 +555,24 @@ public class Projekt {
         String sqlFraga;
         
         try{
-            sqlFraga = "INSERT INTO projekt (pid, projektnamn, beskrivning, "
+            if(slutdatum == null){
+                sqlFraga = "INSERT INTO projekt (pid, projektnamn, beskrivning, "
                 + "startdatum, slutdatum, kostnad, status, prioritet, projektchef, land) " 
-                + "VALUES (" + this.getProjektID() + ", '" + this.getNamn() 
-                + "', '" + this.getBeskrivning() + "', '" + this.getStartdatum() 
-                + "', " + null + ", '" + this.getKostnad() + "', '" + this.getStatus() 
-                + "', '" + this.getPrioritet() + "', " + this.getProjektchefID() 
-                + ", " + this.getLandID() + ");";
+                + "VALUES (" + this.projektID + ", '" + this.projektnamn 
+                + "', '" + this.beskrivning + "', '" + this.startdatum 
+                + "', " + null + ", '" + this.kostnad + "', '" + this.status 
+                + "', '" + this.prioritet + "', " + this.projektchefID 
+                + ", " + this.landID + ");";   
+            }
+            else{
+                sqlFraga = "INSERT INTO projekt (pid, projektnamn, beskrivning, "
+                + "startdatum, slutdatum, kostnad, status, prioritet, projektchef, land) " 
+                + "VALUES (" + this.projektID + ", '" + this.projektnamn 
+                + "', '" + this.beskrivning + "', '" + this.startdatum 
+                + "', '" + this.slutdatum + "', '" + this.kostnad + "', '" + this.status 
+                + "', '" + this.prioritet + "', " + this.projektchefID 
+                + ", " + this.landID + ");";
+            }
             
             idb.insert(sqlFraga);
             

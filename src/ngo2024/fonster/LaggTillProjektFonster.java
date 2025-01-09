@@ -30,6 +30,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     private ArrayList<Anvandare> handlaggare;
     private ProjektFonster forraFonstret;
     private ProjektRegister projektregister;
+    private ArrayList<Projekt> attVisa;
     
     /**
      * Creates new form LaggTillFonster
@@ -45,7 +46,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         partnerregister = new PartnerRegister(idb);
         handlaggare = new ArrayList<>();
         this.projektregister = projektregister;
-        
+        attVisa = projektregister.getAllaProjekt();
         
         
         initComponents();
@@ -94,6 +95,9 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         startdatumInput = new javax.swing.JTextField();
         startdatumError = new javax.swing.JLabel();
         projektRegistreradLabel = new javax.swing.JLabel();
+        slutdatumLabel = new javax.swing.JLabel();
+        slutdatumInput = new javax.swing.JTextField();
+        slutdatumError = new javax.swing.JLabel();
 
         setTitle("SDG Sweden - Lägg till projekt");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
@@ -179,6 +183,11 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         projektRegistreradLabel.setForeground(new java.awt.Color(0, 204, 0));
         projektRegistreradLabel.setText("Projekt registrerat!");
 
+        slutdatumLabel.setText("Slutdatum:");
+
+        slutdatumError.setForeground(new java.awt.Color(255, 0, 0));
+        slutdatumError.setText("Kan inte vara tomt!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,39 +204,37 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(beskrivningLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(projektnamnLabel)
-                                .addGap(12, 12, 12)
+                                .addGap(1, 1, 1)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(projektnamnInput, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(24, 24, 24)
-                                        .addComponent(projektnamnError, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(projektchefComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(projektchefLabel)
+                                        .addComponent(beskrivningLabel)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(projektnamnLabel)
+                                        .addGap(12, 12, 12)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(projektnamnInput, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(24, 24, 24)
+                                                .addComponent(projektnamnError, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(projektchefComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(projektchefLabel))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(startdatumLabel)
-                            .addComponent(kostnadLabel))
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(kostnadInput, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(startdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(partnerLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(prioritetLabel)
-                            .addComponent(landLabel))
-                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(kostnadLabel)
+                                .addGap(33, 33, 33)
+                                .addComponent(kostnadInput, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(prioritetLabel)
+                                    .addComponent(landLabel))
+                                .addGap(35, 35, 35)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(prioritetComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,9 +245,29 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
                                     .addComponent(kostnadError, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(statusError)
                                     .addComponent(prioritetError)
-                                    .addComponent(landError)
-                                    .addComponent(startdatumError)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(landError)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(partnerLabel)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(80, 80, 80)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(slutdatumLabel)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(slutdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(275, 275, 275)
+                                        .addComponent(slutdatumError))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(startdatumLabel)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(startdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(275, 275, 275)
+                                        .addComponent(startdatumError)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,12 +285,17 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(beskrivningLabel)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(startdatumLabel)
                     .addComponent(startdatumError))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(slutdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(slutdatumLabel)
+                    .addComponent(slutdatumError))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(kostnadInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -284,11 +316,11 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
                     .addComponent(landLabel)
                     .addComponent(landComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(landError))
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(partnerLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tillbakaButton)
                     .addComponent(sparaButton)
@@ -362,6 +394,21 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
             projektOK = false;
         }
         
+        //Slutdatum
+        if(Validerare.arDatum(slutdatumInput.getText())){
+            nyttProjekt.setSlutdatum(slutdatumInput.getText());
+        }
+        else{
+            if(slutdatumInput.getText().isEmpty()){
+                nyttProjekt.setSlutdatum(null);
+            }
+            else if(!Validerare.arDatum(slutdatumInput.getText())){
+                slutdatumError.setText("Felaktigt format! Använd yyyy-mm-dd.");
+                slutdatumError.setVisible(true);
+                projektOK = false;
+            }   
+        }
+        
         //Kostnad
         if(!kostnadInput.getText().isEmpty() && Validerare.formatProjektKostnadOK(kostnadInput.getText()))
         {
@@ -422,16 +469,14 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         
         if(projektOK){
             nyttProjekt.setProjektID();
-            
             nyttProjekt.insertProjektDB();
             projektRegistreradLabel.setVisible(true);
-            projektregister.add(nyttProjekt);
-            forraFonstret.visaData(projektregister.getAllaProjekt());
+            projektregister.refreshaAllaProjekt();
+            attVisa = projektregister.getAllaProjekt();
+            forraFonstret.setAttVisa(attVisa);
+            forraFonstret.visaData(attVisa);
             this.setVisible(false);
-            
         }
-        
-        System.out.println(nyttProjekt); //DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG    
     }//GEN-LAST:event_sparaButtonMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -474,6 +519,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     private void initFelmeddelanden(){
         projektnamnError.setVisible(false);
         startdatumError.setVisible(false);
+        slutdatumError.setVisible(false);
         kostnadError.setVisible(false);
         statusError.setVisible(false);
         prioritetError.setVisible(false);
@@ -483,6 +529,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     private void resetFelmeddelanden(){
         projektnamnError.setVisible(false);
         startdatumError.setVisible(false);
+        slutdatumError.setVisible(false);
         kostnadError.setVisible(false);
         statusError.setVisible(false);
         prioritetError.setVisible(false);
@@ -560,6 +607,9 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     private javax.swing.JLabel projektnamnError;
     private javax.swing.JTextField projektnamnInput;
     private javax.swing.JLabel projektnamnLabel;
+    private javax.swing.JLabel slutdatumError;
+    private javax.swing.JTextField slutdatumInput;
+    private javax.swing.JLabel slutdatumLabel;
     private javax.swing.JButton sparaButton;
     private javax.swing.JLabel startdatumError;
     private javax.swing.JTextField startdatumInput;

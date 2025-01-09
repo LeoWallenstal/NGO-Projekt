@@ -31,11 +31,18 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     private AnvandarRegister anvandarregister;
     private PartnerRegister partnerregister;
 
+    private ProjektRegister projektregister;
+    
+
     private final Projekt attRedigera;
     private final ProjektFonster forstaFonstret;
     private ProjektInfoFonster forraFonstret;
     private final Anvandare inloggadAnvandare;
     private final InfDB idb;
+
+    private ArrayList<Projekt> attVisa;
+    
+    
 
     public RedigeraProjektFonster(Anvandare inloggadAnvandare, Projekt attRedigera,
             ProjektInfoFonster forraFonstret, ProjektFonster forstaFonstret, InfDB idb) {
@@ -50,6 +57,8 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         anvandarregister.hamtaAvdelningensAnvandare(attRedigera.getProjektchef().getAvdelningsID());
 
         partnerregister = new PartnerRegister(idb);
+        projektregister = new ProjektRegister(idb);
+        attVisa = projektregister.getAllaProjekt();
         this.inloggadAnvandare = inloggadAnvandare;
         this.attRedigera = attRedigera;
         this.projektetsPartners = attRedigera.getPartners();
@@ -588,13 +597,18 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         }
         attRedigera.setBeskrivning(beskrivningInput.getText());
         attRedigera.setStartdatum(startdatumInput.getText());
-        attRedigera.setSlutdatum(slutdatumInput.getText());
+        if(slutdatumInput.getText().isEmpty()){
+            attRedigera.setSlutdatum(null);
+        }
+        else{
+            attRedigera.setSlutdatum(slutdatumInput.getText());
+        }
+        
         attRedigera.setKostnad(kostnadInput.getText());
-        attRedigera.setStatus((String) statusCB.getSelectedItem());
-        attRedigera.setPrioritet((String) prioritetCB.getSelectedItem());
-        System.out.println("innan setPartner()");
+        attRedigera.setStatus((String)statusCB.getSelectedItem());
+        attRedigera.setPrioritet((String)prioritetCB.getSelectedItem());
+
         attRedigera.setPartners(projektetsPartners);
-        System.out.println("625");
         attRedigera.setHandlaggare(projektetsHandlaggare);
         //Inte kunna ändra land... eller??
         attRedigera.updateProjektDB();
@@ -602,9 +616,12 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         sparaBtn.setEnabled(false);
 
         forraFonstret.refreshProjektInfo();
-        forstaFonstret.visaData();
 
-        System.out.println(attRedigera);
+        projektregister.refreshaAllaProjekt();
+        attVisa = projektregister.getAllaProjekt();
+        forstaFonstret.setAttVisa(attVisa);
+        forstaFonstret.visaData(attVisa);
+
     }//GEN-LAST:event_sparaBtnMouseClicked
 
     private void tillbakaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillbakaButtonMouseClicked
