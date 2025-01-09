@@ -97,6 +97,7 @@ public class MenyFonster extends javax.swing.JFrame {
         getContentPane().add(lblValkommen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         btnUppgifter.setText("Mina uppgifter");
+        btnUppgifter.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnUppgifter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUppgifterActionPerformed(evt);
@@ -105,6 +106,7 @@ public class MenyFonster extends javax.swing.JFrame {
         getContentPane().add(btnUppgifter, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 130, -1));
 
         btnAvdelning.setText("Min avdelning");
+        btnAvdelning.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAvdelning.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAvdelningActionPerformed(evt);
@@ -113,6 +115,7 @@ public class MenyFonster extends javax.swing.JFrame {
         getContentPane().add(btnAvdelning, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 130, -1));
 
         btnProjekt.setText("Projekt");
+        btnProjekt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnProjekt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProjektActionPerformed(evt);
@@ -121,6 +124,7 @@ public class MenyFonster extends javax.swing.JFrame {
         getContentPane().add(btnProjekt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 130, -1));
 
         btnAnstallda.setText("Hantera anställda");
+        btnAnstallda.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAnstallda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnstalldaActionPerformed(evt);
@@ -131,6 +135,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/03-god-halsa-och-valbefinnande.png"))); // NOI18N
         btnMal_3.setBorderPainted(false);
         btnMal_3.setContentAreaFilled(false);
+        btnMal_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_3ActionPerformed(evt);
@@ -141,6 +146,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/04-god-utbildning-for-alla-logo-1.png"))); // NOI18N
         btnMal_4.setBorderPainted(false);
         btnMal_4.setContentAreaFilled(false);
+        btnMal_4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_4ActionPerformed(evt);
@@ -151,6 +157,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/05-jamstalldhet.png"))); // NOI18N
         btnMal_5.setBorderPainted(false);
         btnMal_5.setContentAreaFilled(false);
+        btnMal_5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_5ActionPerformed(evt);
@@ -161,6 +168,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/08-anstandiga-arbetsvillkor-och-ekonomisk-tillvaxt.png"))); // NOI18N
         btnMal_8.setBorderPainted(false);
         btnMal_8.setContentAreaFilled(false);
+        btnMal_8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_8ActionPerformed(evt);
@@ -171,6 +179,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/10-minskad-ojamnlikhet.png"))); // NOI18N
         btnMal_10.setBorderPainted(false);
         btnMal_10.setContentAreaFilled(false);
+        btnMal_10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_10ActionPerformed(evt);
@@ -181,6 +190,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/09-hallbar-industri-innovationer-och-infrastruktur.png"))); // NOI18N
         btnMal_9.setBorderPainted(false);
         btnMal_9.setContentAreaFilled(false);
+        btnMal_9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_9ActionPerformed(evt);
@@ -191,6 +201,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/13-bekampa-klimatforandringarna.png"))); // NOI18N
         btnMal_13.setBorderPainted(false);
         btnMal_13.setContentAreaFilled(false);
+        btnMal_13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_13ActionPerformed(evt);
@@ -201,6 +212,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/14_hav_och_marina_resurser.png"))); // NOI18N
         btnMal_14.setBorderPainted(false);
         btnMal_14.setContentAreaFilled(false);
+        btnMal_14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_14ActionPerformed(evt);
@@ -211,6 +223,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/15_ekosystem.png"))); // NOI18N
         btnMal_15.setBorderPainted(false);
         btnMal_15.setContentAreaFilled(false);
+        btnMal_15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_15ActionPerformed(evt);
@@ -221,6 +234,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/01-ingen-fattigdom.png"))); // NOI18N
         btnMal_1.setBorderPainted(false);
         btnMal_1.setContentAreaFilled(false);
+        btnMal_1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_1ActionPerformed(evt);
@@ -231,6 +245,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/06-rent-vatten-och-sanitet-for-alla.png"))); // NOI18N
         btnMal_6.setBorderPainted(false);
         btnMal_6.setContentAreaFilled(false);
+        btnMal_6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_6ActionPerformed(evt);
@@ -241,6 +256,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/11-hallbara-stader-och-samhallen.png"))); // NOI18N
         btnMal_11.setBorderPainted(false);
         btnMal_11.setContentAreaFilled(false);
+        btnMal_11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_11ActionPerformed(evt);
@@ -251,6 +267,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/Sustainable-Development-Goals_icons-16-1.png"))); // NOI18N
         btnMal_16.setBorderPainted(false);
         btnMal_16.setContentAreaFilled(false);
+        btnMal_16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_16ActionPerformed(evt);
@@ -261,6 +278,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/02-ingen-hunger.png"))); // NOI18N
         btnMal_2.setBorderPainted(false);
         btnMal_2.setContentAreaFilled(false);
+        btnMal_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_2ActionPerformed(evt);
@@ -271,6 +289,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/07-hallbar-energi-for-alla.png"))); // NOI18N
         btnMal_7.setBorderPainted(false);
         btnMal_7.setContentAreaFilled(false);
+        btnMal_7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_7ActionPerformed(evt);
@@ -281,6 +300,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/12-hallbar-konsumtion-och-produktion.png"))); // NOI18N
         btnMal_12.setBorderPainted(false);
         btnMal_12.setContentAreaFilled(false);
+        btnMal_12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_12ActionPerformed(evt);
@@ -291,6 +311,7 @@ public class MenyFonster extends javax.swing.JFrame {
         btnMal_17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/17_genomforande_och_partnerskap-logo.png"))); // NOI18N
         btnMal_17.setBorderPainted(false);
         btnMal_17.setContentAreaFilled(false);
+        btnMal_17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMal_17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMal_17ActionPerformed(evt);
@@ -300,6 +321,7 @@ public class MenyFonster extends javax.swing.JFrame {
 
         tpMalInfoText.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tpMalInfoText.setText("Klicka på ett utav målen för att läsa mer!");
+        tpMalInfoText.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tpMalInfoText.setFocusable(false);
         tpMalInfoText.setOpaque(false);
         getContentPane().add(tpMalInfoText, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 140, 320, 90));
@@ -318,6 +340,7 @@ public class MenyFonster extends javax.swing.JFrame {
         getContentPane().add(loggaUtButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, -1, -1));
 
         partnersButton.setText("Partners");
+        partnersButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         partnersButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 partnersButtonMouseClicked(evt);
@@ -331,6 +354,7 @@ public class MenyFonster extends javax.swing.JFrame {
         getContentPane().add(partnersButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 130, -1));
 
         btnLander.setText("Länder");
+        btnLander.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLander.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLanderActionPerformed(evt);
@@ -339,6 +363,7 @@ public class MenyFonster extends javax.swing.JFrame {
         getContentPane().add(btnLander, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 130, -1));
 
         btnStatistik.setText("Statistik");
+        btnStatistik.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnStatistik.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStatistikActionPerformed(evt);
@@ -361,87 +386,87 @@ public class MenyFonster extends javax.swing.JFrame {
 
     private void btnMal_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_3ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,3).setVisible(true);
+        new MalInfoFonster(idb,3,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_3ActionPerformed
 
     private void btnMal_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_4ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,4).setVisible(true);
+        new MalInfoFonster(idb,4,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_4ActionPerformed
 
     private void btnMal_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_5ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,5).setVisible(true);
+        new MalInfoFonster(idb,5,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_5ActionPerformed
 
     private void btnMal_8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_8ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,8).setVisible(true);
+        new MalInfoFonster(idb,8,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_8ActionPerformed
 
     private void btnMal_10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_10ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,10).setVisible(true);
+        new MalInfoFonster(idb,10,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_10ActionPerformed
 
     private void btnMal_9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_9ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,9).setVisible(true);
+        new MalInfoFonster(idb,9,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_9ActionPerformed
 
     private void btnMal_13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_13ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,13).setVisible(true);
+        new MalInfoFonster(idb,13,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_13ActionPerformed
 
     private void btnMal_14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_14ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,14).setVisible(true);
+        new MalInfoFonster(idb,14,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_14ActionPerformed
 
     private void btnMal_15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_15ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,15).setVisible(true);
+        new MalInfoFonster(idb,15,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_15ActionPerformed
 
     private void btnMal_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_1ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,1).setVisible(true);
+        new MalInfoFonster(idb,1,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_1ActionPerformed
 
     private void btnMal_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_6ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,6).setVisible(true);
+        new MalInfoFonster(idb,6,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_6ActionPerformed
 
     private void btnMal_11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_11ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,11).setVisible(true);
+        new MalInfoFonster(idb,11,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_11ActionPerformed
 
     private void btnMal_16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_16ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,16).setVisible(true);
+        new MalInfoFonster(idb,16,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_16ActionPerformed
 
     private void btnMal_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_2ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,2).setVisible(true);
+        new MalInfoFonster(idb,2,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_2ActionPerformed
 
     private void btnMal_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_7ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,7).setVisible(true);
+        new MalInfoFonster(idb,7,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_7ActionPerformed
 
     private void btnMal_12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_12ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,12).setVisible(true);
+        new MalInfoFonster(idb,12,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_12ActionPerformed
 
     private void btnMal_17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMal_17ActionPerformed
         // TODO add your handling code here:
-        new MalInfoFonster(idb,17).setVisible(true);
+        new MalInfoFonster(idb,17,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMal_17ActionPerformed
 
     private void btnAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvdelningActionPerformed
