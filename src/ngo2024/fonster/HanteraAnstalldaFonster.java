@@ -63,7 +63,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         visaAnstallda();
         tblAnstallda.setDefaultEditor(Object.class, null);
-        setWindowSize();
+        setLocationRelativeTo(null);
         initGlassPane();
         lblInfoTaBort.setVisible(false);
     }
@@ -179,15 +179,6 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setWindowSize() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int windowWidth = (int) (screenSize.width * 0.75);
-        int windowHeight = (int) (screenSize.height * 0.75);
-        int x = (screenSize.width - windowWidth) / 2;
-        int y = (screenSize.height - windowHeight) / 2;
-        setBounds(x, y, windowWidth, windowHeight);
-        setLocationRelativeTo(null);
-    }
 
     private void initGlassPane() {
         glassPaneOverlay = new JPanel() {

@@ -25,7 +25,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private Avdelning valdAvdelning;
     private AvdelningsRegister avdelningsRegister;
     private StadRegister stadRegister;
-    private HashMap<String,Stad> stadMap;
+    private HashMap<String, Stad> stadMap;
     private DefaultTableModel tabell;
     private JPanel glassPaneOverlay;
     private String vy;
@@ -48,7 +48,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         this.inloggadAnvandare = inloggadAnvandare;
         stadMap = new HashMap<>();
         avdelningsRegister = new AvdelningsRegister(idb);
-        stadRegister  = new StadRegister(idb);
+        stadRegister = new StadRegister(idb);
         valdAvdelning = avdelningsRegister.getAvdelningFranId(inloggadAnvandare.getAvdelningsID());
         initComponents();
         btnSpara.setEnabled(false);
@@ -58,122 +58,121 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         initStadCB();
         initKolumner();
         initAvdelningCB();
-        visaAnstallda();
-        uppdateraAvdelningsInfo(valdAvdelning);
+        uppdateraAvdelningsInfo();
         vy = "Alla";
         setLocationRelativeTo(null);
         doljFelMeddelanden();
     }
 
-    private void doljFelMeddelanden(){
-        
+    private void doljFelMeddelanden() {
+
         taFelMNamn.setVisible(false);
         lblFelMEpost.setVisible(false);
         lblFelMTelefon.setVisible(false);
         lblFelMTomt.setVisible(false);
     }
-    
-    private void uppdateraAnstallda(Avdelning avdelning) {
+
+    private void uppdateraAnstallda() {
         tabell.setRowCount(0);
-        for (Anvandare enAnstalld : avdelning.getAvdelningensAnstallda()) {
+        for (Anvandare enAnstalld : valdAvdelning.getAvdelningensAnstallda()) {
             String roll = "";
             if (!enAnstalld.isAdmin()) {
                 roll = "Handläggare";
-                tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(),enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
+                tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(), enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
             }
         }
     }
-    
-    private void uppdateraAvdelningsInfo(Avdelning avdelning) {
-    uppdateraAnstallda(avdelning);
-    orginalNamn = avdelning.getNamn();
-    orginalBeskrivning = avdelning.getBeskrivning();
-    orginalAdress = avdelning.getAdress();
-    orginalStad = avdelning.getStad().getNamn();
-    orginalEpost = avdelning.getEpost();
-    orginalTelefonnummer = avdelning.getTelefonnummer();
-    orginalChefNamn = avdelning.getChef().getFullNamn();
-    orginalChefId = avdelning.getChef().getAnstallningsID();
-    nyttChefId = avdelning.getChef().getAnstallningsID();
 
-    tfAvdelningsNamn.setText(orginalNamn);
-    taBeskrivning.setText(orginalBeskrivning);
-    tfAdress.setText(orginalAdress);
-    cbStad.setSelectedItem(orginalStad);
-    tfEpost.setText(orginalEpost);
-    tfTelefon.setText(orginalTelefonnummer);
-    lblChef.setText(orginalChefNamn);
-}
+    private void uppdateraAvdelningsInfo() {
+        uppdateraAnstallda();
+        orginalNamn = valdAvdelning.getNamn();
+        orginalBeskrivning = valdAvdelning.getBeskrivning();
+        orginalAdress = valdAvdelning.getAdress();
+        orginalStad = valdAvdelning.getStad().getNamn();
+        orginalEpost = valdAvdelning.getEpost();
+        orginalTelefonnummer = valdAvdelning.getTelefonnummer();
+        orginalChefNamn = valdAvdelning.getChef().getFullNamn();
+        orginalChefId = valdAvdelning.getChef().getAnstallningsID();
+        nyttChefId = valdAvdelning.getChef().getAnstallningsID();
 
-    private void uppdateraAvdelning(){
+        tfAvdelningsNamn.setText(orginalNamn);
+        taBeskrivning.setText(orginalBeskrivning);
+        tfAdress.setText(orginalAdress);
+        cbStad.setSelectedItem(orginalStad);
+        tfEpost.setText(orginalEpost);
+        tfTelefon.setText(orginalTelefonnummer);
+        lblChef.setText(orginalChefNamn);
+    }
+
+    private void uppdateraAvdelning() {
         //valdAvdelning = new Avdelning(valdAvdelning.getAvdelningsID(),idb);
-        uppdateraAvdelningsInfo(valdAvdelning);
+        uppdateraAvdelningsInfo();
         initAvdelningCB();
     }
-    
-    private void bytAvdelning(){
+
+    private void bytAvdelning() {
         String valdAvdelningNamn = (String) cbAvdelningar.getSelectedItem();
         for (Avdelning avdelning : avdelningsRegister.getLista()) {
             if (avdelning.getNamn().equals(valdAvdelningNamn)) {
                 valdAvdelning = avdelning;
-                uppdateraAvdelningsInfo(avdelning);
+                uppdateraAvdelningsInfo();
                 break;
             }
         }
     }
-    
-    private void initAvdelningCB(){
+
+    private void initAvdelningCB() {
         cbAvdelningar.removeAllItems();
-        for(Avdelning enAvdelning : avdelningsRegister.getLista()){
+        for (Avdelning enAvdelning : avdelningsRegister.getLista()) {
             cbAvdelningar.addItem(enAvdelning.getNamn());
         }
         cbAvdelningar.setSelectedItem(valdAvdelning.getNamn());
-        
+
         cbAvdelningar.setRenderer(new DefaultListCellRenderer() {
-        @Override
-        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-            if (!cbAvdelningar.isEnabled()) {
-                label.setText("Du kan inte byta avdelning med osparade ändringar");
+                if (!cbAvdelningar.isEnabled()) {
+                    label.setText("Du kan inte byta avdelning med osparade ändringar");
+                }
+
+                return label;
             }
-
-            return label;
-        }
-    });
+        });
     }
-    
-    private void initStadCB(){
-        cbStad.removeAllItems();  
-        for(Stad enStad : stadRegister.getLista()){
+
+    private void initStadCB() {
+        cbStad.removeAllItems();
+        for (Stad enStad : stadRegister.getLista()) {
             String stadNamn = enStad.getNamn();
             stadMap.put(stadNamn, enStad);
             cbStad.addItem(stadNamn);
         }
-            
+
         cbStad.setSelectedItem(valdAvdelning.getStad().getNamn());
     }
-    
+
     private boolean harOsparadeAndringar() {
-        if (orginalNamn!=null&&!orginalNamn.equals(tfAvdelningsNamn.getText())) {
+        if (orginalNamn != null && !orginalNamn.equals(tfAvdelningsNamn.getText())) {
             return true;
         }
-        if (orginalBeskrivning!=null&&!orginalBeskrivning.equals(taBeskrivning.getText())) {
+        if (orginalBeskrivning != null && !orginalBeskrivning.equals(taBeskrivning.getText())) {
             return true;
         }
-        if (orginalAdress!=null&&!orginalAdress.equals(tfAdress.getText())) {
+        if (orginalAdress != null && !orginalAdress.equals(tfAdress.getText())) {
             return true;
         }
-        if (orginalStad!=null&&!orginalStad.equals(cbStad.getSelectedItem())) {
+        if (orginalStad != null && !orginalStad.equals(cbStad.getSelectedItem())) {
             return true;
         }
-        if (orginalEpost!=null&&!orginalEpost.equals(tfEpost.getText())) {
+        if (orginalEpost != null && !orginalEpost.equals(tfEpost.getText())) {
             return true;
         }
-        if (orginalTelefonnummer!=null&&!orginalTelefonnummer.equals(tfTelefon.getText())) {
+        if (orginalTelefonnummer != null && !orginalTelefonnummer.equals(tfTelefon.getText())) {
             return true;
         }
-        if (orginalChefNamn!=null&&!orginalChefNamn.equals(lblChef.getText())) {
+        if (orginalChefNamn != null && !orginalChefNamn.equals(lblChef.getText())) {
             return true;
         }
         return false;
@@ -264,7 +263,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
 
     private void vidarebefordraMusHandelse(MouseEvent e) {
         // Lista över exkluderade komponenter
-        JComponent[] exkluderadeKomponenter = {jScrollPane1,sokfalt, sokBtn, sokCB};
+        JComponent[] exkluderadeKomponenter = {jScrollPane1, sokfalt, sokBtn, sokCB};
 
         for (JComponent komponent : exkluderadeKomponenter) {
             if (komponent != null && komponent.isVisible()) {
@@ -455,8 +454,13 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
                 sokBtnMouseClicked(evt);
             }
         });
+        sokBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sokBtnActionPerformed(evt);
+            }
+        });
 
-        sokCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sök efter...", "Namn", "Epost" }));
+        sokCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Namn", "Epost" }));
         sokCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sokCBActionPerformed(evt);
@@ -768,14 +772,16 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     private void sokBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokBtnMouseClicked
         if (!sokfalt.getText().isEmpty()) {
             if (sokCB.getSelectedItem().equals("Namn")) {
+                valdAvdelning.hamtaAnstallda();
                 valdAvdelning.hamtaSokNamn(sokfalt.getText());
                 rensaDataFonster();
-                visaAnstallda();
+                uppdateraAnstallda();
                 vy = "Sökt";
             } else if (sokCB.getSelectedItem().equals("Epost")) {
+                valdAvdelning.hamtaAnstallda();
                 valdAvdelning.hamtaSokEpost(sokfalt.getText());
                 rensaDataFonster();
-                visaAnstallda();
+                uppdateraAnstallda();
                 vy = "Sökt";
             } else {
                 resetFonster();
@@ -805,9 +811,6 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
                 resetFonster();
                 vy = "Alla";
             }
-        } else if (sokCB.getSelectedItem().equals("Sök efter...")) {
-            sokfalt.setEnabled(false);
-            sokfalt.setText("Sök anställd...");
         }
     }//GEN-LAST:event_sokCBActionPerformed
 
@@ -830,12 +833,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_cbAvdelningarItemStateChanged
 
     private void tfAvdelningsNamnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfAvdelningsNamnKeyTyped
-        if(!harOsparadeAndringar()){
+        if (!harOsparadeAndringar()) {
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
-        }
-        else{
+        } else {
             btnSpara.setEnabled(true);
             btnAterstall.setEnabled(true);
             cbAvdelningar.setEnabled(false);
@@ -843,12 +845,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfAvdelningsNamnKeyTyped
 
     private void taBeskrivningKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taBeskrivningKeyTyped
-        if(!harOsparadeAndringar()){
+        if (!harOsparadeAndringar()) {
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
-        }
-        else{
+        } else {
             btnSpara.setEnabled(true);
             btnAterstall.setEnabled(true);
             cbAvdelningar.setEnabled(false);
@@ -856,12 +857,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_taBeskrivningKeyTyped
 
     private void tfAdressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfAdressKeyTyped
-        if(!harOsparadeAndringar()){
+        if (!harOsparadeAndringar()) {
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
-        }
-        else{
+        } else {
             btnSpara.setEnabled(true);
             btnAterstall.setEnabled(true);
             cbAvdelningar.setEnabled(false);
@@ -869,12 +869,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfAdressKeyTyped
 
     private void tfEpostKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfEpostKeyTyped
-        if(!harOsparadeAndringar()){
+        if (!harOsparadeAndringar()) {
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
-        }
-        else{
+        } else {
             btnSpara.setEnabled(true);
             btnAterstall.setEnabled(true);
             cbAvdelningar.setEnabled(false);
@@ -882,12 +881,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfEpostKeyTyped
 
     private void tfTelefonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefonKeyTyped
-        if(!harOsparadeAndringar()){
+        if (!harOsparadeAndringar()) {
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
-        }
-        else{
+        } else {
             btnSpara.setEnabled(true);
             btnAterstall.setEnabled(true);
             cbAvdelningar.setEnabled(false);
@@ -895,12 +893,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfTelefonKeyTyped
 
     private void lblChefPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lblChefPropertyChange
-        if(!harOsparadeAndringar()){
+        if (!harOsparadeAndringar()) {
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
-        }
-        else{
+        } else {
             btnSpara.setEnabled(true);
             btnAterstall.setEnabled(true);
             cbAvdelningar.setEnabled(false);
@@ -916,7 +913,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         for (Avdelning avdelning : avdelningsRegister.getLista()) {
             if (avdelning.getNamn().equals(valdAvdelningNamn)) {
                 valdAvdelning = avdelning;
-                uppdateraAvdelningsInfo(avdelning);
+                uppdateraAvdelningsInfo();
                 break;
             }
         }
@@ -929,37 +926,36 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         String adress = tfAdress.getText();
         String epost = tfEpost.getText();
         String telefon = tfTelefon.getText();
-        
+
         //Om något/alla textfält är tomma skrivs ett felmeddelande ut
-        if(namn.isEmpty()||beskrivning.isEmpty()||adress.isEmpty()||epost.isEmpty()||telefon.isEmpty()){
+        if (namn.isEmpty() || beskrivning.isEmpty() || adress.isEmpty() || epost.isEmpty() || telefon.isEmpty()) {
             formatKorrekt = false;
             lblFelMTomt.setVisible(true);
         }
-        
+
         //Validerar om avdelningens namn är skrivet i bokstäver
-        if(!Validerare.arBokstaver(namn)){
+        if (!Validerare.arBokstaver(namn)) {
             formatKorrekt = false;
             taFelMNamn.setVisible(true);
         }
-        
+
         //Validerar formatet på epostadressen
-        if(!Validerare.arEpostAdress(epost)){
+        if (!Validerare.arEpostAdress(epost)) {
             formatKorrekt = false;
             lblFelMEpost.setVisible(true);
         }
-        
+
         //Validerar formatet på telefonnumret
-        if(!Validerare.arTelefonnummer(telefon)){
+        if (!Validerare.arTelefonnummer(telefon)) {
             formatKorrekt = false;
             lblFelMTelefon.setVisible(true);
         }
 
-        
-        if(formatKorrekt){
+        if (formatKorrekt) {
             String stadId = stadMap.get(cbStad.getSelectedItem().toString()).getStadID();
-            boolean lyckadDbUpdate = valdAvdelning.updateUppgifter(tfAvdelningsNamn.getText(),taBeskrivning.getText(),
-                    tfAdress.getText(),stadId,tfEpost.getText(),tfTelefon.getText(),nyttChefId);
-            if(lyckadDbUpdate){
+            boolean lyckadDbUpdate = valdAvdelning.updateUppgifter(tfAvdelningsNamn.getText(), taBeskrivning.getText(),
+                    tfAdress.getText(), stadId, tfEpost.getText(), tfTelefon.getText(), nyttChefId);
+            if (lyckadDbUpdate) {
                 uppdateraAvdelning();
                 btnSpara.setEnabled(false);
                 btnAterstall.setEnabled(false);
@@ -969,21 +965,24 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSparaActionPerformed
 
     private void cbStadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbStadItemStateChanged
-        if(!harOsparadeAndringar()){
+        if (!harOsparadeAndringar()) {
             btnSpara.setEnabled(false);
             btnAterstall.setEnabled(false);
             cbAvdelningar.setEnabled(true);
-        }
-        else{
+        } else {
             btnSpara.setEnabled(true);
             btnAterstall.setEnabled(true);
             cbAvdelningar.setEnabled(false);
         }
     }//GEN-LAST:event_cbStadItemStateChanged
 
+    private void sokBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sokBtnActionPerformed
+
     private void initKolumner() {
         tabell.addColumn("AID");
-        tabell.addColumn("Namn"); //denna ska gömmas senare
+        tabell.addColumn("Namn");
         tabell.addColumn("Epost");
         tabell.addColumn("Roll");
 
@@ -997,23 +996,11 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
-     */
-    private void visaAnstallda() {
-        for (Anvandare enAnstalld : valdAvdelning.getAvdelningensAnstallda()) {
-            String roll = "";
-            if (enAnstalld.isAdmin()) {
-                roll = "Administratör";
-            } else {
-                roll = "Handläggare";
-            }
-            tabell.addRow(new Object[]{enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
-        }
-    }
+     */   
 
     private void rensaDataFonster() {
         //Tar bort datan
         tabell.getDataVector().clear();
-
         //Tar bort datan från fönstret också.
         anstalldTable.repaint();
 
@@ -1024,7 +1011,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     public void resetFonster() {
         rensaDataFonster();
         valdAvdelning.hamtaAnstallda();
-        visaAnstallda();
+        uppdateraAnstallda();
     }
 
     public static void main(String args[]) {
