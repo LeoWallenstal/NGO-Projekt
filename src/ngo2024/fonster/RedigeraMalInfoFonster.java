@@ -15,23 +15,28 @@ import ngo2024.Anvandare;
  *
  * @author leowa
  */
-public class MalInfoFonster extends javax.swing.JFrame {
+public class RedigeraMalInfoFonster extends javax.swing.JFrame {
     
     private InfDB idb;
     private int malNr;
     private Anvandare inloggadAnvandare;
+    private boolean osparadeAndringar;
+    
     /**
      * Creates new form MalInfo
      */
     
-    public MalInfoFonster(InfDB idb, int malNr, Anvandare inloggadAnvandare) {
+    public RedigeraMalInfoFonster(InfDB idb, int malNr, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.malNr = malNr;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
         setLocationRelativeTo(null);
         setMal();
-        checkBehorighet();
+        lblFelM.setVisible(false);
+        btnSpara.setEnabled(false);
+        btnAterstall.setEnabled(false);
+        osparadeAndringar = false;
     }
       
     private void setMal(){
@@ -62,35 +67,29 @@ public class MalInfoFonster extends javax.swing.JFrame {
             
             String malNamn = dbMalInfo.get("namn");
             tpMalNamn.setText(malNamn);
-            tpMalNamn.setOpaque(false);
-            tpMalNamn.setFocusable(false);
-            //tpMalNamn.setForeground(Color.BLACK);
             
             String malBeskrivning = dbMalInfo.get("beskrivning");
             tpMalBeskrivning.setText(malBeskrivning);
-            tpMalBeskrivning.setOpaque(false);
-            tpMalBeskrivning.setFocusable(false);
-            //tpMalBeskrivning.setForeground(Color.BLACK);
 
             String prioritet = dbMalInfo.get("prioritet");
             switch(prioritet){
                 case "Hög":
-                    lblPrioritet.setText("Prioritet: Hög");
+                    cbPrio.setSelectedItem("Hög");
                     pbPrioritet.setValue(100);
                     pbPrioritet.setForeground(Color.RED);
                     break;
                 case "Medel":
-                    lblPrioritet.setText("Prioritet: Medel");
+                    cbPrio.setSelectedItem("Medel");
                     pbPrioritet.setValue(75);
                     pbPrioritet.setForeground(Color.YELLOW);
                     break;
                 case "Låg":
-                    lblPrioritet.setText("Prioritet: Låg");
+                    cbPrio.setSelectedItem("Låg");
                     pbPrioritet.setValue(25);
                     pbPrioritet.setForeground(Color.GREEN);
                     break;
             }
-            this.setTitle("SDG Sweden - " + malNamn);
+            this.setTitle("SDG Sweden - Redigera " + malNamn);
         }catch(InfException ex){
             System.out.println(ex.getMessage());
         }
@@ -99,12 +98,6 @@ public class MalInfoFonster extends javax.swing.JFrame {
                 
         }
     
-    private void checkBehorighet(){
-        if(!inloggadAnvandare.isAdmin())
-        {
-            btnRedigera.setVisible(false);
-        }
-    }
     
     
     /**
@@ -117,36 +110,47 @@ public class MalInfoFonster extends javax.swing.JFrame {
     private void initComponents() {
 
         lblMalIkon = new javax.swing.JLabel();
-        btnStang = new javax.swing.JButton();
+        btnTillbaka = new javax.swing.JButton();
         lblBeskrivning = new javax.swing.JLabel();
         tpMalBeskrivning = new javax.swing.JTextPane();
         tpMalNamn = new javax.swing.JTextPane();
         lblPrioritet = new javax.swing.JLabel();
         pbPrioritet = new javax.swing.JProgressBar();
-        btnRedigera = new javax.swing.JButton();
+        btnSpara = new javax.swing.JButton();
+        cbPrio = new javax.swing.JComboBox<>();
+        lblFelM = new javax.swing.JLabel();
+        btnAterstall = new javax.swing.JButton();
 
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setResizable(false);
 
         lblMalIkon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/01-ingen-fattigdom.png"))); // NOI18N
 
-        btnStang.setText("Stäng");
-        btnStang.addActionListener(new java.awt.event.ActionListener() {
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStangActionPerformed(evt);
+                btnTillbakaActionPerformed(evt);
             }
         });
 
         lblBeskrivning.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblBeskrivning.setText("Beskrivning:");
 
-        tpMalBeskrivning.setEditable(false);
         tpMalBeskrivning.setBorder(null);
         tpMalBeskrivning.setText("Målets beskrivning");
+        tpMalBeskrivning.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tpMalBeskrivningKeyTyped(evt);
+            }
+        });
 
-        tpMalNamn.setEditable(false);
         tpMalNamn.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         tpMalNamn.setText("Namn");
+        tpMalNamn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tpMalNamnKeyTyped(evt);
+            }
+        });
 
         lblPrioritet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblPrioritet.setText("Prioritet:");
@@ -154,10 +158,32 @@ public class MalInfoFonster extends javax.swing.JFrame {
         pbPrioritet.setForeground(new java.awt.Color(204, 204, 204));
         pbPrioritet.setOpaque(true);
 
-        btnRedigera.setText("Redigera");
-        btnRedigera.addActionListener(new java.awt.event.ActionListener() {
+        btnSpara.setText("Spara");
+        btnSpara.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRedigeraActionPerformed(evt);
+                btnSparaActionPerformed(evt);
+            }
+        });
+
+        cbPrio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hög", "Medel", "Låg" }));
+        cbPrio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbPrioItemStateChanged(evt);
+            }
+        });
+        cbPrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPrioActionPerformed(evt);
+            }
+        });
+
+        lblFelM.setForeground(new java.awt.Color(255, 0, 51));
+        lblFelM.setText("Alla fält måste vara ifyllda!");
+
+        btnAterstall.setText("Återställ");
+        btnAterstall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAterstallActionPerformed(evt);
             }
         });
 
@@ -169,20 +195,28 @@ public class MalInfoFonster extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pbPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPrioritet)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnStang)
+                        .addComponent(btnTillbaka)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRedigera))
+                        .addComponent(btnSpara)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAterstall))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblMalIkon)
                         .addGap(18, 18, 18)
                         .addComponent(tpMalNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblBeskrivning)
-                    .addComponent(tpMalBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(pbPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblPrioritet)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(cbPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblFelM))))
+                        .addComponent(tpMalBeskrivning, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -197,28 +231,104 @@ public class MalInfoFonster extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tpMalBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPrioritet)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pbPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnStang)
-                    .addComponent(btnRedigera))
+                    .addComponent(lblPrioritet)
+                    .addComponent(cbPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFelM))
+                .addGap(10, 10, 10)
+                .addComponent(pbPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTillbaka)
+                    .addComponent(btnSpara)
+                    .addComponent(btnAterstall))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnStangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStangActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-    }//GEN-LAST:event_btnStangActionPerformed
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        if(osparadeAndringar){
+            new OsparadeAndringarFonster(idb, inloggadAnvandare, "Mål info", this, malNr).setVisible(true);
+        }
+        else{
+            this.setVisible(false);
+            new MalInfoFonster(idb,malNr,inloggadAnvandare).setVisible(true);
+        }
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
-    private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
+    private void cbPrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPrioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbPrioActionPerformed
+
+    private void cbPrioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPrioItemStateChanged
+        String prioritet = cbPrio.getSelectedItem().toString();
+        switch(prioritet){
+                case "Hög":
+                    pbPrioritet.setValue(100);
+                    pbPrioritet.setForeground(Color.RED);
+                    break;
+                case "Medel":
+                    pbPrioritet.setValue(75);
+                    pbPrioritet.setForeground(Color.YELLOW);
+                    break;
+                case "Låg":
+                    pbPrioritet.setValue(25);
+                    pbPrioritet.setForeground(Color.GREEN);
+                    break;
+            }
+        osparadeAndringar = true;
+        btnSpara.setEnabled(true);
+        btnAterstall.setEnabled(true);
+    }//GEN-LAST:event_cbPrioItemStateChanged
+
+    private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+        boolean formatKorrekt = true;
+        
+        String namn = tpMalNamn.getText();
+        String beskrivning = tpMalBeskrivning.getText();
+        if(namn.isEmpty()|| beskrivning.isEmpty()){
+            lblFelM.setVisible(true);
+            formatKorrekt = false;
+        }
+        if(formatKorrekt){
+            String sqlFraga = "UPDATE hallbarhetsmal "
+                    + "SET namn = '" + namn + "', beskrivning = '" 
+                    + beskrivning + "', prioritet = '" + cbPrio.getSelectedItem().toString() + "' "
+                    + "WHERE malnummer = " + malNr;
+            try{
+                idb.update(sqlFraga);
+                setMal();
+            }
+            catch(InfException ex){
+                System.out.println(ex.getMessage());
+            }
+            
         this.setVisible(false);
-        new RedigeraMalInfoFonster(idb, malNr, inloggadAnvandare).setVisible(true);
-    }//GEN-LAST:event_btnRedigeraActionPerformed
+        new MalInfoFonster(idb, malNr, inloggadAnvandare).setVisible(true);
+        }
+    }//GEN-LAST:event_btnSparaActionPerformed
+
+    private void tpMalNamnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tpMalNamnKeyTyped
+        osparadeAndringar = true;
+        btnSpara.setEnabled(true);
+        btnAterstall.setEnabled(true);
+    }//GEN-LAST:event_tpMalNamnKeyTyped
+
+    private void tpMalBeskrivningKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tpMalBeskrivningKeyTyped
+        osparadeAndringar = true;
+        btnSpara.setEnabled(true);
+        btnAterstall.setEnabled(true);
+    }//GEN-LAST:event_tpMalBeskrivningKeyTyped
+
+    private void btnAterstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAterstallActionPerformed
+        osparadeAndringar = false;
+        btnSpara.setEnabled(false);
+        btnAterstall.setEnabled(false);
+        
+        setMal();
+    }//GEN-LAST:event_btnAterstallActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,14 +347,16 @@ public class MalInfoFonster extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MalInfoFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RedigeraMalInfoFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MalInfoFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RedigeraMalInfoFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MalInfoFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RedigeraMalInfoFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MalInfoFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RedigeraMalInfoFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -257,9 +369,12 @@ public class MalInfoFonster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRedigera;
-    private javax.swing.JButton btnStang;
+    private javax.swing.JButton btnAterstall;
+    private javax.swing.JButton btnSpara;
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JComboBox<String> cbPrio;
     private javax.swing.JLabel lblBeskrivning;
+    private javax.swing.JLabel lblFelM;
     private javax.swing.JLabel lblMalIkon;
     private javax.swing.JLabel lblPrioritet;
     private javax.swing.JProgressBar pbPrioritet;

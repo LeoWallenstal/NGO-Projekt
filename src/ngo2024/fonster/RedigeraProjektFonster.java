@@ -12,6 +12,7 @@ import ngo2024.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import javax.swing.ImageIcon;
+
 /**
  *
  * @author james
@@ -21,39 +22,40 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     /**
      * Creates new form RedigeraProjektFonster
      */
-    
     private ArrayList<Anvandare> projektetsHandlaggare;
     private ArrayList<Anvandare> avdelningensHandlaggare;
     private ArrayList<Partner> projektetsPartners;
-    
+
     private Anvandare valdProjektchef;
-    
+
     private AnvandarRegister anvandarregister;
     private PartnerRegister partnerregister;
+
     private ProjektRegister projektregister;
     
+
     private final Projekt attRedigera;
     private final ProjektFonster forstaFonstret;
     private ProjektInfoFonster forraFonstret;
     private final Anvandare inloggadAnvandare;
     private final InfDB idb;
+
     private ArrayList<Projekt> attVisa;
     
     
-    
+
     public RedigeraProjektFonster(Anvandare inloggadAnvandare, Projekt attRedigera,
-            ProjektInfoFonster forraFonstret, ProjektFonster forstaFonstret, InfDB idb)    
-    {
+            ProjektInfoFonster forraFonstret, ProjektFonster forstaFonstret, InfDB idb) {
         initComponents();
         andringarSparadeLbl.setVisible(false);
         this.setLocationRelativeTo(null);
         this.forstaFonstret = forstaFonstret;
         this.forraFonstret = forraFonstret;
-        
+
         this.idb = idb;
         anvandarregister = new AnvandarRegister(idb);
         anvandarregister.hamtaAvdelningensAnvandare(attRedigera.getProjektchef().getAvdelningsID());
-        
+
         partnerregister = new PartnerRegister(idb);
         projektregister = new ProjektRegister(idb);
         attVisa = projektregister.getAllaProjekt();
@@ -64,14 +66,12 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         this.avdelningensHandlaggare = getAvdelningensHandlaggare();
         valdProjektchef = attRedigera.getProjektchef();
         initProjektchefCB();
-        
-        
+
         initTillgangligaPartners();
         visaTillgangligaPartners();
         visaTillgangligaHandlaggare();
-        initFalt();  
-        
-            
+        initFalt();
+
     }
 
     /**
@@ -233,12 +233,22 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 laggTillPartnerBtnMouseClicked(evt);
             }
         });
+        laggTillPartnerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laggTillPartnerBtnActionPerformed(evt);
+            }
+        });
 
         taBortPartnerBtn.setText("Ta bort");
         taBortPartnerBtn.setEnabled(false);
         taBortPartnerBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 taBortPartnerBtnMouseClicked(evt);
+            }
+        });
+        taBortPartnerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taBortPartnerBtnActionPerformed(evt);
             }
         });
 
@@ -273,12 +283,22 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
                 laggTillHandlaggareBtnMouseClicked(evt);
             }
         });
+        laggTillHandlaggareBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laggTillHandlaggareBtnActionPerformed(evt);
+            }
+        });
 
         taBortHandlaggareBtn.setText("Ta bort");
         taBortHandlaggareBtn.setEnabled(false);
         taBortHandlaggareBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 taBortHandlaggareBtnMouseClicked(evt);
+            }
+        });
+        taBortHandlaggareBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taBortHandlaggareBtnActionPerformed(evt);
             }
         });
 
@@ -438,19 +458,18 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private ArrayList<Anvandare> getAvdelningensHandlaggare(){
+    private ArrayList<Anvandare> getAvdelningensHandlaggare() {
         ArrayList<Anvandare> avdelningensHandlaggare = new ArrayList<>();
-        for(Anvandare enAnstalld : anvandarregister.getLista()){
-            if(enAnstalld.isHandlaggare()){
-                if(!attRedigera.harHandlaggare(enAnstalld.getAnstallningsID()))
-                {
+        for (Anvandare enAnstalld : anvandarregister.getLista()) {
+            if (enAnstalld.isHandlaggare()) {
+                if (!attRedigera.harHandlaggare(enAnstalld.getAnstallningsID())) {
                     avdelningensHandlaggare.add(enAnstalld);
                 }
             }
         }
         return avdelningensHandlaggare;
     }
-    
+
     private void tillbakaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tillbakaButtonActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_tillbakaButtonActionPerformed
@@ -460,7 +479,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         tillgangligaPartnersList.clearSelection();
         projektetsHandlaggareList.clearSelection();
         tillgangligaHandlaggareList.clearSelection();
-        
+
         laggTillPartnerBtn.setEnabled(false);
         taBortPartnerBtn.setEnabled(false);
         laggTillHandlaggareBtn.setEnabled(false);
@@ -478,141 +497,101 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tillgangligaPartnersListMouseClicked
 
     private void laggTillPartnerBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillPartnerBtnMouseClicked
-        if(!projektetsPartners.isEmpty()){
-            projektetsPartnersList.setEnabled(true);
-        }
-        
-        int i = tillgangligaPartnersList.getSelectedIndex();
-        projektetsPartners.add(partnerregister.get(i));
-        partnerregister.remove(i);
-        refreshaPartnerListor();
-        
-        if(!attRedigera.partnersEquals(projektetsPartners)){
-            sparaBtn.setEnabled(true);
-            andringarSparadeLbl.setVisible(false);   
-        }
-        else{
-            sparaBtn.setEnabled(false);
-        }
+
     }//GEN-LAST:event_laggTillPartnerBtnMouseClicked
 
     private void taBortPartnerBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortPartnerBtnMouseClicked
-        int i = projektetsPartnersList.getSelectedIndex();
-        partnerregister.add(projektetsPartners.get(i));
-        projektetsPartners.remove(i);
-        refreshaPartnerListor();
         
-        if(!attRedigera.partnersEquals(projektetsPartners)){
-            sparaBtn.setEnabled(true);
-            andringarSparadeLbl.setVisible(false);
-        }
-        else{
-            sparaBtn.setEnabled(false);
-        }
     }//GEN-LAST:event_taBortPartnerBtnMouseClicked
 
     private void projektnamnInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_projektnamnInputKeyReleased
-        if(!projektnamnInput.getText().isEmpty() && 
-                !projektnamnInput.getText().equals(attRedigera.getNamn()))
-        {
+        if (!projektnamnInput.getText().isEmpty()
+                && !projektnamnInput.getText().equals(attRedigera.getNamn())) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-        }
-        else{
+        } else {
             sparaBtn.setEnabled(false);
         }
     }//GEN-LAST:event_projektnamnInputKeyReleased
 
     private void beskrivningInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_beskrivningInputKeyReleased
-        if(!beskrivningInput.getText().isEmpty() && 
-                !beskrivningInput.getText().equals(attRedigera.getBeskrivning()))
-        {
+        if (!beskrivningInput.getText().isEmpty()
+                && !beskrivningInput.getText().equals(attRedigera.getBeskrivning())) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-        }
-        else{
+        } else {
             sparaBtn.setEnabled(false);
         }
     }//GEN-LAST:event_beskrivningInputKeyReleased
 
     private void projektchefCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projektchefCBActionPerformed
-        if(!projektchefCB.getSelectedItem().equals(attRedigera.getProjektchef().getFullNamn())){
+        if (!projektchefCB.getSelectedItem().equals(attRedigera.getProjektchef().getFullNamn())) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-            
+
 //            int i = projektchefCB.getSelectedIndex();
 //            projektetsHandlaggare.add(valdProjektchef);
 //            valdProjektchef = projektetsHandlaggare.get(i);
 //            projektetsHandlaggare.remove(i);
 //            refreshaHandlaggareListor();
-        }
-        else{
+        } else {
             sparaBtn.setEnabled(false);
         }
     }//GEN-LAST:event_projektchefCBActionPerformed
 
     private void prioritetCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prioritetCBActionPerformed
-        if(!prioritetCB.getSelectedItem().equals(attRedigera.getPrioritet())){
+        if (!prioritetCB.getSelectedItem().equals(attRedigera.getPrioritet())) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-        }
-        else{
+        } else {
             sparaBtn.setEnabled(false);
         }
     }//GEN-LAST:event_prioritetCBActionPerformed
 
     private void statusCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusCBActionPerformed
-        if(!statusCB.getSelectedItem().equals(attRedigera.getStatus())){
+        if (!statusCB.getSelectedItem().equals(attRedigera.getStatus())) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-        }
-        else{
+        } else {
             sparaBtn.setEnabled(false);
         }
     }//GEN-LAST:event_statusCBActionPerformed
 
     private void kostnadInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kostnadInputKeyReleased
-        if(!kostnadInput.getText().isEmpty() && 
-                !kostnadInput.getText().equals(attRedigera.getKostnad()))
-        {
+        if (!kostnadInput.getText().isEmpty()
+                && !kostnadInput.getText().equals(attRedigera.getKostnad())) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-        }
-        else{
+        } else {
             sparaBtn.setEnabled(false);
         }
     }//GEN-LAST:event_kostnadInputKeyReleased
 
     private void startdatumInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_startdatumInputKeyReleased
-        if(!startdatumInput.getText().isEmpty() && 
-                !startdatumInput.getText().equals(attRedigera.getStartdatum()))
-        {
+        if (!startdatumInput.getText().isEmpty()
+                && !startdatumInput.getText().equals(attRedigera.getStartdatum())) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-        }
-        else{
+        } else {
             sparaBtn.setEnabled(false);
         }
     }//GEN-LAST:event_startdatumInputKeyReleased
 
     private void slutdatumInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_slutdatumInputKeyReleased
-        if(!slutdatumInput.getText().isEmpty() && 
-                !slutdatumInput.getText().equals(attRedigera.getSlutdatum()))
-        {
+        if (!slutdatumInput.getText().isEmpty()
+                && !slutdatumInput.getText().equals(attRedigera.getSlutdatum())) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-        }
-        else{
+        } else {
             sparaBtn.setEnabled(false);
         }
     }//GEN-LAST:event_slutdatumInputKeyReleased
 
     private void sparaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sparaBtnMouseClicked
         attRedigera.setProjektnamn(projektnamnInput.getText());
-        if(projektchefCB.getSelectedItem().equals("Ingen")){
+        if (projektchefCB.getSelectedItem().equals("Ingen")) {
             attRedigera.setProjektchefsID(null);
-        }
-        else{
+        } else {
             int i = projektchefCB.getSelectedIndex() - 2;
             attRedigera.setProjektchefsID(avdelningensHandlaggare.get(i).getAnstallningsID());
         }
@@ -628,64 +607,39 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         attRedigera.setKostnad(kostnadInput.getText());
         attRedigera.setStatus((String)statusCB.getSelectedItem());
         attRedigera.setPrioritet((String)prioritetCB.getSelectedItem());
+
         attRedigera.setPartners(projektetsPartners);
         attRedigera.setHandlaggare(projektetsHandlaggare);
         //Inte kunna ändra land... eller??
         attRedigera.updateProjektDB();
         andringarSparadeLbl.setVisible(true);
         sparaBtn.setEnabled(false);
-        
+
         forraFonstret.refreshProjektInfo();
-        
+
         projektregister.refreshaAllaProjekt();
         attVisa = projektregister.getAllaProjekt();
         forstaFonstret.setAttVisa(attVisa);
         forstaFonstret.visaData(attVisa);
+
     }//GEN-LAST:event_sparaBtnMouseClicked
 
     private void tillbakaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillbakaButtonMouseClicked
         //Om sparaknappen är enabled har man osparade ändringar.
-        if(sparaBtn.isEnabled()){
+        if (sparaBtn.isEnabled()) {
             //new OsparadeAndringarFonster(idb, inloggadAnvandare, "Projekt").setVisible(true);
             //nånting nånting osparade ändringar...
-        }
-        else{
+        } else {
             this.setVisible(false);
         }
     }//GEN-LAST:event_tillbakaButtonMouseClicked
 
     private void laggTillHandlaggareBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillHandlaggareBtnMouseClicked
-        if(!projektetsHandlaggare.isEmpty()){
-            projektetsHandlaggareList.setEnabled(true);
-        }
         
-        int i = tillgangligaHandlaggareList.getSelectedIndex();
-        projektetsHandlaggare.add(avdelningensHandlaggare.get(i));
-        avdelningensHandlaggare.remove(i);
-        refreshaHandlaggareListor();
-        
-        if(!attRedigera.handlaggareEquals(projektetsHandlaggare)){
-            sparaBtn.setEnabled(true);
-            andringarSparadeLbl.setVisible(false);   
-        }
-        else{
-            sparaBtn.setEnabled(false);
-        }
     }//GEN-LAST:event_laggTillHandlaggareBtnMouseClicked
 
     private void taBortHandlaggareBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortHandlaggareBtnMouseClicked
-        int i = projektetsHandlaggareList.getSelectedIndex();
-        avdelningensHandlaggare.add(projektetsHandlaggare.get(i));
-        projektetsHandlaggare.remove(i);
-        refreshaHandlaggareListor();
         
-        if(!attRedigera.handlaggareEquals(projektetsHandlaggare)){
-            sparaBtn.setEnabled(true);
-            andringarSparadeLbl.setVisible(false);
-        }
-        else{
-            sparaBtn.setEnabled(false);
-        }
     }//GEN-LAST:event_taBortHandlaggareBtnMouseClicked
 
     private void projektetsHandlaggareListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projektetsHandlaggareListMouseClicked
@@ -698,86 +652,146 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         taBortHandlaggareBtn.setEnabled(false);
     }//GEN-LAST:event_tillgangligaHandlaggareListMouseClicked
 
-    private void initProjektchefCB(){
+    private void laggTillPartnerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laggTillPartnerBtnActionPerformed
+        if (!projektetsPartners.isEmpty()) {
+            projektetsPartnersList.setEnabled(true);
+        }
+
+        int i = tillgangligaPartnersList.getSelectedIndex();
+        projektetsPartners.add(partnerregister.get(i));
+        partnerregister.remove(i);
+        refreshaPartnerListor();
+
+        if (!attRedigera.partnersEquals(projektetsPartners)) {
+            sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
+        } else {
+            sparaBtn.setEnabled(false);
+        }    }//GEN-LAST:event_laggTillPartnerBtnActionPerformed
+
+    private void laggTillHandlaggareBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laggTillHandlaggareBtnActionPerformed
+        if (!projektetsHandlaggare.isEmpty()) {
+            projektetsHandlaggareList.setEnabled(true);
+        }
+
+        int i = tillgangligaHandlaggareList.getSelectedIndex();
+        projektetsHandlaggare.add(avdelningensHandlaggare.get(i));
+        avdelningensHandlaggare.remove(i);
+        refreshaHandlaggareListor();
+
+        if (!attRedigera.handlaggareEquals(projektetsHandlaggare)) {
+            sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
+        } else {
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_laggTillHandlaggareBtnActionPerformed
+
+    private void taBortPartnerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taBortPartnerBtnActionPerformed
+        int i = projektetsPartnersList.getSelectedIndex();
+        partnerregister.add(projektetsPartners.get(i));
+        projektetsPartners.remove(i);
+        refreshaPartnerListor();
+
+        if (!attRedigera.partnersEquals(projektetsPartners)) {
+            sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
+        } else {
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_taBortPartnerBtnActionPerformed
+
+    private void taBortHandlaggareBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taBortHandlaggareBtnActionPerformed
+        int i = projektetsHandlaggareList.getSelectedIndex();
+        avdelningensHandlaggare.add(projektetsHandlaggare.get(i));
+        projektetsHandlaggare.remove(i);
+        refreshaHandlaggareListor();
+
+        if (!attRedigera.handlaggareEquals(projektetsHandlaggare)) {
+            sparaBtn.setEnabled(true);
+            andringarSparadeLbl.setVisible(false);
+        } else {
+            sparaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_taBortHandlaggareBtnActionPerformed
+
+    private void initProjektchefCB() {
         projektchefCB.addItem("Ingen");
-        
-        for(Anvandare enAnvandare : avdelningensHandlaggare){
+
+        for (Anvandare enAnvandare : avdelningensHandlaggare) {
             projektchefCB.addItem(enAnvandare.getFullNamn());
         }
     }
-    
-    private int getProjektchefIndex(){
+
+    private int getProjektchefIndex() {
         String projektchef = attRedigera.getProjektchef().getFullNamn();
-        
-        for(int i = 0; i<avdelningensHandlaggare.size(); i++){
-            if(avdelningensHandlaggare.get(i).getFullNamn().equals(projektchef)){
+
+        for (int i = 0; i < avdelningensHandlaggare.size(); i++) {
+            if (avdelningensHandlaggare.get(i).getFullNamn().equals(projektchef)) {
                 return i;
             }
         }
         System.out.println(projektchef + " finns inte... ojdå.");
         return -1;
     }
-    
-    private int getPrioritetIndex(){
-        switch(attRedigera.getPrioritet()){
+
+    private int getPrioritetIndex() {
+        switch (attRedigera.getPrioritet()) {
             case "Låg":
                 return 1;
             case "Medel":
                 return 2;
             case "Hög":
                 return 3;
-            default:
-            {
+            default: {
                 System.out.println("getPrioritetIndex() failed.");
                 return -1;
-            }   
+            }
         }
     }
-    
-    private int getStatusIndex(){
-        switch(attRedigera.getStatus()){
+
+    private int getStatusIndex() {
+        switch (attRedigera.getStatus()) {
             case "Planerat":
                 return 1;
             case "Pågående":
                 return 2;
             case "Avslutat":
                 return 3;
-            default:
-            {
+            default: {
                 System.out.println("getStatusIndex() failed.");
                 return -1;
             }
         }
     }
-    
-    private void initTillgangligaPartners(){
+
+    private void initTillgangligaPartners() {
         Iterator<Partner> it = partnerregister.getLista().iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             Partner enPartner = it.next();
-            if(attRedigera.harPartner(enPartner.getPartnerID())){
+            if (attRedigera.harPartner(enPartner.getPartnerID())) {
                 it.remove();
             }
         }
     }
-    
-    private void visaTillgangligaPartners(){
+
+    private void visaTillgangligaPartners() {
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        for(Partner enPartner : partnerregister.getLista()){
+        for (Partner enPartner : partnerregister.getLista()) {
             listModell.addElement(enPartner.getNamn());
         }
         tillgangligaPartnersList.setModel(listModell);
     }
-    
-    
-    private void visaTillgangligaHandlaggare(){
+
+    private void visaTillgangligaHandlaggare() {
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        for(Anvandare enHandlaggare : avdelningensHandlaggare){
+        for (Anvandare enHandlaggare : avdelningensHandlaggare) {
             listModell.addElement(enHandlaggare.getFullNamn());
         }
         tillgangligaHandlaggareList.setModel(listModell);
     }
-    
-    private void initFalt(){
+
+    private void initFalt() {
         projektnamnInput.setText(attRedigera.getNamn());
         beskrivningInput.setText(attRedigera.getBeskrivning());
         projektchefCB.setSelectedIndex(getProjektchefIndex() + 2); // + 2 För att skippa "välj" och "ingen"
@@ -789,81 +803,79 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         initProjektetsPartnerLista();
         initProjektetsHandlaggareLista();
     }
-    
-    private void initProjektetsPartnerLista(){
+
+    private void initProjektetsPartnerLista() {
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        if(attRedigera.getPartnersID().isEmpty()){
+        if (attRedigera.getPartnersID().isEmpty()) {
             projektetsPartnersList.setEnabled(false);
             listModell.addElement("Inga partners kopplade till projektet.");
-        }
-        else{
-            for(Partner enPartner : projektetsPartners){
+        } else {
+            for (Partner enPartner : projektetsPartners) {
                 listModell.addElement(enPartner.getNamn());
             }
         }
         projektetsPartnersList.setModel(listModell);
     }
-    
-    private void initProjektetsHandlaggareLista(){
+
+    private void initProjektetsHandlaggareLista() {
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        if(attRedigera.getPartnersID().isEmpty()){
+        if (attRedigera.getPartnersID().isEmpty()) {
             projektetsHandlaggareList.setEnabled(false);
             listModell.addElement("Inga handläggare kopplade till projektet.");
-        }
-        else{
-            for(Anvandare enHandlaggare : attRedigera.getHandlaggare()){
+        } else {
+            for (Anvandare enHandlaggare : attRedigera.getHandlaggare()) {
                 listModell.addElement(enHandlaggare.getFullNamn());
             }
         }
         projektetsHandlaggareList.setModel(listModell);
     }
-    
-    private void rensaPartnerListor(){
+
+    private void rensaPartnerListor() {
         //Tar bort datan
         projektetsPartnersList.setModel(new DefaultListModel<>());
         tillgangligaPartnersList.setModel(new DefaultListModel<>());
         //Tar bort datan från fönstret också.
         projektetsPartnersList.repaint();
         tillgangligaPartnersList.repaint();
-    };
+    }
+
+    ;
     
-    private void refreshaPartnerListor(){
+    private void refreshaPartnerListor() {
         rensaPartnerListor();
         refreshPartnerLista();
         refreshTillgangligaPartnersLista();
     }
-    
-    private void refreshPartnerLista(){
-        
+
+    private void refreshPartnerLista() {
+
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        if(projektetsPartners.isEmpty()){
+        if (projektetsPartners.isEmpty()) {
             listModell.addElement("Inga partners kopplade till projektet.");
             projektetsPartnersList.setEnabled(false);
-        }
-        else{
-            for(Partner enPartner : projektetsPartners){
+        } else {
+            for (Partner enPartner : projektetsPartners) {
                 listModell.addElement(enPartner.getNamn());
             }
         }
         projektetsPartnersList.setModel(listModell);
     }
-    
-    private void refreshTillgangligaPartnersLista(){
-        
+
+    private void refreshTillgangligaPartnersLista() {
+
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        if(partnerregister.getLista().isEmpty()){
+        if (partnerregister.getLista().isEmpty()) {
             tillgangligaPartnersList.setEnabled(false);
             listModell.addElement("");
-        }
-        else{
-            for(Partner enPartner : partnerregister.getLista()){
+        } else {
+            for (Partner enPartner : partnerregister.getLista()) {
                 listModell.addElement(enPartner.getNamn());
             }
         }
         tillgangligaPartnersList.setModel(listModell);
     }
-    
-    private void rensaHandlaggareListor(){
+
+    private void rensaHandlaggareListor() {
         //Tar bort datan
         projektetsHandlaggareList.setModel(new DefaultListModel<>());
         tillgangligaHandlaggareList.setModel(new DefaultListModel<>());
@@ -871,41 +883,39 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         projektetsHandlaggareList.repaint();
         tillgangligaHandlaggareList.repaint();
     }
-    
-    private void refreshaHandlaggareListor(){
+
+    private void refreshaHandlaggareListor() {
         rensaHandlaggareListor();
         refreshHandlaggareLista();
         refreshTillgangligaHandlaggareLista();
     }
-    
-    private void refreshHandlaggareLista(){
+
+    private void refreshHandlaggareLista() {
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        if(projektetsHandlaggare.isEmpty()){
+        if (projektetsHandlaggare.isEmpty()) {
             listModell.addElement("Inga partners kopplade till projektet.");
             projektetsHandlaggareList.setEnabled(false);
-        }
-        else{
-            for(Anvandare enHandlaggare : projektetsHandlaggare){
+        } else {
+            for (Anvandare enHandlaggare : projektetsHandlaggare) {
                 listModell.addElement(enHandlaggare.getFullNamn());
             }
         }
         projektetsHandlaggareList.setModel(listModell);
     }
-    
-    private void refreshTillgangligaHandlaggareLista(){
+
+    private void refreshTillgangligaHandlaggareLista() {
         DefaultListModel<String> listModell = new DefaultListModel<>();
-        if(avdelningensHandlaggare.isEmpty()){
+        if (avdelningensHandlaggare.isEmpty()) {
             tillgangligaHandlaggareList.setEnabled(false);
             listModell.addElement("");
-        }
-        else{
-            for(Anvandare enHandlaggare : avdelningensHandlaggare){
+        } else {
+            for (Anvandare enHandlaggare : avdelningensHandlaggare) {
                 listModell.addElement(enHandlaggare.getFullNamn());
             }
         }
         tillgangligaHandlaggareList.setModel(listModell);
     }
-    
+
     /**
      * @param args the command line arguments
      */

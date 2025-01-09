@@ -453,6 +453,7 @@ public class ProjektFonster extends javax.swing.JFrame {
             sokfalt.setText("");
             sokfalt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         } 
+
     }//GEN-LAST:event_sokfaltMouseClicked
 
     
@@ -486,6 +487,7 @@ public class ProjektFonster extends javax.swing.JFrame {
     public void visaData(){
         rensaDataFonster();
         ArrayList<Projekt> attVisa = projektregister.hamtaAllaProjekt();
+      
         for(Projekt ettProjekt : attVisa){
             if(ettProjekt.getProjektchefID() == null){
                 tabell.addRow(new Object[]{ettProjekt.getNamn(), 
@@ -497,6 +499,8 @@ public class ProjektFonster extends javax.swing.JFrame {
                 ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
                 ettProjekt.getStartdatum()} );
             }
+
+            
         }
     }
     

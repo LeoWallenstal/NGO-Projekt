@@ -9,6 +9,7 @@ import ngo2024.Land;
 import ngo2024.Anvandare;
 import oru.inf.InfDB;
 import javax.swing.ImageIcon;
+
 /**
  *
  * @author Gastinlogg
@@ -18,23 +19,23 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
     private InfDB idb;
     private Anvandare inloggadAnvandare;
     private String redigeringslage;
-    
+
     private Partner aktuellPartner;
     private RedigeraPartnerInfoFonster redigeraPartnerFonstret;
-    
+
     private RedigeraLandFonster redigeraLandFonstret;
     private LandFonster landFonstret;
     private Land aktuelltLand;
     private LaggTillLandFonster laggTillLandFonstret;
-    
+
     private RedigeraMinaUppgifterFonster redigeraUppgifterFonstret;
-    
+
     private RedigeraAvdelningFonster redigeraAvdelningFonstret;
-    
-    
-    
-    
-    
+
+    private MalInfoFonster malInfoFonster;
+    private RedigeraMalInfoFonster redigeraMalInfoFonster;
+    private int malNr;
+
     /**
      * Creates new form OsparadeAndringar
      */
@@ -47,7 +48,7 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+
     //Redigera Avdelning
     public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, String redigeringslage, RedigeraAvdelningFonster redigeraAvdelningFonstret) {
         this.redigeringslage = redigeringslage;
@@ -57,9 +58,9 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+
     //Redigera PartnerInfo
-    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, Partner aktuellPartner, String redigeringslage, RedigeraPartnerInfoFonster redigeraPartnerFonstret){
+    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, Partner aktuellPartner, String redigeringslage, RedigeraPartnerInfoFonster redigeraPartnerFonstret) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         this.redigeringslage = redigeringslage;
@@ -68,9 +69,9 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+
     //Redigera LandInfo
-    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, Land aktuelltLand, LandFonster landFonstret, String redigeringslage, RedigeraLandFonster redigeraLandFonstret){
+    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, Land aktuelltLand, LandFonster landFonstret, String redigeringslage, RedigeraLandFonster redigeraLandFonstret) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         this.aktuelltLand = aktuelltLand;
@@ -80,14 +81,25 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+
     //Lägg till Land
-    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, LandFonster landFonstret, String redigeringslage, LaggTillLandFonster laggTillLandFonstret){
+    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, LandFonster landFonstret, String redigeringslage, LaggTillLandFonster laggTillLandFonstret) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         this.landFonstret = landFonstret;
         this.redigeringslage = redigeringslage;
         this.laggTillLandFonstret = laggTillLandFonstret;
+        initComponents();
+        setLocationRelativeTo(null);
+    }
+
+    //Redigera målinfo
+    public OsparadeAndringarFonster(InfDB idb, Anvandare inloggadAnvandare, String redigeringslage, RedigeraMalInfoFonster redigeraMalInfoFonster, int malNr) {
+        this.idb = idb;
+        this.inloggadAnvandare = inloggadAnvandare;
+        this.redigeringslage = redigeringslage;
+        this.redigeraMalInfoFonster = redigeraMalInfoFonster;
+        this.malNr = malNr;
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -168,23 +180,22 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
 
     private void btnFortsattTillMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFortsattTillMinaUppgifterActionPerformed
         this.setVisible(false);
-        if(redigeringslage.equals("Mina Uppgifter")){
-            new MinaUppgifterFonster(idb,inloggadAnvandare).setVisible(true);
+        if (redigeringslage.equals("Mina Uppgifter")) {
+            new MinaUppgifterFonster(idb, inloggadAnvandare).setVisible(true);
             redigeraUppgifterFonstret.setVisible(false);
-        }
-        else if(redigeringslage.equals("Avdelning")){
-            new MenyFonster(idb,inloggadAnvandare).setVisible(true);
+        } else if (redigeringslage.equals("Avdelning")) {
+            new MenyFonster(idb, inloggadAnvandare).setVisible(true);
             redigeraAvdelningFonstret.setVisible(false);
-        }
-        else if(redigeringslage.equals("Partner")){
-            new PartnerInfoFonster(inloggadAnvandare, aktuellPartner, idb).setVisible(true); 
+        } else if (redigeringslage.equals("Partner")) {
+            new PartnerInfoFonster(inloggadAnvandare, aktuellPartner, idb).setVisible(true);
             redigeraPartnerFonstret.setVisible(false);
-        }
-        else if(redigeringslage.equals("Redigera Land")){
+        } else if (redigeringslage.equals("Redigera Land")) {
             redigeraLandFonstret.setVisible(false);
-        }
-        else if(redigeringslage.equals("Lägg till Land")){
+        } else if (redigeringslage.equals("Lägg till Land")) {
             laggTillLandFonstret.setVisible(false);
+        } else if (redigeringslage.equals("Mål info")) {
+            new MalInfoFonster(idb,malNr,inloggadAnvandare).setVisible(true);
+            redigeraMalInfoFonster.setVisible(false);
         }
     }//GEN-LAST:event_btnFortsattTillMinaUppgifterActionPerformed
 
