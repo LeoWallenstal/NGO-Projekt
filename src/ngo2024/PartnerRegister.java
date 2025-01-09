@@ -82,7 +82,7 @@ public class PartnerRegister {
     }
     
     public void hamtaAllaPartners(){
-        String sqlFraga = "SELECT * FROM partner";
+        String sqlFraga = "SELECT pid FROM partner";
         ArrayList<HashMap<String, String>> allaPartnersMap = null;
         
         ArrayList<Partner> allaPartners = new ArrayList<>();
@@ -97,7 +97,7 @@ public class PartnerRegister {
         for(HashMap<String, String> enPartner : allaPartnersMap){
             for(String key : enPartner.keySet()){
                 String partnerID = enPartner.get(key);
-                allaPartners.add(new Partner(enPartner, idb));
+                allaPartners.add(new Partner(partnerID, idb));
             }
         }
         this.allaPartners = allaPartners;

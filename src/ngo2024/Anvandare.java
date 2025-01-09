@@ -22,6 +22,30 @@ public class Anvandare {
     private boolean admin = false;
     private boolean handlaggare = false;
     
+    private String fornamn;
+    private String efternamn;
+    private String adress;
+    private String telefon;
+    private String avdelningsId;
+    private String anstallningsdatum;
+    private String epost;
+    private String losenord;
+    private String aid;
+    
+    private Avdelning avdelning;
+    
+    public Anvandare(HashMap<String,String> enAnvandare, InfDB idb){
+        this.idb = idb;
+        fornamn = enAnvandare.get("fornamn");
+        efternamn = enAnvandare.get("efternamn");
+        adress = enAnvandare.get("adress");
+        telefon = enAnvandare.get("telefon");
+        avdelningsId = enAnvandare.get("avdelning");
+        anstallningsdatum = enAnvandare.get("anstallningsdatum");
+        epost = enAnvandare.get("epost");
+        losenord = enAnvandare.get("losenord");
+        aid = enAnvandare.get("aid");
+    }
     
     public Anvandare(InfDB idb, String aid) {
         this.idb = idb;

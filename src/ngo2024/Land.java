@@ -20,27 +20,8 @@ public class Land {
     private String tidszon;
     private String politiskStruktur;
     private String ekonomi;
-    private final InfDB idb;
+    private InfDB idb;
     
-    
-    public Land(HashMap<String, String> ettLand, InfDB idb){
-        this.idb = idb;
-        this.landID = ettLand.get("lid");
-        this.namn = ettLand.get("namn");
-        this.sprak = ettLand.get("sprak");
-        this.valuta = ettLand.get("valuta");
-        this.tidszon = ettLand.get("tidszon");
-        this.politiskStruktur = ettLand.get("politisk_struktur");
-        this.ekonomi = ettLand.get("ekonomi");
-    }
-    
-    
-    
-    /**
-     *
-     * @param landID Ett landID
-     * @param idb Ett objekt som interagerar med databasen
-     */
     public Land(String landID, InfDB idb){
         this.idb = idb;
         HashMap<String, String> ettLand = null;
@@ -53,21 +34,73 @@ public class Land {
             System.out.println(ex.getMessage() + "i Land.java, Land()");
         }
         
-        this.landID = ettLand.get("lid");
-        this.namn = ettLand.get("namn");
-        this.sprak = ettLand.get("sprak");
-        this.valuta = ettLand.get("valuta");
-        this.tidszon = ettLand.get("tidszon");
-        this.politiskStruktur = ettLand.get("politisk_struktur");
-        this.ekonomi = ettLand.get("ekonomi");
+        if(ettLand != null){
+            for(String key : ettLand.keySet()){
+                switch(key){
+                    case "lid":
+                        this.landID = ettLand.get("lid");
+                        break;
+                    case "namn":
+                        namn = ettLand.get("namn");
+                        break;
+                    case "sprak":
+                        sprak = ettLand.get("sprak");
+                        break;
+                    case "valuta":
+                        valuta = ettLand.get("valuta");
+                        break;
+                    case "tidszon":
+                        tidszon = ettLand.get("tidszon");
+                        break;
+                    case "politisk_struktur":
+                        politiskStruktur = ettLand.get("politisk_struktur");
+                        break;
+                        case "ekonomi":
+                        ekonomi = ettLand.get("ekonomi");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else{
+            System.out.println("Nånting gick fel, kolla IDT?");
+            //Byta detta felmeddelande mot något annat senare
+        } 
     }
     
-    /**
-     * En konstruktor för att skapa ett tomt Land objekt,
-     * som t.ex när man ska registrera ett nytt land.
-     * @param idb Ett objekt som interagerar med databasen
-     * 
-     */
+    public Land(HashMap<String, String> ettLand, InfDB idb){
+        this.idb = idb;
+        
+        for(String key : ettLand.keySet()){
+                switch(key){
+                    case "lid":
+                        landID = ettLand.get("lid");
+                        break;
+                    case "namn":
+                        namn = ettLand.get("namn");
+                        break;
+                    case "sprak":
+                        sprak = ettLand.get("sprak");
+                        break;
+                    case "valuta":
+                        valuta = ettLand.get("valuta");
+                        break;
+                    case "tidszon":
+                        tidszon = ettLand.get("tidszon");
+                        break;
+                    case "politisk_struktur":
+                        politiskStruktur = ettLand.get("politisk_struktur");
+                        break;
+                    case "ekonomi":
+                        ekonomi = ettLand.get("ekonomi");
+                        break;
+                    default:
+                        break;
+                }
+            }
+    }
+    
     public Land(InfDB idb){
         this.idb = idb;
     }
