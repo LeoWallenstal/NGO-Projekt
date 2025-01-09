@@ -44,7 +44,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         lblAdressFelM.setVisible(false);
         lblEpostFelM.setVisible(false);
         lblTelefonNrFelM.setVisible(false);
-        
+        pfLosenord.setEchoChar('*');
     }
     
     private void updateDB(){
@@ -85,8 +85,8 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         String ePost = inloggadAnvandare.getEPost();
         tfEpost.setText(ePost);
         String losenord = inloggadAnvandare.getLosenord();
-        tfLosenord.setText(losenord);
-        tfLosenord.enable(false);
+        pfLosenord.setText(losenord);
+        pfLosenord.enable(false);
         String telNr = inloggadAnvandare.getTelNr();
         tfTelefonnr.setText(telNr);
         String AID = inloggadAnvandare.getAnstallningsID();
@@ -118,7 +118,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        tfLosenord = new javax.swing.JPasswordField();
+        pfLosenord = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         tfTelefonnr = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -142,6 +142,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         lblAdressFelM = new javax.swing.JLabel();
         lblEpostFelM = new javax.swing.JLabel();
         lblTelefonNrFelM = new javax.swing.JLabel();
+        tbtnVisaLosenord = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Ändra uppgifter");
@@ -150,9 +151,9 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
 
         jLabel2.setText("AnställningsID:");
 
-        tfLosenord.addActionListener(new java.awt.event.ActionListener() {
+        pfLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfLosenordActionPerformed(evt);
+                pfLosenordActionPerformed(evt);
             }
         });
 
@@ -241,6 +242,13 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         lblTelefonNrFelM.setForeground(new java.awt.Color(255, 0, 51));
         lblTelefonNrFelM.setText("Telefonnumret måste anges i formatet xxx-xxx-xxxx, där x är en siffra.");
 
+        tbtnVisaLosenord.setText("Visa");
+        tbtnVisaLosenord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbtnVisaLosenordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -265,7 +273,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
                             .addComponent(lblFornamn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfLosenord)
+                            .addComponent(pfLosenord)
                             .addComponent(tfTelefonnr)
                             .addComponent(tfAID)
                             .addComponent(tfAnstallningsdatum)
@@ -280,7 +288,8 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
                             .addComponent(lblEfternamnFelM)
                             .addComponent(lblAdressFelM)
                             .addComponent(lblEpostFelM)
-                            .addComponent(lblTelefonNrFelM))))
+                            .addComponent(lblTelefonNrFelM)
+                            .addComponent(tbtnVisaLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(214, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -309,7 +318,8 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLosenord)
-                    .addComponent(tfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tbtnVisaLosenord))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -327,7 +337,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tfAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnSparaNyaUppgifter))
@@ -337,9 +347,9 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLosenordActionPerformed
+    private void pfLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfLosenordActionPerformed
         
-    }//GEN-LAST:event_tfLosenordActionPerformed
+    }//GEN-LAST:event_pfLosenordActionPerformed
 
     private void btnSparaNyaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaNyaUppgifterActionPerformed
         //metod för att ändra uppgifter
@@ -437,6 +447,17 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
         btnSparaNyaUppgifter.setEnabled(true);
     }//GEN-LAST:event_tfTelefonnrKeyTyped
 
+    private void tbtnVisaLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnVisaLosenordActionPerformed
+        if (pfLosenord.getEchoChar() == '*') {
+            pfLosenord.setEchoChar((char) 0);
+            tbtnVisaLosenord.setText("Dölj");
+        }       
+        else {
+            pfLosenord.setEchoChar('*'); 
+            tbtnVisaLosenord.setText("Visa");
+        }
+    }//GEN-LAST:event_tbtnVisaLosenordActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -490,6 +511,8 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     private javax.swing.JLabel lblFornamnFelM;
     private javax.swing.JLabel lblLosenord;
     private javax.swing.JLabel lblTelefonNrFelM;
+    private javax.swing.JPasswordField pfLosenord;
+    private javax.swing.JToggleButton tbtnVisaLosenord;
     private javax.swing.JTextField tfAID;
     private javax.swing.JTextField tfAdress;
     private javax.swing.JTextField tfAnstallningsdatum;
@@ -497,7 +520,6 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     private javax.swing.JTextField tfEfternamn;
     private javax.swing.JTextField tfEpost;
     private javax.swing.JTextField tfFornamn;
-    private javax.swing.JPasswordField tfLosenord;
     private javax.swing.JTextField tfTelefonnr;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,7 +26,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         initComponents();
         setWindowSize();
         setUppgifter();
-        
+        pfLosenordet.setEchoChar('*');
     }
     
     private void setWindowSize(){
@@ -49,8 +49,8 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         lblEposten.setText(Epost);
         
         String losenord = inloggadAnvandare.getLosenord();
-        lblLosenordet.setText(losenord);
-        lblLosenordet.enable(false);
+        pfLosenordet.setText(losenord);
+        pfLosenordet.enable(false);
         
         String telefonNr = inloggadAnvandare.getTelNr();
         lblTelefonnummer.setText(telefonNr);
@@ -99,12 +99,13 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         lblEfternamnet = new javax.swing.JLabel();
         lblAdressen = new javax.swing.JLabel();
         lblEposten = new javax.swing.JLabel();
-        lblLosenordet = new javax.swing.JPasswordField();
+        pfLosenordet = new javax.swing.JPasswordField();
         lblTelefonnummer = new javax.swing.JLabel();
         lblAnsID = new javax.swing.JLabel();
         lblAnstDatum = new javax.swing.JLabel();
         lblAvdelningen = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        tbtnVisaLosenordet = new javax.swing.JToggleButton();
 
         jLabel5.setText("jLabel5");
 
@@ -163,7 +164,12 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
 
         lblEposten.setText("jLabel8");
 
-        lblLosenordet.setText("jPasswordField1");
+        pfLosenordet.setText("jPasswordField1");
+        pfLosenordet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pfLosenordetActionPerformed(evt);
+            }
+        });
 
         lblTelefonnummer.setText("jLabel8");
 
@@ -176,6 +182,13 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/vecteezy_user-icon-on-transparent-background_19879186.png"))); // NOI18N
         jLabel8.setText("jLabel3");
 
+        tbtnVisaLosenordet.setText("Visa");
+        tbtnVisaLosenordet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbtnVisaLosenordetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,6 +196,10 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnTillbaka)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAndraLosenord))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -205,18 +222,16 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
                                     .addComponent(lblEfternamnet)
                                     .addComponent(lblAdressen)
                                     .addComponent(lblEposten)
-                                    .addComponent(lblLosenordet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblTelefonnummer)
                                     .addComponent(lblAnsID)
                                     .addComponent(lblAnstDatum)
-                                    .addComponent(lblAvdelningen))))
-                        .addGap(0, 145, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnTillbaka)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAndraLosenord)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAndraUppgifter)))
+                                    .addComponent(lblAvdelningen)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(pfLosenordet, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tbtnVisaLosenordet)))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAndraUppgifter)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -245,7 +260,8 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblLosenord)
-                            .addComponent(lblLosenordet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pfLosenordet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tbtnVisaLosenordet))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -265,7 +281,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel8)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAndraLosenord)
                     .addComponent(btnAndraUppgifter)
@@ -293,6 +309,21 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         new MenyFonster(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void pfLosenordetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfLosenordetActionPerformed
+        
+    }//GEN-LAST:event_pfLosenordetActionPerformed
+
+    private void tbtnVisaLosenordetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnVisaLosenordetActionPerformed
+        if (pfLosenordet.getEchoChar() == '*') {
+            pfLosenordet.setEchoChar((char) 0);
+            tbtnVisaLosenordet.setText("Dölj");
+        }       
+        else {
+            pfLosenordet.setEchoChar('*'); 
+            tbtnVisaLosenordet.setText("Visa");
+        }
+    }//GEN-LAST:event_tbtnVisaLosenordetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -353,7 +384,8 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
     private javax.swing.JLabel lblFornamn;
     private javax.swing.JLabel lblFornamnet;
     private javax.swing.JLabel lblLosenord;
-    private javax.swing.JPasswordField lblLosenordet;
     private javax.swing.JLabel lblTelefonnummer;
+    private javax.swing.JPasswordField pfLosenordet;
+    private javax.swing.JToggleButton tbtnVisaLosenordet;
     // End of variables declaration//GEN-END:variables
 }
