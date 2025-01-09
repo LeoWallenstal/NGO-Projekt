@@ -269,6 +269,10 @@ public class ProjektFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setAttVisa(ArrayList<Projekt> attVisa){
+        this.attVisa = attVisa;
+    }
+    
     private void tillbakaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillbakaButtonMouseClicked
         new MenyFonster(idb, inloggadAnvandare).setVisible(true);
                 this.setVisible(false);
@@ -445,8 +449,10 @@ public class ProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_dcSlutDatumPropertyChange
 
     private void sokfaltMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokfaltMouseClicked
-        sokfalt.setText("");
-        sokfalt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        if(sokfalt.isEnabled()){
+            sokfalt.setText("");
+            sokfalt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        } 
     }//GEN-LAST:event_sokfaltMouseClicked
 
     
@@ -478,8 +484,8 @@ public class ProjektFonster extends javax.swing.JFrame {
     }
     
     public void visaData(){
-        ArrayList<Projekt> attVisa = projektregister.hamtaAllaProjekt();
         rensaDataFonster();
+        ArrayList<Projekt> attVisa = projektregister.hamtaAllaProjekt();
         for(Projekt ettProjekt : attVisa){
             if(ettProjekt.getProjektchefID() == null){
                 tabell.addRow(new Object[]{ettProjekt.getNamn(), 
@@ -491,7 +497,6 @@ public class ProjektFonster extends javax.swing.JFrame {
                 ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
                 ettProjekt.getStartdatum()} );
             }
-            
         }
     }
     
