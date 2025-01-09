@@ -50,7 +50,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="tfLosenord" alignment="0" max="32767" attributes="0"/>
+                          <Component id="pfLosenord" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfTelefonnr" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfAID" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfAnstallningsdatum" alignment="0" max="32767" attributes="0"/>
@@ -67,6 +67,7 @@
                           <Component id="lblAdressFelM" min="-2" max="-2" attributes="0"/>
                           <Component id="lblEpostFelM" min="-2" max="-2" attributes="0"/>
                           <Component id="lblTelefonNrFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="tbtnVisaLosenord" alignment="0" min="-2" pref="68" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -104,7 +105,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="pfLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tbtnVisaLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -127,7 +129,7 @@
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfAvdelning" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace pref="40" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSparaNyaUppgifter" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -143,9 +145,9 @@
         <Property name="text" type="java.lang.String" value="Anst&#xe4;llningsID:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="tfLosenord">
+    <Component class="javax.swing.JPasswordField" name="pfLosenord">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfLosenordActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pfLosenordActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -276,6 +278,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Telefonnumret m&#xe5;ste anges i formatet xxx-xxx-xxxx, d&#xe4;r x &#xe4;r en siffra."/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JToggleButton" name="tbtnVisaLosenord">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Visa"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbtnVisaLosenordActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

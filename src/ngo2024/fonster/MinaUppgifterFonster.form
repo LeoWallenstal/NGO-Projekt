@@ -38,12 +38,17 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnAndraLosenord" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel8" min="-2" pref="245" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
@@ -61,24 +66,22 @@
                                   <Component id="lblEfternamnet" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblAdressen" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblEposten" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblLosenordet" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblTelefonnummer" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblAnsID" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblAnstDatum" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblAvdelningen" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="pfLosenordet" min="-2" pref="107" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="tbtnVisaLosenordet" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="145" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnAndraLosenord" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnAndraUppgifter" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnAndraUppgifter" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -113,7 +116,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblLosenordet" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="pfLosenordet" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tbtnVisaLosenordet" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -141,7 +145,7 @@
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="42" max="32767" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnAndraLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnAndraUppgifter" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -242,10 +246,13 @@
         <Property name="text" type="java.lang.String" value="jLabel8"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="lblLosenordet">
+    <Component class="javax.swing.JPasswordField" name="pfLosenordet">
       <Properties>
         <Property name="text" type="java.lang.String" value="jPasswordField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pfLosenordetActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTelefonnummer">
       <Properties>
@@ -274,6 +281,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="jLabel3"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JToggleButton" name="tbtnVisaLosenordet">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Visa"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbtnVisaLosenordetActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

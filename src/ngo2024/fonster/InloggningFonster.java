@@ -30,6 +30,7 @@ public class InloggningFonster extends javax.swing.JFrame {
         initComponents();
         lblFelmeddelande.setVisible(false);
         setLocationRelativeTo(null);
+        pfLosenord.setEchoChar('*');
     }
     
     private void login(String ePost,String losenord){
@@ -68,11 +69,12 @@ public class InloggningFonster extends javax.swing.JFrame {
         lblLosenord = new javax.swing.JLabel();
         lblFelmeddelande = new javax.swing.JLabel();
         tfEPost = new javax.swing.JTextField();
-        tfLosenord = new javax.swing.JTextField();
         btnLoggaIn = new javax.swing.JButton();
         lblLogo = new javax.swing.JLabel();
         btnAdmin = new javax.swing.JButton();
         btnHandlaggare = new javax.swing.JButton();
+        pfLosenord = new javax.swing.JPasswordField();
+        tbtnVisaLosenord = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Inloggning");
@@ -91,13 +93,6 @@ public class InloggningFonster extends javax.swing.JFrame {
         tfEPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfEPostActionPerformed(evt);
-            }
-        });
-
-        tfLosenord.setText("password123");
-        tfLosenord.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfLosenordActionPerformed(evt);
             }
         });
 
@@ -124,6 +119,15 @@ public class InloggningFonster extends javax.swing.JFrame {
             }
         });
 
+        pfLosenord.setText("password123");
+
+        tbtnVisaLosenord.setText("Visa");
+        tbtnVisaLosenord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbtnVisaLosenordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,9 +144,11 @@ public class InloggningFonster extends javax.swing.JFrame {
                                     .addComponent(lblEPost))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfEPost, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(btnLoggaIn)
-                                    .addComponent(tfEPost)
-                                    .addComponent(tfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(pfLosenord))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tbtnVisaLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(124, 124, 124)
                         .addComponent(lblLogo))
@@ -151,12 +157,12 @@ public class InloggningFonster extends javax.swing.JFrame {
                         .addComponent(btnAdmin)
                         .addGap(57, 57, 57)
                         .addComponent(btnHandlaggare)))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addComponent(lblLogo)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -165,7 +171,8 @@ public class InloggningFonster extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLosenord)
-                    .addComponent(tfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tbtnVisaLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFelmeddelande)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -174,7 +181,7 @@ public class InloggningFonster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdmin)
                     .addComponent(btnHandlaggare))
-                .addGap(34, 34, 34))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -184,14 +191,10 @@ public class InloggningFonster extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfEPostActionPerformed
 
-    private void tfLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLosenordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfLosenordActionPerformed
-
     private void btnLoggaInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoggaInActionPerformed
         
         String ePost = tfEPost.getText();
-        String losenord = tfLosenord.getText();
+        String losenord = pfLosenord.getText();
         login(ePost,losenord);
         
     }//GEN-LAST:event_btnLoggaInActionPerformed
@@ -205,6 +208,17 @@ public class InloggningFonster extends javax.swing.JFrame {
         // TODO add your handling code here:
         login("ling.w@example.com","password456");
     }//GEN-LAST:event_btnHandlaggareActionPerformed
+
+    private void tbtnVisaLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnVisaLosenordActionPerformed
+        if (pfLosenord.getEchoChar() == '*') {
+            pfLosenord.setEchoChar((char) 0);
+            tbtnVisaLosenord.setText("Dölj");
+        }       
+        else {
+            pfLosenord.setEchoChar('*'); 
+            tbtnVisaLosenord.setText("Visa");
+        }
+    }//GEN-LAST:event_tbtnVisaLosenordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,7 +264,8 @@ public class InloggningFonster extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelmeddelande;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblLosenord;
+    private javax.swing.JPasswordField pfLosenord;
+    private javax.swing.JToggleButton tbtnVisaLosenord;
     private javax.swing.JTextField tfEPost;
-    private javax.swing.JTextField tfLosenord;
     // End of variables declaration//GEN-END:variables
 }
