@@ -123,70 +123,76 @@ public class ProjektRegister {
         return false;
     }
     
-    public ArrayList<Projekt> getListaStatus(Projektstatus status){
+    public ArrayList<Projekt> getListaStatus(Projektstatus status, ArrayList <Projekt> attFiltrera){
         
-        ArrayList<Projekt> listaStatus = new ArrayList<>();
-        if(status.equals("Alla")){
-            //return getAllaProjekt();
-        }
-        
+
         for(Projekt ettProjekt : allaProjekt){
-            if(ettProjekt.getStatus().equals(status.toString())){
-                listaStatus.add(ettProjekt);
+            if(!ettProjekt.getStatus().equals(status.toString())){
+                attFiltrera.remove(ettProjekt);
             }
         }
-        return listaStatus;
+        return attFiltrera;
     }
     
-    public ArrayList<Projekt> getSoktLista(SokKategori kategori, String sokStr){
+    public ArrayList<Projekt> getSoktLista(SokKategori kategori, String sokStr, ArrayList<Projekt> attFiltrera){
         
-        ArrayList<Projekt> resultat = new ArrayList<>();
         if(kategori == SokKategori.PROJEKTCHEF){
-            for(Projekt ettProjekt : allaProjekt){
-                if(ettProjekt.getProjektchef().getFullNamn().startsWith(sokStr)){
-                    resultat.add(ettProjekt);
+            Iterator<Projekt> it = attFiltrera.iterator();
+            while(it.hasNext()){
+                Projekt ettProjekt = it.next();
+                if(!ettProjekt.getProjektchef().getFullNamn().startsWith(sokStr)){
+                    it.remove();
                 }
             }
         }
         else if(kategori == SokKategori.PROJEKTNAMN){
-            for(Projekt ettProjekt : allaProjekt){
-                if(ettProjekt.getNamn().startsWith(sokStr)){
-                    resultat.add(ettProjekt);
+            Iterator<Projekt> it = attFiltrera.iterator();
+            while(it.hasNext()){
+                Projekt ettProjekt = it.next();
+                if(!ettProjekt.getNamn().startsWith(sokStr)){
+                    it.remove();
                 }
             }
         }
-        return resultat;
+        return attFiltrera;
     }
     
-    public ArrayList<Projekt> getListaDatumSpann(String startdatum, String slutdatum){
-        ArrayList<Projekt> resultat = new ArrayList<>();
-        for(Projekt ettProjekt : allaProjekt){
-            if((ettProjekt.arEfter(startdatum) || ettProjekt.arSamma(startdatum))
-                && (ettProjekt.arFore(slutdatum) || ettProjekt.arSamma(slutdatum))){
-                resultat.add(ettProjekt);
+    public ArrayList<Projekt> getListaDatumSpann(String startdatum, String slutdatum,
+            ArrayList<Projekt> attFiltrera)
+    {
+        Iterator<Projekt> it = attFiltrera.iterator();
+        
+        while(it.hasNext()){
+            Projekt ettProjekt = it.next();
+            if(ettProjekt.arFore(slutdatum) && ettProjekt.arEfter(startdatum)){
+                it.remove();
             }
         }
-        return resultat;
+        return attFiltrera;
     }
     
-    public ArrayList<Projekt> getListaStartdatum(String startdatum){
-        ArrayList<Projekt> resultat = new ArrayList<>();
-        for(Projekt ettProjekt : allaProjekt){
-            if(ettProjekt.arSamma(startdatum) || ettProjekt.arEfter(startdatum)){
-                resultat.add(ettProjekt);
+    public ArrayList<Projekt> getListaStartdatum(String startdatum, ArrayList<Projekt> attFiltrera){
+        Iterator<Projekt> it = attFiltrera.iterator();
+        
+        while(it.hasNext()){
+            Projekt ettProjekt = it.next();
+            if(ettProjekt.arFore(startdatum)){
+                it.remove();
             }
         }
-        return resultat;
+        return attFiltrera;
     }
     
-    public ArrayList<Projekt> getListaSlutdatum(String slutdatum){
-        ArrayList<Projekt> resultat = new ArrayList<>();
-        for(Projekt ettProjekt : allaProjekt){
-            if(ettProjekt.arSamma(slutdatum) || ettProjekt.arFore(slutdatum)){
-                resultat.add(ettProjekt);
+    public ArrayList<Projekt> getListaSlutdatum(String slutdatum, ArrayList<Projekt> attFiltrera){
+        Iterator<Projekt> it = attFiltrera.iterator();
+        
+        while(it.hasNext()){
+            Projekt ettProjekt = it.next();
+            if(ettProjekt.arEfter(slutdatum)){
+                it.remove();
             }
         }
-        return resultat;
+        return attFiltrera;
     }
     
     
