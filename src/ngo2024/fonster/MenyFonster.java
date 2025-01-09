@@ -37,8 +37,9 @@ public class MenyFonster extends javax.swing.JFrame {
         if(!inloggadAnvandare.isAdmin())
         {
             btnAnstallda.setVisible(false);
+            btnHanteraAvdelningar.setVisible(false);
         }
-        else{
+        else if (!inloggadAnvandare.isHandlaggare()){
             btnStatistik.setVisible(false);
         }
     }
@@ -80,6 +81,7 @@ public class MenyFonster extends javax.swing.JFrame {
         partnersButton = new javax.swing.JButton();
         btnLander = new javax.swing.JButton();
         btnStatistik = new javax.swing.JButton();
+        btnHanteraAvdelningar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Start");
@@ -103,7 +105,7 @@ public class MenyFonster extends javax.swing.JFrame {
                 btnUppgifterActionPerformed(evt);
             }
         });
-        getContentPane().add(btnUppgifter, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 130, -1));
+        getContentPane().add(btnUppgifter, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 140, -1));
 
         btnAvdelning.setText("Min avdelning");
         btnAvdelning.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -112,7 +114,7 @@ public class MenyFonster extends javax.swing.JFrame {
                 btnAvdelningActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAvdelning, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 130, -1));
+        getContentPane().add(btnAvdelning, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 140, -1));
 
         btnProjekt.setText("Projekt");
         btnProjekt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -121,7 +123,7 @@ public class MenyFonster extends javax.swing.JFrame {
                 btnProjektActionPerformed(evt);
             }
         });
-        getContentPane().add(btnProjekt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 130, -1));
+        getContentPane().add(btnProjekt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 140, -1));
 
         btnAnstallda.setText("Hantera anställda");
         btnAnstallda.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -130,7 +132,7 @@ public class MenyFonster extends javax.swing.JFrame {
                 btnAnstalldaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAnstallda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 130, -1));
+        getContentPane().add(btnAnstallda, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 140, -1));
 
         btnMal_3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/03-god-halsa-och-valbefinnande.png"))); // NOI18N
         btnMal_3.setBorderPainted(false);
@@ -351,7 +353,7 @@ public class MenyFonster extends javax.swing.JFrame {
                 partnersButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(partnersButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 130, -1));
+        getContentPane().add(partnersButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 140, -1));
 
         btnLander.setText("Länder");
         btnLander.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -360,7 +362,7 @@ public class MenyFonster extends javax.swing.JFrame {
                 btnLanderActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLander, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 130, -1));
+        getContentPane().add(btnLander, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 140, -1));
 
         btnStatistik.setText("Statistik");
         btnStatistik.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -369,7 +371,15 @@ public class MenyFonster extends javax.swing.JFrame {
                 btnStatistikActionPerformed(evt);
             }
         });
-        getContentPane().add(btnStatistik, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 130, -1));
+        getContentPane().add(btnStatistik, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 140, -1));
+
+        btnHanteraAvdelningar.setText("Hantera avdelningar");
+        btnHanteraAvdelningar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHanteraAvdelningarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnHanteraAvdelningar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 140, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -507,6 +517,11 @@ public class MenyFonster extends javax.swing.JFrame {
         new StatistikFonster(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnStatistikActionPerformed
 
+    private void btnHanteraAvdelningarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHanteraAvdelningarActionPerformed
+        new RedigeraAvdelningFonster(idb,inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnHanteraAvdelningarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -546,6 +561,7 @@ public class MenyFonster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnstallda;
     private javax.swing.JButton btnAvdelning;
+    private javax.swing.JButton btnHanteraAvdelningar;
     private javax.swing.JButton btnLander;
     private javax.swing.JButton btnMal_1;
     private javax.swing.JButton btnMal_10;
