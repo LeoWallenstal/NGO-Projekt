@@ -45,13 +45,13 @@ public class ProjektRegister {
         ArrayList<HashMap<String, String>> projektMap = new ArrayList<>();
         
         try{
-            projektMap = idb.fetchRows("SELECT pid FROM projekt");
+            projektMap = idb.fetchRows("SELECT * FROM projekt");
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
         
             for(HashMap<String, String> ettProjekt : projektMap){
-                allaProjekt.add(new Projekt(ettProjekt.get("pid"), idb));
+                allaProjekt.add(new Projekt(ettProjekt, idb));
             }
         return allaProjekt;
     }

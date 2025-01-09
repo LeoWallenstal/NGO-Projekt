@@ -16,9 +16,7 @@ public class Projekt {
     private String status;
     private String prioritet;
     private String projektchefID;
-    private Anvandare projektchef;
     private String landID;
-    private Land land;
     private ArrayList<String> partners;
     
     //OKLART OM DETTA ÄR RÄTT TERMINOLOGI?? ASSÅ DE SOM JOBBAR PÅ PROJEKTET
@@ -26,71 +24,6 @@ public class Projekt {
     private ArrayList<String> handlaggare;
     
     private final InfDB idb;
-
-
-    //Constructors
-    /*initialisera ett projekt med en HashMap från idb.fetchRow()
-    alterantivt om man gjort idb.fetchRows() kan man kanske iterera över
-    ArrayListen med en ForLoop och sen bara skapa ett 'Projekt'-objekt med
-    en HashMap i taget*/
-    public Projekt(HashMap<String, String> ettProjekt, InfDB idb){
-        this.idb = idb;
-        
-        for(String key : ettProjekt.keySet()){
-            switch(key){
-                case "pid":
-                    projektID = ettProjekt.get(key);
-                    break;
-                case "projektnamn":
-                    projektnamn = ettProjekt.get(key);
-                    break;
-                case "beskrivning":
-                    beskrivning = ettProjekt.get(key);
-                    break;
-                case "startdatum":
-                    startdatum = ettProjekt.get(key);
-                    break;
-                case "slutdatum":
-                    slutdatum = ettProjekt.get(key);
-                    break;
-                case "kostnad":
-                    kostnad = ettProjekt.get(key);
-                    break;
-                case "status":
-                    status = ettProjekt.get(key);
-                    break;
-                case "prioritet":
-                    prioritet = ettProjekt.get(key);
-                    break;
-                case "projektchef":{
-                        if(ettProjekt.get(key) != null){
-                            projektchefID = ettProjekt.get(key);
-                        }
-                        else{
-                            projektchefID = null;
-                        }
-                        break;
-                    }
-                case "land":
-                {
-                    landID = ettProjekt.get(key);
-                    land = new Land(landID, idb);
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
-        if(projektchefID != null && !projektchefID.isEmpty()){
-            projektchef = new Anvandare(idb, Projekt.getAnstalldID(idb, projektchefID));
-        }
-        else{
-            projektchef = null;
-        }
-        hamtaPartners();
-        hamtaHandlaggare();
-        
-    }
 
     //En konstruktor som gör ett 'projekt'-objekt från ett pid
     public Projekt(String projektID, InfDB idb){
@@ -104,49 +37,35 @@ public class Projekt {
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }     
+        this.projektID = ettProjekt.get("pid");
+        this.projektnamn = ettProjekt.get("projektnamn");
+        this.beskrivning = ettProjekt.get("beskrivning");
+        this.startdatum = ettProjekt.get("startdatum");
+        this.slutdatum = ettProjekt.get("slutdatum");
+        this.kostnad = ettProjekt.get("kostnad");
+        this.status = ettProjekt.get("status");
+        this.prioritet = ettProjekt.get("prioritet");
+        this.projektchefID = ettProjekt.get("projektchef");
+        this.landID = ettProjekt.get("land");
         
-        if(ettProjekt != null){
-            for(String key : ettProjekt.keySet()){
-                switch(key){
-                    case "pid":
-                        this.projektID = projektID;
-                        break;
-                    case "projektnamn":
-                        projektnamn = ettProjekt.get(key);
-                        break;
-                    case "beskrivning":
-                        beskrivning = ettProjekt.get(key);
-                        break;
-                    case "startdatum":
-                        startdatum = ettProjekt.get(key);
-                        break;
-                    case "slutdatum":
-                        slutdatum = ettProjekt.get(key);
-                        break;
-                    case "kostnad":
-                        kostnad = ettProjekt.get(key);
-                        break;
-                    case "status":
-                        status = ettProjekt.get(key);
-                        break;
-                    case "prioritet":
-                        prioritet = ettProjekt.get(key);
-                        break;
-                    case "projektchef":
-                        projektchefID = ettProjekt.get(key);
-                        break;
-                    case "land":
-                        landID = ettProjekt.get(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        else{
-            System.out.println("Nånting gick fel, kolla IDT?");
-            //Byta detta felmeddelande mot något annat senare
-        }
+        hamtaPartners();
+        hamtaHandlaggare();
+    }
+    
+    public Projekt(HashMap<String, String> ettProjekt, InfDB idb){
+        this.idb = idb;
+        
+        this.projektID = ettProjekt.get("pid");
+        this.projektnamn = ettProjekt.get("projektnamn");
+        this.beskrivning = ettProjekt.get("beskrivning");
+        this.startdatum = ettProjekt.get("startdatum");
+        this.slutdatum = ettProjekt.get("slutdatum");
+        this.kostnad = ettProjekt.get("kostnad");
+        this.status = ettProjekt.get("status");
+        this.prioritet = ettProjekt.get("prioritet");
+        this.projektchefID = ettProjekt.get("projektchef");
+        this.landID = ettProjekt.get("land");
+        
         hamtaPartners();
         hamtaHandlaggare();
     }
@@ -200,7 +119,7 @@ public class Projekt {
     }
 
     public Land getLand() {
-        return land;
+        return new Land(landID, idb);
     }
 
     public String getLandID(){
@@ -336,12 +255,12 @@ public class Projekt {
             + "\n[Beskrivning]: " + beskrivning +  "\n[Startdatum]: " + startdatum
             + "\n[Slutdatum]: " + slutdatum + "\n[Kostnad]: " + kostnad
             + "\n[Status]: " + status + "\n[Prioritet]: " + prioritet;
-            if(projektchef != null){
-                outForsta += "\n[Projektchef]: " + projektchef  
+            if(projektchefID != null){
+                outForsta += "\n[Projektchef]: " + getProjektchef().getFullNamn()
                     + "\n[ProjektchefID]: " + projektchefID;
             }
             
-            String outAndra = "\n[Land]: " + land + "\n[Partners]:" + partners;
+            String outAndra = "\n[Land]: " + getLand().getNamn() + "\n[Partners]:" + partners;
             
             return outForsta + outAndra;       
     }
@@ -457,16 +376,6 @@ public class Projekt {
         
         if(Validerare.arSiffror(lid) && landregister.harID(lid)){
             this.landID = lid;
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    
-    public boolean setLand(Land ettLand){
-        if(ettLand != null){
-            this.land = ettLand;
             return true;
         }
         else{
