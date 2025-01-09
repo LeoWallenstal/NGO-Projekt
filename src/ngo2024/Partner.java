@@ -21,43 +21,99 @@ public class Partner {
     private String telefonnummer;
     private String adress;
     private String bransch;
+    private Stad stad;
     private String stadID;
     
     private InfDB idb;
     
     //Constructors
     
-    public Partner(HashMap<String, String> enPartner, InfDB idb){
-        this.idb = idb;
-        
-        this.partnerID = enPartner.get("pid");
-        this.namn = enPartner.get("namn");
-        this.kontaktperson = enPartner.get("kontaktperson");
-        this.kontaktepost = enPartner.get("kontaktepost");
-        this.telefonnummer = enPartner.get("telefon");
-        this.adress = enPartner.get("adress");
-        this.bransch = enPartner.get("branch");
-        this.stadID = enPartner.get("stad");
-    }
-    
     public Partner(String partnerID, InfDB idb){
         this.idb = idb;
+        
         HashMap<String, String> enPartner = null;
 
         String sqlFraga = "SELECT * FROM partner WHERE pid = " + partnerID;
+
         try{
             enPartner = idb.fetchRow(sqlFraga);
         } catch (InfException ex) {
             System.out.println(ex.getMessage() + "in Partner.java, public Partner()");
+        }
+        
+        if(enPartner != null){
+            for(String key : enPartner.keySet()){
+                switch(key){
+                    case "pid":
+                        this.partnerID = enPartner.get(key);
+                        break;
+                    case "namn":
+                        namn = enPartner.get(key);
+                        break;
+                    case "kontaktperson":
+                        kontaktperson = enPartner.get(key);
+                        break;
+                    case "kontaktepost":
+                        kontaktepost = enPartner.get(key);
+                        break;
+                    case "telefon":
+                        telefonnummer = enPartner.get(key);
+                        break;
+                    case "adress":
+                        adress = enPartner.get(key);
+                        break;
+                    case "branch":
+                        bransch = enPartner.get(key);
+                        break;
+                    case "stad":
+                        stadID = enPartner.get(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            stad = new Stad(stadID, idb);
+        }
+        else{
+            System.out.println("Nånting gick fel, kolla IDT?");
+            //Byta detta felmeddelande mot något annat senare
         } 
-        this.partnerID = enPartner.get("pid");
-        this.namn = enPartner.get("namn");
-        this.kontaktperson = enPartner.get("kontaktperson");
-        this.kontaktepost = enPartner.get("kontaktepost");
-        this.telefonnummer = enPartner.get("telefon");
-        this.adress = enPartner.get("adress");
-        this.bransch = enPartner.get("branch");
-        this.stadID = enPartner.get("stad");
+    }
+    
+    public Partner(HashMap<String, String> enPartner, InfDB idb){
+        this.idb = idb;
+        
+        for(String key : enPartner.keySet()){
+                switch(key){
+                    case "pid":
+                        this.partnerID = enPartner.get(key);
+                        break;
+                    case "namn":
+                        namn = enPartner.get(key);
+                        break;
+                    case "kontaktperson":
+                        kontaktperson = enPartner.get(key);
+                        break;
+                    case "kontaktepost":
+                        kontaktepost = enPartner.get(key);
+                        break;
+                    case "telefon":
+                        telefonnummer = enPartner.get(key);
+                        break;
+                    case "adress":
+                        adress = enPartner.get(key);
+                        break;
+                    case "bransch":
+                        bransch = enPartner.get(key);
+                        break;
+                    case "stad":
+                        stadID = enPartner.get(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            stad = new Stad(stadID, idb);
     }
     
     public Partner(InfDB idb){
@@ -95,7 +151,7 @@ public class Partner {
     }
     
     public Stad getStad(){
-        return new Stad(stadID, idb);
+        return stad;
     }
     
     public boolean equals(Partner annan){
@@ -145,6 +201,12 @@ public class Partner {
         String nyttIDStr = Integer.toString(nyttID);
         
         partnerID = nyttIDStr;
+    }
+    
+    public void setStad(String stadID){
+        if(!stadID.isEmpty()){
+            this.stad = new Stad(stadID, idb);
+        }
     }
     
     public void setStadID(String stadID){

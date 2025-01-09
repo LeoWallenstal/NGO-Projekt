@@ -375,6 +375,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
            aktuellPartner.setKontaktepost(epost);
            aktuellPartner.setTelefonnummer(telNr);
            aktuellPartner.setAdress(adress);
+           aktuellPartner.setStad(stadID);
            aktuellPartner.setStadID(stadID);
            
            aktuellPartner.uppdateraPartnerDB();

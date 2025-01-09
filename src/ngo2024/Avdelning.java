@@ -22,7 +22,9 @@ public class Avdelning {
     private String adress;
     private String epost;
     private String telefonnummer;
+    private Stad stad;
     private String stadID;
+    private Anvandare chef;
     private String chefID;
     private ArrayList<Anvandare> anstallda;
 
@@ -37,7 +39,13 @@ public class Avdelning {
         epost = enAvdelning.get("epost");
         telefonnummer = enAvdelning.get("telefon");
         stadID = enAvdelning.get("stad");
+        stad = new Stad(stadID, idb);
         chefID = enAvdelning.get("chef");
+        if (chefID != null) {
+            this.chef = new Anvandare(idb, this.getAnstalldID());
+        } else {
+            chef = null;
+        }
         hamtaAnstallda();
     }
 
@@ -76,18 +84,16 @@ public class Avdelning {
                     break;
                 case "stad": {
                     this.stadID = enAvdelning.get(key);
+                    this.stad = new Stad(stadID, idb);
                     break;
                 }
-                case "chef": 
-                {
+                case "chef": {
                     String chefID = enAvdelning.get(key);
-                    if (chefID != null)
-                    {
+                    if (chefID != null) {
                         this.chefID = chefID;
-                    } 
-                    else 
-                    {
-                        this.chefID = null;
+                        this.chef = new Anvandare(idb, this.getAnstalldID());
+                    } else {
+                        chef = null;
                     }
                     break;
                 }
@@ -100,8 +106,8 @@ public class Avdelning {
         return "[AvdelningsID]: " + avdelningsID + "\n[Avdelningens namn]: " + namn
                 + "\n[Beskrivning]: " + beskrivning + "\n[Adress]: " + adress
                 + "\n[Epost]: " + epost + "\n[Telefonnummer]: " + telefonnummer
-                + "\n[StadID]: " + stadID + "\n[Stad]: " + getStad().getNamn()
-                + "\n[ChefID]: " + chefID + "\n[Chef]: " + getChef().getFullNamn();
+                + "\n[StadID]: " + stadID + "\n[Stad]: " + stad.getNamn()
+                + "\n[ChefID]: " + chefID + "\n[Chef]: " + chef.getFullNamn();
     }
 
     public String getAvdelningsID() {
@@ -129,7 +135,7 @@ public class Avdelning {
     }
 
     public Stad getStad() {
-        return new Stad(stadID, idb);
+        return stad;
     }
 
     public String getStadID() {
@@ -137,7 +143,7 @@ public class Avdelning {
     }
 
     public Anvandare getChef() {
-        return new Anvandare(idb, chefID);
+        return chef;
     }
 
     private String getAnstalldID() {
@@ -277,9 +283,11 @@ public class Avdelning {
             this.namn = namn;
             this.beskrivning = beskrivning;
             this.adress = adress;
+            this.stad = new Stad(stadId,idb);
             this.epost = epost;
             this.telefonnummer = telefon;
             this.chefID = chefId;
+            this.chef = new Anvandare(idb, chefID);
             return true;
         } catch (InfException ex) {
             System.out.println(ex.getMessage());

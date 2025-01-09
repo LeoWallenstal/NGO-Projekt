@@ -16,6 +16,7 @@ public class Stad {
     private String stadID;
     private String namn;
     private String landID;
+    private Land land;
     private InfDB idb;
     
     public Stad(String stadID, InfDB idb){
@@ -29,17 +30,20 @@ public class Stad {
             System.out.println(ex.getMessage() + "i Stad.java, Stad()");
         }
         
-        this.stadID = enStad.get("sid");
-        this.namn = enStad.get("namn");
-        this.landID = enStad.get("land");
-    }
-    
-    public Stad(HashMap<String, String> enStad, InfDB idb){
-        this.idb = idb;
-        
-        this.stadID = enStad.get("sid");
-        this.namn = enStad.get("namn");
-        this.landID = enStad.get("land");
+        for(String key : enStad.keySet()){
+            switch(key){
+                case "sid":
+                    this.stadID = enStad.get(key);
+                    break;
+                case "namn":
+                    this.namn = enStad.get(key);
+                    break;
+                case "land":
+                    landID = enStad.get(key);
+                    break;
+            }
+        }
+        land = new Land(landID, idb);
     }
     
     public boolean equals(Stad annan){
@@ -55,7 +59,7 @@ public class Stad {
     }
     
     public Land getLand(){
-        return new Land(landID, idb);
+        return land;
     }
     
     public String getNamn(){
