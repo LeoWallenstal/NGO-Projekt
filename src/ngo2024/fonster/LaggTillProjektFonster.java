@@ -57,6 +57,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         initPartnerList();
         initHandlaggareList();
         projektRegistreradLabel.setVisible(false);
+        setLocationRelativeTo(null);
     }
 
     /**

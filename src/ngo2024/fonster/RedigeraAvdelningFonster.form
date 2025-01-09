@@ -283,15 +283,15 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sokBtnMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sokBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="sokCB">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="S&#xf6;k efter..."/>
-            <StringItem index="1" value="Namn"/>
-            <StringItem index="2" value="Epost"/>
+          <StringArray count="2">
+            <StringItem index="0" value="Namn"/>
+            <StringItem index="1" value="Epost"/>
           </StringArray>
         </Property>
       </Properties>

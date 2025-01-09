@@ -34,8 +34,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
         anvandarensAvdelning = avdelningsRegister.getAvdelningFranId(inloggadAnvandare.getAvdelningsID());
         initComponents();
         tabell = (DefaultTableModel) anstalldTable.getModel();
-        sokfalt.setEnabled(false);
-        
+      
         setLocationRelativeTo(null);
         initKolumner();
         visaAnstallda();
@@ -143,10 +142,15 @@ public class AvdelningFonster extends javax.swing.JFrame {
         });
 
         sokfalt.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        sokfalt.setText("Sök anställd...");
+        sokfalt.setText("Sök namn...");
         sokfalt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 sokfaltMouseClicked(evt);
+            }
+        });
+        sokfalt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sokfaltActionPerformed(evt);
             }
         });
 
@@ -156,8 +160,13 @@ public class AvdelningFonster extends javax.swing.JFrame {
                 sokBtnMouseClicked(evt);
             }
         });
+        sokBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sokBtnActionPerformed(evt);
+            }
+        });
 
-        sokCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sök efter...", "Namn", "Epost" }));
+        sokCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Namn", "Epost" }));
         sokCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sokCBActionPerformed(evt);
@@ -280,12 +289,14 @@ public class AvdelningFonster extends javax.swing.JFrame {
     private void sokBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokBtnMouseClicked
         if(!sokfalt.getText().isEmpty()){
             if(sokCB.getSelectedItem().equals("Namn")){
+                anvandarensAvdelning.hamtaAnstallda();
                 anvandarensAvdelning.hamtaSokNamn(sokfalt.getText());
                 rensaDataFonster();
                 visaAnstallda();
                 vy = "Sökt";
             }
             else if(sokCB.getSelectedItem().equals("Epost")){
+                anvandarensAvdelning.hamtaAnstallda();
                 anvandarensAvdelning.hamtaSokEpost(sokfalt.getText());
                 rensaDataFonster();
                 visaAnstallda();
@@ -301,10 +312,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_sokBtnMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        sokCB.setSelectedIndex(0);
-        sokfalt.setText("Sök anställd...");
-        sokfalt.setFont(new Font("Segoe UI", Font.ITALIC, 12));
-        resetFonster();
+        
     }//GEN-LAST:event_formMouseClicked
 
     private void sokCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokCBActionPerformed
@@ -323,12 +331,16 @@ public class AvdelningFonster extends javax.swing.JFrame {
                 resetFonster();
                 vy = "Alla";
             }
-        }
-        else if(sokCB.getSelectedItem().equals("Sök efter...")){
-            sokfalt.setEnabled(false);
-            sokfalt.setText("Sök anställd...");
-        }
+        } 
     }//GEN-LAST:event_sokCBActionPerformed
+
+    private void sokBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sokBtnActionPerformed
+
+    private void sokfaltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokfaltActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sokfaltActionPerformed
 
     private void initKolumner(){
         tabell.addColumn("Namn"); //denna ska gömmas senare
@@ -356,84 +368,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
                 tabell.addRow(new Object[]{enAnstalld.getFullNamn(), enAnstalld.getEPost(), roll});
         }
     }
-    
-    //Denna kan tas bort vid tillfälle
-    private void displayAnstallda(){
-        
-        try{
-            HashMap<String,String> anstalldRows = new HashMap<>();
-            
-            String sqlFraga = "SELECT aid FROM anstalld "
-                    + "WHERE avdelning = " + inloggadAnvandare.getAvdelningsID();
-
-            ArrayList<HashMap<String,String>> anstallda = idb.fetchRows(sqlFraga);
-            
-            sqlFraga = "SELECT aid FROM handlaggare";
-            ArrayList<String> aidHandlaggare = idb.fetchColumn(sqlFraga);
-            
-            sqlFraga = "SELECT aid FROM admin";
-            ArrayList<String> aidAdmin = idb.fetchColumn(sqlFraga);
-                       
-            for(HashMap<String,String> anstalld : anstallda){
-                anstalldRows.put(anstalld.get("aid"),"Anställd");
-            }
-            
-            for(HashMap<String,String> anstalld : anstallda){
-               String aid = anstalld.get("aid");
-               if(aidHandlaggare.contains(aid)){
-                   anstalldRows.put(aid, "Handläggare");
-               }else if(aidAdmin.contains(aid)){
-                   anstalldRows.put(aid,"Administratör");
-               }
-            }
-           
-            for(String aid : anstalldRows.keySet()){
-              String  sqlFraga1 = "SELECT fornamn FROM anstalld " +
-                        "WHERE aid = "+aid;
-                String sqlFraga2 = "SELECT efternamn FROM anstalld " +
-                        "WHERE aid = "+aid;
-                String namn = idb.fetchSingle(sqlFraga1)+" "+idb.fetchSingle(sqlFraga2);
-                DefaultTableModel model = (DefaultTableModel) anstalldTable.getModel();
-                model.addRow(new Object[]{namn, anstalldRows.get(aid)} );
-            }
-        }catch(InfException ex){
-            System.out.println(ex.getMessage() + "i AvdelningFonster.java, displayAnstallda()");
-        }
-    }
-    
-    //Denna kan tas bort vid tillfälle
-    private void setAvdelningsUppgifter(){
-    try{
-        String sqlFraga = "SELECT namn, beskrivning, adress, epost, telefon, stad, chef from avdelning "+
-                "where avdid = "+ inloggadAnvandare.getAvdelningsID();
-        HashMap<String,String> avdelningsUppgifter = idb.fetchRow(sqlFraga);
-        lblAvdelningsNamn.setText(avdelningsUppgifter.get("namn"));
-        
-        tpBeskrivning.setText(avdelningsUppgifter.get("beskrivning"));
-        tpBeskrivning.setOpaque(false);
-        tpBeskrivning.setFocusable(false);
-        
-        lblAdress.setText(avdelningsUppgifter.get("adress"));
-        
-        sqlFraga = "SELECT namn FROM stad "+
-                "where sid = "+avdelningsUppgifter.get("stad");
-        String stad = idb.fetchSingle(sqlFraga);
-        lblStad.setText(stad);
-        
-        lblEpost.setText(avdelningsUppgifter.get("epost"));
-        
-        lblTelefon.setText(avdelningsUppgifter.get("telefon"));
-        
-        sqlFraga = "SELECT namn FROM anstalld "+
-                "where aid = "+avdelningsUppgifter.get("chef");
-        String chef = idb.fetchSingle(sqlFraga);
-        lblChef.setText(chef);
-        
-    }catch(InfException ex){
-        System.out.println(ex.getMessage() + " i AvdelningFonster.java, setAvdelningsUppgifter()");
-    }
-}
-    
+      
     //Denna kan döpas om till ovan när den ovan tagits bort
     private void nySetAvdelningsUppgifter(){
         lblAvdelningsNamn.setText(anvandarensAvdelning.getNamn());

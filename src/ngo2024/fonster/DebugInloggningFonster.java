@@ -17,14 +17,14 @@ import javax.swing.ImageIcon;
  *
  * @author walle
  */
-public class InloggningFonster extends javax.swing.JFrame {
+public class DebugInloggningFonster extends javax.swing.JFrame {
 
     private final InfDB idb;
     
     /**
      * Creates new form Inloggning
      */
-    public InloggningFonster(InfDB idb) {
+    public DebugInloggningFonster(InfDB idb) {
         this.idb = idb;
         
         initComponents();
@@ -71,9 +71,10 @@ public class InloggningFonster extends javax.swing.JFrame {
         tfEPost = new javax.swing.JTextField();
         btnLoggaIn = new javax.swing.JButton();
         lblLogo = new javax.swing.JLabel();
+        btnAdmin = new javax.swing.JButton();
+        btnHandlaggare = new javax.swing.JButton();
         pfLosenord = new javax.swing.JPasswordField();
         tbtnVisaLosenord = new javax.swing.JToggleButton();
-        btnDebug = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Inloggning");
@@ -88,6 +89,7 @@ public class InloggningFonster extends javax.swing.JFrame {
         lblFelmeddelande.setText("Felaktig epost eller lösenord");
         lblFelmeddelande.setAlignmentX(0.5F);
 
+        tfEPost.setText("maria.g@example.com");
         tfEPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfEPostActionPerformed(evt);
@@ -103,17 +105,26 @@ public class InloggningFonster extends javax.swing.JFrame {
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/foretagLogga.png"))); // NOI18N
 
+        btnAdmin.setText("Admin");
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
+
+        btnHandlaggare.setText("Handläggare");
+        btnHandlaggare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHandlaggareActionPerformed(evt);
+            }
+        });
+
+        pfLosenord.setText("password123");
+
         tbtnVisaLosenord.setText("Visa");
         tbtnVisaLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbtnVisaLosenordActionPerformed(evt);
-            }
-        });
-
-        btnDebug.setText("Debug inlogg");
-        btnDebug.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDebugActionPerformed(evt);
             }
         });
 
@@ -143,7 +154,9 @@ public class InloggningFonster extends javax.swing.JFrame {
                         .addComponent(lblLogo))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnDebug)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnAdmin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnHandlaggare, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -164,8 +177,10 @@ public class InloggningFonster extends javax.swing.JFrame {
                 .addComponent(lblFelmeddelande)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLoggaIn)
-                .addGap(47, 47, 47)
-                .addComponent(btnDebug)
+                .addGap(18, 18, 18)
+                .addComponent(btnAdmin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnHandlaggare)
                 .addContainerGap())
         );
 
@@ -184,6 +199,16 @@ public class InloggningFonster extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnLoggaInActionPerformed
 
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        // TODO add your handling code here:
+        login("fatima.alm@example.com","passwordxyz");
+    }//GEN-LAST:event_btnAdminActionPerformed
+
+    private void btnHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlaggareActionPerformed
+        // TODO add your handling code here:
+        login("ling.w@example.com","password456");
+    }//GEN-LAST:event_btnHandlaggareActionPerformed
+
     private void tbtnVisaLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnVisaLosenordActionPerformed
         if (pfLosenord.getEchoChar() == '*') {
             pfLosenord.setEchoChar((char) 0);
@@ -194,11 +219,6 @@ public class InloggningFonster extends javax.swing.JFrame {
             tbtnVisaLosenord.setText("Visa");
         }
     }//GEN-LAST:event_tbtnVisaLosenordActionPerformed
-
-    private void btnDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDebugActionPerformed
-        this.setVisible(false);
-        new DebugInloggningFonster(idb).setVisible(true);
-    }//GEN-LAST:event_btnDebugActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,14 +237,20 @@ public class InloggningFonster extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DebugInloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DebugInloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DebugInloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DebugInloggningFonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -237,7 +263,8 @@ public class InloggningFonster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDebug;
+    private javax.swing.JButton btnAdmin;
+    private javax.swing.JButton btnHandlaggare;
     private javax.swing.JButton btnLoggaIn;
     private javax.swing.JLabel lblEPost;
     private javax.swing.JLabel lblFelmeddelande;
