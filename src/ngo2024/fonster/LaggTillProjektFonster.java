@@ -6,6 +6,7 @@ package ngo2024.fonster;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import ngo2024.*;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -44,7 +45,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         anvandarregister = new AnvandarRegister(idb);
         landregister = new LandRegister(idb);
         partnerregister = new PartnerRegister(idb);
-        handlaggare = new ArrayList<>();
+        handlaggare = initTillgangligaHandlaggare();
         this.projektregister = projektregister;
         attVisa = projektregister.getAllaProjekt();
         
@@ -54,6 +55,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         initProjektchefComboBox();   
         initLandComboBox();
         initPartnerList();
+        initHandlaggareList();
         projektRegistreradLabel.setVisible(false);
     }
 
@@ -98,6 +100,9 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         slutdatumLabel = new javax.swing.JLabel();
         slutdatumInput = new javax.swing.JTextField();
         slutdatumError = new javax.swing.JLabel();
+        handlaggareLabel = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        handlaggareList = new javax.swing.JList<>();
 
         setTitle("SDG Sweden - Lägg till projekt");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
@@ -188,6 +193,15 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         slutdatumError.setForeground(new java.awt.Color(255, 0, 0));
         slutdatumError.setText("Kan inte vara tomt!");
 
+        handlaggareLabel.setText("Handläggare:");
+
+        handlaggareList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                handlaggareListMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(handlaggareList);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,27 +260,28 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
                                     .addComponent(statusError)
                                     .addComponent(prioritetError)
                                     .addComponent(landError)))
+                            .addComponent(partnerLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(275, 275, 275)
+                                .addComponent(slutdatumError))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(275, 275, 275)
+                                .addComponent(startdatumError))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(partnerLabel)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(80, 80, 80)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(slutdatumLabel)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(slutdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(275, 275, 275)
-                                        .addComponent(slutdatumError))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(startdatumLabel)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(startdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(275, 275, 275)
-                                        .addComponent(startdatumError)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(startdatumLabel)
+                                    .addComponent(slutdatumLabel))
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(slutdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(startdatumInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(handlaggareLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -318,9 +333,13 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
                     .addComponent(landError))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(partnerLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                    .addComponent(partnerLabel)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(handlaggareLabel)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tillbakaButton)
                     .addComponent(sparaButton)
@@ -331,6 +350,25 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private ArrayList<Anvandare> initTillgangligaHandlaggare(){
+        ArrayList<Anvandare> tillgangligaHandlaggare = new ArrayList<>();
+        for(Anvandare enAnstalld : anvandarregister.getLista()){
+            if(enAnstalld.getAvdelningsID().equals(inloggadAnvandare.getAvdelningsID())
+                && enAnstalld.isHandlaggare()){
+                tillgangligaHandlaggare.add(enAnstalld);
+            }
+        }
+        return tillgangligaHandlaggare;
+    }
+    
+    private void initHandlaggareList(){
+        DefaultListModel<String> listModell = new DefaultListModel<>();
+        for (Anvandare enHandlaggare : handlaggare) {
+            listModell.addElement(enHandlaggare.getFullNamn());
+        }
+        handlaggareList.setModel(listModell);
+    }
+    
     private void tillbakaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillbakaButtonMouseClicked
         this.setVisible(false);
     }//GEN-LAST:event_tillbakaButtonMouseClicked
@@ -467,6 +505,11 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         }
         nyttProjekt.setPartners(valdaPartners);
         
+        //Handlaggare
+        ArrayList<Anvandare> valdaHandlaggare = sparaHandlaggare();
+        nyttProjekt.setHandlaggare(valdaHandlaggare);
+        
+        
         if(projektOK){
             nyttProjekt.setProjektID();
             nyttProjekt.insertProjektDB();
@@ -482,6 +525,10 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         partnerList.clearSelection();
     }//GEN-LAST:event_formMouseClicked
+
+    private void handlaggareListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_handlaggareListMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_handlaggareListMouseClicked
 
     private void initProjektchefComboBox(){
         projektchefComboBox.addItem("Välj projektchef...");
@@ -546,6 +593,14 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
         return valdaPartners;
     }
     
+    private ArrayList<Anvandare> sparaHandlaggare(){
+        int[] handlaggareIndex = handlaggareList.getSelectedIndices();
+        ArrayList<Anvandare> valdaHandlaggare = new ArrayList<>();
+        for(int i = 0; i < handlaggareIndex.length; i++){
+            valdaHandlaggare.add(handlaggare.get(handlaggareIndex[i]));
+        }
+        return valdaHandlaggare;
+    }
     
     
     /**
@@ -587,9 +642,12 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea beskrivningInput;
     private javax.swing.JLabel beskrivningLabel;
+    private javax.swing.JLabel handlaggareLabel;
+    private javax.swing.JList<String> handlaggareList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel kostnadError;
     private javax.swing.JTextField kostnadInput;
     private javax.swing.JLabel kostnadLabel;
