@@ -42,7 +42,7 @@ public class StadRegister {
     }
     
     public void hamtaAllaStader(){
-        String sqlFraga = "SELECT sid FROM stad";
+        String sqlFraga = "SELECT * FROM stad";
         ArrayList<HashMap<String, String>> allaStaderMap = null;
         
         ArrayList<Stad> allaStader = new ArrayList<>();
@@ -57,7 +57,7 @@ public class StadRegister {
         for(HashMap<String, String> enStad : allaStaderMap){
             for(String key : enStad.keySet()){
                 String stadID = enStad.get(key);
-                allaStader.add(new Stad(stadID, idb));
+                allaStader.add(new Stad(enStad, idb));
             }
         }
         this.allaStader = allaStader;

@@ -34,6 +34,14 @@ public class Stad {
         this.landID = enStad.get("land");
     }
     
+    public Stad(HashMap<String, String> enStad, InfDB idb){
+        this.idb = idb;
+        
+        this.stadID = enStad.get("sid");
+        this.namn = enStad.get("namn");
+        this.landID = enStad.get("land");
+    }
+    
     public boolean equals(Stad annan){
         return this.stadID.equals(annan.stadID);
     }

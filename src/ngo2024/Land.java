@@ -22,6 +22,20 @@ public class Land {
     private String ekonomi;
     private final InfDB idb;
     
+    
+    public Land(HashMap<String, String> ettLand, InfDB idb){
+        this.idb = idb;
+        this.landID = ettLand.get("lid");
+        this.namn = ettLand.get("namn");
+        this.sprak = ettLand.get("sprak");
+        this.valuta = ettLand.get("valuta");
+        this.tidszon = ettLand.get("tidszon");
+        this.politiskStruktur = ettLand.get("politisk_struktur");
+        this.ekonomi = ettLand.get("ekonomi");
+    }
+    
+    
+    
     /**
      *
      * @param landID Ett landID
@@ -47,6 +61,7 @@ public class Land {
         this.politiskStruktur = ettLand.get("politisk_struktur");
         this.ekonomi = ettLand.get("ekonomi");
     }
+    
     /**
      * En konstruktor för att skapa ett tomt Land objekt,
      * som t.ex när man ska registrera ett nytt land.

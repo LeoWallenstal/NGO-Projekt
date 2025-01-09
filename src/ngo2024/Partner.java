@@ -27,6 +27,19 @@ public class Partner {
     
     //Constructors
     
+    public Partner(HashMap<String, String> enPartner, InfDB idb){
+        this.idb = idb;
+        
+        this.partnerID = enPartner.get("pid");
+        this.namn = enPartner.get("namn");
+        this.kontaktperson = enPartner.get("kontaktperson");
+        this.kontaktepost = enPartner.get("kontaktepost");
+        this.telefonnummer = enPartner.get("telefon");
+        this.adress = enPartner.get("adress");
+        this.bransch = enPartner.get("branch");
+        this.stadID = enPartner.get("stad");
+    }
+    
     public Partner(String partnerID, InfDB idb){
         this.idb = idb;
         HashMap<String, String> enPartner = null;

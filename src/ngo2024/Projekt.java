@@ -52,6 +52,24 @@ public class Projekt {
         hamtaHandlaggare();
     }
     
+    public Projekt(HashMap<String, String> ettProjekt, InfDB idb){
+        this.idb = idb;
+        
+        this.projektID = ettProjekt.get("pid");
+        this.projektnamn = ettProjekt.get("projektnamn");
+        this.beskrivning = ettProjekt.get("beskrivning");
+        this.startdatum = ettProjekt.get("startdatum");
+        this.slutdatum = ettProjekt.get("slutdatum");
+        this.kostnad = ettProjekt.get("kostnad");
+        this.status = ettProjekt.get("status");
+        this.prioritet = ettProjekt.get("prioritet");
+        this.projektchefID = ettProjekt.get("projektchef");
+        this.landID = ettProjekt.get("land");
+        
+        hamtaPartners();
+        hamtaHandlaggare();
+    }
+    
     public Projekt(InfDB idb){
         this.idb = idb;
         this.partners = new ArrayList<>();
