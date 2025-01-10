@@ -736,17 +736,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void anstalldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anstalldTableMouseClicked
-        int rad = anstalldTable.rowAtPoint(evt.getPoint());
-        int kolumn = anstalldTable.columnAtPoint(evt.getPoint());
-
-        String kolumnnamn = tabell.getColumnName(kolumn);
-
-        if (kolumnnamn.equals("Namn") && (rad >= 0 && rad < anstalldTable.getRowCount())) {
-            Anvandare aktuellAnstalld = valdAvdelning.getAnstalld(rad);
-
-            //Öppnar nytt fönster som visar mer detaljerad information om ett projekt 
-            new AnstalldInfoFonster(inloggadAnvandare, aktuellAnstalld).setVisible(true);
-        }
+        
     }//GEN-LAST:event_anstalldTableMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
