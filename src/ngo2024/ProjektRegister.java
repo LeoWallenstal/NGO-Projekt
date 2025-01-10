@@ -124,13 +124,14 @@ public class ProjektRegister {
     }
     
     public ArrayList<Projekt> getListaStatus(Projektstatus status, ArrayList <Projekt> attFiltrera){
-        
-
-        for(Projekt ettProjekt : allaProjekt){
+        Iterator<Projekt> it = attFiltrera.iterator();
+        while(it.hasNext()){
+            Projekt ettProjekt = it.next();
             if(!ettProjekt.getStatus().equals(status.toString())){
-                attFiltrera.remove(ettProjekt);
+                it.remove();
             }
         }
+
         return attFiltrera;
     }
     

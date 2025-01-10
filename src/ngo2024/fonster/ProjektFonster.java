@@ -294,6 +294,16 @@ public class ProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tillbakaButtonMouseClicked
 
     private void sokfaltKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sokfaltKeyPressed
+        if(vy.equals("Alla projekt")){
+            attVisa = projektregister.getAllaProjekt();
+        }   
+        else if(vy.equals("Avdelningens projekt")){
+            attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
+        }
+        else if(vy.equals("Mina projekt")){
+            attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
+        }
+        
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             if(sokfalt.getText().equals("")){
                 return;
@@ -301,6 +311,7 @@ public class ProjektFonster extends javax.swing.JFrame {
             attVisa = projektregister.getSoktLista(kategori, sokfalt.getText(), attVisa);
             visaData(attVisa);
         }
+        
     }//GEN-LAST:event_sokfaltKeyPressed
 
     private void allaProjektButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allaProjektButtonActionPerformed
@@ -339,20 +350,64 @@ public class ProjektFonster extends javax.swing.JFrame {
  
     private void statusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusComboBoxActionPerformed
         String status = statusComboBox.getSelectedItem().toString();
+        projektregister.refreshaAllaProjekt();
         
         switch(status){
             case "Alla":
-                attVisa = projektregister.getAllaProjekt();
+            {
+                if(vy.equals("Alla projekt")){
+                    attVisa = projektregister.getAllaProjekt();
+                }   
+                else if(vy.equals("Avdelningens projekt")){
+                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
+                }
+                else if(vy.equals("Mina projekt")){
+                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
+                }
                 break;
+            }
             case "Pågående":
+            {
+                if(vy.equals("Alla projekt")){
+                    attVisa = projektregister.getAllaProjekt();
+                }   
+                else if(vy.equals("Avdelningens projekt")){
+                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
+                }
+                else if(vy.equals("Mina projekt")){
+                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
+                }
                 attVisa = projektregister.getListaStatus(Projektstatus.PÅGÅENDE, attVisa);
                 break;
+            }
             case "Planerat":
+            {
+                if(vy.equals("Alla projekt")){
+                    attVisa = projektregister.getAllaProjekt();
+                }   
+                else if(vy.equals("Avdelningens projekt")){
+                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
+                }
+                else if(vy.equals("Mina projekt")){
+                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
+                }
                 attVisa = projektregister.getListaStatus(Projektstatus.PLANERAT, attVisa);
                 break;
+            }
             case "Avslutat":
+            {
+                if(vy.equals("Alla projekt")){
+                    attVisa = projektregister.getAllaProjekt();
+                }   
+                else if(vy.equals("Avdelningens projekt")){
+                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
+                }
+                else if(vy.equals("Mina projekt")){
+                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
+                }
                 attVisa = projektregister.getListaStatus(Projektstatus.AVSLUTAT, attVisa);
                 break;
+            }
             default:
                 break;
         }    
