@@ -65,12 +65,13 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         this.projektetsHandlaggare = attRedigera.getHandlaggare();
         this.avdelningensHandlaggare = getAvdelningensHandlaggare();
         valdProjektchef = attRedigera.getProjektchef();
-        initProjektchefCB();
-
+        
         initTillgangligaPartners();
         visaTillgangligaPartners();
         visaTillgangligaHandlaggare();
+        initProjektchefCB();
         initFalt();
+        
 
     }
 
@@ -462,7 +463,8 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         ArrayList<Anvandare> avdelningensHandlaggare = new ArrayList<>();
         for (Anvandare enAnstalld : anvandarregister.getLista()) {
             if (enAnstalld.isHandlaggare()) {
-                if (!attRedigera.harHandlaggare(enAnstalld.getAnstallningsID())) {
+                if (attRedigera.getProjektchef().getAvdelningsID()
+                        .equals(enAnstalld.getAvdelningsID())) {
                     avdelningensHandlaggare.add(enAnstalld);
                 }
             }
@@ -838,8 +840,6 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         projektetsPartnersList.repaint();
         tillgangligaPartnersList.repaint();
     }
-
-    ;
     
     private void refreshaPartnerListor() {
         rensaPartnerListor();
