@@ -17,6 +17,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
 
     private InfDB idb;
     private Anvandare inloggadAnvandare;
+    private Anvandare displayAnvandare;
     /**
      * Creates new form MinaUppgifter
      */
@@ -25,8 +26,27 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
         setWindowSize();
-        setUppgifter();
+        setUppgifter(inloggadAnvandare);
         pfLosenordet.setEchoChar('*');
+        this.displayAnvandare = null;
+        this.setTitle("SDG Sweden - Mina uppgifter");
+    }
+    
+    public MinaUppgifterFonster(InfDB idb, Anvandare inloggadAnvandare, Anvandare displayAnvandare) {
+        this.idb = idb;
+        this.inloggadAnvandare = inloggadAnvandare;
+        initComponents();
+        setWindowSize();
+        setUppgifter(displayAnvandare);
+        pfLosenordet.setEchoChar('*');
+        this.displayAnvandare = displayAnvandare;
+        this.setTitle("SDG Sweden - " + displayAnvandare.getFullNamn());
+        if(!displayAnvandare.getAnstallningsID().equals(inloggadAnvandare.getAnstallningsID())){
+            btnAndraLosenord.setVisible(false);
+            btnAndraUppgifter.setVisible(false);
+            tbtnVisaLosenordet.setVisible(false);
+        }
+        
     }
     
     private void setWindowSize(){
@@ -35,33 +55,33 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
-    private void setUppgifter(){
-        String fornamn = inloggadAnvandare.getFornamn();
+    private void setUppgifter(Anvandare attVisa){
+        String fornamn = attVisa.getFornamn();
         lblFornamnet.setText(fornamn);
         
-        String efternamn = inloggadAnvandare.getEfternamn();
+        String efternamn = attVisa.getEfternamn();
         lblEfternamnet.setText(efternamn);
         
-        String adress = inloggadAnvandare.getAdress();
+        String adress = attVisa.getAdress();
         lblAdressen.setText(adress);
         
-        String Epost = inloggadAnvandare.getEPost();
+        String Epost = attVisa.getEPost();
         lblEposten.setText(Epost);
         
-        String losenord = inloggadAnvandare.getLosenord();
+        String losenord = attVisa.getLosenord();
         pfLosenordet.setText(losenord);
         pfLosenordet.enable(false);
         
-        String telefonNr = inloggadAnvandare.getTelNr();
+        String telefonNr = attVisa.getTelNr();
         lblTelefonnummer.setText(telefonNr);
         
-        String anstallningsID = inloggadAnvandare.getAnstallningsID();
+        String anstallningsID = attVisa.getAnstallningsID();
         lblAnsID.setText(anstallningsID);
         
-        String anstallningsDatum = inloggadAnvandare.getAnstallningsDatum();
+        String anstallningsDatum = attVisa.getAnstallningsDatum();
         lblAnstDatum.setText(anstallningsDatum);
         
-        String avdelning = inloggadAnvandare.getAvdelningsID();
+        String avdelning = attVisa.getAvdelningsID();
         String sqlFraga = "SELECT namn FROM avdelning WHERE avdid =" + avdelning;
         try{
             String avdelningsNamn = idb.fetchSingle(sqlFraga);
@@ -306,8 +326,13 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaMouseClicked
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new MenyFonster(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
+        if(displayAnvandare != null){
+            this.setVisible(false);
+        }
+        else{
+            new MenyFonster(idb, inloggadAnvandare).setVisible(true);
+            this.setVisible(false);
+        } 
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void pfLosenordetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfLosenordetActionPerformed
