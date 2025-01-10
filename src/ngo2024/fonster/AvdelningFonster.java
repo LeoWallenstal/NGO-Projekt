@@ -277,7 +277,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
             Anvandare aktuellAnstalld = anvandarensAvdelning.getAnstalld(rad);
             
             //Öppnar nytt fönster som visar mer detaljerad information om ett projekt 
-            new AnstalldInfoFonster(inloggadAnvandare, aktuellAnstalld).setVisible(true);
+            new MinaUppgifterFonster(idb, inloggadAnvandare, aktuellAnstalld).setVisible(true);
         }
     }//GEN-LAST:event_anstalldTableMouseClicked
 
