@@ -376,6 +376,12 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         tblAnstallda.repaint();
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
+    
+    public void andraFranTaBortLage(){
+        taBort = false;
+        glassPaneOverlay.setVisible(false);
+        btnTaBortAnstalld.setEnabled(true);
+    }
 
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
         setCursor(new Cursor(Cursor.HAND_CURSOR));

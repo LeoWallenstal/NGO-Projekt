@@ -204,7 +204,11 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_jaButtonMouseClicked
 
     private void nejButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nejButtonMouseClicked
+        if(taBortVad.equals("Anställd")){
+            forraFonstretAnstallda.andraFranTaBortLage();
+        }
         this.setVisible(false);
+        
     }//GEN-LAST:event_nejButtonMouseClicked
 
     /**
