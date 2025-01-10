@@ -205,7 +205,7 @@ public class Avdelning {
         ArrayList<Anvandare> resultat = new ArrayList<>();
 
         for (Anvandare enAnstalld : anstallda) {
-            if (enAnstalld.getFullNamn().toLowerCase().startsWith(sokord)) {
+            if (enAnstalld.getFullNamn().toLowerCase().startsWith(sokord.toLowerCase())) {
                 resultat.add(enAnstalld);
             }
         }
@@ -216,7 +216,7 @@ public class Avdelning {
         ArrayList<Anvandare> resultat = new ArrayList<>();
 
         for (Anvandare enAnstalld : anstallda) {
-            if (enAnstalld.getEPost().toLowerCase().startsWith(sokord)) {
+            if (enAnstalld.getEPost().toLowerCase().startsWith(sokord.toLowerCase())) {
                 resultat.add(enAnstalld);
             }
         }
