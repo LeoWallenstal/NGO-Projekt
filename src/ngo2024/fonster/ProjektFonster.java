@@ -44,7 +44,7 @@ public class ProjektFonster extends javax.swing.JFrame {
      */
     public ProjektFonster(InfDB idb, Anvandare inloggadAnvandare) {
         initComponents();
-
+        projektTable.getTableHeader().setReorderingAllowed(false);
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
         vy = "Alla projekt";
@@ -370,14 +370,7 @@ public class ProjektFonster extends javax.swing.JFrame {
 
     private void sokfaltKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sokfaltKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            //projektregister.refreshaAllaProjekt();
-            filterStatus();
-            if (sokfalt.getText().equals("")) {
-                visaData(attVisa);
-                return;
-            }
-            attVisa = projektregister.getSoktLista(kategori, sokfalt.getText(), attVisa);
-            visaData(attVisa);
+            filtrering();
         }
 
     }//GEN-LAST:event_sokfaltKeyPressed
@@ -429,11 +422,13 @@ public class ProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_minaProjektButtonMouseClicked
 
     private void statusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusComboBoxActionPerformed
-        filterStatus();
+        filtrering();
         visaData(attVisa);
     }//GEN-LAST:event_statusComboBoxActionPerformed
 
     private void sokEfterComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokEfterComboBoxActionPerformed
+        sokfalt.setText("");
+        filtrering();
         String status = sokEfterComboBox.getSelectedItem().toString();
 
         switch (status) {
@@ -511,20 +506,13 @@ public class ProjektFonster extends javax.swing.JFrame {
 
     private void dcStartDatumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcStartDatumPropertyChange
         if (dcStartDatum.getDate() != null) {
-            String startdatum = new SimpleDateFormat("yyyy-MM-dd").format(dcStartDatum.getDate());
-            dcSlutDatum.setMinSelectableDate(dcStartDatum.getDate());
-
-            attVisa = projektregister.getListaStartdatum(startdatum, attVisa);
-            visaData(attVisa);
+            filtrering();
         }
     }//GEN-LAST:event_dcStartDatumPropertyChange
 
     private void dcSlutDatumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcSlutDatumPropertyChange
         if (dcSlutDatum.getDate() != null) {
-            String slutdatum = new SimpleDateFormat("yyyy-MM-dd").format(dcSlutDatum.getDate());
-            dcStartDatum.setMaxSelectableDate(dcSlutDatum.getDate());
-            attVisa = projektregister.getListaSlutdatum(slutdatum, attVisa);
-            visaData(attVisa);
+            filtrering();
         }
     }//GEN-LAST:event_dcSlutDatumPropertyChange
 
@@ -540,7 +528,7 @@ public class ProjektFonster extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_sokfaltActionPerformed
 
-    private void filterStatus(){
+    private void filtrering(){
         String status = statusComboBox.getSelectedItem().toString();
         projektregister.refreshaAllaProjekt();
 
@@ -591,6 +579,22 @@ public class ProjektFonster extends javax.swing.JFrame {
             default:
                 break;
         }
+        if (dcStartDatum.getDate() != null) {
+            
+            String startdatum = new SimpleDateFormat("yyyy-MM-dd").format(dcStartDatum.getDate());
+            dcSlutDatum.setMinSelectableDate(dcStartDatum.getDate());
+
+            attVisa = projektregister.getListaStartdatum(startdatum, attVisa);
+        }
+        if (dcSlutDatum.getDate() != null) {
+            String slutdatum = new SimpleDateFormat("yyyy-MM-dd").format(dcSlutDatum.getDate());
+            dcStartDatum.setMaxSelectableDate(dcSlutDatum.getDate());
+            attVisa = projektregister.getListaSlutdatum(slutdatum, attVisa);
+        }
+        if(!sokfalt.getText().isEmpty() && sokfalt.isEnabled()){
+            attVisa = projektregister.getSoktLista(kategori, sokfalt.getText(), attVisa);
+        }
+        visaData(attVisa);
     }
     
     private void initKolumner() {
