@@ -51,6 +51,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         stadRegister = new StadRegister(idb);
         valdAvdelning = avdelningsRegister.getAvdelningFranId(inloggadAnvandare.getAvdelningsID());
         initComponents();
+        anstalldTable.getTableHeader().setReorderingAllowed(false);
         btnSpara.setEnabled(false);
         btnAterstall.setEnabled(false);
         tabell = (DefaultTableModel) anstalldTable.getModel();

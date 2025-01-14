@@ -32,6 +32,7 @@ public class LandFonster extends javax.swing.JFrame {
         landRegister = new LandRegister(idb);
         
         initComponents();
+        landTable.getTableHeader().setReorderingAllowed(false);
         tabell = (DefaultTableModel) landTable.getModel();
         initKolumner();
         visaData();

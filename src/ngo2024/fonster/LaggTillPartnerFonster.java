@@ -362,7 +362,6 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
         //Stad
         if(!stadComboBox.getSelectedItem().equals("Välj stad...")){
             String stadID = stadregister.get(stadComboBox.getSelectedIndex()).getStadID();
-            nyPartner.setStad(stadID);
             nyPartner.setStadID(stadID);
         }
         else{

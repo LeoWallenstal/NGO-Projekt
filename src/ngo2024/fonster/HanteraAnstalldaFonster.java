@@ -62,6 +62,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         tabell = (DefaultTableModel) tblAnstallda.getModel();
         setLocationRelativeTo(null);
         visaAnstallda();
+        tblAnstallda.getTableHeader().setReorderingAllowed(false);
         tblAnstallda.setDefaultEditor(Object.class, null);
         setLocationRelativeTo(null);
         initGlassPane();
@@ -86,7 +87,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         btnBytRoll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SDG Sweden - Anställda");
+        setTitle("SDG Sweden - Hantera anställda");
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setMaximumSize(new java.awt.Dimension(1020, 576));
         setResizable(false);

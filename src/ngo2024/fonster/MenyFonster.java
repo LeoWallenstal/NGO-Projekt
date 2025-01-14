@@ -7,9 +7,15 @@ package ngo2024.fonster;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import ngo2024.Anvandare;
 import ngo2024.Avdelning;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 /**
  *
  * @author walle
@@ -30,7 +36,58 @@ public class MenyFonster extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         checkBehorighet();
         lblInloggadAnvandare.setText(inloggadNamn);
+        
+        // Array of buttons
+        JButton[] buttons = {btnMal_1, btnMal_2, btnMal_3, btnMal_4, btnMal_5, btnMal_6, btnMal_7, 
+            btnMal_8, btnMal_9, btnMal_10, btnMal_11, btnMal_12, btnMal_13, btnMal_14, 
+            btnMal_15, btnMal_16, btnMal_17};
+
+        // Loop through each button and add the mouse hover effect
+        for (JButton button : buttons) {
+            // Assuming each button has an icon set (example icon path)
+            Icon originalIcon = button.getIcon(); // Get the original icon
+            button.setContentAreaFilled(false); // Prevent the background from being painted
+            button.setBorder(BorderFactory.createEmptyBorder()); // Set initial empty border
+
+            button.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    // On mouse enter, scale and move the icon to a larger size
+                    if (originalIcon instanceof ImageIcon) {
+                        ImageIcon originalImageIcon = (ImageIcon) originalIcon;
+                        Image img = originalImageIcon.getImage(); // Get the original image
+                        
+                        // Scale the image to a larger size (e.g., 1.5 times the original size)
+                        Image scaledImg = img.getScaledInstance(
+                                (int) (originalImageIcon.getIconWidth() * 1.5), 
+                                (int) (originalImageIcon.getIconHeight() * 1.5), 
+                                Image.SCALE_SMOOTH
+                        );
+                        
+                        // Create an offset (e.g., move the image 5 pixels in both X and Y direction)
+                        int offsetX = 5;
+                        int offsetY = 5;
+                        
+                        // Create a new ImageIcon with the scaled and offset image
+                        Icon movedIcon = new ImageIcon(((Image) scaledImg).getScaledInstance(
+                                (int) (originalImageIcon.getIconWidth() * 1.01) + offsetX,
+                                (int) (originalImageIcon.getIconHeight() * 1.01) + offsetY,
+                                Image.SCALE_SMOOTH));
+                        
+                        // Set the scaled and offset icon as the button's icon
+                        button.setIcon(movedIcon);
+                    }
+                }
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    // On mouse exit, reset the icon to the original size
+                    button.setIcon(originalIcon); // Reset the icon to its original size
+                }
+            });
+        }
     }
+        
+    
     
     private void checkBehorighet()
     {
@@ -522,6 +579,8 @@ public class MenyFonster extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnHanteraAvdelningarActionPerformed
 
+    
+    
     /**
      * @param args the command line arguments
      */

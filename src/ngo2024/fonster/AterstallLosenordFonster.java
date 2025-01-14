@@ -47,7 +47,7 @@ public class AterstallLosenordFonster extends javax.swing.JFrame {
         btnTillbaka = new javax.swing.JButton();
         lblLosenordAterstallt = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SDG Sweden - Återställ lösenord");
 
         lblEpost.setText("Epost:");
 
