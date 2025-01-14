@@ -29,6 +29,12 @@ public class StatistikFonster extends javax.swing.JFrame {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
+        
+        tblProjektkostnadLand.getTableHeader().setReorderingAllowed(false);
+        tblPartners.getTableHeader().setReorderingAllowed(false);
+        tblLander.getTableHeader().setReorderingAllowed(false);
+        
+        
         this.tabell1 = (DefaultTableModel) tblProjektkostnadLand.getModel();
         this.tabell2 = (DefaultTableModel) tblPartners.getModel();
         this.tabell3 = (DefaultTableModel) tblLander.getModel();

@@ -138,6 +138,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="pfLosenord">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pfLosenordActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pfLosenordKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="tbtnVisaLosenord">
       <Properties>
@@ -157,7 +161,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblAterstall">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#xc5;terst&#xe4;ll l&#xf6;senord"/>
+        <Property name="text" type="java.lang.String" value="Gl&#xf6;mt l&#xf6;senord?"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblAterstallMouseClicked"/>

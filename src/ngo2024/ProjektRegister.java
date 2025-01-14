@@ -50,9 +50,9 @@ public class ProjektRegister {
             System.out.println(ex.getMessage());
         }
         
-            for(HashMap<String, String> ettProjekt : projektMap){
-                allaProjekt.add(new Projekt(ettProjekt, idb));
-            }
+        for(HashMap<String, String> ettProjekt : projektMap){
+            allaProjekt.add(new Projekt(ettProjekt, idb));
+        }
         return allaProjekt;
     }
     

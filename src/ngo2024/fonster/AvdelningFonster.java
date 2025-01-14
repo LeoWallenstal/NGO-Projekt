@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024.fonster;
+import java.awt.Component;
 import java.awt.Font;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -10,6 +11,7 @@ import java.util.*;
 import javax.swing.table.*;
 import ngo2024.*;
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
 
 /**
  *
@@ -24,6 +26,9 @@ public class AvdelningFonster extends javax.swing.JFrame {
     private DefaultTableModel tabell;
     private String vy;
     
+    private int hoveredRow = -1;
+    private int hoveredColumn = -1;
+    
     /**
      * Creates new form Avdelning
      */
@@ -34,13 +39,88 @@ public class AvdelningFonster extends javax.swing.JFrame {
         anvandarensAvdelning = avdelningsRegister.getAvdelningFranId(inloggadAnvandare.getAvdelningsID());
         initComponents();
         tabell = (DefaultTableModel) anstalldTable.getModel();
+        anstalldTable.getTableHeader().setReorderingAllowed(false);
       
         setLocationRelativeTo(null);
         initKolumner();
         visaAnstallda();
         nySetAvdelningsUppgifter();
         vy = "Alla";
+        
+        anstalldTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus,
+                    int row, int column) {
+                Component component = super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
+
+                // Get the column name
+                String columnName = table.getColumnName(column);
+
+                // Check if the cell is hovered and belongs to Projektnamn or Projektchef
+                if ((row == hoveredRow && column == hoveredColumn)
+                        && (columnName.equals("Namn"))) {
+
+                    // Apply HTML for underlined and bold text
+                    if (value != null) {
+                        setText("<html><b><u>" + value.toString() + "</u></b></html>");
+                    }
+                } else {
+                    // Reset to plain text if not hovered
+                    if (value != null) {
+                        setText(value.toString());
+                    }
+                }
+
+                return component;
+            }
+        });
+
+        anstalldTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                int row = anstalldTable.rowAtPoint(evt.getPoint());
+                int column = anstalldTable.columnAtPoint(evt.getPoint());
+
+                if (row != hoveredRow || column != hoveredColumn) {
+                    hoveredRow = row;
+                    hoveredColumn = column;
+                    anstalldTable.repaint();
+                }
+            }
+        });
+
+        anstalldTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                int row = anstalldTable.rowAtPoint(evt.getPoint());
+                int column = anstalldTable.columnAtPoint(evt.getPoint());
+
+                // Update hover state if inside the table
+                if (row != hoveredRow || column != hoveredColumn) {
+                    hoveredRow = row;
+                    hoveredColumn = column;
+                    anstalldTable.repaint();
+                }
+            }
+        });
+
+        anstalldTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                // Reset hover state when the mouse exits the table
+                hoveredRow = -1;
+                hoveredColumn = -1;
+                anstalldTable.repaint();
+            }
+        });
+        
     }
+        
+        
+        
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

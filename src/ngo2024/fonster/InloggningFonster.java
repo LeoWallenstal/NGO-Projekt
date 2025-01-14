@@ -35,6 +35,7 @@ public class InloggningFonster extends javax.swing.JFrame {
         lblFelmeddelande.setVisible(false);
         setLocationRelativeTo(null);
         pfLosenord.setEchoChar('*');
+        tbtnVisaLosenord.setEnabled(false);
     }
     
     private void login(String ePost,String losenord){
@@ -108,6 +109,17 @@ public class InloggningFonster extends javax.swing.JFrame {
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/goals_icons/foretagLogga.png"))); // NOI18N
 
+        pfLosenord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pfLosenordActionPerformed(evt);
+            }
+        });
+        pfLosenord.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pfLosenordKeyTyped(evt);
+            }
+        });
+
         tbtnVisaLosenord.setText("Visa");
         tbtnVisaLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,7 +134,7 @@ public class InloggningFonster extends javax.swing.JFrame {
             }
         });
 
-        lblAterstall.setText("Återställ lösenord");
+        lblAterstall.setText("Glömt lösenord?");
         lblAterstall.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblAterstallMouseClicked(evt);
@@ -242,6 +254,24 @@ public class InloggningFonster extends javax.swing.JFrame {
         
         lblAterstall.setFont(originalFont);
     }//GEN-LAST:event_lblAterstallMouseExited
+
+    private void pfLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfLosenordActionPerformed
+        if(pfLosenord.getText().isEmpty()){
+            tbtnVisaLosenord.setEnabled(false);
+        }
+        else{
+            tbtnVisaLosenord.setEnabled(true);
+        }
+    }//GEN-LAST:event_pfLosenordActionPerformed
+
+    private void pfLosenordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pfLosenordKeyTyped
+        if(pfLosenord.getText().isEmpty()){
+            tbtnVisaLosenord.setEnabled(false);
+        }
+        else{
+            tbtnVisaLosenord.setEnabled(true);
+        }
+    }//GEN-LAST:event_pfLosenordKeyTyped
 
     /**
      * @param args the command line arguments

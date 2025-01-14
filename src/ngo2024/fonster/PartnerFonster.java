@@ -41,6 +41,7 @@ public class PartnerFonster extends javax.swing.JFrame {
         visaData();
         setLocationRelativeTo(null);
         setKnappar();
+        partnerTable.getTableHeader().setReorderingAllowed(false);
         
         partnerTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
