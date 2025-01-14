@@ -21,6 +21,7 @@ import ngo2024.ProjektRegister;
 import ngo2024.Projektstatus;
 import ngo2024.SokKategori;
 import java.text.SimpleDateFormat;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -60,6 +61,77 @@ public class ProjektFonster extends javax.swing.JFrame {
         
         visaData(attVisa);
         setLocationRelativeTo(null);
+        
+        projektTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus,
+                                                       int row, int column) {
+            Component component = super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            // Get the column name
+            String columnName = table.getColumnName(column);
+
+            // Check if the cell is hovered and belongs to Projektnamn or Projektchef
+            if ((row == hoveredRow && column == hoveredColumn) &&
+                (columnName.equals("Projektnamn") || columnName.equals("Projektchef"))) {
+
+                // Apply HTML for underlined and bold text
+                if (value != null) {
+                    setText("<html><b><u>" + value.toString() + "</u></b></html>");
+                }
+            } else {
+                // Reset to plain text if not hovered
+                if (value != null) {
+                    setText(value.toString());
+                }
+            }
+
+            return component;
+        }
+        });
+        
+        projektTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                int row = projektTable.rowAtPoint(evt.getPoint());
+                int column = projektTable.columnAtPoint(evt.getPoint());
+
+                if (row != hoveredRow || column != hoveredColumn) {
+                    hoveredRow = row;
+                    hoveredColumn = column;
+                    projektTable.repaint();
+                }
+            }
+        });
+        
+        projektTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                int row = projektTable.rowAtPoint(evt.getPoint());
+                int column = projektTable.columnAtPoint(evt.getPoint());
+
+                // Update hover state if inside the table
+                if (row != hoveredRow || column != hoveredColumn) {
+                    hoveredRow = row;
+                    hoveredColumn = column;
+                    projektTable.repaint();
+                }
+            }
+        });
+
+        projektTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                // Reset hover state when the mouse exits the table
+                hoveredRow = -1;
+                hoveredColumn = -1;
+                projektTable.repaint();
+            }
+        });
+        
+        
     }
 
     /**
@@ -329,6 +401,10 @@ public class ProjektFonster extends javax.swing.JFrame {
         vy = "Avdelningens projekt";
         attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
         visaData(attVisa);
+        
+        allaProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        avdelningensProjektButton.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        minaProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
     }//GEN-LAST:event_avdelningensProjektButtonMouseClicked
 
     private void allaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allaProjektButtonMouseClicked
@@ -337,6 +413,10 @@ public class ProjektFonster extends javax.swing.JFrame {
         vy = "Alla projekt";
         attVisa = projektregister.getAllaProjekt();
         visaData(attVisa);
+        
+        allaProjektButton.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        avdelningensProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        minaProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
     }//GEN-LAST:event_allaProjektButtonMouseClicked
 
     private void minaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minaProjektButtonMouseClicked
@@ -346,11 +426,15 @@ public class ProjektFonster extends javax.swing.JFrame {
         vy = "Mina projekt";
         attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
         visaData(attVisa);
+        
+        allaProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        avdelningensProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        minaProjektButton.setFont(new Font("Segoe UI", Font.BOLD, 13));
     }//GEN-LAST:event_minaProjektButtonMouseClicked
  
     private void statusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusComboBoxActionPerformed
         String status = statusComboBox.getSelectedItem().toString();
-        projektregister.refreshaAllaProjekt();
+        //projektregister.refreshaAllaProjekt();
         
         switch(status){
             case "Alla":
@@ -434,8 +518,6 @@ public class ProjektFonster extends javax.swing.JFrame {
                 sokfalt.setEnabled(true);
                 sokfalt.setText("Sök projektnamn...");
                 sokfalt.setFont(new Font("Segoe UI", Font.ITALIC, 12));
-            }
-            default -> {
             }
         }
     }//GEN-LAST:event_sokEfterComboBoxActionPerformed
@@ -549,8 +631,7 @@ public class ProjektFonster extends javax.swing.JFrame {
                 tabell.addRow(new Object[]{ettProjekt.getNamn(), 
                 ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
                 ettProjekt.getStartdatum()} );
-            }
-            
+            }         
         }
     }
     
@@ -568,9 +649,7 @@ public class ProjektFonster extends javax.swing.JFrame {
                 tabell.addRow(new Object[]{ettProjekt.getNamn(), 
                 ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
                 ettProjekt.getStartdatum()} );
-            }
-
-            
+            }  
         }
     }
     
@@ -579,16 +658,17 @@ public class ProjektFonster extends javax.swing.JFrame {
         tabell.getDataVector().clear();
         //Tar bort datan från fönstret också.
         projektTable.repaint();
-        
     };
     
     
     private void setKnappar(){
+        allaProjektButton.setFont(new Font("Segoe UI", Font.BOLD, 13));
         if(inloggadAnvandare.isAdmin()){
             laggTillButton.setVisible(true);
         }
         else{
-            laggTillButton.setVisible(false);    }
+            laggTillButton.setVisible(false);    
+        }
     }
     
     private void resetKnapparOchSokfalt(){
@@ -638,6 +718,10 @@ public class ProjektFonster extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton allaProjektButton;
@@ -657,4 +741,9 @@ public class ProjektFonster extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> statusComboBox;
     private javax.swing.JButton tillbakaButton;
     // End of variables declaration//GEN-END:variables
+
+    private void setDefaultRenderer(Class<Object> aClass, DefaultTableCellRenderer defaultTableCellRenderer) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

@@ -68,6 +68,7 @@
                                   <Component id="handlaggareLbl" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="landLbl" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -94,7 +95,9 @@
               <Component id="startdatumLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="slutdatumLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="landLbl" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
               <Component id="partnerLbl" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="73" max="-2" attributes="0"/>
@@ -102,7 +105,7 @@
               <Component id="handlaggareLbl" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="73" max="-2" attributes="0"/>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="redigeraButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tillbakaButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -239,5 +242,10 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="landLbl">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Land: "/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

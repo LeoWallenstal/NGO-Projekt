@@ -229,11 +229,6 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
 
         laggTillPartnerBtn.setText("Lägg till");
         laggTillPartnerBtn.setEnabled(false);
-        laggTillPartnerBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                laggTillPartnerBtnMouseClicked(evt);
-            }
-        });
         laggTillPartnerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 laggTillPartnerBtnActionPerformed(evt);
@@ -242,11 +237,6 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
 
         taBortPartnerBtn.setText("Ta bort");
         taBortPartnerBtn.setEnabled(false);
-        taBortPartnerBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                taBortPartnerBtnMouseClicked(evt);
-            }
-        });
         taBortPartnerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 taBortPartnerBtnActionPerformed(evt);
@@ -498,14 +488,6 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         taBortPartnerBtn.setEnabled(false);
     }//GEN-LAST:event_tillgangligaPartnersListMouseClicked
 
-    private void laggTillPartnerBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laggTillPartnerBtnMouseClicked
-
-    }//GEN-LAST:event_laggTillPartnerBtnMouseClicked
-
-    private void taBortPartnerBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taBortPartnerBtnMouseClicked
-        
-    }//GEN-LAST:event_taBortPartnerBtnMouseClicked
-
     private void projektnamnInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_projektnamnInputKeyReleased
         if (!projektnamnInput.getText().isEmpty()
                 && !projektnamnInput.getText().equals(attRedigera.getNamn())) {
@@ -655,6 +637,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tillgangligaHandlaggareListMouseClicked
 
     private void laggTillPartnerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laggTillPartnerBtnActionPerformed
+        laggTillPartnerBtn.setEnabled(false);
         if (!projektetsPartners.isEmpty()) {
             projektetsPartnersList.setEnabled(true);
         }
@@ -667,11 +650,12 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         if (!attRedigera.partnersEquals(projektetsPartners)) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-        } else {
+        } else{
             sparaBtn.setEnabled(false);
         }    }//GEN-LAST:event_laggTillPartnerBtnActionPerformed
 
     private void laggTillHandlaggareBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laggTillHandlaggareBtnActionPerformed
+        laggTillHandlaggareBtn.setEnabled(false);
         if (!projektetsHandlaggare.isEmpty()) {
             projektetsHandlaggareList.setEnabled(true);
         }
@@ -690,6 +674,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_laggTillHandlaggareBtnActionPerformed
 
     private void taBortPartnerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taBortPartnerBtnActionPerformed
+        taBortPartnerBtn.setEnabled(false);
         int i = projektetsPartnersList.getSelectedIndex();
         partnerregister.add(projektetsPartners.get(i));
         projektetsPartners.remove(i);
@@ -704,6 +689,7 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_taBortPartnerBtnActionPerformed
 
     private void taBortHandlaggareBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taBortHandlaggareBtnActionPerformed
+        taBortHandlaggareBtn.setEnabled(false);
         int i = projektetsHandlaggareList.getSelectedIndex();
         avdelningensHandlaggare.add(projektetsHandlaggare.get(i));
         projektetsHandlaggare.remove(i);
