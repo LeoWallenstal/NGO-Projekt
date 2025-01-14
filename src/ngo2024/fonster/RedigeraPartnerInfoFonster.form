@@ -39,29 +39,26 @@
                           <Component id="lblKontaktPersonR" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="lblTfNr" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="lblEpostR" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblBranchR1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="tfNamnPartner" max="32767" attributes="0"/>
+                          <Component id="tfBranch" alignment="0" pref="114" max="32767" attributes="0"/>
+                          <Component id="tfAdress" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfKontaktPersonNamn" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfKontaktPersonTel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfEpost" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cbStad" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="tfNamnPartner" min="-2" pref="71" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tfBranch" alignment="0" pref="114" max="32767" attributes="0"/>
-                                  <Component id="tfAdress" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfKontaktPersonNamn" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfKontaktPersonTel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfEpost" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cbStad" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblBranschFelM" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblStadFelM" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblAdressFelM" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblKontaktPersonFelM" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTelefonFelM" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblEpostFelM" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="lblBranschFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStadFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAdressFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblKontaktPersonFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTelefonFelM" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEpostFelM" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -73,7 +70,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              <Component id="tfNamnPartner" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfNamnPartner" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblBranchR1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblBranchR" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -274,6 +274,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfNamnPartnerActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblBranchR1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Namn:"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
