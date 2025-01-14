@@ -73,6 +73,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
         lblFelMTomtFalt = new javax.swing.JLabel();
         cbStad = new javax.swing.JComboBox<>();
         tfNamnPartner = new javax.swing.JTextField();
+        lblBranchR1 = new javax.swing.JLabel();
 
         lblAdressT.setText("Adress:");
 
@@ -140,6 +141,8 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
             }
         });
 
+        lblBranchR1.setText("Namn:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,33 +164,34 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
                             .addComponent(lblBranchR)
                             .addComponent(lblKontaktPersonR)
                             .addComponent(lblTfNr)
-                            .addComponent(lblEpostR))
+                            .addComponent(lblEpostR)
+                            .addComponent(lblBranchR1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfNamnPartner)
+                            .addComponent(tfBranch, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                            .addComponent(tfAdress)
+                            .addComponent(tfKontaktPersonNamn)
+                            .addComponent(tfKontaktPersonTel)
+                            .addComponent(tfEpost)
+                            .addComponent(cbStad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNamnPartner, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfBranch, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                                    .addComponent(tfAdress)
-                                    .addComponent(tfKontaktPersonNamn)
-                                    .addComponent(tfKontaktPersonTel)
-                                    .addComponent(tfEpost)
-                                    .addComponent(cbStad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblBranschFelM)
-                                    .addComponent(lblStadFelM)
-                                    .addComponent(lblAdressFelM)
-                                    .addComponent(lblKontaktPersonFelM)
-                                    .addComponent(lblTelefonFelM)
-                                    .addComponent(lblEpostFelM))))
+                            .addComponent(lblBranschFelM)
+                            .addComponent(lblStadFelM)
+                            .addComponent(lblAdressFelM)
+                            .addComponent(lblKontaktPersonFelM)
+                            .addComponent(lblTelefonFelM)
+                            .addComponent(lblEpostFelM))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(tfNamnPartner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfNamnPartner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBranchR1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBranchR)
@@ -430,6 +434,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
     private javax.swing.JLabel lblAdressFelM;
     private javax.swing.JLabel lblAdressT;
     private javax.swing.JLabel lblBranchR;
+    private javax.swing.JLabel lblBranchR1;
     private javax.swing.JLabel lblBranschFelM;
     private javax.swing.JLabel lblEpostFelM;
     private javax.swing.JLabel lblEpostR;

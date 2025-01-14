@@ -41,7 +41,7 @@ public class Partner {
         }
         
         this.idb = idb;
-        this.partnerID = enPartner.get("partnerID");
+        this.partnerID = enPartner.get("pid");
         this.namn = enPartner.get("namn");
         this.kontaktperson = enPartner.get("kontaktperson");
         this.kontaktepost = enPartner.get("kontaktepost");
@@ -53,7 +53,7 @@ public class Partner {
     
     public Partner(HashMap<String, String> enPartner, InfDB idb){
         this.idb = idb;
-        this.partnerID = enPartner.get("partnerID");
+        this.partnerID = enPartner.get("pid");
         this.namn = enPartner.get("namn");
         this.kontaktperson = enPartner.get("kontaktperson");
         this.kontaktepost = enPartner.get("kontaktepost");
