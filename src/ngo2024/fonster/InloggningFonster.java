@@ -7,6 +7,8 @@ package ngo2024.fonster;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.util.Map;
 import ngo2024.Anvandare;
 import ngo2024.Avdelning;
 import javax.swing.ImageIcon;
@@ -20,6 +22,7 @@ import javax.swing.ImageIcon;
 public class InloggningFonster extends javax.swing.JFrame {
 
     private final InfDB idb;
+    private Font originalFont;
     
     /**
      * Creates new form Inloggning
@@ -28,6 +31,7 @@ public class InloggningFonster extends javax.swing.JFrame {
         this.idb = idb;
         
         initComponents();
+        originalFont = lblAterstall.getFont();
         lblFelmeddelande.setVisible(false);
         setLocationRelativeTo(null);
         pfLosenord.setEchoChar('*');
@@ -74,6 +78,7 @@ public class InloggningFonster extends javax.swing.JFrame {
         pfLosenord = new javax.swing.JPasswordField();
         tbtnVisaLosenord = new javax.swing.JToggleButton();
         btnDebug = new javax.swing.JButton();
+        lblAterstall = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SDG Sweden - Inloggning");
@@ -117,6 +122,19 @@ public class InloggningFonster extends javax.swing.JFrame {
             }
         });
 
+        lblAterstall.setText("Återställ lösenord");
+        lblAterstall.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAterstallMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblAterstallMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblAterstallMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,10 +152,13 @@ public class InloggningFonster extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tfEPost, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(btnLoggaIn)
-                                    .addComponent(pfLosenord))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tbtnVisaLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnLoggaIn)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblAterstall))
+                                    .addComponent(pfLosenord))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tbtnVisaLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(124, 124, 124)
                         .addComponent(lblLogo))
@@ -163,7 +184,9 @@ public class InloggningFonster extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFelmeddelande)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLoggaIn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLoggaIn)
+                    .addComponent(lblAterstall))
                 .addGap(47, 47, 47)
                 .addComponent(btnDebug)
                 .addContainerGap())
@@ -199,6 +222,26 @@ public class InloggningFonster extends javax.swing.JFrame {
         this.setVisible(false);
         new DebugInloggningFonster(idb).setVisible(true);
     }//GEN-LAST:event_btnDebugActionPerformed
+
+    private void lblAterstallMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAterstallMouseClicked
+        
+        new AterstallLosenordFonster(idb).setVisible(true);
+    }//GEN-LAST:event_lblAterstallMouseClicked
+
+    private void lblAterstallMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAterstallMouseEntered
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+       
+        Map<TextAttribute, Object> attribut = (Map<TextAttribute, Object>) originalFont.getAttributes();
+        attribut.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        Font underlinedFont = originalFont.deriveFont(attribut);
+        lblAterstall.setFont(underlinedFont);
+    }//GEN-LAST:event_lblAterstallMouseEntered
+
+    private void lblAterstallMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAterstallMouseExited
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        
+        lblAterstall.setFont(originalFont);
+    }//GEN-LAST:event_lblAterstallMouseExited
 
     /**
      * @param args the command line arguments
@@ -239,6 +282,7 @@ public class InloggningFonster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDebug;
     private javax.swing.JButton btnLoggaIn;
+    private javax.swing.JLabel lblAterstall;
     private javax.swing.JLabel lblEPost;
     private javax.swing.JLabel lblFelmeddelande;
     private javax.swing.JLabel lblLogo;
