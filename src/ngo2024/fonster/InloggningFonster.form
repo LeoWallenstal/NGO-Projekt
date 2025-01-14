@@ -34,7 +34,7 @@
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblFelmeddelande" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblLosenord" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblEPost" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -42,13 +42,17 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="tfEPost" alignment="0" pref="200" max="32767" attributes="0"/>
-                                  <Component id="btnLoggaIn" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="btnLoggaIn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="lblAterstall" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <Component id="pfLosenord" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="tbtnVisaLosenord" min="-2" pref="63" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="tbtnVisaLosenord" min="-2" pref="63" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
@@ -82,7 +86,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblFelmeddelande" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="btnLoggaIn" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnLoggaIn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAterstall" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               <Component id="btnDebug" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -146,6 +153,16 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDebugActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAterstall">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#xc5;terst&#xe4;ll l&#xf6;senord"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblAterstallMouseClicked"/>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblAterstallMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblAterstallMouseExited"/>
       </Events>
     </Component>
   </SubComponents>

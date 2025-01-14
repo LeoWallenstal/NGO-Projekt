@@ -12,7 +12,7 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.KeyEvent; 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import ngo2024.Anvandare;
@@ -38,13 +38,13 @@ public class ProjektFonster extends javax.swing.JFrame {
     private int hoveredRow = -1;
     private int hoveredColumn;
     private ArrayList<Projekt> attVisa;
-    
+
     /**
      * Creates new form Projekt
      */
     public ProjektFonster(InfDB idb, Anvandare inloggadAnvandare) {
         initComponents();
-        
+
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
         vy = "Alla projekt";
@@ -55,43 +55,43 @@ public class ProjektFonster extends javax.swing.JFrame {
         sokfalt.setText("Sök efter...");
         sokfalt.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         attVisa = projektregister.getAllaProjekt();
-        
+
         setKnappar();   //Sätter visibility på knappar beroende på behörighet
         initKolumner(); //Skapar och namnsätter kolumner
-        
+
         visaData(attVisa);
         setLocationRelativeTo(null);
-        
+
         projektTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                                                       boolean isSelected, boolean hasFocus,
-                                                       int row, int column) {
-            Component component = super.getTableCellRendererComponent(
-                    table, value, isSelected, hasFocus, row, column);
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus,
+                    int row, int column) {
+                Component component = super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
 
-            // Get the column name
-            String columnName = table.getColumnName(column);
+                // Get the column name
+                String columnName = table.getColumnName(column);
 
-            // Check if the cell is hovered and belongs to Projektnamn or Projektchef
-            if ((row == hoveredRow && column == hoveredColumn) &&
-                (columnName.equals("Projektnamn") || columnName.equals("Projektchef"))) {
+                // Check if the cell is hovered and belongs to Projektnamn or Projektchef
+                if ((row == hoveredRow && column == hoveredColumn)
+                        && (columnName.equals("Projektnamn") || columnName.equals("Projektchef"))) {
 
-                // Apply HTML for underlined and bold text
-                if (value != null) {
-                    setText("<html><b><u>" + value.toString() + "</u></b></html>");
+                    // Apply HTML for underlined and bold text
+                    if (value != null) {
+                        setText("<html><b><u>" + value.toString() + "</u></b></html>");
+                    }
+                } else {
+                    // Reset to plain text if not hovered
+                    if (value != null) {
+                        setText(value.toString());
+                    }
                 }
-            } else {
-                // Reset to plain text if not hovered
-                if (value != null) {
-                    setText(value.toString());
-                }
+
+                return component;
             }
-
-            return component;
-        }
         });
-        
+
         projektTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -105,7 +105,7 @@ public class ProjektFonster extends javax.swing.JFrame {
                 }
             }
         });
-        
+
         projektTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -197,6 +197,11 @@ public class ProjektFonster extends javax.swing.JFrame {
         sokfalt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 sokfaltMouseClicked(evt);
+            }
+        });
+        sokfalt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sokfaltActionPerformed(evt);
             }
         });
         sokfalt.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -354,34 +359,27 @@ public class ProjektFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setAttVisa(ArrayList<Projekt> attVisa){
+    public void setAttVisa(ArrayList<Projekt> attVisa) {
         this.attVisa = attVisa;
     }
-    
+
     private void tillbakaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tillbakaButtonMouseClicked
         new MenyFonster(idb, inloggadAnvandare).setVisible(true);
-                this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_tillbakaButtonMouseClicked
 
     private void sokfaltKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sokfaltKeyPressed
-        if(vy.equals("Alla projekt")){
-            attVisa = projektregister.getAllaProjekt();
-        }   
-        else if(vy.equals("Avdelningens projekt")){
-            attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
-        }
-        else if(vy.equals("Mina projekt")){
-            attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
-        }
-        
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            if(sokfalt.getText().equals("")){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            //projektregister.refreshaAllaProjekt();
+            filterStatus();
+            if (sokfalt.getText().equals("")) {
+                visaData(attVisa);
                 return;
             }
             attVisa = projektregister.getSoktLista(kategori, sokfalt.getText(), attVisa);
             visaData(attVisa);
         }
-        
+
     }//GEN-LAST:event_sokfaltKeyPressed
 
     private void allaProjektButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allaProjektButtonActionPerformed
@@ -399,7 +397,7 @@ public class ProjektFonster extends javax.swing.JFrame {
         vy = "Avdelningens projekt";
         attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
         visaData(attVisa);
-        
+
         allaProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         avdelningensProjektButton.setFont(new Font("Segoe UI", Font.BOLD, 13));
         minaProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -411,7 +409,7 @@ public class ProjektFonster extends javax.swing.JFrame {
         vy = "Alla projekt";
         attVisa = projektregister.getAllaProjekt();
         visaData(attVisa);
-        
+
         allaProjektButton.setFont(new Font("Segoe UI", Font.BOLD, 13));
         avdelningensProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         minaProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -420,98 +418,37 @@ public class ProjektFonster extends javax.swing.JFrame {
     private void minaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minaProjektButtonMouseClicked
         resetKnapparOchSokfalt();
         projektregister.refreshaAllaProjekt();
-        
+
         vy = "Mina projekt";
         attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
         visaData(attVisa);
-        
+
         allaProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         avdelningensProjektButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         minaProjektButton.setFont(new Font("Segoe UI", Font.BOLD, 13));
     }//GEN-LAST:event_minaProjektButtonMouseClicked
- 
+
     private void statusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusComboBoxActionPerformed
-        String status = statusComboBox.getSelectedItem().toString();
-        //projektregister.refreshaAllaProjekt();
-        
-        switch(status){
-            case "Alla":
-            {
-                if(vy.equals("Alla projekt")){
-                    attVisa = projektregister.getAllaProjekt();
-                }   
-                else if(vy.equals("Avdelningens projekt")){
-                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
-                }
-                else if(vy.equals("Mina projekt")){
-                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
-                }
-                break;
-            }
-            case "Pågående":
-            {
-                if(vy.equals("Alla projekt")){
-                    attVisa = projektregister.getAllaProjekt();
-                }   
-                else if(vy.equals("Avdelningens projekt")){
-                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
-                }
-                else if(vy.equals("Mina projekt")){
-                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
-                }
-                attVisa = projektregister.getListaStatus(Projektstatus.PÅGÅENDE, attVisa);
-                break;
-            }
-            case "Planerat":
-            {
-                if(vy.equals("Alla projekt")){
-                    attVisa = projektregister.getAllaProjekt();
-                }   
-                else if(vy.equals("Avdelningens projekt")){
-                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
-                }
-                else if(vy.equals("Mina projekt")){
-                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
-                }
-                attVisa = projektregister.getListaStatus(Projektstatus.PLANERAT, attVisa);
-                break;
-            }
-            case "Avslutat":
-            {
-                if(vy.equals("Alla projekt")){
-                    attVisa = projektregister.getAllaProjekt();
-                }   
-                else if(vy.equals("Avdelningens projekt")){
-                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
-                }
-                else if(vy.equals("Mina projekt")){
-                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
-                }
-                attVisa = projektregister.getListaStatus(Projektstatus.AVSLUTAT, attVisa);
-                break;
-            }
-            default:
-                break;
-        }    
+        filterStatus();
         visaData(attVisa);
     }//GEN-LAST:event_statusComboBoxActionPerformed
 
     private void sokEfterComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokEfterComboBoxActionPerformed
         String status = sokEfterComboBox.getSelectedItem().toString();
-        
-        switch(status){
-            case "Sök efter..." ->             {
+
+        switch (status) {
+            case "Sök efter..." -> {
                 sokfalt.setEnabled(false);
                 sokfalt.setText("Sök efter...");
                 sokfalt.setFont(new Font("Segoe UI", Font.ITALIC, 12));
             }
-            case "Projektchef" ->             {
+            case "Projektchef" -> {
                 kategori = SokKategori.PROJEKTCHEF;
                 sokfalt.setEnabled(true);
                 sokfalt.setText("Sök projektchef...");
                 sokfalt.setFont(new Font("Segoe UI", Font.ITALIC, 12));
             }
-            case "Projektnamn" ->             {
+            case "Projektnamn" -> {
                 kategori = SokKategori.PROJEKTNAMN;
                 sokfalt.setEnabled(true);
                 sokfalt.setText("Sök projektnamn...");
@@ -525,53 +462,46 @@ public class ProjektFonster extends javax.swing.JFrame {
         int kolumn = projektTable.columnAtPoint(evt.getPoint());
 
         String kolumnnamn = tabell.getColumnName(kolumn);
-        
-        if(kolumnnamn.equals("Projektnamn") && (rad >= 0 && rad < projektTable.getRowCount())){
+
+        if (kolumnnamn.equals("Projektnamn") && (rad >= 0 && rad < projektTable.getRowCount())) {
             Projekt aktuelltProjekt = attVisa.get(rad);
-            
+
             //Öppnar nytt fönster som visar mer detaljerad information om ett projekt 
-            new ProjektInfoFonster(inloggadAnvandare, aktuelltProjekt, 
+            new ProjektInfoFonster(inloggadAnvandare, aktuelltProjekt,
                     this, projektregister, idb).setVisible(true);
-        }
-        else if(kolumnnamn.equals("Projektchef") && (rad >= 0 && rad < projektTable.getRowCount())){
-            String cellKlickad = (String)tabell.getValueAt(rad, kolumn);
-            
+        } else if (kolumnnamn.equals("Projektchef") && (rad >= 0 && rad < projektTable.getRowCount())) {
+            String cellKlickad = (String) tabell.getValueAt(rad, kolumn);
+
             //Om man t.ex klickat på ett projekt som inte har en projektchef, händer ingenting.
-            if(cellKlickad.isEmpty()){
+            if (cellKlickad.isEmpty()) {
                 return;
             }
-            
+
             Projekt aktuelltProjekt = attVisa.get(rad);
-            
+
             //Öppnar nytt fönster som visar detaljerad information om en projektchef
-            new ProjektchefInfoFonster(inloggadAnvandare, 
-                aktuelltProjekt.getProjektchef(), idb).setVisible(true);
+            new ProjektchefInfoFonster(inloggadAnvandare,
+                    aktuelltProjekt.getProjektchef(), idb).setVisible(true);
         }
     }//GEN-LAST:event_projektTableMouseClicked
 
     private void projektTableMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projektTableMouseMoved
         int row = projektTable.rowAtPoint(evt.getPoint());
         int column = projektTable.columnAtPoint(evt.getPoint());
-        
-        if(row >= 0 && column >= 0)
-        {
+
+        if (row >= 0 && column >= 0) {
             String columnNamn = projektTable.getColumnName(column);
-            
-            if(columnNamn.equals("Projektnamn") || columnNamn.equals("Projektchef"))
-            {
+
+            if (columnNamn.equals("Projektnamn") || columnNamn.equals("Projektchef")) {
                 projektTable.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 hoveredRow = row;
                 hoveredColumn = column;
-            }
-            else
-            {
+            } else {
                 projektTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 hoveredRow = -1;
                 hoveredColumn = -1;
-            } 
-        }
-        else
-        {
+            }
+        } else {
             projektTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             hoveredRow = -1;
             hoveredColumn = -1;
@@ -580,17 +510,17 @@ public class ProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_projektTableMouseMoved
 
     private void dcStartDatumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcStartDatumPropertyChange
-        if(dcStartDatum.getDate() != null){
+        if (dcStartDatum.getDate() != null) {
             String startdatum = new SimpleDateFormat("yyyy-MM-dd").format(dcStartDatum.getDate());
             dcSlutDatum.setMinSelectableDate(dcStartDatum.getDate());
-            
+
             attVisa = projektregister.getListaStartdatum(startdatum, attVisa);
             visaData(attVisa);
         }
     }//GEN-LAST:event_dcStartDatumPropertyChange
 
     private void dcSlutDatumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcSlutDatumPropertyChange
-        if(dcSlutDatum.getDate() != null){
+        if (dcSlutDatum.getDate() != null) {
             String slutdatum = new SimpleDateFormat("yyyy-MM-dd").format(dcSlutDatum.getDate());
             dcStartDatum.setMaxSelectableDate(dcSlutDatum.getDate());
             attVisa = projektregister.getListaSlutdatum(slutdatum, attVisa);
@@ -599,87 +529,142 @@ public class ProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_dcSlutDatumPropertyChange
 
     private void sokfaltMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokfaltMouseClicked
-        if(sokfalt.isEnabled()){
+        if (sokfalt.isEnabled()) {
             sokfalt.setText("");
             sokfalt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        } 
+        }
 
     }//GEN-LAST:event_sokfaltMouseClicked
 
+    private void sokfaltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokfaltActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sokfaltActionPerformed
+
+    private void filterStatus(){
+        String status = statusComboBox.getSelectedItem().toString();
+        projektregister.refreshaAllaProjekt();
+
+        switch (status) {
+            case "Alla": {
+                if (vy.equals("Alla projekt")) {
+                    attVisa = projektregister.getAllaProjekt();
+                } else if (vy.equals("Avdelningens projekt")) {
+                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
+                } else if (vy.equals("Mina projekt")) {
+                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
+                }
+                break;
+            }
+            case "Pågående": {
+                if (vy.equals("Alla projekt")) {
+                    attVisa = projektregister.getAllaProjekt();
+                } else if (vy.equals("Avdelningens projekt")) {
+                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
+                } else if (vy.equals("Mina projekt")) {
+                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
+                }
+                attVisa = projektregister.getListaStatus(Projektstatus.PÅGÅENDE, attVisa);
+                break;
+            }
+            case "Planerat": {
+                if (vy.equals("Alla projekt")) {
+                    attVisa = projektregister.getAllaProjekt();
+                } else if (vy.equals("Avdelningens projekt")) {
+                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
+                } else if (vy.equals("Mina projekt")) {
+                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
+                }
+                attVisa = projektregister.getListaStatus(Projektstatus.PLANERAT, attVisa);
+                break;
+            }
+            case "Avslutat": {
+                if (vy.equals("Alla projekt")) {
+                    attVisa = projektregister.getAllaProjekt();
+                } else if (vy.equals("Avdelningens projekt")) {
+                    attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
+                } else if (vy.equals("Mina projekt")) {
+                    attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
+                }
+                attVisa = projektregister.getListaStatus(Projektstatus.AVSLUTAT, attVisa);
+                break;
+            }
+            default:
+                break;
+        }
+    }
     
-    private void initKolumner(){
+    private void initKolumner() {
         tabell.addColumn("Projektnamn");
         tabell.addColumn("Projektchef");
         tabell.addColumn("Prioritet");
         tabell.addColumn("Startdatum");
-        
+
         //Förhindrar användaren från att editera cellerna direkt
         projektTable.setDefaultEditor(Object.class, null);
     }
-    
-    public void visaData(ArrayList<Projekt> attVisa){
+
+    public void visaData(ArrayList<Projekt> attVisa) {
         rensaDataFonster();
-        for(Projekt ettProjekt : attVisa){
-            if(ettProjekt.getProjektchefID() == null){
-                tabell.addRow(new Object[]{ettProjekt.getNamn(), 
-                "", ettProjekt.getPrioritet(),
-                ettProjekt.getStartdatum()} );
+        for (Projekt ettProjekt : attVisa) {
+            if (ettProjekt.getProjektchefID() == null) {
+                tabell.addRow(new Object[]{ettProjekt.getNamn(),
+                    "", ettProjekt.getPrioritet(),
+                    ettProjekt.getStartdatum()});
+            } else {
+                tabell.addRow(new Object[]{ettProjekt.getNamn(),
+                    ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
+                    ettProjekt.getStartdatum()});
             }
-            else{
-                tabell.addRow(new Object[]{ettProjekt.getNamn(), 
-                ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
-                ettProjekt.getStartdatum()} );
-            }         
         }
     }
-    
-    public void visaData(){
+
+    public void visaData() {
         rensaDataFonster();
         ArrayList<Projekt> attVisa = projektregister.hamtaAllaProjekt();
-      
-        for(Projekt ettProjekt : attVisa){
-            if(ettProjekt.getProjektchefID() == null){
-                tabell.addRow(new Object[]{ettProjekt.getNamn(), 
-                "", ettProjekt.getPrioritet(),
-                ettProjekt.getStartdatum()} );
+
+        for (Projekt ettProjekt : attVisa) {
+            if (ettProjekt.getProjektchefID() == null) {
+                tabell.addRow(new Object[]{ettProjekt.getNamn(),
+                    "", ettProjekt.getPrioritet(),
+                    ettProjekt.getStartdatum()});
+            } else {
+                tabell.addRow(new Object[]{ettProjekt.getNamn(),
+                    ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
+                    ettProjekt.getStartdatum()});
             }
-            else{
-                tabell.addRow(new Object[]{ettProjekt.getNamn(), 
-                ettProjekt.getProjektchef().getFullNamn(), ettProjekt.getPrioritet(),
-                ettProjekt.getStartdatum()} );
-            }  
         }
     }
-    
-    private void rensaDataFonster(){
+
+    private void rensaDataFonster() {
         //Tar bort datan
         tabell.getDataVector().clear();
         //Tar bort datan från fönstret också.
         projektTable.repaint();
-    };
+    }
+
+    ;
     
     
-    private void setKnappar(){
+    private void setKnappar() {
         allaProjektButton.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        if(inloggadAnvandare.isAdmin()){
+        if (inloggadAnvandare.isAdmin()) {
             laggTillButton.setVisible(true);
-        }
-        else{
-            laggTillButton.setVisible(false);    
+        } else {
+            laggTillButton.setVisible(false);
         }
     }
-    
-    private void resetKnapparOchSokfalt(){
+
+    private void resetKnapparOchSokfalt() {
         sokfalt.setText("Sök efter...");
         sokfalt.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         sokfalt.setEnabled(false);
-        
+
         sokEfterComboBox.setSelectedIndex(0);
         statusComboBox.setSelectedIndex(0);
         dcStartDatum.setDate(null);
         dcSlutDatum.setDate(null);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -707,7 +692,7 @@ public class ProjektFonster extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -716,10 +701,7 @@ public class ProjektFonster extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton allaProjektButton;
