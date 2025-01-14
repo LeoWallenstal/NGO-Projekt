@@ -93,6 +93,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
             slutdatumLabel.setVisible(true);
             slutdatumLabel.setText("Slutdatum: " + aktuelltProjekt.getSlutdatum());
         }
+        landLbl.setText("Land: " + aktuelltProjekt.getLand().getNamn());
     }
     
     public void refreshProjektInfo(){
@@ -114,6 +115,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
             slutdatumLabel.setVisible(true);
             slutdatumLabel.setText("Slutdatum: " + aktuelltProjekt.getSlutdatum());
         }
+        landLbl.setText("Land : " + aktuelltProjekt.getLand().getNamn());
         
     }
     
@@ -172,6 +174,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         handlaggareLbl = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         handlaggareList = new javax.swing.JList<>();
+        landLbl = new javax.swing.JLabel();
 
         setIconImage(new ImageIcon(getClass().getResource("/resources/icons/appLogo.png")).getImage());
         setResizable(false);
@@ -245,6 +248,8 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(handlaggareList);
 
+        landLbl.setText("Land: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -280,7 +285,8 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
                                 .addGap(15, 15, 15)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(partnerLbl)
-                                    .addComponent(handlaggareLbl))))
+                                    .addComponent(handlaggareLbl)))
+                            .addComponent(landLbl))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -302,7 +308,9 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
                 .addComponent(startdatumLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(slutdatumLabel)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(landLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(partnerLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -310,7 +318,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
                 .addComponent(handlaggareLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(redigeraButton)
                     .addComponent(tillbakaButton)
@@ -392,6 +400,7 @@ public class ProjektInfoFonster extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel kostnadLabel;
+    private javax.swing.JLabel landLbl;
     private javax.swing.JLabel partnerLbl;
     private javax.swing.JList<String> partnerList;
     private javax.swing.JLabel prioritetLabel;
