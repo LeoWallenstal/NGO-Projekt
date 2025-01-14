@@ -93,14 +93,16 @@ public class StatistikFonster extends javax.swing.JFrame {
     
     public void setStatistikPartners(){
         try{
-            String sqlFraga = "SELECT namn, count(projekt_partner.pid) as antalproj FROM partner "+
-                " JOIN projekt_partner ON partner.pid = projekt_partner.partner_pid " +
-                "JOIN projekt ON projekt.projektchef = " + inloggadAnvandare.getAnstallningsID() +
-                " GROUP BY partner.pid " +
-                "ORDER BY antalproj DESC";
+            String sqlFraga = "SELECT partner.namn, COUNT(DISTINCT projekt.pid) AS antalproj FROM partner " +
+            "JOIN projekt_partner ON partner.pid = projekt_partner.partner_pid " +
+            "JOIN projekt ON projekt.pid = projekt_partner.pid " +
+            " WHERE projekt.projektchef = " + inloggadAnvandare.getAnstallningsID() + 
+            " GROUP BY partner.pid " +
+            "ORDER BY antalproj DESC";
+            
+            System.out.println(sqlFraga);
             
             ArrayList<HashMap<String, String>> partnerAntal = idb.fetchRows(sqlFraga);
-            System.out.println(partnerAntal);
            
             if(!partnerAntal.isEmpty()){
                 for(HashMap<String, String> partner: partnerAntal){
@@ -109,6 +111,7 @@ public class StatistikFonster extends javax.swing.JFrame {
                     if(antalProj == null){
                         antalProj = "0";
                     }
+                    System.out.println(namnPartner+ ", " + antalProj);
                     tabell2.addRow(new Object[]{namnPartner, antalProj});
                 }
             }
@@ -167,8 +170,6 @@ public class StatistikFonster extends javax.swing.JFrame {
         tblLander = new javax.swing.JTable();
         lblRubrik = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblKonstadProText.setText("Kostnad för projekt där du varit projektledare:");
 
