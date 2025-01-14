@@ -141,7 +141,7 @@ public class ProjektRegister {
             Iterator<Projekt> it = attFiltrera.iterator();
             while(it.hasNext()){
                 Projekt ettProjekt = it.next();
-                if(!ettProjekt.getProjektchef().getFullNamn().startsWith(sokStr)){
+                if(!ettProjekt.getProjektchef().getFornamn().toLowerCase().startsWith(sokStr.toLowerCase())){
                     it.remove();
                 }
             }
@@ -150,7 +150,7 @@ public class ProjektRegister {
             Iterator<Projekt> it = attFiltrera.iterator();
             while(it.hasNext()){
                 Projekt ettProjekt = it.next();
-                if(!ettProjekt.getNamn().startsWith(sokStr)){
+                if(!ettProjekt.getNamn().toLowerCase().contains(sokStr.toLowerCase())){
                     it.remove();
                 }
             }
