@@ -10,6 +10,7 @@ public class Validerare {
         return epost.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
     
+    //får innehålla +(isåfall i början), - och siffror
     public static boolean arTelefonnummer(String telefonnummer){
     return telefonnummer.matches("^[+]?\\d{1,4}[-]?\\d{1,4}[-]?\\d{1,4}$");
     }
@@ -34,14 +35,16 @@ public class Validerare {
         return losenord.matches("^(?=.*\\d).{8,}$");
     }
     
+    //belopp med upp til två decimaler
     public static boolean formatProjektKostnadOK(String kostnad){
         return kostnad.matches("^\\d{1,}(\\.\\d{2})?$");
     }
-    
+    //kontroll om namnet är förnamn & efternamn, - får förekomma
     public static boolean formatNamnOK(String namn){
         return namn.matches("^([A-Za-zÅÄÖåäö]+(?:-[A-Za-zÅÄÖåäö]+)?)\\s([A-Za-zÅÄÖåäö]+(?:-[A-Za-zÅÄÖåäö]+)?)$");
     }
    
+    //namn får innehålla bokstäver & -
     public static boolean formatEnkeltNamnOK(String namn) {
         return namn.matches("^[A-Za-zÅÄÖåäö]+(?:-[A-Za-zÅÄÖåäö]+)?$");
     }

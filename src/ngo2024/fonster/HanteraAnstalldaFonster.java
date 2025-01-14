@@ -107,11 +107,6 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
                 "AnställningsID", "Namn", "Roll", "Avdelning"
             }
         ));
-        tblAnstallda.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblAnstalldaMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tblAnstallda);
 
         btnLaggTillAnstalld.setText("Registrera anställd");
@@ -179,7 +174,6 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     private void initGlassPane() {
         glassPaneOverlay = new JPanel() {
@@ -301,12 +295,11 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
                                 if (taBort) {
                                     // Skapa och öppna ett nytt fönster som skickar med aid
                                     new VarningJaNejFonster(anstalldaMap.get(aid), this).setVisible(true);
-                                }
-                             else if (bytRoll) {
+                                } else if (bytRoll) {
                                     anstalldaMap.get(aid).bytRoll();
                                     reset();
                                     visaAnstallda();
-                            }
+                                }
                             }
                         }
                     }
@@ -369,6 +362,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     public void reset() {
+        //sätter knappar och fält, muspekare till normalläge tömmer tabell
         glassPaneOverlay.setVisible(false);
         btnTaBortAnstalld.setEnabled(true);
         lblInfoTaBort.setVisible(false);
@@ -377,15 +371,18 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         tblAnstallda.repaint();
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
-    
-    public void andraFranTaBortLage(){
+
+    public void andraFranTaBortLage() {
         taBort = false;
         glassPaneOverlay.setVisible(false);
         btnTaBortAnstalld.setEnabled(true);
     }
 
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
+        //byter muspekare
         setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        //sätter fältet till true och visar en overlay
         this.taBort = true;
         btnTaBortAnstalld.setEnabled(false);
         glassPaneOverlay.setVisible(true);
@@ -393,16 +390,15 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
         glassPaneOverlay.repaint();
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
-    private void tblAnstalldaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnstalldaMouseClicked
-        // Hämta raden som är vald när musen klickar
-    }//GEN-LAST:event_tblAnstalldaMouseClicked
-
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
 
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void btnBytRollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBytRollActionPerformed
+        //byter muspekare
         setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        //sätter fältet till true och visar en overlay 
         this.bytRoll = true;
         btnTaBortAnstalld.setEnabled(false);
         lblInfoTaBort.setVisible(true);
@@ -412,8 +408,10 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBytRollActionPerformed
 
     public void deleteAnstalld(Anvandare anvandareTaBort) {
-        System.out.println(avdelningsRegister.getAvdelningFranId(anvandareTaBort.getAvdelningsID()).removeAnstalld(anvandareTaBort.getAnstallningsID()));
+        //tar bort användare i databas
         anvandareTaBort.deleteAnvandareDb();
+
+        //resetar tabellen och visar anställda på nytt för att den man tagit bort ej ska synas
         reset();
         visaAnstallda();
     }
@@ -433,8 +431,7 @@ public class HanteraAnstalldaFonster extends javax.swing.JFrame {
                 tabell.addRow(new Object[]{enAnstalld.getAnstallningsID(),
                     enAnstalld.getFullNamn(),
                     roll,
-                    enAvdelning.getNamn()
-                });
+                    enAvdelning.getNamn()});
             }
         }
     }
