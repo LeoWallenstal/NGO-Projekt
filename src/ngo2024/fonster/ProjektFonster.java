@@ -130,8 +130,6 @@ public class ProjektFonster extends javax.swing.JFrame {
                 projektTable.repaint();
             }
         });
-        
-        
     }
 
     /**

@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024.fonster;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import ngo2024.*;
 import oru.inf.InfDB;
@@ -23,6 +26,9 @@ public class PartnerFonster extends javax.swing.JFrame {
     private DefaultTableModel tabell;
     private PartnerRegister partnerregister;
     
+    private int hoveredRow = -1;
+    private int hoveredColumn = -1;
+    
     
     public PartnerFonster(Anvandare inloggadAnvandare, InfDB idb) {
         this.inloggadAnvandare = inloggadAnvandare;
@@ -35,7 +41,55 @@ public class PartnerFonster extends javax.swing.JFrame {
         visaData();
         setLocationRelativeTo(null);
         setKnappar();
+        
+        partnerTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus,
+                                                           int row, int column) {
+                Component component = super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
 
+                // Apply bold and underlined font for the hovered cell in the "Namn" column
+                if (row == hoveredRow && column == hoveredColumn) {
+                    String columnName = table.getColumnName(column);
+                    if ("Namn".equals(columnName)) {
+                        setText("<html><b><u>" + value.toString() + "</u></b></html>");
+                    } else {
+                        setText(value != null ? value.toString() : "");
+                    }
+                } else {
+                    setText(value != null ? value.toString() : "");
+                }
+
+                return component;
+            }
+        });
+        
+        partnerTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                int row = partnerTable.rowAtPoint(evt.getPoint());
+                int column = partnerTable.columnAtPoint(evt.getPoint());
+
+                // Update hover state
+                if (row != hoveredRow || column != hoveredColumn) {
+                    hoveredRow = row;
+                    hoveredColumn = column;
+                    partnerTable.repaint();
+                }
+            }
+        });
+
+        partnerTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                hoveredRow = -1;
+                hoveredColumn = -1;
+                partnerTable.repaint();
+            }
+        });
+        
     }
 
     /**
@@ -145,22 +199,18 @@ public class PartnerFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tillbakaButtonMouseClicked
 
     private void initKolumner(){
-        tabell.addColumn("pid"); //denna ska gömmas senare
         tabell.addColumn("Namn");
         tabell.addColumn("Kontaktperson");
         tabell.addColumn("Kontaktepost");
         
         //Förhindrar användaren från att editera cellerna direkt
         partnerTable.setDefaultEditor(Object.class, null);
-        
-        //Gömmer pid kolumnen
-        partnerTable.removeColumn(partnerTable.getColumnModel().getColumn(0));
     }
     
     private void visaData(){
         rensaDataFonster();
         for(Partner enPartner : partnerregister.getLista()){
-            tabell.addRow(new Object[]{enPartner.getPartnerID(), enPartner.getNamn(), 
+            tabell.addRow(new Object[]{enPartner.getNamn(), 
                 enPartner.getKontaktperson(), enPartner.getKontaktepost()});
         }
     }
@@ -181,8 +231,10 @@ public class PartnerFonster extends javax.swing.JFrame {
     
     private void partnerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_partnerTableMouseClicked
         int partnerIndex = partnerTable.rowAtPoint(evt.getPoint());
+        int kolumn = partnerTable.columnAtPoint(evt.getPoint());
+        String kolumnnamn = partnerTable.getColumnName(kolumn);
 
-        if(partnerIndex>= 0 && partnerIndex < partnerTable.getRowCount()){;
+        if(kolumnnamn.equals("Namn") && partnerIndex>= 0 && partnerIndex < partnerTable.getRowCount()){;
             Partner aktuellPartner = partnerregister.get(partnerIndex);
 
             //Öppnar nytt fönster som visar mer detaljerad information om en partner
