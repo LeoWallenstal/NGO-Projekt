@@ -15,6 +15,7 @@ public class Validerare {
     return telefonnummer.matches("^[+]?\\d{1,4}[-]?\\d{1,4}[-]?\\d{1,4}$");
     }
     
+    //format XXXX-XX-XX
     public static boolean arDatum(String datum){
             return datum.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
     }
@@ -23,6 +24,9 @@ public class Validerare {
             return bokstaver.matches("^[a-zA-ZåäöÅÄÖ ]+$");
     }
     
+    //Ska innehålla minst en bokstav (stora och små)& minst en siffra.
+    //Ska innehålla en eller flera tecken.
+    //Kan sluta med antingen bokstäver, siffror eller bindestreck.
     public static boolean arAdress(String adress) {
         return adress.matches("^(?=.*[a-zA-Z])(?=.*\\d).+[-a-zA-Z0-9]+$");
     }
@@ -31,11 +35,12 @@ public class Validerare {
             return siffror.matches("^\\d+$");
     }
     
+    //ska innehålla en siffra och vara minst 8 tecken långt
     public static boolean formatLosenord(String losenord){
         return losenord.matches("^(?=.*\\d).{8,}$");
     }
     
-    //belopp med upp til två decimaler
+    //belopp med upp till två decimaler
     public static boolean formatProjektKostnadOK(String kostnad){
         return kostnad.matches("^\\d{1,}(\\.\\d{2})?$");
     }

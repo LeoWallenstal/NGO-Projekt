@@ -393,22 +393,35 @@ public class RegistreraAnstalldFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tfAdressActionPerformed
 
     private void btnSlumpaLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSlumpaLosenordActionPerformed
-
+        
+        //skapar en strängvariabel som innehåller alla siffror
         String siffror = "0123456789";
+        //likaså med bokstäver
         String bokstaver = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        //sätter ihop siffror och bokstäver till en sträng
         String allaTecken = siffror + bokstaver;
-
-        Random rand = new Random();
+        
+        //skapar ett objekt av klassen Random för att kunna generera ett slumpmässigt lösenord
+        Random slumpa = new Random();
+        
+        //skapar ett objekt av klassen StringBuilder. Denna används för att kunna skapa och manipulera fram en sträng.
+        //Vi skapar en nytt objekt av StringBuilder som döps till losenord vilket för närvarande är en tom sträng
         StringBuilder losenord = new StringBuilder();
+        //denna fylls på i kodraderna nedan
 
-        // Lägg till minst en siffra först
-        losenord.append(siffror.charAt(rand.nextInt(siffror.length())));
+        // Slumpar fram en siffra och lägger till en siffra först i variabeln losenord för att säkerställa att det blir minst en i strängen
+        //nextint är en metod i klassen Random. Returnerar ett slumpmässigt tal mellan 0 och längden på variabeln siffror(10).
+        //denna returnerar indexpositionen för siffran, dvs 0-9.
+        //charAt hämtar tecknet som ligger på den indexpositionen som returnerats av nextInt metoden.
+        //append är en metod i StringBuilder som lägger till tecknet i "losenord".
+        losenord.append(siffror.charAt(slumpa.nextInt(siffror.length())));
 
-        // Lägg till resten av tecknen så att lösenordet blir minst 8 tecken långt
+        // Lägger till resten av tecknen så att lösenordet blir 8 tecken långt
+        //startar från index 1 med anledning av att en siffra redan lagts till
         for (int i = 1; i < 8; i++) {
-            losenord.append(allaTecken.charAt(rand.nextInt(allaTecken.length())));
+            losenord.append(allaTecken.charAt(slumpa.nextInt(allaTecken.length())));
         }
-
+        //sätter labeln till nya lösenordet som slumpats fram och konverterar från StringBuilder till en vanlig String.
         lblLosenordSlumpas.setText(losenord.toString());
     }//GEN-LAST:event_btnSlumpaLosenordActionPerformed
 
