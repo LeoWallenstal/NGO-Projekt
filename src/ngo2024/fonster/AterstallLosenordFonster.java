@@ -16,10 +16,8 @@ import oru.inf.InfException;
  */
 public class AterstallLosenordFonster extends javax.swing.JFrame {
 
-    
     private InfDB idb;
-    
-    
+
     /**
      * Creates new form AterstallLosenordFonster
      */
@@ -127,40 +125,54 @@ public class AterstallLosenordFonster extends javax.swing.JFrame {
 
     private void btnAterstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAterstallActionPerformed
         String epost = tfEpost.getText();
-        if(!epost.isEmpty() && Validerare.arEpostAdress(epost)){
-            try{
+        if (!epost.isEmpty() && Validerare.arEpostAdress(epost)) {
+            try {
                 String sqlFraga = "SELECT COUNT(*) FROM anstalld WHERE epost = '" + epost + "'";
                 String kontroll = idb.fetchSingle(sqlFraga);
-                if(kontroll.equals("0")){
+                if (kontroll.equals("0")) {
                     lblNyttLosenord.setText("Ogiltig epost!");
                     lblNyttLosenord.setForeground(Color.RED);
-                }
-                else{
+                } else {
+
+                    //skapar en strängvariabel som innehåller alla siffror
                     String siffror = "0123456789";
+                    //likaså med bokstäver
                     String bokstaver = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    //sätter ihop siffror och bokstäver till en sträng
                     String allaTecken = siffror + bokstaver;
 
-                    Random rand = new Random();
+                    //skapar ett objekt av klassen Random för att kunna generera ett slumpmässigt lösenord
+                    Random slumpa = new Random();
+
+                    //skapar ett objekt av klassen StringBuilder. Denna används för att kunna skapa och manipulera fram en sträng.
+                    //Vi skapar en nytt objekt av StringBuilder som döps till losenord vilket för närvarande är en tom sträng
                     StringBuilder losenord = new StringBuilder();
+                    //denna fylls på i kodraderna nedan
+                    
+                    // Slumpar fram en siffra och lägger till en siffra först i variabeln losenord för att säkerställa att det blir minst en i strängen
+                    //nextint är en metod i klassen Random. Returnerar ett slumpmässigt tal mellan 0 och längden på variabeln siffror(10).
+                    //denna returnerar indexpositionen för siffran, dvs 0-9.
+                    //charAt hämtar tecknet som ligger på den indexpositionen som returnerats av nextInt metoden.
+                    //append är en metod i StringBuilder som lägger till tecknet i "losenord".
+                    losenord.append(siffror.charAt(slumpa.nextInt(siffror.length())));
 
-                    // Lägg till minst en siffra först
-                    losenord.append(siffror.charAt(rand.nextInt(siffror.length())));
-
-                    // Lägg till resten av tecknen så att lösenordet blir minst 8 tecken långt
+                    // Lägger till resten av tecknen så att lösenordet blir 8 tecken långt
+                    //startar från index 1 med anledning av att en siffra redan lagts till
                     for (int i = 1; i < 8; i++) {
-                        losenord.append(allaTecken.charAt(rand.nextInt(allaTecken.length())));
+                        losenord.append(allaTecken.charAt(slumpa.nextInt(allaTecken.length())));
                     }
                     
+
                     sqlFraga = "UPDATE anstalld SET losenord = '" + losenord.toString() + "' WHERE epost = '" + epost + "'";
                     idb.update(sqlFraga);
                     
+                    //sätter labeln till nya lösenordet som slumpats fram och konverterar från StringBuilder till en vanlig String.
                     lblNyttLosenord.setText(losenord.toString());
                     lblNyttLosenord.setForeground(Color.WHITE);
                     lblLosenordAterstallt.setVisible(true);
                 }
                 System.out.println(kontroll);
-            }
-            catch(InfException ex){
+            } catch (InfException ex) {
                 System.out.println(ex.getMessage());
             }
         }
