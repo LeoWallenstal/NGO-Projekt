@@ -83,6 +83,8 @@ public class AnvandarRegister {
             String sqlFragaAdmin = "SELECT aid FROM admin";
             String sqlFragaHandlaggare = "SELECT aid FROM handlaggare";
 
+            /*Två hashmaps där anställningsIDn för de anställda som är admin,
+            respektive handläggare, sparas.*/
             adminAid = idb.fetchColumn(sqlFragaAdmin);
             handlaggareAid = idb.fetchColumn(sqlFragaHandlaggare);
 
@@ -93,24 +95,30 @@ public class AnvandarRegister {
         try {
             String sqlFraga = "SELECT * "
                     + "FROM anstalld";
-
+               
             allaAnstalldaMap = idb.fetchRows(sqlFraga);
         } catch (InfException ex) {
             System.out.println(ex.getMessage() + "i Avdelning.java, getAnstallningsID()");
         }
-
+        /*Hämtar all data från tabellen anstalld, som sparas i en ArrayList med HashMaps,
+        där en HashMap representerar en rad i tabellen. */
+        
         for (HashMap<String, String> enAnstalld : allaAnstalldaMap) {
             String aid = enAnstalld.get("aid");
             boolean admin = false;
             boolean handlaggare = false;
+            /*Jämför anställningsIDt på en anställd, gentemot listorna där administratörerna 
+            och handläggarnas IDn sparats */
             if (adminAid.contains(aid)) {
                 admin = true;
             }
             if (handlaggareAid.contains(aid)) {
                 handlaggare = true;
             }
+            //Lägger till en anställd i den lokala ArrayListan 'samtligaAnstallda
             allaAnstallda.add(new Anvandare(idb, enAnstalld, admin, handlaggare));
         }
+        //Tilldelar till sist medlemsfältet 'allaAnstallda', den lokala ArrayListan samtligaAnstallda
         samtligaAnstallda = allaAnstallda;
     }
     
@@ -128,6 +136,7 @@ public class AnvandarRegister {
     }
     
     public ArrayList<String> hamtaHandlaggare(){
+        //Hämtar alla anställningsIDn på de anställda som är handläggare
         ArrayList<String> allaHandlaggare = new ArrayList<>();
         try {
             String sqlFraga = "SELECT aid FROM handlaggare";
@@ -140,6 +149,7 @@ public class AnvandarRegister {
     }
     
     public void hamtaAdmins(){
+        //Hämtar alla anställningsIDn på de anställda som är admins
         ArrayList<HashMap<String, String>> allaAdmins = new ArrayList<>();
         try {
             String sqlFraga = "SELECT aid FROM handlaggare";

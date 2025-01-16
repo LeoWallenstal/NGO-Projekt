@@ -41,6 +41,7 @@ public class StadRegister {
         return allaStader.size();
     }
     
+    //Se andra registerklasser, samma princip.
     public void hamtaAllaStader(){
         String sqlFraga = "SELECT * FROM stad";
         ArrayList<HashMap<String, String>> allaStaderMap = null;

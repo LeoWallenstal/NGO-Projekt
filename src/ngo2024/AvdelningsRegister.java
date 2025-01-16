@@ -24,6 +24,9 @@ public class AvdelningsRegister {
         hamtaAllaAvdelningar();
     }
     
+    
+    /*Hämtar alla avdelningar från SQLdatabasen, gör objekt av dem och
+    sparar i medlemsfältet avdelningMap*/
     public final void hamtaAllaAvdelningar(){
         this.tomLista();
         ArrayList<HashMap<String, String>> avdelningLista = new ArrayList<>();
@@ -32,11 +35,11 @@ public class AvdelningsRegister {
         try{
             avdelningLista = idb.fetchRows("SELECT * FROM avdelning");
             if(avdelningLista != null){
-            for(HashMap<String,String> enAvdelning : avdelningLista){
-                Avdelning avdelning = new Avdelning(enAvdelning, idb);
-                avdelningMap.put(avdelning.getAvdelningsID(), avdelning);
+                for(HashMap<String,String> enAvdelning : avdelningLista){
+                    Avdelning avdelning = new Avdelning(enAvdelning, idb);
+                    avdelningMap.put(avdelning.getAvdelningsID(), avdelning);
+                }
             }
-        }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }

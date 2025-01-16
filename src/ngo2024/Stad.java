@@ -18,6 +18,9 @@ public class Stad {
     private String landID;
     private InfDB idb;
     
+    /*Konstruktor som gör ett 'Stad'-objekt efter ett specifikt 
+    stadID. Se Anvandare.java, Land.java, Projekt.java, Avdelning.java,
+    och Partner.java. Samma princip.*/
     public Stad(String stadID, InfDB idb){
         this.idb = idb;
         HashMap<String, String> enStad = null;
@@ -53,6 +56,8 @@ public class Stad {
         return landID;
     }
     
+    /*Returnerar ett anonymt 'Land'-objekt med det sparade IDt från
+    det här objketets fält 'landID'.*/
     public Land getLand(){
         return new Land(landID, idb);
     }

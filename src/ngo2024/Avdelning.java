@@ -31,6 +31,11 @@ public class Avdelning {
     private InfDB idb;
 
     public Avdelning(HashMap<String, String> enAvdelning, InfDB idb) {
+        /*En konstruktor som tar en HashMap som parameter, samt ett objekt
+        av datatypen InfDB. Sedan initialiseras objektet med HashMapens
+        .get() funktion, där man anger tabellens namn som nyckel. Vidare
+        initialiseras fältet 'anstallda' genom hamtaAnstallda()funktionen. */
+        
         this.idb = idb;  
         avdelningsID = enAvdelning.get("avdid");
         namn = enAvdelning.get("namn");
@@ -50,6 +55,9 @@ public class Avdelning {
     }
 
     public Avdelning(String avdelningsID, InfDB idb) {
+        /*En konstruktor som skapar ett 'Avdelning'-objekt utifrån
+        ett givet anställningsID. Vidare
+        initialiseras fältet 'anstallda' genom hamtaAnstallda()funktionen.*/
         this.idb = idb;
         this.anstallda = new ArrayList<>();
 
@@ -102,6 +110,7 @@ public class Avdelning {
         hamtaAnstallda();
     }
 
+    //toString() för debug
     public String toString() {
         return "[AvdelningsID]: " + avdelningsID + "\n[Avdelningens namn]: " + namn
                 + "\n[Beskrivning]: " + beskrivning + "\n[Adress]: " + adress
@@ -109,6 +118,8 @@ public class Avdelning {
                 + "\n[StadID]: " + stadID + "\n[Stad]: " + stad.getNamn()
                 + "\n[ChefID]: " + chefID + "\n[Chef]: " + chef.getFullNamn();
     }
+    
+    //Getters
 
     public String getAvdelningsID() {
         return avdelningsID;
@@ -198,6 +209,8 @@ public class Avdelning {
     
 
     public boolean equals(Avdelning annan) {
+        /*Returnerar true om avdelningen i parametern har samma avdelningsID
+        som det här objektets avdelningsID.*/
         return this.avdelningsID.equals(annan.getAvdelningsID());
     }
 
@@ -230,6 +243,7 @@ public class Avdelning {
         ArrayList<String> adminAid = new ArrayList<>();
         ArrayList<String> handlaggareAid = new ArrayList<>();
 
+        //Se kommentar i Anvandare.java, setBehorighet() 152
         try {
             String sqlFragaAdmin = "SELECT aid FROM admin";
             String sqlFragaHandlaggare = "SELECT aid FROM handlaggare";

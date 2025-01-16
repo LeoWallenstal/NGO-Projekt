@@ -8,6 +8,8 @@ package ngo2024;
  *
  * @author james
  */
+
+/*Enumklass som hjälper statusfiltrering-funktionaliteten*/
 public enum Projektstatus {
     ALLA ("Alla"),
     PÅGÅENDE ("Pågående"),

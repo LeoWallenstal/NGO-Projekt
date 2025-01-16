@@ -82,6 +82,8 @@ public class PartnerRegister {
     }
     
     public void hamtaAllaPartners(){
+        //Se hamtaAllaLand() i LandRegister.java, eller HamtaAllaProjekt i ProjektRegister.java
+        //Samma princip.
         String sqlFraga = "SELECT DISTINCT * FROM partner";
         ArrayList<HashMap<String, String>> allaPartnersMap = null;
         
@@ -108,6 +110,7 @@ public class PartnerRegister {
         return partnerNamn;
     }
     
+    //Söker efter ett partnerID
     public boolean harID(String partnerID){
         for(Partner enPartner : allaPartners){
             if(partnerID.equals(enPartner.getPartnerID())){
@@ -117,6 +120,7 @@ public class PartnerRegister {
         return false;
     }
     
+    //Returnerar högsta partnerIDt
     public int getHogstaPartnerID(){
         int hogstaID = Integer.parseInt(allaPartners.getFirst().getPartnerID());
         
