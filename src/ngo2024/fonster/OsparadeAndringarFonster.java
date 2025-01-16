@@ -180,6 +180,7 @@ public class OsparadeAndringarFonster extends javax.swing.JFrame {
 
     private void btnFortsattTillMinaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFortsattTillMinaUppgifterActionPerformed
         this.setVisible(false);
+        //Öppnar olika fönster beroende på redigeringsläge
         if (redigeringslage.equals("Mina Uppgifter")) {
             new MinaUppgifterFonster(idb, inloggadAnvandare).setVisible(true);
             redigeraUppgifterFonstret.setVisible(false);

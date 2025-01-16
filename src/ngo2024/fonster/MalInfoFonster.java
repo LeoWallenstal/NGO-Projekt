@@ -33,8 +33,11 @@ public class MalInfoFonster extends javax.swing.JFrame {
         setMal();
         checkBehorighet();
     }
-      
+    
+    
     private void setMal(){
+        
+        //Skapar en Array of String sokVag som innehåller filvägar till hållbarhetsmålens ikoner
         String[] sokVag = {
             "/resources/goals_icons/01-ingen-fattigdom.png",
             "/resources/goals_icons/02-ingen-hunger.png",
@@ -64,13 +67,11 @@ public class MalInfoFonster extends javax.swing.JFrame {
             tpMalNamn.setText(malNamn);
             tpMalNamn.setOpaque(false);
             tpMalNamn.setFocusable(false);
-            //tpMalNamn.setForeground(Color.BLACK);
             
             String malBeskrivning = dbMalInfo.get("beskrivning");
             tpMalBeskrivning.setText(malBeskrivning);
             tpMalBeskrivning.setOpaque(false);
             tpMalBeskrivning.setFocusable(false);
-            //tpMalBeskrivning.setForeground(Color.BLACK);
 
             String prioritet = dbMalInfo.get("prioritet");
             switch(prioritet){
@@ -95,6 +96,9 @@ public class MalInfoFonster extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
         
+        //Metoden getClass().getResource(...) letar upp bildfilen med den angivna filvägen (sokVag[malNr-1])
+        //Metoden .ImageIcon() skapar en bildikon av URL:n
+        //Metoden .setIcon() sätter bilden som ikon för JLabel:n
         lblMalIkon.setIcon(new javax.swing.ImageIcon(getClass().getResource(sokVag[malNr-1])));
                 
         }
@@ -211,7 +215,6 @@ public class MalInfoFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStangActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_btnStangActionPerformed
 
