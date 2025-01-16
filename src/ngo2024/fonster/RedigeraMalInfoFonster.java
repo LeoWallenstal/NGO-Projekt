@@ -39,6 +39,7 @@ public class RedigeraMalInfoFonster extends javax.swing.JFrame {
         osparadeAndringar = false;
     }
       
+    //Metod för att sätta ikon och information om det specifika målet.
     private void setMal(){
         String[] sokVag = {
             "/resources/goals_icons/01-ingen-fattigdom.png",
@@ -248,6 +249,8 @@ public class RedigeraMalInfoFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Om man har osparade änringar öppnas ett fönster som frågar om man vill fortsätta utan att spara
+    //Annars stängs detta fönster ner och målinfo fönstret öppnas igen.
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         if(osparadeAndringar){
             new OsparadeAndringarFonster(idb, inloggadAnvandare, "Mål info", this, malNr).setVisible(true);

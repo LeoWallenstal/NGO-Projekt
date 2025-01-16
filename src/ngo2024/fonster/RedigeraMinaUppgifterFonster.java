@@ -352,7 +352,7 @@ public class RedigeraMinaUppgifterFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_pfLosenordActionPerformed
 
     private void btnSparaNyaUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaNyaUppgifterActionPerformed
-        //metod för att ändra uppgifter
+
         boolean formatKorrekt = true;
         lblFornamnFelM.setVisible(false);
         lblEfternamnFelM.setVisible(false);

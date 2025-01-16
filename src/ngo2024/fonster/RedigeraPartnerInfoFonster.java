@@ -233,6 +233,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Sätter uppgifterna om partnern
     public void setUppgifter(){
         tfNamnPartner.setText("Redigera uppgifter - " + aktuellPartner.getNamn());
         tfNamnPartner.setText(orginalNamn);
@@ -245,6 +246,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
         
     }
     
+    //döljer felmeddelanden
     private void doljFelmeddelanden(){
         lblFelMTomtFalt.setVisible(false);
         lblBranschFelM.setVisible(false);
@@ -255,6 +257,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
         lblEpostFelM.setVisible(false);
     }
     
+    //Sätter fälten med uppgifterna om partnern
     private void setFalt(){
         this.orginalNamn = aktuellPartner.getNamn();
         this.orginalBransch = aktuellPartner.getBransch();
@@ -265,6 +268,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
         this.orginalEpost = aktuellPartner.getKontaktepost();
     }
     
+    //kollar om det finns osparade ändringar
     public boolean harOsparadeAndringar(){
         if(!tfNamnPartner.equals(orginalNamn)){
             return true;
@@ -300,6 +304,7 @@ public class RedigeraPartnerInfoFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_tillbakaBtnActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+       //Kollar om alla fält är ifyllda och korrekt format för att sedan uppdatera i databasen
         doljFelmeddelanden();
         boolean formatKorrekt = true;
         boolean faltIfyllda = true;
