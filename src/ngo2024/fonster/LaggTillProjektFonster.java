@@ -352,6 +352,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private ArrayList<Anvandare> initTillgangligaHandlaggare(){
+        //metod som returnerar alla anställda på ens avdelning som är handläggare
         ArrayList<Anvandare> tillgangligaHandlaggare = new ArrayList<>();
         for(Anvandare enAnstalld : anvandarregister.getLista()){
             if(enAnstalld.getAvdelningsID().equals(inloggadAnvandare.getAvdelningsID())
@@ -363,6 +364,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     }
     
     private void initHandlaggareList(){
+        //fyller rutan med de handläggare som finns
         DefaultListModel<String> listModell = new DefaultListModel<>();
         for (Anvandare enHandlaggare : handlaggare) {
             listModell.addElement(enHandlaggare.getFullNamn());
@@ -379,6 +381,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_sparaButtonActionPerformed
 
     private void partnerListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_partnerListMouseClicked
+        //om man valt någon partner så tillgängliggörs sparaknappen
         if(partnerList.getSelectedIndices().length > 0){
             sparaButton.setEnabled(true);
         }
@@ -531,6 +534,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_handlaggareListMouseClicked
 
     private void initProjektchefComboBox(){
+        //fyller comoboboxen med tillgängliga projektchefer
         projektchefComboBox.addItem("Välj projektchef...");
         projektchefComboBox.addItem("Ingen");
         
@@ -546,6 +550,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     }
     
     private void initLandComboBox(){
+        //fyller comoboboxen med tillgängliga länder
         landComboBox.addItem("Välj land...");
         
         landregister.hamtaAllaLand();
@@ -557,6 +562,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     }
     
     private void initPartnerList(){
+        //fyller partnerlistan
         partnerregister.hamtaAllaPartners();
         partnerList.setListData(partnerregister.getListData());
         
@@ -584,6 +590,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     }
     
     private ArrayList<Partner> sparaPartners(){
+        //metod som hämtar vilka partners som markerats och returnerar lista med partnerobjekt
         int[] partnerIndex = partnerList.getSelectedIndices();
         ArrayList<Partner> valdaPartners = new ArrayList<>();
         
@@ -594,6 +601,7 @@ public class LaggTillProjektFonster extends javax.swing.JFrame {
     }
     
     private ArrayList<Anvandare> sparaHandlaggare(){
+        //metod som hämtar vilka handläggare som markerats och returnerar lista med anvandarobjekt
         int[] handlaggareIndex = handlaggareList.getSelectedIndices();
         ArrayList<Anvandare> valdaHandlaggare = new ArrayList<>();
         for(int i = 0; i < handlaggareIndex.length; i++){

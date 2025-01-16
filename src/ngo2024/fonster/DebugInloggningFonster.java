@@ -37,7 +37,7 @@ public class DebugInloggningFonster extends javax.swing.JFrame {
       
         try{
             String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost+"'";
-            //System.out.println(sqlFraga);
+            
             String dbLosenord = idb.fetchSingle(sqlFraga);
             if (losenord.equals(dbLosenord)){
                 sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + ePost + "'";
@@ -200,12 +200,10 @@ public class DebugInloggningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoggaInActionPerformed
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        // TODO add your handling code here:
         login("fatima.alm@example.com","passwordxyz");
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlaggareActionPerformed
-        // TODO add your handling code here:
         login("ling.w@example.com","password456");
     }//GEN-LAST:event_btnHandlaggareActionPerformed
 

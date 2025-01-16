@@ -46,6 +46,7 @@ public class LaggTillLandFonster extends javax.swing.JFrame {
     }
     
     private boolean harOsparadeAndringar(){
+        //kontroll om data skrivits i något av fälten, returnerar isådanafall true
         if(!tfNamn.getText().isEmpty()){
             return true;
         }
@@ -262,6 +263,7 @@ public class LaggTillLandFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        
         if(harOsparadeAndringar()){
             new OsparadeAndringarFonster(idb, inloggadAnvandare, forraFonstret, "Lägg till Land", this).setVisible(true);
         }

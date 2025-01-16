@@ -384,6 +384,7 @@ public class LaggTillPartnerFonster extends javax.swing.JFrame {
         
         stadregister.hamtaAllaStader();
         
+        //hämtar alla städer och lägger i ComboBoxen
         for(Stad enStad : stadregister.getLista()){
             stadComboBox.addItem(enStad.getNamn());
         }
