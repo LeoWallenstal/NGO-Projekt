@@ -386,7 +386,6 @@ public class ProjektFonster extends javax.swing.JFrame {
     private void avdelningensProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avdelningensProjektButtonMouseClicked
 
         resetKnapparOchSokfalt();
-        projektregister.refreshaAllaProjekt();
         vy = "Avdelningens projekt";
         attVisa = projektregister.getAvdelningensProjekt(inloggadAnvandare.getAvdelningsID());
         visaData(attVisa);
@@ -398,7 +397,6 @@ public class ProjektFonster extends javax.swing.JFrame {
 
     private void allaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allaProjektButtonMouseClicked
         resetKnapparOchSokfalt();
-        projektregister.refreshaAllaProjekt();
         vy = "Alla projekt";
         attVisa = projektregister.getAllaProjekt();
         visaData(attVisa);
@@ -410,8 +408,6 @@ public class ProjektFonster extends javax.swing.JFrame {
 
     private void minaProjektButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minaProjektButtonMouseClicked
         resetKnapparOchSokfalt();
-        projektregister.refreshaAllaProjekt();
-
         vy = "Mina projekt";
         attVisa = projektregister.getMinaProjekt(inloggadAnvandare.getAnstallningsID());
         visaData(attVisa);
@@ -530,8 +526,6 @@ public class ProjektFonster extends javax.swing.JFrame {
 
     private void filtrering(){
         String status = statusComboBox.getSelectedItem().toString();
-        projektregister.refreshaAllaProjekt();
-
         switch (status) {
             case "Alla": {
                 if (vy.equals("Alla projekt")) {

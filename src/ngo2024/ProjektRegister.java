@@ -57,7 +57,7 @@ public class ProjektRegister {
     }
     
     public ArrayList<Projekt> getAllaProjekt(){
-        return allaProjekt;
+        return new ArrayList<>(allaProjekt);
     }
     
     /*Returnerar en lista med projekt från den avdelningen som den inloggade
