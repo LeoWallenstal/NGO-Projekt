@@ -475,8 +475,8 @@ public class ProjektFonster extends javax.swing.JFrame {
             Projekt aktuelltProjekt = attVisa.get(rad);
 
             //Öppnar nytt fönster som visar detaljerad information om en projektchef
-            new ProjektchefInfoFonster(inloggadAnvandare,
-                    aktuelltProjekt.getProjektchef(), idb).setVisible(true);
+            new MinaUppgifterFonster(idb,
+                inloggadAnvandare, aktuelltProjekt.getProjektchef()).setVisible(true);
         }
     }//GEN-LAST:event_projektTableMouseClicked
 
