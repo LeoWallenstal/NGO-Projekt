@@ -47,6 +47,7 @@ public class AvdelningFonster extends javax.swing.JFrame {
         nySetAvdelningsUppgifter();
         vy = "Alla";
         
+        //nedan kod endast för estetiska saker som tagits fram med ChatGPT, vi uppfattade det som att det var okej :)
         anstalldTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,

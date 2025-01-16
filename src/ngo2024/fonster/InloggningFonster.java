@@ -42,11 +42,14 @@ public class InloggningFonster extends javax.swing.JFrame {
       
         try{
             String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost+"'";
-            //System.out.println(sqlFraga);
+            
             String dbLosenord = idb.fetchSingle(sqlFraga);
+            
+            //kontroll om angivet losenord stämmer med det som finns i databasen
             if (losenord.equals(dbLosenord)){
                 sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + ePost + "'";
                 String anstallningsId = idb.fetchSingle(sqlFraga);
+                //skapar ett objekt av klassen anvandare som sedan skickas runt som inloggadAnvandare för slippa hämta datan från db vare gång
                 Anvandare inloggadAnvandare = new Anvandare(idb, anstallningsId);
                 new MenyFonster(idb, inloggadAnvandare).setVisible(true);
                 this.setVisible(false);
@@ -232,6 +235,7 @@ public class InloggningFonster extends javax.swing.JFrame {
 
     private void btnDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDebugActionPerformed
         this.setVisible(false);
+        //hänvisning till inloggsida med latknappar
         new DebugInloggningFonster(idb).setVisible(true);
     }//GEN-LAST:event_btnDebugActionPerformed
 
@@ -241,8 +245,10 @@ public class InloggningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_lblAterstallMouseClicked
 
     private void lblAterstallMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAterstallMouseEntered
+        //byter muspekare när man sveper över glömt lösenord.
         setCursor(new Cursor(Cursor.HAND_CURSOR));
        
+        //gör så att glömt lösenord blir understruket när man har musen på den labeln
         Map<TextAttribute, Object> attribut = (Map<TextAttribute, Object>) originalFont.getAttributes();
         attribut.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         Font underlinedFont = originalFont.deriveFont(attribut);
@@ -250,8 +256,10 @@ public class InloggningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_lblAterstallMouseEntered
 
     private void lblAterstallMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAterstallMouseExited
+        //tar tillbaka vanlig muspekare
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         
+        //tar bort understykning av glömt lösenord.
         lblAterstall.setFont(originalFont);
     }//GEN-LAST:event_lblAterstallMouseExited
 

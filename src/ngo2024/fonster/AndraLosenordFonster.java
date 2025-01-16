@@ -34,6 +34,7 @@ public class AndraLosenordFonster extends javax.swing.JFrame {
         lblFelmeddelandeOrginalLosenord.setVisible(false);
     }
     
+    //metod som andrar losenord i db, tar in en sträng med nya lösenordet som parameter
     private void updateDB(String nyttLosenord){
         String sqlFraga = "UPDATE anstalld SET "
                 + "losenord = '" + nyttLosenord + "' "
@@ -200,10 +201,16 @@ public class AndraLosenordFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAvbrytActionPerformed
 
     private void btnSparaNyttLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaNyttLosenordActionPerformed
+        
         lblFelmeddelandeOrginalLosenord.setVisible(false);
         lblFelmeddelandeNyttLosenord.setVisible(false);
+        
         String losenord = inloggadAnvandare.getLosenord();
         String angivetLosenord = tfTidigareLosenord.getText();
+        
+        //kontrollerar om det angivna tidigare lösenordet är korrekt 
+        //därefter kontroll om samma lösenord angivits som nytt lösenord
+        //om de överrensstämmer anropas metod som ändrar i db, ananrs felmeddelande
         if(losenord.equals(angivetLosenord)){
             String nyttLosenord1 = tfNyttLosenord.getText();
             String nyttLosenord2 = tfUpprepaLosenord.getText();
