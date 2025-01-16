@@ -6,6 +6,10 @@ package ngo2024;
  */
 public class Validerare {
     
+    //Kontrollerar första delen av mailen, användarnamn, som kan vara en kombination av bokstäver, siffror och vissa specialtecken (., %, +, -)
+    //att mailen innehåller @
+    //sedan en domän och en punkt
+    //även en toppdomän, dvs sista delen (com/se), som ska innehålla minst 2 bokstäver
     public static boolean arEpostAdress(String epost){
         return epost.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
@@ -15,7 +19,8 @@ public class Validerare {
     return telefonnummer.matches("^[+]?\\d{1,4}[-]?\\d{1,4}[-]?\\d{1,4}$");
     }
     
-    //format XXXX-XX-XX
+    //format YYYY-MM-DD
+    //månad mellan 01-12, datum mellan 01-31
     public static boolean arDatum(String datum){
             return datum.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
     }
