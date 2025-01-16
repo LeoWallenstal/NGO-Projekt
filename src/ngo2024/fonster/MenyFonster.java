@@ -96,7 +96,7 @@ public class MenyFonster extends javax.swing.JFrame {
             btnAnstallda.setVisible(false);
             btnHanteraAvdelningar.setVisible(false);
         }
-        else if (!inloggadAnvandare.isProjektChef()){
+        if (!inloggadAnvandare.isProjektChef()){
             btnStatistik.setVisible(false);
         }
     }
