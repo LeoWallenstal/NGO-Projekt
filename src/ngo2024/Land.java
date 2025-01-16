@@ -22,6 +22,10 @@ public class Land {
     private String ekonomi;
     private InfDB idb;
     
+    
+    /*En konstruktor som gör ett 'Land'-objekt utifrån ett landID,
+    och initialiserar fälten med hjälp av att hämta ut datan från
+    HashMapen man får i från InfDB funktionen .fetchRow()*/
     public Land(String landID, InfDB idb){
         this.idb = idb;
         HashMap<String, String> ettLand = null;
@@ -70,35 +74,39 @@ public class Land {
     }
     
     public Land(HashMap<String, String> ettLand, InfDB idb){
+       /*En konstruktor som tar en HashMap som parameter, samt ett objekt
+        av datatypen InfDB. Sedan initialiseras objektet med HashMapens
+        .get() funktion, där man anger tabellens namn som nyckel.*/
+        
         this.idb = idb;
         
         for(String key : ettLand.keySet()){
-                switch(key){
-                    case "lid":
-                        landID = ettLand.get("lid");
-                        break;
-                    case "namn":
-                        namn = ettLand.get("namn");
-                        break;
-                    case "sprak":
-                        sprak = ettLand.get("sprak");
-                        break;
-                    case "valuta":
-                        valuta = ettLand.get("valuta");
-                        break;
-                    case "tidszon":
-                        tidszon = ettLand.get("tidszon");
-                        break;
-                    case "politisk_struktur":
-                        politiskStruktur = ettLand.get("politisk_struktur");
-                        break;
-                    case "ekonomi":
-                        ekonomi = ettLand.get("ekonomi");
-                        break;
-                    default:
-                        break;
-                }
+            switch(key){
+                case "lid":
+                    landID = ettLand.get("lid");
+                    break;
+                case "namn":
+                    namn = ettLand.get("namn");
+                    break;
+                case "sprak":
+                    sprak = ettLand.get("sprak");
+                    break;
+                case "valuta":
+                    valuta = ettLand.get("valuta");
+                    break;
+                case "tidszon":
+                    tidszon = ettLand.get("tidszon");
+                    break;
+                case "politisk_struktur":
+                    politiskStruktur = ettLand.get("politisk_struktur");
+                    break;
+                case "ekonomi":
+                    ekonomi = ettLand.get("ekonomi");
+                    break;
+                default:
+                    break;
             }
+        }
     }
     
     public Land(InfDB idb){

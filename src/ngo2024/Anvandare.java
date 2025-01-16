@@ -35,6 +35,10 @@ public class Anvandare {
     private Avdelning avdelning;
     
     public Anvandare(HashMap<String,String> enAnvandare, InfDB idb){
+        /*En konstruktor som tar en HashMap som parameter, samt ett objekt
+        av datatypen InfDB. Sedan initialiseras objektet med HashMapens
+        .get() funktion, där man anger tabellens namn som nyckel.*/
+        
         this.idb = idb;
         fornamn = enAnvandare.get("fornamn");
         efternamn = enAnvandare.get("efternamn");
@@ -48,6 +52,9 @@ public class Anvandare {
     }
     
     public Anvandare(InfDB idb, String aid) {
+        /*En konstruktor som skapar ett 'Anvandare'-objekt utifrån
+        ett givet anställningsID, och initialiserar fälten i setUppgifter()
+        resp. setBehorighet()*/
         this.idb = idb;
         uppgifter = new HashMap<>();
         setUppgifter(aid);
@@ -55,6 +62,8 @@ public class Anvandare {
     }
     
     public Anvandare(InfDB idb, HashMap<String,String> uppgifter, boolean admin, boolean handlaggare) {
+        //Se första konstruktorn
+ 
         this.idb = idb;
         this.uppgifter = uppgifter;
         this.admin = admin;
@@ -239,7 +248,7 @@ public class Anvandare {
                         "VALUES ( " + getAnstallningsID() + ", '1')");
                 
                 setBehorighet(getAnstallningsID());
-                }
+            }
         }
             
         catch (InfException ex) {
@@ -258,7 +267,7 @@ public class Anvandare {
             idb.delete("DELETE FROM anstalld WHERE aid = " + this.getAnstallningsID());
             } 
             catch (InfException ex) {
-            System.out.println(ex.getMessage() + "i Anvandare.java, deleteAnvandareDb()");
+                System.out.println(ex.getMessage() + "i Anvandare.java, deleteAnvandareDb()");
             }
         }
 }

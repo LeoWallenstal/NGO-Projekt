@@ -60,6 +60,8 @@ public class ProjektRegister {
         return allaProjekt;
     }
     
+    /*Returnerar en lista med projekt från den avdelningen som den inloggade
+    användaren tillhör.*/
     public ArrayList<Projekt> getAvdelningensProjekt(String avdelningsID){
         
         ArrayList<Projekt> resultat = new ArrayList<>();
@@ -71,6 +73,8 @@ public class ProjektRegister {
         return resultat;
     }
     
+    /*Returnerar en lista med projekt där den inloggade användaren antingen
+    är med som handläggare, eller är projektchef.*/
     public ArrayList<Projekt> getMinaProjekt(String anstallningsID){
        
         ArrayList<Projekt> resultat = new ArrayList<>();
@@ -84,6 +88,7 @@ public class ProjektRegister {
         return resultat;
     }
     
+    //Returnerar true om ett projektID finns i listan allaProjekt
     public boolean contains(String projektID){
         for(Projekt ettProjekt : allaProjekt){
             if(ettProjekt.getProjektID().equals(projektID)){
@@ -123,6 +128,7 @@ public class ProjektRegister {
         return false;
     }
     
+    /*Returnerar en lista där användaren har valt en viss status att filtrera efter.*/
     public ArrayList<Projekt> getListaStatus(Projektstatus status, ArrayList <Projekt> attFiltrera){
         Iterator<Projekt> it = attFiltrera.iterator();
         while(it.hasNext()){
@@ -135,6 +141,8 @@ public class ProjektRegister {
         return attFiltrera;
     }
     
+    /*Returnerar en lista som är filtrerad efter ett söksträng som användaren stoppar in.
+    Vid inmatning så specifierar användaren även om de söker efter projektchef eller projektnamn*/
     public ArrayList<Projekt> getSoktLista(SokKategori kategori, String sokStr, ArrayList<Projekt> attFiltrera){
         
         if(kategori == SokKategori.PROJEKTCHEF){
@@ -158,6 +166,7 @@ public class ProjektRegister {
         return attFiltrera;
     }
     
+    //Returnerar en lista som är filtrerad på start- och slutdatum
     public ArrayList<Projekt> getListaDatumSpann(String startdatum, String slutdatum,
             ArrayList<Projekt> attFiltrera)
     {
@@ -172,6 +181,7 @@ public class ProjektRegister {
         return attFiltrera;
     }
     
+    //Returnerar en lista som är filtrerad på startdatum
     public ArrayList<Projekt> getListaStartdatum(String startdatum, ArrayList<Projekt> attFiltrera){
         Iterator<Projekt> it = attFiltrera.iterator();
         
@@ -184,6 +194,7 @@ public class ProjektRegister {
         return attFiltrera;
     }
     
+    //Returnerar en lista som är filtrerad på slutdatum
     public ArrayList<Projekt> getListaSlutdatum(String slutdatum, ArrayList<Projekt> attFiltrera){
         Iterator<Projekt> it = attFiltrera.iterator();
         
