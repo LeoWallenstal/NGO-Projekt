@@ -27,6 +27,7 @@ public class PartnerInfoFonster extends javax.swing.JFrame {
         this.idb = idb;
         this.aktuellPartner = aktuellPartner;
         
+        //Centrerar fönstret
         this.setLocationRelativeTo(null);
         
         setText();

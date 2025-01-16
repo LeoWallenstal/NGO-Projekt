@@ -21,6 +21,8 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
     /**
      * Creates new form MinaUppgifter
      */
+    
+    //Konstruktor för Mina Uppgifter
     public MinaUppgifterFonster(InfDB idb, Anvandare inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
@@ -32,6 +34,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         this.setTitle("SDG Sweden - Mina uppgifter");
     }
     
+    //Konstruktor för att visa en annan anställds uppgifter
     public MinaUppgifterFonster(InfDB idb, Anvandare inloggadAnvandare, Anvandare displayAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
@@ -49,6 +52,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
         
     }
     
+    //Skapar standardstorlek på fönstret, går inte att göra för litet och centrerar fönstret
     private void setWindowSize(){
         setPreferredSize(new Dimension(850, 350));
         setMinimumSize(new Dimension(800, 328));
@@ -340,6 +344,7 @@ public class MinaUppgifterFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_pfLosenordetActionPerformed
 
     private void tbtnVisaLosenordetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnVisaLosenordetActionPerformed
+        //Gör att det går att visa/dölja lösenordet med en toggle button
         if (pfLosenordet.getEchoChar() == '*') {
             pfLosenordet.setEchoChar((char) 0);
             tbtnVisaLosenordet.setText("Dölj");

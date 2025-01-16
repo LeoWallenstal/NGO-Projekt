@@ -74,6 +74,8 @@ public class PartnerFonster extends javax.swing.JFrame {
                 int column = partnerTable.columnAtPoint(evt.getPoint());
 
                 // Update hover state
+                // hoveredRow och hoveredColumn håller reda på vilken cell som för närvarande är under muspekaren
+                
                 if (row != hoveredRow || column != hoveredColumn) {
                     hoveredRow = row;
                     hoveredColumn = column;
@@ -208,6 +210,7 @@ public class PartnerFonster extends javax.swing.JFrame {
         partnerTable.setDefaultEditor(Object.class, null);
     }
     
+    //Tömmer tabellen och fyller den sedan med Partner-objekt-data från ArrayList:en partnerregister
     private void visaData(){
         rensaDataFonster();
         for(Partner enPartner : partnerregister.getLista()){

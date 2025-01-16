@@ -52,6 +52,7 @@ public class LandFonster extends javax.swing.JFrame {
         landTable.setDefaultEditor(Object.class, null);
     }
     
+    //Tömmer tabellen och fyller den sedan med Land-objekt-data från en ArrayList landRegister
     private void visaData(){
         rensaDataFonster();
         for(Land ettLand : landRegister.getLista()){
@@ -61,6 +62,7 @@ public class LandFonster extends javax.swing.JFrame {
         }
     }
     
+    //Tömmer datan ur tabellen och uppdaterar tabellens vy
     private void rensaDataFonster(){
         tabell.getDataVector().clear();
         landTable.repaint();
@@ -183,6 +185,8 @@ public class LandFonster extends javax.swing.JFrame {
         new LaggTillLandFonster(inloggadAnvandare, this, idb).setVisible(true);
     }//GEN-LAST:event_btnLaggTillLandActionPerformed
 
+    //Om den inloggade användaren är admin kan denne klicka på rader i tabellen,
+    //denna metod identifierar raden och öppnar ett RedigeraLandFonster för det aktuella landet
     private void landTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landTableMouseClicked
         int landIndex = landTable.rowAtPoint(evt.getPoint());
         
@@ -192,6 +196,7 @@ public class LandFonster extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_landTableMouseClicked
 
+    //Gör så att muspekaren blir handformad för en admin, för att tydliggöra att raderna går att klicka på
     private void landTableMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landTableMouseMoved
         int row = landTable.rowAtPoint(evt.getPoint());
         int column = landTable.columnAtPoint(evt.getPoint());
