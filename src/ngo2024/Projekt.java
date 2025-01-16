@@ -18,9 +18,6 @@ public class Projekt {
     private String projektchefID;
     private String landID;
     private ArrayList<String> partners;
-    
-    //OKLART OM DETTA ÄR RÄTT TERMINOLOGI?? ASSÅ DE SOM JOBBAR PÅ PROJEKTET
-    //ÄNDRA ANNARS OCKSÅ hamtaHandlaggare() KRING RAD 434
     private ArrayList<String> handlaggare;
     
     private final InfDB idb;
@@ -101,7 +98,7 @@ public class Projekt {
         }
         else{
             System.out.println("Nånting gick fel, kolla IDT?");
-            //Byta detta felmeddelande mot något annat senare
+            //Felmeddelande.
         }
         hamtaPartners();
         hamtaHandlaggare();
@@ -148,6 +145,8 @@ public class Projekt {
     }
 
     public Anvandare getProjektchef() {
+        //Returnerar ett anonymt 'Anvandare'-objekt, som skapats med
+        //ProjektchefIDt, alltså en projektchef
         return new Anvandare(idb, projektchefID);
     }
 
@@ -287,6 +286,7 @@ public class Projekt {
         return false;
     }
     
+    //För debug
     public String toString(){
             String outForsta = "[ProjektID]: " + projektID + "\n[Projektnamn]: " + projektnamn
             + "\n[Beskrivning]: " + beskrivning +  "\n[Startdatum]: " + startdatum

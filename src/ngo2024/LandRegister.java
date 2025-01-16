@@ -31,6 +31,7 @@ public class LandRegister {
     }
     
     public void hamtaAllaLand(){
+        //Hämtar alla IDn
         String sqlFraga = "SELECT lid FROM land";
         ArrayList<HashMap<String, String>> allaLandMap = null;
         
@@ -46,12 +47,15 @@ public class LandRegister {
         for(HashMap<String, String> ettLand : allaLandMap){
             for(String key : ettLand.keySet()){
                 String landID = ettLand.get(key);
+                /*Gör ett 'Land'-objekt av varje landID, samt idb.
+                Se Land.java, rad 29*/
                 allaLand.add(new Land(landID, idb));
             }
         }
         this.allaLand = allaLand;
     }
  
+    //Söker efter ett specifikt landID
     public boolean harID(String landID){
         for(Land ettLand : allaLand){
             if(ettLand.getLandID().equals(landID)){
@@ -61,6 +65,7 @@ public class LandRegister {
         return false;
     }
     
+    //Hittar det högsta landIDt
     public int getHogstaLandID(){
         int hogstaID = Integer.parseInt(allaLand.getFirst().getLandID());
         

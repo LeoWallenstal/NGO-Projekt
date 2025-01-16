@@ -8,6 +8,8 @@ package ngo2024;
  *
  * @author james
  */
+/*Enumklass som hjälper funktionaliteten att filtrera
+om man vill söka efter projektchef eller projektnamn */
 public enum SokKategori {
     PROJEKTCHEF("Projektchef"),
     PROJEKTNAMN("Projektnamn"),

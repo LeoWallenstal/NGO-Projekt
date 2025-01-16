@@ -34,3 +34,16 @@ public class NGO2024 {
     }
     
 }
+
+/*
+
+Till Mathias:
+
+|\---/|
+| o_o |
+ \_^_/
+
+
+    :-)
+
+*/

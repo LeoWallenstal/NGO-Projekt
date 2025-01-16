@@ -97,6 +97,8 @@ public class Partner {
         return bransch;
     }
     
+    /*Returnerar ett anonymt 'Stad'-objekt istället för att
+    alltid ha ett 'Stad'-objekt initialiserat*/
     public Stad getStad(){
         return new Stad(stadID, idb);
     }
