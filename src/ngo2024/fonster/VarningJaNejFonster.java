@@ -185,6 +185,8 @@ public class VarningJaNejFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jaButtonMouseClicked
+        //Eftersom fönstret används vid flera olika ställen används 
+        //stringen "taBortVad" för att identifiera vart man kommer ifrån
         if(taBortVad.equals("Projekt")){
             projektTaBort.deleteProjektDB();
             projektregister.remove(projektTaBort.getProjektID());

@@ -52,6 +52,9 @@ public class RedigeraLandFonster extends javax.swing.JFrame {
         lblFelMEkonomi.setVisible(false);
     }
     
+    
+    //Metod för att uppdatera uppgifterna om landet som visas.
+    //Använder getters på landobjektet för att sätta värdena.
     private void setLandInfoText(){
         originalNamn = aktuelltLand.getNamn();
         originalSprak = aktuelltLand.getSprak();
@@ -67,7 +70,7 @@ public class RedigeraLandFonster extends javax.swing.JFrame {
         tfPolitiskStruktur.setText(originalPolitiskStruktur);
         tfEkonomi.setText(originalEkonomi);
     }
-    
+    //Metod för att kontrollera om det har skett ändringar i något utav fälten.
     private boolean harOsparadeAndringar(){
         if(!originalNamn.equals(tfNamn.getText())){
             return true;
@@ -288,7 +291,9 @@ public class RedigeraLandFonster extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Om man har osparade änringar öppnas ett fönster som frågar om man vill fortsätta utan att spara
+    //Annars stängs detta fönster ner.
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         if(harOsparadeAndringar()){
             new OsparadeAndringarFonster(idb, inloggadAnvandare, aktuelltLand, forraFonstret, "Redigera Land", this).setVisible(true);
@@ -299,8 +304,10 @@ public class RedigeraLandFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+        //Döljer alla tidigare felmeddelanden
         doljFelMeddelanden();
         
+        //Kontrollerar så inget fält ar tomt och formatet är korrekt, annars visas felmeddelanden.
         boolean formatKorrekt = true;
         
         String namn = tfNamn.getText();

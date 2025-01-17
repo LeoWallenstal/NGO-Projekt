@@ -73,6 +73,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         lblFelMTomt.setVisible(false);
     }
 
+    //Metod för att uppdatera dom anställda som visas i tabellen. 
+    //Loopar igenom avdelningens anställda och lägger endast till handläggare då det är dom som kan vara chefer.
     private void uppdateraAnstallda() {
         tabell.setRowCount(0);
         for (Anvandare enAnstalld : valdAvdelning.getAvdelningensAnstallda()) {
@@ -84,6 +86,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         }
     }
 
+    //Metod för att uppdatera uppgifterna om avdelningen som visas.
+    //Använder getters på avdelningsobjektet för att sätta värdena.
     private void uppdateraAvdelningsInfo() {
         uppdateraAnstallda();
         orginalNamn = valdAvdelning.getNamn();
@@ -106,11 +110,12 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }
 
     private void uppdateraAvdelning() {
-        //valdAvdelning = new Avdelning(valdAvdelning.getAvdelningsID(),idb);
         uppdateraAvdelningsInfo();
         initAvdelningCB();
     }
 
+    //Metod för att byta vald avdelning.
+    //Loopar igenom alla avdelningar i avdelningsregister och letar efter specifikt namn på avdelningen.
     private void bytAvdelning() {
         String valdAvdelningNamn = (String) cbAvdelningar.getSelectedItem();
         for (Avdelning avdelning : avdelningsRegister.getLista()) {
@@ -122,6 +127,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         }
     }
 
+    //Metod för att lägga till alla avdelningar i comboboxen.
     private void initAvdelningCB() {
         cbAvdelningar.removeAllItems();
         for (Avdelning enAvdelning : avdelningsRegister.getLista()) {
@@ -129,6 +135,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         }
         cbAvdelningar.setSelectedItem(valdAvdelning.getNamn());
 
+        //Sätter en default text på comboboxen som visas när den är disabled.
         cbAvdelningar.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -143,6 +150,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         });
     }
 
+    //Metod för att lägga till alla städer i comboboxen.
     private void initStadCB() {
         cbStad.removeAllItems();
         for (Stad enStad : stadRegister.getLista()) {
@@ -154,6 +162,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         cbStad.setSelectedItem(valdAvdelning.getStad().getNamn());
     }
 
+    //Metod för att kontrollera om det har skett ändringar i något utav fälten.
     private boolean harOsparadeAndringar() {
         if (orginalNamn != null && !orginalNamn.equals(tfAvdelningsNamn.getText())) {
             return true;
@@ -179,6 +188,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         return false;
     }
 
+    //En metod som tagits fram med hjälp av ChatGPT och som enbart medför visuella ändringar
+    //Vi har tolkat det som att det var okej att ta med det när vi frågade.
     private void initGlassPane() {
         glassPaneOverlay = new JPanel() {
             @Override
@@ -262,6 +273,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
         setGlassPane(glassPaneOverlay);
     }
 
+    //Metod för att vidarebefodra musklick på overlayen till underliggande excluderade komponenter.
+    //Detta då man vill kunna interagera med tex tabellen även fast glasspane overlayen är aktiv.
     private void vidarebefordraMusHandelse(MouseEvent e) {
         // Lista över exkluderade komponenter
         JComponent[] exkluderadeKomponenter = {jScrollPane1, sokfalt, sokBtn, sokCB};
@@ -728,6 +741,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        //Om man har osparade änringar öppnas ett fönster som frågar om man vill fortsätta utan att spara
+        //Annars går man tillbaka till menyn.
         if (harOsparadeAndringar()) {
             new OsparadeAndringarFonster(idb, inloggadAnvandare, "Avdelning", this).setVisible(true);
         } else {
@@ -737,7 +752,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void anstalldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anstalldTableMouseClicked
-        
+
     }//GEN-LAST:event_anstalldTableMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -761,6 +776,8 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void sokBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokBtnMouseClicked
+        //När man klickar sök så kollas först om något har skrivits in, sen kollas vad man söker efter
+        //och tillsist så filtrerar man den data som visas utefter sökkriterierna
         if (!sokfalt.getText().isEmpty()) {
             if (sokCB.getSelectedItem().equals("Namn")) {
                 valdAvdelning.hamtaAnstallda();
@@ -783,11 +800,14 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_sokBtnMouseClicked
 
     private void sokfaltMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sokfaltMouseClicked
+        //När man klickat på sökfältet försvinner förinlagda texten som tex "Sök namn..."
         sokfalt.setText("");
         sokfalt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
     }//GEN-LAST:event_sokfaltMouseClicked
 
     private void sokCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sokCBActionPerformed
+        //Beroende på vad man har valt att söka efter så sätts olika texter i sökfältet innan man klickar på det
+        //Så om man har valt namn så kommer det stå "Sök namn..."
         if (sokCB.getSelectedItem().equals("Namn")) {
             sokfalt.setEnabled(true);
             sokfalt.setText("Sök namn...");
@@ -900,6 +920,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
     }//GEN-LAST:event_lblChefKeyTyped
 
     private void btnAterstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAterstallActionPerformed
+        //Återställer alla fält till det värdet som är sparat i db
         String valdAvdelningNamn = (String) cbAvdelningar.getSelectedItem();
         for (Avdelning avdelning : avdelningsRegister.getLista()) {
             if (avdelning.getNamn().equals(valdAvdelningNamn)) {
@@ -987,8 +1008,7 @@ public class RedigeraAvdelningFonster extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
-     */   
-
+     */
     private void rensaDataFonster() {
         //Tar bort datan
         tabell.getDataVector().clear();

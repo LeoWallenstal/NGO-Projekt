@@ -512,12 +512,6 @@ public class RedigeraProjektFonster extends javax.swing.JFrame {
         if (!projektchefCB.getSelectedItem().equals(attRedigera.getProjektchef().getFullNamn())) {
             sparaBtn.setEnabled(true);
             andringarSparadeLbl.setVisible(false);
-
-//            int i = projektchefCB.getSelectedIndex();
-//            projektetsHandlaggare.add(valdProjektchef);
-//            valdProjektchef = projektetsHandlaggare.get(i);
-//            projektetsHandlaggare.remove(i);
-//            refreshaHandlaggareListor();
         } else {
             sparaBtn.setEnabled(false);
         }
